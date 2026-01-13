@@ -29,6 +29,13 @@
 @import './components/chart/styles.css';
 
 /** **************************************
+* Circuit UI
+* Imported for progressive migration from MUI
+* Styles use CSS variables and shouldn't conflict with MUI
+*************************************** */
+@import '@sumup-oss/circuit-ui/styles.css';
+
+/** **************************************
 * Tailwind CSS
 *************************************** */
 @tailwind base;

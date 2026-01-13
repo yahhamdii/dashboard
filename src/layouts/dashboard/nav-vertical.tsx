@@ -8,7 +8,7 @@ import { styled } from '@mui/material/styles';
 
 import { Logo } from 'src/components/logo';
 import { Scrollbar } from 'src/components/scrollbar';
-import { NavSectionMini, NavSectionVertical } from 'src/components/nav-section';
+import { NavSectionVertical } from 'src/components/nav-section';
 
 import { layoutClasses } from '../core';
 

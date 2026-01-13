@@ -1,31 +1,28 @@
+/**
+ * POC: NotFound View with Circuit UI
+ * 
+ * This is a proof of concept to validate Circuit UI integration
+ * alongside MUI. Use feature flag USE_CIRCUIT_ERROR_PAGES to toggle.
+ */
+
 'use client';
 
 import { m } from 'framer-motion';
 
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
+
+import { Button, Headline, Body } from '@sumup-oss/circuit-ui';
 
 import { RouterLink } from 'src/routes/components';
-import { useCircuitComponent } from 'src/lib/feature-flags';
 
 import { SimpleLayout } from 'src/layouts/simple';
 import { PageNotFoundIllustration } from 'src/assets/illustrations';
 
 import { varBounce, MotionContainer } from 'src/components/animate';
-import { NotFoundViewCircuit } from './not-found-view-circuit';
 
 // ----------------------------------------------------------------------
 
-export function NotFoundView() {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_ERROR_PAGES');
-
-  // Use Circuit UI version if flag is enabled
-  if (useCircuit) {
-    return <NotFoundViewCircuit />;
-  }
-
-  // Default MUI version
+export function NotFoundViewCircuit() {
   return (
     <SimpleLayout
       slotProps={{
@@ -34,26 +31,34 @@ export function NotFoundView() {
     >
       <Container component={MotionContainer}>
         <m.div variants={varBounce('in')}>
-          <Typography variant="h3" sx={{ mb: 2 }}>
+          <Headline as="h1" size="l" style={{ marginBottom: '16px' }}>
             Sorry, page not found!
-          </Typography>
+          </Headline>
         </m.div>
 
         <m.div variants={varBounce('in')}>
-          <Typography sx={{ color: 'text.secondary' }}>
+          <Body size="one" style={{ color: '#6B7280' }}>
             Sorry, we couldn't find the page you're looking for. Perhaps you've mistyped the URL? Be
             sure to check your spelling.
-          </Typography>
+          </Body>
         </m.div>
 
         <m.div variants={varBounce('in')}>
           <PageNotFoundIllustration sx={{ my: { xs: 5, sm: 10 } }} />
         </m.div>
 
-        <Button component={RouterLink} href="/" size="large" variant="contained">
-          Go to home
-        </Button>
+        <m.div variants={varBounce('in')}>
+          <Button
+            as={RouterLink}
+            href="/"
+            variant="primary"
+            size="m"
+          >
+            Go to home
+          </Button>
+        </m.div>
       </Container>
     </SimpleLayout>
   );
 }
+
