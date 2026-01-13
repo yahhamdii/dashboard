@@ -1,0 +1,94 @@
+/**
+ * Typography Wrapper - Compatibilité MUI → Circuit UI
+ * 
+ * Wrapper qui permet d'utiliser Circuit UI Typography avec l'API MUI
+ * pour faciliter la migration progressive.
+ */
+
+'use client';
+
+import Typography from '@mui/material/Typography';
+import type { TypographyProps as MuiTypographyProps } from '@mui/material/Typography';
+
+import { Headline, Body } from '@sumup-oss/circuit-ui';
+
+import { useCircuitComponent } from 'src/lib/feature-flags';
+
+// ----------------------------------------------------------------------
+
+type TypographyWrapperProps = Omit<MuiTypographyProps, 'variant'> & {
+  variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'body1' | 'body2' | 'caption' | 'subtitle1' | 'subtitle2' | 'overline';
+};
+
+/**
+ * Mapping MUI Typography variants → Circuit UI components
+ */
+const variantMapping = {
+  h1: { component: Headline, as: 'h1' as const, size: 'l' as const },
+  h2: { component: Headline, as: 'h2' as const, size: 'l' as const },
+  h3: { component: Headline, as: 'h3' as const, size: 'm' as const },
+  h4: { component: Headline, as: 'h4' as const, size: 'm' as const },
+  h5: { component: Headline, as: 'h5' as const, size: 's' as const },
+  h6: { component: Headline, as: 'h6' as const, size: 's' as const },
+  subtitle1: { component: Headline, as: 'h6' as const, size: 's' as const },
+  subtitle2: { component: Headline, as: 'h6' as const, size: 's' as const },
+  body1: { component: Body, as: 'p' as const, size: 'one' as const },
+  body2: { component: Body, as: 'p' as const, size: 'two' as const },
+  caption: { component: Body, as: 'span' as const, size: 'two' as const },
+  overline: { component: Body, as: 'span' as const, size: 'two' as const },
+} as const;
+
+/**
+ * Typography wrapper component
+ * 
+ * Utilise Circuit UI quand le flag USE_CIRCUIT_TYPOGRAPHY est activé,
+ * sinon utilise MUI Typography
+ */
+export function TypographyWrapper({
+  variant = 'body1',
+  children,
+  className,
+  sx,
+  ...other
+}: TypographyWrapperProps) {
+  const useCircuit = useCircuitComponent('USE_CIRCUIT_TYPOGRAPHY');
+
+  // Si Circuit UI n'est pas activé, utiliser MUI
+  if (!useCircuit) {
+    return (
+      <Typography variant={variant} className={className} sx={sx} {...other}>
+        {children}
+      </Typography>
+    );
+  }
+
+  // Utiliser Circuit UI
+  const mapping = variantMapping[variant];
+  if (!mapping) {
+    // Fallback sur body1 si variant non reconnu
+    const fallback = variantMapping.body1;
+    const Component = fallback.component;
+    const { color, ...circuitProps } = other as any;
+    return (
+      <Component as={fallback.as} size={fallback.size} className={className} {...circuitProps}>
+        {children}
+      </Component>
+    );
+  }
+
+  const { component: Component, as, size } = mapping;
+
+  // Filtrer les props MUI incompatibles avec Circuit UI
+  // Circuit UI n'accepte pas toutes les props de MUI Typography
+  const { color, ...circuitProps } = other as any;
+
+  // Convertir sx (MUI) en style (Circuit UI) - seulement pour les styles simples
+  const style = sx ? (typeof sx === 'object' && !Array.isArray(sx) ? sx as React.CSSProperties : undefined) : undefined;
+
+  return (
+    <Component as={as} size={size} className={className} style={style} {...circuitProps}>
+      {children}
+    </Component>
+  );
+}
+

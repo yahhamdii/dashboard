@@ -11,9 +11,10 @@ import { m } from 'framer-motion';
 
 import Container from '@mui/material/Container';
 
-import { Button, Headline, Body } from '@sumup-oss/circuit-ui';
+import { Headline, Body } from '@sumup-oss/circuit-ui';
 
 import { RouterLink } from 'src/routes/components';
+import { ButtonWrapper } from 'src/components/circuit-ui';
 
 import { SimpleLayout } from 'src/layouts/simple';
 import { PageNotFoundIllustration } from 'src/assets/illustrations';
@@ -48,14 +49,14 @@ export function NotFoundViewCircuit() {
         </m.div>
 
         <m.div variants={varBounce('in')}>
-          <Button
-            as={RouterLink}
+          <ButtonWrapper
+            component={RouterLink}
             href="/"
-            variant="primary"
-            size="m"
+            variant="contained"
+            size="medium"
           >
             Go to home
-          </Button>
+          </ButtonWrapper>
         </m.div>
       </Container>
     </SimpleLayout>
