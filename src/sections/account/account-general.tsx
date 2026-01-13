@@ -4,11 +4,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { isValidPhoneNumber } from 'react-phone-number-input/input';
 
 import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
+
+import { CardWrapper as Card } from 'src/components/circuit-ui';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+
+import { TypographyWrapper as Typography, ButtonWrapper as Button } from 'src/components/circuit-ui';
 
 import { fData } from 'src/utils/format-number';
 

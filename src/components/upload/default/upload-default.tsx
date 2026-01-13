@@ -4,9 +4,10 @@ import { useDropzone } from 'react-dropzone';
 import { mergeClasses } from 'minimal-shared/utils';
 
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import FormHelperText from '@mui/material/FormHelperText';
 import CircularProgress from '@mui/material/CircularProgress';
+
+import { ButtonWrapper as Button } from 'src/components/circuit-ui';
 
 import { UploadIllustration } from 'src/assets/illustrations';
 

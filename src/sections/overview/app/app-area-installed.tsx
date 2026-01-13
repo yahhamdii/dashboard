@@ -3,9 +3,9 @@ import type { ChartOptions } from 'src/components/chart';
 
 import { useState, useCallback } from 'react';
 
-import Card from '@mui/material/Card';
 import { useTheme } from '@mui/material/styles';
-import CardHeader from '@mui/material/CardHeader';
+
+import { CardWrapper as Card, CardHeaderWrapper as CardHeader } from 'src/components/circuit-ui';
 
 import { fNumber, fShortenNumber } from 'src/utils/format-number';
 

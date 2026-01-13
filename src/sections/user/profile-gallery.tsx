@@ -1,10 +1,12 @@
 import type { IUserProfileGallery } from 'src/types/user';
 
 import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
+
+import { CardWrapper as Card } from 'src/components/circuit-ui';
 import ListItemText from '@mui/material/ListItemText';
+
+import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
 
 import { fDate } from 'src/utils/format-time';
 

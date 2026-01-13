@@ -4,17 +4,12 @@ import type { TableHeadCellProps } from 'src/components/table';
 import { usePopover } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import Table from '@mui/material/Table';
-import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
-import TableRow from '@mui/material/TableRow';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import CardHeader from '@mui/material/CardHeader';
 import IconButton from '@mui/material/IconButton';
+
+import { ButtonWrapper as Button, CardWrapper as Card, CardHeaderWrapper as CardHeader, TableWrapper as Table, TableBodyWrapper as TableBody, TableRowWrapper as TableRow, TableCellWrapper as TableCell } from 'src/components/circuit-ui';
 
 import { fCurrency } from 'src/utils/format-number';
 

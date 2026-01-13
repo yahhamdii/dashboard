@@ -2,8 +2,9 @@
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
 import { useTheme } from '@mui/material/styles';
+
+import { ButtonWrapper as Button } from 'src/components/circuit-ui';
 
 import { DashboardContent } from 'src/layouts/dashboard';
 import { SeoIllustration } from 'src/assets/illustrations';

@@ -126,6 +126,17 @@ export function ButtonWrapper({
   // Gérer destructive pour error color
   const destructive = color === 'error';
 
+  // Filtrer les props MUI spécifiques qui ne sont pas compatibles avec Circuit UI Button
+  const {
+    loading, // MUI Button prop - Circuit UI n'a pas de prop loading directe
+    disableElevation, // MUI specific prop
+    disableRipple, // MUI specific prop
+    focusRipple, // MUI specific prop
+    centerRipple, // MUI specific prop
+    TouchRippleProps, // MUI specific prop
+    ...circuitOtherProps
+  } = other as any;
+
   // Props pour Circuit UI
   const circuitProps: any = {
     variant: circuitVariant,
@@ -134,7 +145,7 @@ export function ButtonWrapper({
     className,
     style,
     locale: circuitLocale, // Fixe la locale pour éviter les erreurs d'hydratation
-    ...other,
+    ...circuitOtherProps,
   };
 
   if (asProp) {

@@ -5,9 +5,10 @@ import { useBoolean } from 'minimal-shared/hooks';
 import { useRef, useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Collapse from '@mui/material/Collapse';
+
+import { ButtonWrapper as Button } from 'src/components/circuit-ui';
 
 import { Iconify } from 'src/components/iconify';
 

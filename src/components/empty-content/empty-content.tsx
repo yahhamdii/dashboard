@@ -8,9 +8,9 @@ import { varAlpha } from 'minimal-shared/utils';
 
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
 
 import { CONFIG } from 'src/global-config';
+import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
 
 // ----------------------------------------------------------------------
 

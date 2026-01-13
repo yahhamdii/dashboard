@@ -10,12 +10,12 @@ import { useBoolean, useSetState } from 'minimal-shared/hooks';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import Card from '@mui/material/Card';
-import Table from '@mui/material/Table';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
-import TableBody from '@mui/material/TableBody';
 import IconButton from '@mui/material/IconButton';
+
+import { CardWrapper as Card, TableWrapper as Table, TableBodyWrapper as TableBody } from 'src/components/circuit-ui';
+
+import { ButtonWrapper as Button } from 'src/components/circuit-ui';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';

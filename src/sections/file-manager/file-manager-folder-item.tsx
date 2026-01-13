@@ -4,10 +4,11 @@ import type { FileItemProps } from './file-manager-file-item-slots';
 import { useState, useCallback } from 'react';
 import { useBoolean, usePopover, useCopyToClipboard } from 'minimal-shared/hooks';
 
-import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
+
+import { ButtonWrapper as Button } from 'src/components/circuit-ui';
 
 import { fData } from 'src/utils/format-number';
 

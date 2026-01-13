@@ -17,7 +17,7 @@ import { useCircuitComponent } from 'src/lib/feature-flags';
 // ----------------------------------------------------------------------
 
 type TypographyWrapperProps = Omit<MuiTypographyProps, 'variant'> & {
-  variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'body1' | 'body2' | 'caption' | 'subtitle1' | 'subtitle2' | 'overline';
+  variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'body1' | 'body2' | 'caption' | 'subtitle1' | 'subtitle2' | 'overline' | string;
 };
 
 /**
@@ -53,40 +53,74 @@ export function TypographyWrapper({
 }: TypographyWrapperProps) {
   const useCircuit = useCircuitComponent('USE_CIRCUIT_TYPOGRAPHY');
 
+  // Normaliser le variant (peut être une string ou un type MUI)
+  const normalizedVariant = typeof variant === 'string' ? variant : 'body1';
+  
   // Si Circuit UI n'est pas activé, utiliser MUI
   if (!useCircuit) {
     return (
-      <Typography variant={variant} className={className} sx={sx} {...other}>
+      <Typography variant={normalizedVariant as any} className={className} sx={sx} {...other}>
         {children}
       </Typography>
     );
   }
 
   // Utiliser Circuit UI
-  const mapping = variantMapping[variant];
+  const mapping = variantMapping[normalizedVariant as keyof typeof variantMapping];
   if (!mapping) {
     // Fallback sur body1 si variant non reconnu
     const fallback = variantMapping.body1;
     const Component = fallback.component;
-    const { color, ...circuitProps } = other as any;
+    const {
+      color,
+      noWrap,
+      gutterBottom,
+      paragraph,
+      align,
+      ...circuitProps
+    } = other as any;
+    
+    const style = noWrap
+      ? { whiteSpace: 'nowrap' as const, overflow: 'hidden', textOverflow: 'ellipsis' }
+      : align
+      ? { textAlign: align }
+      : undefined;
+    
     return (
-      <Component as={fallback.as} size={fallback.size} className={className} {...circuitProps}>
+      <Component as={fallback.as} size={fallback.size} className={className} style={style} {...circuitProps}>
         {children}
       </Component>
     );
   }
 
-  const { component: Component, as, size } = mapping;
+  const { component: Component, as, size } = mapping as typeof variantMapping[keyof typeof variantMapping];
 
   // Filtrer les props MUI incompatibles avec Circuit UI
   // Circuit UI n'accepte pas toutes les props de MUI Typography
-  const { color, ...circuitProps } = other as any;
+  const {
+    color,
+    noWrap, // MUI prop qui n'existe pas dans Circuit UI
+    gutterBottom, // MUI prop qui n'existe pas dans Circuit UI
+    paragraph, // MUI prop qui n'existe pas dans Circuit UI
+    align, // MUI prop qui n'existe pas dans Circuit UI
+    ...circuitProps
+  } = other as any;
 
   // Convertir sx (MUI) en style (Circuit UI) - seulement pour les styles simples
   const style = sx ? (typeof sx === 'object' && !Array.isArray(sx) ? sx as React.CSSProperties : undefined) : undefined;
 
+  // Gérer noWrap avec style CSS si nécessaire
+  const finalStyle = noWrap
+    ? { ...style, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }
+    : style;
+
+  // Gérer align avec style CSS si nécessaire
+  const finalStyleWithAlign = align
+    ? { ...finalStyle, textAlign: align }
+    : finalStyle;
+
   return (
-    <Component as={as} size={size} className={className} style={style} {...circuitProps}>
+    <Component as={as} size={size} className={className} style={finalStyleWithAlign} {...circuitProps}>
       {children}
     </Component>
   );

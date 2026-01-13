@@ -4,8 +4,9 @@ import { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
-import Card from '@mui/material/Card';
 import Tabs from '@mui/material/Tabs';
+
+import { CardWrapper as Card } from 'src/components/circuit-ui';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';

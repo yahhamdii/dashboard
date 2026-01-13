@@ -5,14 +5,15 @@ import { useTabs } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
-import Card from '@mui/material/Card';
 import Tabs from '@mui/material/Tabs';
 import Stack from '@mui/material/Stack';
 import Rating from '@mui/material/Rating';
 import Avatar from '@mui/material/Avatar';
-import CardHeader from '@mui/material/CardHeader';
-import Typography from '@mui/material/Typography';
+
+import { CardWrapper as Card, CardHeaderWrapper as CardHeader } from 'src/components/circuit-ui';
 import { svgIconClasses } from '@mui/material/SvgIcon';
+
+import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
 
 import { fData, fCurrency, fShortenNumber } from 'src/utils/format-number';
 

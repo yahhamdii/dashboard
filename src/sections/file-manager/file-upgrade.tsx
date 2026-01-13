@@ -1,10 +1,12 @@
 import type { CardProps } from '@mui/material/Card';
 
 import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+
+import { CardWrapper as Card } from 'src/components/circuit-ui';
+
+import { TypographyWrapper as Typography, ButtonWrapper as Button } from 'src/components/circuit-ui';
+import { useCircuitComponent } from 'src/lib/feature-flags';
 
 import { CONFIG } from 'src/global-config';
 
@@ -52,15 +54,27 @@ export function FileUpgrade({ sx, ...other }: CardProps) {
         }}
       />
 
-      <Stack spacing={3} sx={{ alignItems: 'flex-start' }}>
-        <Typography variant="h6" sx={{ maxWidth: 180 }}>
-          Upgrade your plan and get more space
-        </Typography>
+      {useCircuitComponent('USE_CIRCUIT_LAYOUTS') ? (
+        <div className="flex flex-col gap-3 items-start">
+          <Typography variant="h6" sx={{ maxWidth: 180 }}>
+            Upgrade your plan and get more space
+          </Typography>
 
-        <Button color="warning" variant="contained">
-          Upgrade plan
-        </Button>
-      </Stack>
+          <Button color="warning" variant="contained">
+            Upgrade plan
+          </Button>
+        </div>
+      ) : (
+        <Stack spacing={3} sx={{ alignItems: 'flex-start' }}>
+          <Typography variant="h6" sx={{ maxWidth: 180 }}>
+            Upgrade your plan and get more space
+          </Typography>
+
+          <Button color="warning" variant="contained">
+            Upgrade plan
+          </Button>
+        </Stack>
+      )}
     </Card>
   );
 }

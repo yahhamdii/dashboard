@@ -1,0 +1,50 @@
+warning: in the working copy of 'src/components/empty-content/empty-content.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/search-not-found/search-not-found.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/table/table-selected-action.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/upload/avatar/upload-avatar.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/layouts/components/workspaces-popover.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/sections/account/account-general.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/sections/error/403-view.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/sections/error/500-view.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/sections/error/not-found-view.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/sections/file-manager/file-manager-file-details.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/sections/file-manager/file-manager-file-item-slots.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/sections/file-manager/file-manager-table-row.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/sections/file-manager/file-upgrade.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/sections/file-manager/file-widget.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/sections/file-manager/view/file-manager-view.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/sections/overview/app/app-featured.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/sections/overview/app/app-top-installed-countries.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/sections/overview/app/app-top-related.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/sections/overview/app/app-welcome.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/sections/user/profile-followers.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/sections/user/profile-friends.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/sections/user/profile-gallery.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/sections/user/profile-post-item.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/sections/user/user-create-edit-form.tsx', LF will be replaced by CRLF the next time Git touches it
+ src/components/circuit-ui/typography-wrapper.tsx           | 11 [32m+++++++[m[31m----[m
+ src/components/empty-content/empty-content.tsx             |  2 [32m+[m[31m-[m
+ src/components/search-not-found/search-not-found.tsx       |  3 [32m++[m[31m-[m
+ src/components/table/table-selected-action.tsx             |  3 [32m++[m[31m-[m
+ src/components/upload/avatar/upload-avatar.tsx             |  2 [32m+[m[31m-[m
+ src/layouts/components/workspaces-popover.tsx              |  3 [32m++[m[31m-[m
+ src/sections/account/account-general.tsx                   |  3 [32m++[m[31m-[m
+ src/sections/error/403-view.tsx                            |  2 [32m+[m[31m-[m
+ src/sections/error/500-view.tsx                            |  2 [32m+[m[31m-[m
+ src/sections/error/not-found-view.tsx                      |  2 [32m+[m[31m-[m
+ src/sections/file-manager/file-manager-file-details.tsx    |  3 [32m++[m[31m-[m
+ src/sections/file-manager/file-manager-file-item-slots.tsx |  3 [32m++[m[31m-[m
+ src/sections/file-manager/file-manager-table-row.tsx       |  3 [32m++[m[31m-[m
+ src/sections/file-manager/file-upgrade.tsx                 |  3 [32m++[m[31m-[m
+ src/sections/file-manager/file-widget.tsx                  |  3 [32m++[m[31m-[m
+ src/sections/file-manager/view/file-manager-view.tsx       |  3 [32m++[m[31m-[m
+ src/sections/overview/app/app-featured.tsx                 |  3 [32m++[m[31m-[m
+ src/sections/overview/app/app-top-installed-countries.tsx  |  3 [32m++[m[31m-[m
+ src/sections/overview/app/app-top-related.tsx              |  3 [32m++[m[31m-[m
+ src/sections/overview/app/app-welcome.tsx                  |  3 [32m++[m[31m-[m
+ src/sections/user/profile-followers.tsx                    |  3 [32m++[m[31m-[m
+ src/sections/user/profile-friends.tsx                      |  3 [32m++[m[31m-[m
+ src/sections/user/profile-gallery.tsx                      |  3 [32m++[m[31m-[m
+ src/sections/user/profile-post-item.tsx                    |  3 [32m++[m[31m-[m
+ src/sections/user/user-create-edit-form.tsx                |  3 [32m++[m[31m-[m
+ 25 files changed, 50 insertions(+), 28 deletions(-)

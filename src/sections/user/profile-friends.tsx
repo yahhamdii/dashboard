@@ -4,14 +4,17 @@ import { usePopover } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
-import Card from '@mui/material/Card';
 import Avatar from '@mui/material/Avatar';
+
+import { CardWrapper as Card } from 'src/components/circuit-ui';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
-import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
+
+import { InputWrapper as TextField } from 'src/components/circuit-ui';
+
+import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
 
 import { _socials } from 'src/_mock';
 

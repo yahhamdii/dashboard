@@ -1,8 +1,9 @@
 import type { BoxProps } from '@mui/material/Box';
 
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+
+import { ButtonWrapper as Button } from 'src/components/circuit-ui';
 
 import { RouterLink } from 'src/routes/components';
 

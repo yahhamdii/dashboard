@@ -5,7 +5,9 @@ import type { Theme, SxProps } from '@mui/material/styles';
 import type { TypographyProps } from '@mui/material/Typography';
 
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+
+import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
+import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
@@ -18,7 +20,9 @@ type SearchNotFoundProps = BoxProps & {
   };
 };
 
-export function SearchNotFound({ query, sx, slotProps, ...other }: SearchNotFoundProps) {
+export function SearchNotFound({ query, sx, slotProps, className, ...other }: SearchNotFoundProps) {
+  const useCircuit = useCircuitComponent('USE_CIRCUIT_LAYOUTS');
+
   if (!query) {
     return (
       <Typography variant="body2" {...slotProps?.description}>
@@ -27,6 +31,38 @@ export function SearchNotFound({ query, sx, slotProps, ...other }: SearchNotFoun
     );
   }
 
+  // Migration vers Tailwind pour les cas simples
+  const tailwindClasses = 'flex flex-col gap-1 rounded-xl text-center';
+  const combinedClassName = className ? `${tailwindClasses} ${className}` : tailwindClasses;
+
+  if (useCircuit) {
+    return (
+      <div
+        className={combinedClassName}
+        {...other}
+      >
+        <Typography
+          variant="h6"
+          {...slotProps?.title}
+          sx={[
+            { color: 'text.primary' },
+            ...(Array.isArray(slotProps?.title?.sx) ? slotProps.title.sx : [slotProps?.title?.sx]),
+          ]}
+        >
+          Not found
+        </Typography>
+
+        <Typography variant="body2" {...slotProps?.description}>
+          No results found for &nbsp;
+          <strong>{`"${query}"`}</strong>
+          .
+          <br /> Try checking for typos or using complete words.
+        </Typography>
+      </div>
+    );
+  }
+
+  // Fallback MUI pour les cas complexes ou quand le flag est désactivé
   return (
     <Box
       sx={[
@@ -39,6 +75,7 @@ export function SearchNotFound({ query, sx, slotProps, ...other }: SearchNotFoun
         },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
+      className={className}
       {...other}
     >
       <Typography

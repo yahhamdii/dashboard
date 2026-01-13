@@ -7,13 +7,14 @@ import { varAlpha } from 'minimal-shared/utils';
 import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
-import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import InputBase from '@mui/material/InputBase';
-import CardHeader from '@mui/material/CardHeader';
+
+import { CardWrapper as Card, CardHeaderWrapper as CardHeader } from 'src/components/circuit-ui';
+
+import { ButtonWrapper as Button } from 'src/components/circuit-ui';
 
 import { fNumber } from 'src/utils/format-number';
 

@@ -3,13 +3,12 @@ import type { IFile } from 'src/types/file';
 import type { UseTableReturn, TableHeadCellProps } from 'src/components/table';
 
 import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
 import Tooltip from '@mui/material/Tooltip';
-import TableBody from '@mui/material/TableBody';
 import IconButton from '@mui/material/IconButton';
-import TableContainer from '@mui/material/TableContainer';
 import { tableCellClasses } from '@mui/material/TableCell';
 import { tablePaginationClasses } from '@mui/material/TablePagination';
+
+import { TableWrapper as Table, TableBodyWrapper as TableBody, TableContainerWrapper as TableContainer } from 'src/components/circuit-ui';
 
 import { Iconify } from 'src/components/iconify';
 import {

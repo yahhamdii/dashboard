@@ -2,9 +2,10 @@ import type { CardProps } from '@mui/material/Card';
 import type { ChartOptions } from 'src/components/chart';
 
 import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
 import { useTheme } from '@mui/material/styles';
 import ListItemText from '@mui/material/ListItemText';
+
+import { CardWrapper as Card } from 'src/components/circuit-ui';
 
 import { fData } from 'src/utils/format-number';
 

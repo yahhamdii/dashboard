@@ -2,12 +2,11 @@
 
 import { m } from 'framer-motion';
 
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
 
 import { RouterLink } from 'src/routes/components';
 import { useCircuitComponent } from 'src/lib/feature-flags';
+import { TypographyWrapper as Typography, ButtonWrapper as Button } from 'src/components/circuit-ui';
 
 import { SimpleLayout } from 'src/layouts/simple';
 import { PageNotFoundIllustration } from 'src/assets/illustrations';

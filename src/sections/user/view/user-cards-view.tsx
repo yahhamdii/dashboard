@@ -1,6 +1,6 @@
 'use client';
 
-import Button from '@mui/material/Button';
+import { ButtonWrapper as Button } from 'src/components/circuit-ui';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';

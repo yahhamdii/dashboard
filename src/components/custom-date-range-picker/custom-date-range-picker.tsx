@@ -6,15 +6,12 @@ import type { UseDateRangePickerReturn } from './use-date-range-picker';
 
 import { useCallback } from 'react';
 
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import FormHelperText from '@mui/material/FormHelperText';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DateCalendar, dateCalendarClasses } from '@mui/x-date-pickers/DateCalendar';
+
+import { ButtonWrapper as Button, DialogWrapper as Dialog, DialogTitleWrapper as DialogTitle, DialogActionsWrapper as DialogActions, DialogContentWrapper as DialogContent } from 'src/components/circuit-ui';
 
 // ----------------------------------------------------------------------
 

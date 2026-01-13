@@ -4,11 +4,12 @@ import type { IUserProfileFollower } from 'src/types/user';
 import { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
+
+import { CardWrapper as Card } from 'src/components/circuit-ui';
 import ListItemText from '@mui/material/ListItemText';
+
+import { TypographyWrapper as Typography, ButtonWrapper as Button } from 'src/components/circuit-ui';
 
 import { Iconify } from 'src/components/iconify';
 

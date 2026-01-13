@@ -3,7 +3,7 @@ import type { TextFieldProps } from '@mui/material/TextField';
 import { Controller, useFormContext } from 'react-hook-form';
 import { transformValue, transformValueOnBlur, transformValueOnChange } from 'minimal-shared/utils';
 
-import TextField from '@mui/material/TextField';
+import { InputWrapper as TextField } from 'src/components/circuit-ui';
 
 // ----------------------------------------------------------------------
 

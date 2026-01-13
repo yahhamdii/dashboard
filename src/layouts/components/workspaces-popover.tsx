@@ -11,9 +11,10 @@ import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
-import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
-import Button, { buttonClasses } from '@mui/material/Button';
+import { buttonClasses } from '@mui/material/Button';
+
+import { TypographyWrapper as Typography, ButtonWrapper as Button } from 'src/components/circuit-ui';
 
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';

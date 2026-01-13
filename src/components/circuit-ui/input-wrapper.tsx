@@ -42,6 +42,7 @@ export function InputWrapper({
   onChange,
   className,
   sx,
+  slotProps,
   ...other
 }: InputWrapperProps) {
   const useCircuit = useCircuitComponent('USE_CIRCUIT_FORMS');
@@ -64,6 +65,7 @@ export function InputWrapper({
         onChange={onChange}
         className={className}
         sx={sx}
+        slotProps={slotProps}
         {...other}
       />
     );
@@ -87,16 +89,18 @@ export function InputWrapper({
   // On utilise seulement fullWidth pour l'instant
   const inputStyle: React.CSSProperties | undefined = fullWidth ? { width: '100%' } : undefined;
 
+  // Convertir label en string si nécessaire
+  const labelString = label ? (typeof label === 'string' ? label : String(label)) : '';
+  
+  // Circuit UI Input exige un label valide (non vide)
+  // Si pas de label, utiliser hideLabel et passer un label technique
+  const hasLabel = !!labelString && labelString.trim() !== '';
+
   return (
     <div className={className} style={fullWidth ? { width: '100%' } : undefined}>
-      {label && (
-        <label style={{ display: 'block', marginBottom: '8px', fontWeight: 500 }}>
-          {label}
-          {required && <span style={{ color: 'var(--cui-fg-danger)' }}> *</span>}
-        </label>
-      )}
       <CircuitInput
-        label={label ? (typeof label === 'string' ? label : String(label)) : ''} // Circuit UI Input requiert label (string)
+        label={hasLabel ? labelString : 'Input'} // Circuit UI Input requiert un label non vide
+        hideLabel={!hasLabel} // Masquer le label visuellement si on n'en a pas
         invalid={invalid}
         validationHint={validationHint}
         disabled={disabled}

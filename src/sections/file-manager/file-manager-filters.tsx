@@ -7,10 +7,12 @@ import { varAlpha } from 'minimal-shared/utils';
 import { usePopover } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import ButtonBase from '@mui/material/ButtonBase';
 import InputAdornment from '@mui/material/InputAdornment';
+
+import { InputWrapper as TextField } from 'src/components/circuit-ui';
+
+import { ButtonWrapper as Button } from 'src/components/circuit-ui';
 
 import { fDateRangeShortLabel } from 'src/utils/format-time';
 

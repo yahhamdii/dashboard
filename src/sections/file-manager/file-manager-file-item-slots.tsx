@@ -12,8 +12,9 @@ import Avatar from '@mui/material/Avatar';
 import { styled } from '@mui/material/styles';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import AvatarGroup, { avatarGroupClasses } from '@mui/material/AvatarGroup';
+
+import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
 
 import { CONFIG } from 'src/global-config';
 

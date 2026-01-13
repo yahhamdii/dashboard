@@ -5,15 +5,16 @@ import { useBoolean, usePopover } from 'minimal-shared/hooks';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
-import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
-import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
+
+import { TableRowWrapper as TableRow, TableCellWrapper as TableCell } from 'src/components/circuit-ui';
+
+import { ButtonWrapper as Button } from 'src/components/circuit-ui';
 
 import { RouterLink } from 'src/routes/components';
 

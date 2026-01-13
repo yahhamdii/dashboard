@@ -4,8 +4,9 @@ import type { IUserCard } from 'src/types/user';
 import { varAlpha } from 'minimal-shared/utils';
 
 import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
 import Avatar from '@mui/material/Avatar';
+
+import { CardWrapper as Card } from 'src/components/circuit-ui';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';

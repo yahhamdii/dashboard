@@ -5,8 +5,10 @@ import Autoplay from 'embla-carousel-autoplay';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
-import Card from '@mui/material/Card';
-import Typography from '@mui/material/Typography';
+
+import { CardWrapper as Card } from 'src/components/circuit-ui';
+
+import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
 
 import { Image } from 'src/components/image';
 import {

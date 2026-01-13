@@ -6,16 +6,18 @@ import { varAlpha } from 'minimal-shared/utils';
 import { useBoolean, usePopover, useDoubleClick, useCopyToClipboard } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import Checkbox from '@mui/material/Checkbox';
 import { useTheme } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
 import ListItemText from '@mui/material/ListItemText';
-import TableRow, { tableRowClasses } from '@mui/material/TableRow';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import { tableRowClasses } from '@mui/material/TableRow';
+import { tableCellClasses } from '@mui/material/TableCell';
+
+import { TableRowWrapper as TableRow, TableCellWrapper as TableCell } from 'src/components/circuit-ui';
+
+import { TypographyWrapper as Typography, ButtonWrapper as Button } from 'src/components/circuit-ui';
 
 import { fData } from 'src/utils/format-number';
 import { fDate, fTime } from 'src/utils/format-time';

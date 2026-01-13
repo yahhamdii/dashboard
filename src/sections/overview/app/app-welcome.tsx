@@ -3,7 +3,8 @@ import type { BoxProps } from '@mui/material/Box';
 import { varAlpha } from 'minimal-shared/utils';
 
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+
+import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
 
 import { CONFIG } from 'src/global-config';
 

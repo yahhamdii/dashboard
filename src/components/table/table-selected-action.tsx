@@ -4,7 +4,8 @@ import type { BoxProps } from '@mui/material/Box';
 
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
-import Typography from '@mui/material/Typography';
+
+import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
 
 // ----------------------------------------------------------------------
 

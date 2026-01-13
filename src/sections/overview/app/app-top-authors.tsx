@@ -5,9 +5,9 @@ import { orderBy } from 'es-toolkit';
 import { varAlpha } from 'minimal-shared/utils';
 
 import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
 import Avatar from '@mui/material/Avatar';
-import CardHeader from '@mui/material/CardHeader';
+
+import { CardWrapper as Card, CardHeaderWrapper as CardHeader } from 'src/components/circuit-ui';
 
 import { fShortenNumber } from 'src/utils/format-number';
 
