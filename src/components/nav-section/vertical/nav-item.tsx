@@ -8,6 +8,7 @@ import { mergeClasses } from 'minimal-shared/utils';
 import Tooltip from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import ButtonBase from '@mui/material/ButtonBase';
+import { tokens } from 'src/theme/design-tokens';
 
 import { Iconify } from '../../iconify';
 import { createNavItem } from '../utils';
@@ -55,6 +56,7 @@ export function NavItem({
 
   return (
     <ItemRoot
+      role="button"
       aria-label={title}
       {...ownerState}
       {...navItem.baseProps}
@@ -125,7 +127,6 @@ const shouldForwardProp = (prop: string) =>
 const ItemRoot = styled(ButtonBase, { shouldForwardProp })<StyledState>(({
   active,
   open,
-  theme,
 }) => {
   const bulletSvg = `"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' viewBox='0 0 14 14'%3E%3Cpath d='M1 1v4a8 8 0 0 0 8 8h4' stroke='%23efefef' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E"`;
 
@@ -139,12 +140,9 @@ const ItemRoot = styled(ButtonBase, { shouldForwardProp })<StyledState>(({
     mask: `url(${bulletSvg}) no-repeat 50% 50%/100% auto`,
     WebkitMask: `url(${bulletSvg}) no-repeat 50% 50%/100% auto`,
     transform:
-      theme.direction === 'rtl'
+      tokens.direction === 'rtl'
         ? 'translate(calc(var(--nav-bullet-size) * 1), calc(var(--nav-bullet-size) * -0.4)) scaleX(-1)'
         : 'translate(calc(var(--nav-bullet-size) * -1), calc(var(--nav-bullet-size) * -0.4))',
-    ...theme.applyStyles('dark', {
-      backgroundColor: 'var(--nav-bullet-dark-color)',
-    }),
   };
 
   const rootItemStyles: CSSObject = {
@@ -157,9 +155,6 @@ const ItemRoot = styled(ButtonBase, { shouldForwardProp })<StyledState>(({
       color: 'var(--nav-item-root-active-color)',
       backgroundColor: 'var(--nav-item-root-active-bg)',
       '&:hover': { backgroundColor: 'var(--nav-item-root-active-hover-bg)' },
-      ...theme.applyStyles('dark', {
-        color: 'var(--nav-item-root-active-color-on-dark)',
-      }),
     }),
   };
 
@@ -213,33 +208,33 @@ const ItemTexts = styled('span', { shouldForwardProp })<StyledState>(() => ({
 /**
  * @slot title
  */
-const ItemTitle = styled('span', { shouldForwardProp })<StyledState>(({ theme }) => ({
-  ...navItemStyles.title(theme),
-  ...theme.typography.body2,
-  fontWeight: theme.typography.fontWeightMedium,
+const ItemTitle = styled('span', { shouldForwardProp })<StyledState>(() => ({
+  ...navItemStyles.title(),
+  ...tokens.typography.body2,
+  fontWeight: tokens.typography.fontWeightMedium,
   variants: [
-    { props: { active: true }, style: { fontWeight: theme.typography.fontWeightSemiBold } },
+    { props: { active: true }, style: { fontWeight: tokens.typography.fontWeightSemiBold } },
   ],
 }));
 
 /**
  * @slot caption text
  */
-const ItemCaptionText = styled('span', { shouldForwardProp })<StyledState>(({ theme }) => ({
-  ...navItemStyles.captionText(theme),
+const ItemCaptionText = styled('span', { shouldForwardProp })<StyledState>(() => ({
+  ...navItemStyles.captionText(),
   color: 'var(--nav-item-caption-color)',
 }));
 
 /**
  * @slot info
  */
-const ItemInfo = styled('span', { shouldForwardProp })<StyledState>(({ theme }) => ({
+const ItemInfo = styled('span', { shouldForwardProp })<StyledState>(() => ({
   ...navItemStyles.info,
 }));
 
 /**
  * @slot arrow
  */
-const ItemArrow = styled(Iconify, { shouldForwardProp })<StyledState>(({ theme }) => ({
-  ...navItemStyles.arrow(theme),
+const ItemArrow = styled(Iconify, { shouldForwardProp })<StyledState>(() => ({
+  ...navItemStyles.arrow(),
 }));

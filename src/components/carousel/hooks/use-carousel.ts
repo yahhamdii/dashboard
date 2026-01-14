@@ -6,7 +6,7 @@ import type { CarouselOptions, UseCarouselReturn } from '../types';
 import { useMemo } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 
-import { useTheme } from '@mui/material/styles';
+import { tokens } from 'src/theme/design-tokens';
 
 import { useThumbs } from './use-thumbs';
 import { useCarouselDots } from './use-carousel-dots';
@@ -22,9 +22,7 @@ export function useCarousel(
   options?: CarouselOptions,
   plugins?: EmblaPluginType[]
 ): UseCarouselReturn {
-  const theme = useTheme();
-
-  const [mainRef, mainApi] = useEmblaCarousel({ ...options, direction: theme.direction }, plugins);
+  const [mainRef, mainApi] = useEmblaCarousel({ ...options, direction: tokens.direction }, plugins);
 
   const pluginNames = plugins?.map((plugin) => plugin.name);
 

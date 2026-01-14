@@ -7,10 +7,10 @@ import { useRef } from 'react';
 import { mergeRefs } from 'minimal-shared/utils';
 
 import Popover from '@mui/material/Popover';
-import { useTheme } from '@mui/material/styles';
 import { listClasses } from '@mui/material/List';
 import { menuItemClasses } from '@mui/material/MenuItem';
 
+import { tokens } from 'src/theme/design-tokens';
 import { useElementRect } from './hooks';
 import { getPopoverOrigin } from './utils';
 import { Arrow, getPaperOffsetStyles } from './styles';
@@ -29,8 +29,7 @@ export function CustomPopover({
   slotProps,
   ...other
 }: CustomPopoverProps) {
-  const theme = useTheme();
-  const isRtl = theme.direction === 'rtl';
+  const isRtl = tokens.direction === 'rtl';
 
   const { arrow: arrowProps, paper: paperProps, ...otherSlotProps } = slotProps ?? {};
 

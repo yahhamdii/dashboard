@@ -31,7 +31,7 @@ export function AvatarWrapper({
   className,
   sx,
   ...other
-}: AvatarWrapperProps & { size?: 'small' | 'medium' | 'large' }) {
+}: AvatarWrapperProps & { size?: 'xsmall' | 'small' | 'medium' | 'large' }) {
   const useCircuit = useCircuitComponent('USE_CIRCUIT_FORMS');
 
   if (!useCircuit) {
@@ -44,8 +44,8 @@ export function AvatarWrapper({
 
   // Circuit UI n'a pas de composant Avatar natif, utiliser un div avec Tailwind
   const sizeClasses = size === 'small' ? 'w-8 h-8 text-xs' :
-                     size === 'large' ? 'w-16 h-16 text-lg' :
-                     'w-10 h-10 text-sm';
+    size === 'large' ? 'w-16 h-16 text-lg' :
+      'w-10 h-10 text-sm';
 
   const circuitStyles: React.CSSProperties = {
     display: 'inline-flex',

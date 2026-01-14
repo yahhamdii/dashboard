@@ -4,6 +4,8 @@ import { memo } from 'react';
 
 import SvgIcon from '@mui/material/SvgIcon';
 
+import { tokens } from 'src/theme/design-tokens';
+
 // ----------------------------------------------------------------------
 
 function PlanFreeIcon({ sx, ...other }: SvgIconProps) {
@@ -12,14 +14,14 @@ function PlanFreeIcon({ sx, ...other }: SvgIconProps) {
       viewBox="0 0 80 80"
       xmlns="http://www.w3.org/2000/svg"
       sx={[
-        (theme) => ({
-          '--primary-main': theme.vars.palette.primary.main,
-          '--primary-dark': theme.vars.palette.primary.dark,
-          '--primary-darker': theme.vars.palette.primary.darker,
+        {
+          '--primary-main': tokens.colors.primary.main,
+          '--primary-dark': tokens.colors.primary.dark,
+          '--primary-darker': tokens.colors.primary.darker,
           width: 48,
           flexShrink: 0,
           height: 'auto',
-        }),
+        },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
       {...other}

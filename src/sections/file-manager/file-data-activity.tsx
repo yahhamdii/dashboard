@@ -3,7 +3,8 @@ import type { ChartOptions } from 'src/components/chart';
 
 import { useState, useCallback } from 'react';
 
-import { useTheme, alpha as hexAlpha } from '@mui/material/styles';
+import { tokens } from 'src/theme/design-tokens';
+import { varAlpha } from 'minimal-shared/utils';
 
 import { CardWrapper as Card, CardHeaderWrapper as CardHeader } from 'src/components/circuit-ui';
 
@@ -31,17 +32,15 @@ type Props = CardProps & {
 };
 
 export function FileDataActivity({ title, subheader, chart, sx, ...other }: Props) {
-  const theme = useTheme();
-
   const [selectedSeries, setSelectedSeries] = useState('Yearly');
 
   const currentSeries = chart.series.find((i) => i.name === selectedSeries);
 
   const chartColors = chart.colors ?? [
-    theme.palette.primary.main,
-    theme.palette.error.main,
-    theme.palette.warning.main,
-    hexAlpha(theme.palette.grey[500], 0.48),
+    tokens.colors.primary.main,
+    tokens.colors.error.main,
+    tokens.colors.warning.main,
+    varAlpha(tokens.colors.grey['500Channel'], 0.48),
   ];
 
   const chartOptions = useChart({

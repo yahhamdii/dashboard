@@ -3,6 +3,7 @@ import type { FileRejection } from 'react-dropzone';
 import { varAlpha, mergeClasses } from 'minimal-shared/utils';
 
 import { styled } from '@mui/material/styles';
+import { tokens } from 'src/theme/design-tokens';
 
 import { fData } from 'src/utils/format-number';
 
@@ -38,15 +39,15 @@ export function RejectedFiles({ files = [], sx, className, ...other }: RejectedF
 
 // ----------------------------------------------------------------------
 
-const RejectedList = styled('ul')(({ theme }) => ({
+const RejectedList = styled('ul')(() => ({
   display: 'flex',
-  gap: theme.spacing(1),
+  gap: tokens.spacing(1),
   flexDirection: 'column',
-  padding: theme.spacing(2),
-  marginTop: theme.spacing(3),
-  borderRadius: theme.shape.borderRadius,
-  border: `dashed 1px ${theme.vars.palette.error.main}`,
-  backgroundColor: varAlpha(theme.vars.palette.error.mainChannel, 0.08),
+  padding: tokens.spacing(2),
+  marginTop: tokens.spacing(3),
+  borderRadius: tokens.shape.borderRadius,
+  border: `dashed 1px ${tokens.colors.error.main}`,
+  backgroundColor: varAlpha(tokens.colors.error.mainChannel, 0.08),
 }));
 
 const RejectedItem = styled('li')({
@@ -54,10 +55,10 @@ const RejectedItem = styled('li')({
   flexDirection: 'column',
 });
 
-const RejectedTitle = styled('span')(({ theme }) => ({
-  ...theme.typography.subtitle2,
+const RejectedTitle = styled('span')(() => ({
+  ...tokens.typography.subtitle2,
 }));
 
-const RejectedMsg = styled('span')(({ theme }) => ({
-  ...theme.typography.caption,
+const RejectedMsg = styled('span')(() => ({
+  ...tokens.typography.caption,
 }));

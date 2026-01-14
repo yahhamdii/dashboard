@@ -8,6 +8,7 @@ import ListItemText from '@mui/material/ListItemText';
 import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
+import { tokens } from 'src/theme/design-tokens';
 
 import { fDate } from 'src/utils/format-time';
 
@@ -31,107 +32,58 @@ export function ProfileGallery({ gallery }: Props) {
         Gallery
       </Typography>
 
-      {useCircuitLayoutsWithPathname() ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-          {gallery.map((image) => (
-            <Card key={image.id} sx={{ cursor: 'pointer', color: 'common.white' }}>
-              <IconButtonWrapper
-                color="inherit"
-                sx={{
-                  top: 8,
-                  right: 8,
-                  zIndex: 9,
-                  position: 'absolute',
-                }}
-              >
-                <Iconify icon="eva:more-vertical-fill" />
-              </IconButtonWrapper>
+      <Box
+        sx={{
+          gap: 3,
+          display: 'grid',
+          gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' },
+        }}
+      >
+        {gallery.map((image) => (
+          <Card key={image.id} sx={{ cursor: 'pointer', color: tokens.colors.common.white }}>
+            <IconButtonWrapper
+              color="inherit"
+              sx={{
+                top: 8,
+                right: 8,
+                zIndex: 9,
+                position: 'absolute',
+              }}
+            >
+              <Iconify icon="eva:more-vertical-fill" />
+            </IconButtonWrapper>
 
-              <ListItemText
-                sx={{ p: 3, left: 0, width: 1, bottom: 0, zIndex: 9, position: 'absolute' }}
-                primary={image.title}
-                secondary={fDate(image.postedAt)}
-                slotProps={{
-                  primary: {
-                    noWrap: true,
-                    sx: { typography: 'subtitle1' },
-                  },
-                  secondary: {
-                    sx: { mt: 0.5, opacity: 0.48, color: 'inherit' },
-                  },
-                }}
-              />
+            <ListItemText
+              sx={{ p: 3, left: 0, width: 1, bottom: 0, zIndex: 9, position: 'absolute' }}
+              primary={image.title}
+              secondary={fDate(image.postedAt)}
+              slotProps={{
+                primary: {
+                  noWrap: true,
+                  sx: { typography: 'subtitle1' },
+                },
+                secondary: {
+                  sx: { mt: 0.5, opacity: 0.48, color: 'inherit' },
+                },
+              }}
+            />
 
-              <Image
-                alt="Gallery"
-                ratio="1/1"
-                src={image.imageUrl}
-                onClick={() => lightbox.onOpen(image.imageUrl)}
-                slotProps={{
-                  overlay: {
-                    sx: (theme) => ({
-                      backgroundImage: `linear-gradient(to bottom, transparent 0%, ${theme.vars.palette.common.black} 75%)`,
-                    }),
+            <Image
+              alt="Gallery"
+              src={image.imageUrl}
+              ratio="1/1"
+              onClick={() => lightbox.onOpen(image.imageUrl)}
+              slotProps={{
+                overlay: {
+                  sx: {
+                    backgroundImage: `linear-gradient(to bottom, transparent 0%, ${tokens.colors.common.black} 75%)`,
                   },
-                }}
-              />
-            </Card>
-          ))}
-        </div>
-      ) : (
-        <Box
-          sx={{
-            gap: 3,
-            display: 'grid',
-            gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' },
-          }}
-        >
-          {gallery.map((image) => (
-            <Card key={image.id} sx={{ cursor: 'pointer', color: 'common.white' }}>
-              <IconButtonWrapper
-                color="inherit"
-                sx={{
-                  top: 8,
-                  right: 8,
-                  zIndex: 9,
-                  position: 'absolute',
-                }}
-              >
-                <Iconify icon="eva:more-vertical-fill" />
-              </IconButtonWrapper>
-
-              <ListItemText
-                sx={{ p: 3, left: 0, width: 1, bottom: 0, zIndex: 9, position: 'absolute' }}
-                primary={image.title}
-                secondary={fDate(image.postedAt)}
-                slotProps={{
-                  primary: {
-                    noWrap: true,
-                    sx: { typography: 'subtitle1' },
-                  },
-                  secondary: {
-                    sx: { mt: 0.5, opacity: 0.48, color: 'inherit' },
-                  },
-                }}
-              />
-
-              <Image
-                alt="Gallery"
-                src={image.imageUrl}
-                ratio="1/1"
-                onClick={() => lightbox.onOpen(image.imageUrl)}
-                slotProps={{
-                  overlay: {
-                    sx: (theme) => ({
-                      backgroundImage: `linear-gradient(to bottom, transparent 0%, ${theme.vars.palette.common.black} 75%)`,
-                    }),
-                  },
-                }}
-              />
-            </Card>
-          ))}
-        </Box>
-      )}
+                },
+              }}
+            />
+          </Card>
+        ))}
+      </Box>
 
       <Lightbox
         index={lightbox.selected}

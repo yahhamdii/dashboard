@@ -8,6 +8,7 @@ import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
+import { tokens } from 'src/theme/design-tokens';
 import { CONFIG } from 'src/global-config';
 
 // ----------------------------------------------------------------------
@@ -21,7 +22,7 @@ type Props = BoxProps & {
 
 export function AppWelcome({ title, description, action, img, sx, ...other }: Props) {
   const useCircuit = useCircuitLayoutsWithPathname();
-  
+
   const content = (
     <>
       {useCircuit ? (
@@ -53,7 +54,7 @@ export function AppWelcome({ title, description, action, img, sx, ...other }: Pr
       {img && <div className="max-w-[260px]">{img}</div>}
     </>
   );
-  
+
   return useCircuit ? (
     <div
       className="pt-5 pb-5 pr-3 pl-3 md:pl-5 gap-5 rounded-lg flex flex-col md:flex-row md:h-full relative items-center text-white text-center md:text-left"
@@ -67,13 +68,7 @@ export function AppWelcome({ title, description, action, img, sx, ...other }: Pr
   ) : (
     <Box
       sx={[
-        (theme) => ({
-          ...theme.mixins.bgGradient({
-            images: [
-              `linear-gradient(to right, ${varAlpha(theme.vars.palette.grey['900Channel'], 0.88)} 0%, ${theme.vars.palette.grey[900]} 75%)`,
-              `url(${CONFIG.assetsDir}/assets/background/background-5.webp)`,
-            ],
-          }),
+        {
           pt: 5,
           pb: 5,
           pr: 3,
@@ -87,8 +82,12 @@ export function AppWelcome({ title, description, action, img, sx, ...other }: Pr
           color: 'common.white',
           textAlign: { xs: 'center', md: 'left' },
           flexDirection: { xs: 'column', md: 'row' },
-          border: `solid 1px ${theme.vars.palette.grey[800]}`,
-        }),
+          background: `linear-gradient(to right, ${varAlpha(tokens.colors.grey['900Channel'], 0.88)} 0%, ${tokens.colors.grey[900]} 75%), url(${CONFIG.assetsDir}/assets/background/background-5.webp)`,
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+          border: `solid 1px ${tokens.colors.grey[800]}`,
+        },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
       {...other}

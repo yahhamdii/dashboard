@@ -2,7 +2,7 @@
 
 import type { AppBarProps } from '@mui/material/AppBar';
 import type { ContainerProps } from '@mui/material/Container';
-import type { Theme, SxProps, CSSObject, Breakpoint } from '@mui/material/styles';
+import type { Breakpoint } from '@mui/material/styles';
 
 import { useScrollOffsetTop } from 'minimal-shared/hooks';
 import { varAlpha, mergeClasses } from 'minimal-shared/utils';
@@ -10,6 +10,7 @@ import { varAlpha, mergeClasses } from 'minimal-shared/utils';
 import AppBar from '@mui/material/AppBar';
 import { styled } from '@mui/material/styles';
 import Container from '@mui/material/Container';
+import { tokens } from 'src/theme/design-tokens';
 
 import { layoutClasses } from './classes';
 
@@ -28,7 +29,7 @@ export type HeaderSectionProps = AppBarProps & {
   };
   slotProps?: {
     container?: ContainerProps;
-    centerArea?: React.ComponentProps<'div'> & { sx?: SxProps<Theme> };
+    centerArea?: React.ComponentProps<'div'> & { sx?: any };
   };
 };
 
@@ -47,17 +48,19 @@ export function HeaderSection({
   return (
     <HeaderRoot
       position="sticky"
-      color="transparent"
       isOffset={isOffset}
       disableOffset={disableOffset}
       disableElevation={disableElevation}
       className={mergeClasses([layoutClasses.header, className])}
       sx={[
-        (theme) => ({
+        {
+          bgcolor: 'transparent',
+          color: 'inherit',
+          boxShadow: 'none',
           ...(isOffset && {
-            '--color': `var(--offset-color, ${theme.vars.palette.text.primary})`,
+            '--color': `var(--offset-color, ${tokens.colors.text.primary})`,
           }),
-        }),
+        },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
       {...other}
@@ -86,34 +89,31 @@ type HeaderRootProps = Pick<HeaderSectionProps, 'disableOffset' | 'disableElevat
 const HeaderRoot = styled(AppBar, {
   shouldForwardProp: (prop: string) =>
     !['isOffset', 'disableOffset', 'disableElevation', 'sx'].includes(prop),
-})<HeaderRootProps>(({ isOffset, disableOffset, disableElevation, theme }) => {
+})<HeaderRootProps>(({ isOffset, disableOffset, disableElevation }) => {
   const pauseZindex = { top: -1, bottom: -2 };
 
-  const pauseStyles: CSSObject = {
+  const pauseStyles = {
     opacity: 0,
     content: '""',
-    visibility: 'hidden',
-    position: 'absolute',
-    transition: theme.transitions.create(['opacity', 'visibility'], {
-      easing: theme.transitions.easing.easeInOut,
-      duration: theme.transitions.duration.shorter,
-    }),
+    visibility: 'hidden' as const,
+    position: 'absolute' as const,
+    transition: 'opacity 200ms cubic-bezier(0.4, 0, 0.2, 1), visibility 200ms cubic-bezier(0.4, 0, 0.2, 1)',
   };
 
-  const bgStyles: CSSObject = {
-    ...theme.mixins.bgBlur({
-      color: varAlpha(theme.vars.palette.background.defaultChannel, 0.8),
-    }),
+  const bgStyles = {
     ...pauseStyles,
     top: 0,
     left: 0,
     width: '100%',
     height: '100%',
     zIndex: pauseZindex.top,
-    ...(isOffset && { opacity: 1, visibility: 'visible' }),
+    backdropFilter: 'blur(6px)',
+    WebkitBackdropFilter: 'blur(6px)',
+    backgroundColor: varAlpha(tokens.colors.background.defaultChannel, 0.8),
+    ...(isOffset && { opacity: 1, visibility: 'visible' as const }),
   };
 
-  const shadowStyles: CSSObject = {
+  const shadowStyles = {
     ...pauseStyles,
     left: 0,
     right: 0,
@@ -123,8 +123,8 @@ const HeaderRoot = styled(AppBar, {
     borderRadius: '50%',
     width: `calc(100% - 48px)`,
     zIndex: pauseZindex.bottom,
-    boxShadow: theme.vars.customShadows.z8,
-    ...(isOffset && { opacity: 0.48, visibility: 'visible' }),
+    boxShadow: tokens.customShadows.z8,
+    ...(isOffset && { opacity: 0.48, visibility: 'visible' as const }),
   };
 
   return {
@@ -136,12 +136,14 @@ const HeaderRoot = styled(AppBar, {
 
 const HeaderContainer = styled(Container, {
   shouldForwardProp: (prop: string) => !['layoutQuery', 'sx'].includes(prop),
-})<Pick<HeaderSectionProps, 'layoutQuery'>>(({ layoutQuery = 'md', theme }) => ({
+})<Pick<HeaderSectionProps, 'layoutQuery'>>(({ layoutQuery = 'md' }) => ({
   display: 'flex',
   alignItems: 'center',
   color: 'var(--color)',
   height: 'var(--layout-header-mobile-height)',
-  [theme.breakpoints.up(layoutQuery)]: { height: 'var(--layout-header-desktop-height)' },
+  [`@media (min-width: ${tokens.breakpoints.values[layoutQuery] || 900}px)`]: {
+    height: 'var(--layout-header-desktop-height)',
+  },
 }));
 
 const HeaderCenterArea = styled('div')(() => ({

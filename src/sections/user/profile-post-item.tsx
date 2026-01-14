@@ -23,6 +23,7 @@ import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 import { fDate } from 'src/utils/format-time';
 import { fShortenNumber } from 'src/utils/format-number';
 
+import { tokens } from 'src/theme/design-tokens';
 import { Image } from 'src/components/image';
 import { Iconify } from 'src/components/iconify';
 
@@ -92,7 +93,7 @@ export function ProfilePostItem({ post }: Props) {
 
   const renderCommentList = () => {
     const useCircuit = useCircuitLayoutsWithPathname();
-    
+
     return useCircuit ? (
       <div className="flex flex-col gap-1.5 px-3 pb-2">
         {post.comments.map((comment) => (
@@ -146,45 +147,45 @@ export function ProfilePostItem({ post }: Props) {
 
   const renderInput = () => {
     const useCircuit = useCircuitLayoutsWithPathname();
-    
+
     return useCircuit ? (
       <div className="flex items-center gap-2 px-3 pb-3">
-      <AvatarWrapper src={user?.photoURL} alt={user?.displayName}>
-        {user?.displayName?.charAt(0).toUpperCase()}
-      </AvatarWrapper>
+        <AvatarWrapper src={user?.photoURL} alt={user?.displayName}>
+          {user?.displayName?.charAt(0).toUpperCase()}
+        </AvatarWrapper>
 
-      <InputBase
-        fullWidth
-        value={message}
-        inputRef={commentRef}
-        placeholder="Write a comment…"
-        onChange={handleChangeMessage}
-        endAdornment={
-          <InputAdornment position="end" sx={{ mr: 1 }}>
-            <IconButtonWrapper size="small" onClick={handleAttach}>
-              <Iconify icon="solar:gallery-add-bold" />
-            </IconButtonWrapper>
+        <InputBase
+          fullWidth
+          value={message}
+          inputRef={commentRef}
+          placeholder="Write a comment…"
+          onChange={handleChangeMessage}
+          endAdornment={
+            <InputAdornment position="end" sx={{ mr: 1 }}>
+              <IconButtonWrapper size="small" onClick={handleAttach}>
+                <Iconify icon="solar:gallery-add-bold" />
+              </IconButtonWrapper>
 
-            <IconButtonWrapper size="small">
-              <Iconify icon="eva:smiling-face-fill" />
-            </IconButtonWrapper>
-          </InputAdornment>
-        }
-        inputProps={{
-          id: `comment-${post.id}-input`,
-          'aria-label': `Comment ${post.id} input`,
-        }}
-        sx={[
-          (theme) => ({
-            pl: 1.5,
-            height: 40,
-            borderRadius: 1,
-            border: `solid 1px ${varAlpha(theme.vars.palette.grey['500Channel'], 0.32)}`,
-          }),
-        ]}
-      />
+              <IconButtonWrapper size="small">
+                <Iconify icon="eva:smiling-face-fill" />
+              </IconButtonWrapper>
+            </InputAdornment>
+          }
+          inputProps={{
+            id: `comment-${post.id}-input`,
+            'aria-label': `Comment ${post.id} input`,
+          }}
+          sx={[
+            {
+              pl: 1.5,
+              height: 40,
+              borderRadius: 1,
+              border: `solid 1px ${varAlpha(tokens.colors.grey['500Channel'], 0.32)}`,
+            },
+          ]}
+        />
 
-      <input type="file" ref={fileRef} style={{ display: 'none' }} />
+        <input type="file" ref={fileRef} style={{ display: 'none' }} />
       </div>
     ) : (
       <Box
@@ -223,12 +224,12 @@ export function ProfilePostItem({ post }: Props) {
             'aria-label': `Comment ${post.id} input`,
           }}
           sx={[
-            (theme) => ({
+            {
               pl: 1.5,
               height: 40,
               borderRadius: 1,
-              border: `solid 1px ${varAlpha(theme.vars.palette.grey['500Channel'], 0.32)}`,
-            }),
+              border: `solid 1px ${varAlpha(tokens.colors.grey['500Channel'], 0.32)}`,
+            },
           ]}
         />
 
@@ -239,49 +240,49 @@ export function ProfilePostItem({ post }: Props) {
 
   const renderActions = () => {
     const useCircuit = useCircuitLayoutsWithPathname();
-    
+
     return useCircuit ? (
       <div className="flex items-center px-3 py-2 pb-3">
-      <FormControlLabel
-        control={
-          <Checkbox
-            defaultChecked
-            color="error"
-            icon={<Iconify icon="solar:heart-bold" />}
-            checkedIcon={<Iconify icon="solar:heart-bold" />}
-            slotProps={{
-              input: {
-                id: `favorite-${post.id}-checkbox`,
-                'aria-label': `Favorite ${post.id} checkbox`,
-              },
-            }}
-          />
-        }
-        label={fShortenNumber(post.personLikes.length)}
-        sx={{ mr: 1 }}
-      />
+        <FormControlLabel
+          control={
+            <Checkbox
+              defaultChecked
+              color="error"
+              icon={<Iconify icon="solar:heart-bold" />}
+              checkedIcon={<Iconify icon="solar:heart-bold" />}
+              slotProps={{
+                input: {
+                  id: `favorite-${post.id}-checkbox`,
+                  'aria-label': `Favorite ${post.id} checkbox`,
+                },
+              }}
+            />
+          }
+          label={fShortenNumber(post.personLikes.length)}
+          sx={{ mr: 1 }}
+        />
 
-      {!!post.personLikes.length && (
-        <div className="flex -space-x-2">
-          {post.personLikes.map((person) => (
-            <AvatarWrapper key={person.name} alt={person.name} src={person.avatarUrl} size="small" sx={{ width: 32, height: 32, border: '2px solid white' }} />
-          ))}
-        </div>
-      )}
+        {!!post.personLikes.length && (
+          <div className="flex -space-x-2">
+            {post.personLikes.map((person) => (
+              <AvatarWrapper key={person.name} alt={person.name} src={person.avatarUrl} size="small" sx={{ width: 32, height: 32, border: '2px solid white' }} />
+            ))}
+          </div>
+        )}
 
-      <div className="flex-grow" />
+        <div className="flex-grow" />
 
-      <IconButtonWrapper onClick={handleClickComment}>
-        <Iconify icon="solar:chat-round-dots-bold" />
-      </IconButtonWrapper>
+        <IconButtonWrapper onClick={handleClickComment}>
+          <Iconify icon="solar:chat-round-dots-bold" />
+        </IconButtonWrapper>
 
-      <IconButtonWrapper>
-        <Iconify icon="solar:share-bold" />
-      </IconButtonWrapper>
+        <IconButtonWrapper>
+          <Iconify icon="solar:share-bold" />
+        </IconButtonWrapper>
       </div>
     ) : (
       <Box
-        sx={[(theme) => ({ display: 'flex', alignItems: 'center', p: theme.spacing(2, 3, 3, 3) })]}
+        sx={[{ display: 'flex', alignItems: 'center', p: tokens.spacing(2, 3, 3, 3) }]}
       >
         <FormControlLabel
           control={
@@ -338,7 +339,7 @@ export function ProfilePostItem({ post }: Props) {
     <Card>
       {renderHead()}
 
-      <Typography variant="body2" sx={[(theme) => ({ p: theme.spacing(3, 3, 2, 3) })]}>
+      <Typography variant="body2" sx={[{ p: tokens.spacing(3, 3, 2, 3) }]}>
         {post.message}
       </Typography>
 

@@ -7,6 +7,7 @@ import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
 
+import { tokens } from 'src/theme/design-tokens';
 import { fData } from 'src/utils/format-number';
 
 import { Iconify } from '../../iconify';
@@ -58,11 +59,11 @@ export function MultiFilePreview({
               onRemove={() => onRemove?.(file)}
               {...commonProps}
               sx={[
-                (theme) => ({
+                {
                   width: 80,
                   height: 80,
-                  border: `solid 1px ${varAlpha(theme.vars.palette.grey['500Channel'], 0.16)}`,
-                }),
+                  border: `solid 1px ${varAlpha(tokens.colors.grey['500Channel'], 0.16)}`,
+                },
                 ...(Array.isArray(thumbnailProps?.sx) ? thumbnailProps.sx : [thumbnailProps?.sx]),
               ]}
               slotProps={{
@@ -113,10 +114,10 @@ export function MultiFilePreview({
 
 export const PreviewList = styled('ul', {
   shouldForwardProp: (prop: string) => !['orientation', 'sx'].includes(prop),
-})<{ orientation?: PreviewOrientation }>(({ theme }) => ({
+})<{ orientation?: PreviewOrientation }>(() => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: theme.spacing(1),
+  gap: tokens.spacing(1),
   variants: [
     {
       props: (props) => props.orientation === 'horizontal',
@@ -135,13 +136,13 @@ const PreviewItem = styled('li', {
   variants: [
     {
       props: (props) => props.orientation === 'vertical',
-      style: ({ theme }) => ({
+      style: () => ({
         display: 'flex',
         alignItems: 'center',
-        gap: theme.spacing(1.5),
-        padding: theme.spacing(1, 1, 1, 1.5),
-        borderRadius: theme.shape.borderRadius,
-        border: `solid 1px ${varAlpha(theme.vars.palette.grey['500Channel'], 0.16)}`,
+        gap: tokens.spacing(1.5),
+        padding: tokens.spacing(1) + ' ' + tokens.spacing(1) + ' ' + tokens.spacing(1) + ' ' + tokens.spacing(1.5),
+        borderRadius: tokens.shape.borderRadius,
+        border: `solid 1px ${varAlpha(tokens.colors.grey['500Channel'], 0.16)}`,
       }),
     },
   ],

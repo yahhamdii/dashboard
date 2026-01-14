@@ -30,7 +30,6 @@ export type ThemeCssVariables = Pick<
 
 export type ColorSchemeOptionsExtended = ColorSystemOptions & {
   shadows?: Partial<Shadows>;
-  customShadows?: Partial<CustomShadows>;
 };
 
 export type SchemesRecord<T> = Partial<Record<ThemeColorScheme, T>>;

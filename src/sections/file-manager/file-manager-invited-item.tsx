@@ -12,6 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
 
 import { ButtonWrapper as Button, AvatarWrapper, TooltipWrapper } from 'src/components/circuit-ui';
+import { tokens } from 'src/theme/design-tokens';
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
@@ -64,7 +65,7 @@ export function FileManagerInvitedItem({ person }: Props) {
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
-        <MenuItem onClick={() => menuActions.onClose()} sx={{ color: 'error.main' }}>
+        <MenuItem onClick={() => menuActions.onClose()} sx={{ color: tokens.colors.error.main }}>
           <Iconify icon="solar:trash-bin-trash-bold" />
           Remove
         </MenuItem>
@@ -72,13 +73,10 @@ export function FileManagerInvitedItem({ person }: Props) {
     </CustomPopover>
   );
 
-  const useCircuit = useCircuitLayoutsWithPathname();
-
   return (
     <>
-      {useCircuit ? (
-        <li className="flex items-center py-1">
-          <AvatarWrapper alt={person.name} src={person.avatarUrl} size="medium" sx={{ mr: 2 }} />
+      <li className="flex items-center py-1">
+        <AvatarWrapper alt={person.name} src={person.avatarUrl} size="medium" sx={{ mr: 2 }} />
 
         <ListItemText
           primary={person.name}
@@ -105,58 +103,15 @@ export function FileManagerInvitedItem({ person }: Props) {
             />
           }
           onClick={menuActions.onOpen}
-          sx={[
-            (theme) => ({
-              flexShrink: 0,
-              fontSize: theme.typography.pxToRem(12),
-              ...(menuActions.open && { bgcolor: 'action.selected' }),
-            }),
-          ]}
+          sx={{
+            flexShrink: 0,
+            fontSize: '12px',
+            ...(menuActions.open && { bgcolor: tokens.colors.action.selected }),
+          }}
         >
           Can {permission}
         </Button>
-        </li>
-      ) : (
-        <Box component="li" sx={{ display: 'flex', alignItems: 'center', py: 1 }}>
-          <AvatarWrapper alt={person.name} src={person.avatarUrl} size="medium" sx={{ mr: 2 }} />
-
-          <ListItemText
-            primary={person.name}
-            secondary={
-              <TooltipWrapper title={person.email}>
-                <span>{person.email}</span>
-              </TooltipWrapper>
-            }
-            sx={{ flexGrow: 1, pr: 1 }}
-            slotProps={{
-              primary: { noWrap: true },
-              secondary: { noWrap: true },
-            }}
-          />
-
-          <Button
-            size="small"
-            color="inherit"
-            endIcon={
-              <Iconify
-                width={16}
-                icon={menuActions.open ? 'eva:arrow-ios-upward-fill' : 'eva:arrow-ios-downward-fill'}
-                sx={{ ml: -0.5 }}
-              />
-            }
-            onClick={menuActions.onOpen}
-            sx={[
-              (theme) => ({
-                flexShrink: 0,
-                fontSize: theme.typography.pxToRem(12),
-                ...(menuActions.open && { bgcolor: 'action.selected' }),
-              }),
-            ]}
-          >
-            Can {permission}
-          </Button>
-        </Box>
-      )}
+      </li>
 
       {renderMenuActions()}
     </>

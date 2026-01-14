@@ -22,6 +22,9 @@ import {
   outlinedInputVariants,
 } from './text-field';
 
+import { tokens } from 'src/theme/design-tokens';
+import { varAlpha } from 'minimal-shared/utils';
+
 // ----------------------------------------------------------------------
 
 /* **********************************************************************
@@ -117,11 +120,12 @@ const MuiPickersLayout: Components<Theme>['MuiPickersLayout'] = {
       },
       [`& .${buttonClasses.root}`]: {
         '&:last-of-type': {
-          ...theme.mixins.filledStyles(theme, 'inherit', {
-            hover: {
-              boxShadow: theme.vars.customShadows.z8,
-            },
-          }),
+          color: tokens.colors.common.white,
+          backgroundColor: tokens.colors.grey[800],
+          '&:hover': {
+            backgroundColor: tokens.colors.grey[700],
+            boxShadow: tokens.customShadows.z8,
+          },
         },
       },
     }),
@@ -132,8 +136,8 @@ const MuiPickerPopper: Components<Theme>['MuiPickerPopper'] = {
   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼
   styleOverrides: {
     paper: ({ theme }) => ({
-      boxShadow: theme.vars.customShadows.dropdown,
-      borderRadius: Number(theme.shape.borderRadius) * 1.5,
+      boxShadow: tokens.customShadows.dropdown,
+      borderRadius: tokens.shape.borderRadius * 1.5,
     }),
   },
 };
@@ -147,7 +151,7 @@ const MuiClock: Components<Theme>['MuiClock'] = {
   // ▼▼▼▼▼▼▼▼ 🎨 STYLE ▼▼▼▼▼▼▼▼
   styleOverrides: {
     clock: ({ theme }) => ({
-      backgroundColor: theme.vars.palette.background.neutral,
+      backgroundColor: tokens.colors.background.neutral,
     }),
   },
 };
@@ -164,9 +168,9 @@ const inputComponents: Components<Theme> = {
             props: (props) => !props.isFieldFocused && !props.isFieldValueEmpty,
             style: {
               [`& .${inputLabelClasses.root}[data-shrink="false"] + .${pickersInputBaseClasses.root} > .${pickersSectionListClasses.root}`]:
-                {
-                  opacity: 0,
-                },
+              {
+                opacity: 0,
+              },
             },
           },
         ],
@@ -189,7 +193,7 @@ const inputComponents: Components<Theme> = {
             props: (props) => !props.isFieldFocused && !!props.isFieldValueEmpty,
             style: {
               opacity: 1,
-              color: theme.vars.palette.text.disabled,
+              color: tokens.colors.text.disabled,
             },
           },
         ],

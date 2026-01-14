@@ -1,15 +1,12 @@
-import type { Theme } from '@mui/material/styles';
-
+import { tokens } from 'src/theme/design-tokens';
 import { varAlpha } from 'minimal-shared/utils';
 
 // ----------------------------------------------------------------------
 
 export const bulletColor = { dark: '#282F37', light: '#EDEFF2' };
 
-function colorVars(theme: Theme, variant?: 'vertical' | 'mini' | 'horizontal') {
-  const {
-    vars: { palette },
-  } = theme;
+function colorVars(variant?: 'vertical' | 'mini' | 'horizontal') {
+  const { colors: palette } = tokens;
 
   return {
     '--nav-item-color': palette.text.secondary,
@@ -37,11 +34,11 @@ function colorVars(theme: Theme, variant?: 'vertical' | 'mini' | 'horizontal') {
 
 // ----------------------------------------------------------------------
 
-function verticalVars(theme: Theme) {
-  const { shape } = theme;
+function verticalVars() {
+  const { shape } = tokens;
 
   return {
-    ...colorVars(theme, 'vertical'),
+    ...colorVars('vertical'),
     '--nav-item-gap': '4px',
     '--nav-item-radius': `${shape.borderRadius}px`,
     '--nav-item-pt': '4px',
@@ -64,11 +61,11 @@ function verticalVars(theme: Theme) {
 
 // ----------------------------------------------------------------------
 
-function miniVars(theme: Theme) {
-  const { shape } = theme;
+function miniVars() {
+  const { shape } = tokens;
 
   return {
-    ...colorVars(theme, 'mini'),
+    ...colorVars('mini'),
     '--nav-item-gap': '4px',
     '--nav-item-radius': `${shape.borderRadius}px`,
     // root
@@ -86,11 +83,11 @@ function miniVars(theme: Theme) {
 
 // ----------------------------------------------------------------------
 
-function horizontalVars(theme: Theme) {
-  const { shape } = theme;
+function horizontalVars() {
+  const { shape } = tokens;
 
   return {
-    ...colorVars(theme, 'horizontal'),
+    ...colorVars('horizontal'),
     '--nav-item-gap': '6px',
     '--nav-height': '56px',
     '--nav-item-radius': `${Number(shape.borderRadius) * 0.75}px`,

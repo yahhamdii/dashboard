@@ -8,6 +8,7 @@ import Divider from '@mui/material/Divider';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 
+import { tokens } from 'src/theme/design-tokens';
 import { fData } from 'src/utils/format-number';
 import { fDateTime } from 'src/utils/format-time';
 
@@ -88,7 +89,7 @@ export function FileRecentItem({ file, onDelete, sx, ...other }: Props) {
             menuActions.onClose();
             onDelete();
           }}
-          sx={{ color: 'error.main' }}
+          sx={{ color: tokens.colors.error.main }}
         >
           <Iconify icon="solar:trash-bin-trash-bold" />
           Delete

@@ -4,6 +4,8 @@ import { memo } from 'react';
 
 import SvgIcon from '@mui/material/SvgIcon';
 
+import { tokens } from 'src/theme/design-tokens';
+
 // ----------------------------------------------------------------------
 
 function NewPasswordIcon({ sx, ...other }: SvgIconProps) {
@@ -13,14 +15,14 @@ function NewPasswordIcon({ sx, ...other }: SvgIconProps) {
       viewBox="0 0 96 96"
       xmlns="http://www.w3.org/2000/svg"
       sx={[
-        (theme) => ({
-          '--primary-main': theme.vars.palette.primary.main,
-          '--warning-light': theme.vars.palette.warning.light,
-          '--warning-dark': theme.vars.palette.warning.dark,
+        {
+          '--primary-main': tokens.colors.primary.main,
+          '--warning-light': tokens.colors.warning.light,
+          '--warning-dark': tokens.colors.warning.dark,
           width: 96,
           flexShrink: 0,
           height: 'auto',
-        }),
+        },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
       {...other}

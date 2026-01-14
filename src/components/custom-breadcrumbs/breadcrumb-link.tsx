@@ -1,7 +1,8 @@
-import type { Theme, SxProps } from '@mui/material/styles';
+import type { SxProps } from '@mui/material/styles';
 
 import Link from '@mui/material/Link';
 import { styled } from '@mui/material/styles';
+import { tokens } from 'src/theme/design-tokens';
 
 import { RouterLink } from 'src/routes/components';
 
@@ -12,7 +13,7 @@ export type BreadcrumbsLinkProps = React.ComponentProps<'div'> & {
   href?: string;
   disabled?: boolean;
   icon?: React.ReactNode;
-  sx?: SxProps<Theme>;
+  sx?: SxProps<any>;
 };
 
 export function BreadcrumbsLink({ href, icon, name, disabled, ...other }: BreadcrumbsLinkProps) {
@@ -46,16 +47,16 @@ export function BreadcrumbsLink({ href, icon, name, disabled, ...other }: Breadc
 
 const ItemRoot = styled('div', {
   shouldForwardProp: (prop: string) => !['disabled', 'sx'].includes(prop),
-})<Pick<BreadcrumbsLinkProps, 'disabled'>>(({ disabled, theme }) => ({
-  ...theme.typography.body2,
+})<Pick<BreadcrumbsLinkProps, 'disabled'>>(({ disabled }) => ({
+  ...tokens.typography.body2,
   alignItems: 'center',
-  gap: theme.spacing(0.5),
+  gap: tokens.spacing(0.5),
   display: 'inline-flex',
-  color: theme.vars.palette.text.primary,
+  color: tokens.colors.text.primary,
   ...(disabled && {
     cursor: 'default',
     pointerEvents: 'none',
-    color: theme.vars.palette.text.disabled,
+    color: tokens.colors.text.disabled,
   }),
 }));
 

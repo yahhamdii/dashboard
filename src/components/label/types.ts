@@ -1,9 +1,15 @@
 import type { LabelRoot } from './styles';
-import type { PaletteColorKey, CommonColorsKeys } from 'src/theme/core';
 
-// ----------------------------------------------------------------------
-
-export type LabelColor = PaletteColorKey | CommonColorsKeys | 'default';
+export type LabelColor =
+  | 'default'
+  | 'primary'
+  | 'secondary'
+  | 'info'
+  | 'success'
+  | 'warning'
+  | 'error'
+  | 'black'
+  | 'white';
 
 export type LabelVariant = 'filled' | 'outlined' | 'soft' | 'inverted';
 

@@ -5,7 +5,7 @@ import { varAlpha, mergeClasses } from 'minimal-shared/utils';
 
 import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import Divider from '@mui/material/Divider';
-import { useTheme } from '@mui/material/styles';
+import { tokens } from 'src/theme/design-tokens';
 
 import { NavSectionHorizontal } from 'src/components/nav-section';
 
@@ -27,17 +27,9 @@ export function NavHorizontal({
   layoutQuery = 'md',
   ...other
 }: NavHorizontalProps) {
-  const theme = useTheme();
   const useCircuit = useCircuitComponent('USE_CIRCUIT_NAVIGATION');
-  
-  // Convertir les breakpoints MUI vers Tailwind
-  const breakpointClass = layoutQuery === 'xs' ? 'flex' :
-                         layoutQuery === 'sm' ? 'hidden sm:flex' :
-                         layoutQuery === 'md' ? 'hidden md:flex' :
-                         layoutQuery === 'lg' ? 'hidden lg:flex' :
-                         layoutQuery === 'xl' ? 'hidden xl:flex' : 'hidden md:flex';
-  
-  const borderColor = `var(--layout-nav-border-color, ${varAlpha(theme.vars.palette.grey['500Channel'], 0.08)})`;
+
+  const borderColor = `var(--layout-nav-border-color, ${varAlpha(tokens.colors.grey['500Channel'], 0.08)})`;
 
   // Filtrer les props HTML standard pour le div
   const {
@@ -47,6 +39,13 @@ export function NavHorizontal({
     cssVars,
     ...divProps
   } = other as any;
+
+  // Convertir les breakpoints MUI vers Tailwind
+  const breakpointClass = layoutQuery === 'xs' ? 'flex' :
+    layoutQuery === 'sm' ? 'hidden sm:flex' :
+      layoutQuery === 'md' ? 'hidden md:flex' :
+        layoutQuery === 'lg' ? 'hidden lg:flex' :
+          layoutQuery === 'xl' ? 'hidden xl:flex' : 'hidden md:flex';
 
   if (useCircuit) {
     return (
@@ -87,13 +86,14 @@ export function NavHorizontal({
     <Box
       className={mergeClasses([layoutClasses.nav.root, layoutClasses.nav.horizontal, className])}
       sx={[
-        (theme) => ({
+        {
           width: 1,
           position: 'relative',
           flexDirection: 'column',
-          display: { xs: 'none', [layoutQuery]: 'flex' },
-          borderBottom: `solid 1px ${varAlpha(theme.vars.palette.grey['500Channel'], 0.08)}`,
-        }),
+          display: 'none',
+          [`@media (min-width:${tokens.breakpoints.values[layoutQuery]}px)`]: { display: 'flex' },
+          borderBottom: `solid 1px ${varAlpha(tokens.colors.grey['500Channel'], 0.08)}`,
+        },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
     >
@@ -122,4 +122,3 @@ export function NavHorizontal({
     </Box>
   );
 }
-

@@ -6,6 +6,7 @@ import type { Breakpoint } from '@mui/material/styles';
 import { mergeClasses } from 'minimal-shared/utils';
 
 import { BoxWrapper as Box } from 'src/components/circuit-ui';
+import { tokens } from 'src/theme/design-tokens';
 
 import { layoutClasses } from '../core';
 
@@ -20,24 +21,26 @@ export function SimpleCompactContent({
   layoutQuery = 'md',
   ...other
 }: SimpleCompactContentProps) {
+  const breakpointValue = tokens.breakpoints.values[layoutQuery] || tokens.breakpoints.values.md;
+
   return (
     <Box
       className={mergeClasses([layoutClasses.content, className])}
       sx={[
-        (theme) => ({
+        {
           width: 1,
           mx: 'auto',
           display: 'flex',
           flex: '1 1 auto',
           textAlign: 'center',
           flexDirection: 'column',
-          p: theme.spacing(3, 2, 10, 2),
+          p: tokens.spacing(3) + ' ' + tokens.spacing(2) + ' ' + tokens.spacing(10) + ' ' + tokens.spacing(2),
           maxWidth: 'var(--layout-simple-content-compact-width)',
-          [theme.breakpoints.up(layoutQuery)]: {
+          [`@media (min-width: ${breakpointValue}px)`]: {
             justifyContent: 'center',
-            p: theme.spacing(10, 0, 10, 0),
+            p: tokens.spacing(10) + ' 0',
           },
-        }),
+        },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
       {...other}

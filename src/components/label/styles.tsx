@@ -5,17 +5,17 @@ import type { LabelVariant } from './types';
 import { varAlpha } from 'minimal-shared/utils';
 
 import { styled } from '@mui/material/styles';
-
-import { colorKeys } from 'src/theme/core';
+import { tokens } from 'src/theme/design-tokens';
 
 // ----------------------------------------------------------------------
 
-const baseColors = ['default'] as const;
-const allColors = [...baseColors, ...colorKeys.palette, ...colorKeys.common] as const;
+const paletteKeys = ['primary', 'secondary', 'error', 'warning', 'info', 'success'] as const;
+const commonKeys = ['black', 'white'] as const;
+const allColors = ['default', ...paletteKeys, ...commonKeys] as const;
 
 export const LabelRoot = styled('span', {
   shouldForwardProp: (prop: string) => !['color', 'variant', 'disabled', 'sx'].includes(prop),
-})<{ variant?: LabelVariant; disabled?: boolean }>(({ theme }) => ({
+})<{ variant?: LabelVariant; disabled?: boolean; color?: string }>(() => ({
   height: 24,
   minWidth: 24,
   flexShrink: 0,
@@ -24,12 +24,12 @@ export const LabelRoot = styled('span', {
   alignItems: 'center',
   whiteSpace: 'nowrap',
   display: 'inline-flex',
-  gap: theme.spacing(0.75),
+  gap: tokens.spacing(0.75),
   justifyContent: 'center',
-  padding: theme.spacing(0, 0.75),
-  fontSize: theme.typography.pxToRem(12),
-  fontWeight: theme.typography.fontWeightBold,
-  borderRadius: Number(theme.shape.borderRadius) * 0.75,
+  padding: tokens.spacing(0, 0.75),
+  fontSize: tokens.typography.pxToRem(12),
+  fontWeight: tokens.typography.fontWeightBold,
+  borderRadius: tokens.shape.borderRadius * 0.75,
   variants: [
     /**
      * @variant filled
@@ -37,19 +37,22 @@ export const LabelRoot = styled('span', {
     {
       props: { variant: 'filled', color: 'default' },
       style: {
-        ...theme.mixins.filledStyles(theme, 'inherit'),
+        color: tokens.colors.grey[800],
+        backgroundColor: tokens.colors.grey[300],
       },
     },
-    ...colorKeys.common.map((colorKey) => ({
+    ...paletteKeys.map((colorKey) => ({
       props: { variant: 'filled', color: colorKey },
       style: {
-        ...theme.mixins.filledStyles(theme, colorKey),
+        color: tokens.colors.common.white,
+        backgroundColor: (tokens.colors as any)[colorKey].main,
       },
     })),
-    ...colorKeys.palette.map((colorKey) => ({
+    ...commonKeys.map((colorKey) => ({
       props: { variant: 'filled', color: colorKey },
       style: {
-        ...theme.mixins.filledStyles(theme, colorKey),
+        color: tokens.colors.common[colorKey === 'white' ? 'black' : 'white'],
+        backgroundColor: tokens.colors.common[colorKey],
       },
     })),
     /**
@@ -61,29 +64,40 @@ export const LabelRoot = styled('span', {
         border: '2px solid currentColor',
       },
     },
-    ...colorKeys.common.map((colorKey) => ({
+    ...paletteKeys.map((colorKey) => ({
       props: { variant: 'outlined', color: colorKey },
       style: {
-        color: theme.vars.palette.common[colorKey],
+        color: (tokens.colors as any)[colorKey].main,
       },
     })),
-    ...colorKeys.palette.map((colorKey) => ({
+    ...commonKeys.map((colorKey) => ({
       props: { variant: 'outlined', color: colorKey },
       style: {
-        color: theme.vars.palette[colorKey].main,
+        color: tokens.colors.common[colorKey],
       },
     })),
     /**
      * @variant soft
      */
-    ...allColors.map((colorKey) => ({
+    {
+      props: { variant: 'soft', color: 'default' },
+      style: {
+        color: tokens.colors.grey[800],
+        backgroundColor: tokens.colors.grey[300],
+      },
+    },
+    ...paletteKeys.map((colorKey) => ({
       props: { variant: 'soft', color: colorKey },
-      style: () => {
-        const currentColor = colorKey === 'default' ? 'inherit' : colorKey;
-
-        return {
-          ...theme.mixins.softStyles(theme, currentColor),
-        };
+      style: {
+        color: (tokens.colors as any)[colorKey]?.dark || 'currentColor',
+        backgroundColor: varAlpha((tokens.colors as any)[colorKey]?.mainChannel || '0 0 0', tokens.opacity.soft.bg),
+      },
+    })),
+    ...commonKeys.map((colorKey) => ({
+      props: { variant: 'soft', color: colorKey },
+      style: {
+        color: tokens.colors.common[colorKey],
+        backgroundColor: varAlpha('currentColor', tokens.opacity.soft.commonBg),
       },
     })),
     /**
@@ -92,26 +106,22 @@ export const LabelRoot = styled('span', {
     {
       props: { variant: 'inverted', color: 'default' },
       style: {
-        color: theme.vars.palette.grey[800],
-        backgroundColor: theme.vars.palette.grey[300],
+        color: tokens.colors.grey[800],
+        backgroundColor: tokens.colors.grey[300],
       },
     },
-    ...colorKeys.common.map((colorKey) => ({
+    ...paletteKeys.map((colorKey) => ({
       props: { variant: 'inverted', color: colorKey },
       style: {
-        color: theme.vars.palette.common[colorKey],
-        backgroundColor: varAlpha('currentColor', theme.vars.opacity.soft.commonHoverBg),
+        color: (tokens.colors as any)[colorKey].lighter,
+        backgroundColor: (tokens.colors as any)[colorKey].darker,
       },
     })),
-    ...colorKeys.palette.map((colorKey) => ({
+    ...commonKeys.map((colorKey) => ({
       props: { variant: 'inverted', color: colorKey },
       style: {
-        color: theme.vars.palette[colorKey].darker,
-        backgroundColor: theme.vars.palette[colorKey].lighter,
-        ...theme.applyStyles('dark', {
-          color: theme.vars.palette[colorKey].lighter,
-          backgroundColor: theme.vars.palette[colorKey].darker,
-        }),
+        color: tokens.colors.common[colorKey],
+        backgroundColor: varAlpha('currentColor', tokens.opacity.soft.commonHoverBg),
       },
     })),
     /**

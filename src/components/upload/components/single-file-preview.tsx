@@ -3,6 +3,7 @@ import type { FileUploadType } from '../types';
 import { mergeClasses } from 'minimal-shared/utils';
 
 import { styled } from '@mui/material/styles';
+import { tokens } from 'src/theme/design-tokens';
 
 import { uploadClasses } from '../classes';
 import { getFileMeta, useFilePreview } from '../../file-thumbnail';
@@ -30,14 +31,14 @@ export function SingleFilePreview({ sx, file, className, ...other }: SingleFileP
 
 // ----------------------------------------------------------------------
 
-const PreviewRoot = styled('div')(({ theme }) => ({
+const PreviewRoot = styled('div')(() => ({
   top: 0,
   left: 0,
   width: '100%',
   height: '100%',
   position: 'absolute',
   borderRadius: 'inherit',
-  padding: theme.spacing(1),
+  padding: tokens.spacing(1),
 }));
 
 const PreviewImage = styled('img')({

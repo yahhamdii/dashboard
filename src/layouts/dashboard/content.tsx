@@ -7,6 +7,7 @@ import { mergeClasses } from 'minimal-shared/utils';
 
 import { styled } from '@mui/material/styles';
 import Container from '@mui/material/Container';
+import { tokens } from 'src/theme/design-tokens';
 
 import { useSettingsContext } from 'src/components/settings';
 
@@ -32,31 +33,27 @@ export function DashboardContent({
 
   const isNavHorizontal = settings.state.navLayout === 'horizontal';
 
+  const breakpointValue = tokens.breakpoints.values[layoutQuery] || tokens.breakpoints.values.lg;
+
   return (
     <Container
       className={mergeClasses([layoutClasses.content, className])}
       maxWidth={settings.state.compactLayout ? maxWidth : false}
       sx={[
-        (theme) => ({
+        {
           display: 'flex',
           flex: '1 1 auto',
           flexDirection: 'column',
           pt: 'var(--layout-dashboard-content-pt)',
           pb: 'var(--layout-dashboard-content-pb)',
-          [theme.breakpoints.up(layoutQuery)]: {
+          [`@media (min-width: ${breakpointValue}px)`]: {
             px: 'var(--layout-dashboard-content-px)',
             ...(isNavHorizontal && { '--layout-dashboard-content-pt': '40px' }),
           },
           ...(disablePadding && {
-            p: {
-              xs: 0,
-              sm: 0,
-              md: 0,
-              lg: 0,
-              xl: 0,
-            },
+            p: 0,
           }),
-        }),
+        },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
       {...other}
@@ -68,7 +65,7 @@ export function DashboardContent({
 
 // ----------------------------------------------------------------------
 
-export const VerticalDivider = styled('span')(({ theme }) => ({
+export const VerticalDivider = styled('span')(() => ({
   width: 1,
   height: 10,
   flexShrink: 0,
@@ -76,10 +73,10 @@ export const VerticalDivider = styled('span')(({ theme }) => ({
   position: 'relative',
   alignItems: 'center',
   flexDirection: 'column',
-  marginLeft: theme.spacing(2.5),
-  marginRight: theme.spacing(2.5),
+  marginLeft: tokens.spacing(2.5),
+  marginRight: tokens.spacing(2.5),
   backgroundColor: 'currentColor',
-  color: theme.vars.palette.divider,
+  color: tokens.colors.divider,
   '&::before, &::after': {
     top: -5,
     width: 3,

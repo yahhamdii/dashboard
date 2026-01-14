@@ -1,6 +1,5 @@
 'use client';
 
-import type { Theme, SxProps } from '@mui/material/styles';
 import type { LinearProgressProps } from '@mui/material/LinearProgress';
 
 import { Fragment } from 'react';
@@ -8,12 +7,13 @@ import { Fragment } from 'react';
 import Portal from '@mui/material/Portal';
 import { styled } from '@mui/material/styles';
 import LinearProgress from '@mui/material/LinearProgress';
+import { tokens } from 'src/theme/design-tokens';
 
 // ----------------------------------------------------------------------
 
 export type LoadingScreenProps = React.ComponentProps<'div'> & {
   portal?: boolean;
-  sx?: SxProps<Theme>;
+  sx?: any;
   slots?: {
     progress?: React.ReactNode;
   };
@@ -47,13 +47,13 @@ export function LoadingScreen({ portal, slots, slotsProps, sx, ...other }: Loadi
 
 // ----------------------------------------------------------------------
 
-const LoadingContent = styled('div')(({ theme }) => ({
+const LoadingContent = styled('div')(() => ({
   flexGrow: 1,
   width: '100%',
   display: 'flex',
   minHeight: '100%',
   alignItems: 'center',
   justifyContent: 'center',
-  paddingLeft: theme.spacing(5),
-  paddingRight: theme.spacing(5),
+  paddingLeft: tokens.spacing(5),
+  paddingRight: tokens.spacing(5),
 }));

@@ -7,6 +7,7 @@ import { mergeClasses } from 'minimal-shared/utils';
 
 import NoSsr from '@mui/material/NoSsr';
 import { styled } from '@mui/material/styles';
+import { tokens } from 'src/theme/design-tokens';
 
 import { chartClasses } from './classes';
 import { ChartLoading } from './components';
@@ -44,9 +45,9 @@ export function Chart({
 
 // ----------------------------------------------------------------------
 
-const ChartRoot = styled('div')(({ theme }) => ({
+const ChartRoot = styled('div')(() => ({
   width: '100%',
   flexShrink: 0,
   position: 'relative',
-  borderRadius: Number(theme.shape.borderRadius) * 1.5,
+  borderRadius: tokens.shape.borderRadius * 1.5,
 }));

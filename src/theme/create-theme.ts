@@ -21,13 +21,11 @@ export const baseTheme: ThemeOptions = {
     light: {
       palette: palette.light,
       shadows: shadows.light,
-      customShadows: customShadows.light,
       opacity,
     },
     dark: {
       palette: palette.dark,
       shadows: shadows.dark,
-      customShadows: customShadows.dark,
       opacity,
     },
   },

@@ -1,4 +1,5 @@
-import type { Theme, CSSObject } from '@mui/material/styles';
+import type { CSSObject } from '@mui/material/styles';
+import { tokens } from 'src/theme/design-tokens';
 
 // ----------------------------------------------------------------------
 
@@ -8,9 +9,9 @@ type NavItemStyles = {
   texts: CSSObject;
   disabled: CSSObject;
   captionIcon: CSSObject;
-  title: (theme: Theme) => CSSObject;
-  arrow: (theme: Theme) => CSSObject;
-  captionText: (theme: Theme) => CSSObject;
+  title: () => CSSObject;
+  arrow: () => CSSObject;
+  captionText: () => CSSObject;
 };
 
 export const navItemStyles: NavItemStyles = {
@@ -29,8 +30,12 @@ export const navItemStyles: NavItemStyles = {
     },
   },
   texts: { flex: '1 1 auto', display: 'inline-flex', flexDirection: 'column' },
-  title: (theme: Theme) => ({
-    ...theme.mixins.maxLine({ line: 1 }),
+  title: () => ({
+    overflow: 'hidden',
+    display: '-webkit-box',
+    textOverflow: 'ellipsis',
+    WebkitLineClamp: 1,
+    WebkitBoxOrient: 'vertical',
     flex: '1 1 auto',
   }),
   info: {
@@ -41,18 +46,22 @@ export const navItemStyles: NavItemStyles = {
     lineHeight: 18 / 12,
     display: 'inline-flex',
   },
-  arrow: (theme: Theme) => ({
+  arrow: () => ({
     width: 16,
     height: 16,
     flexShrink: 0,
     marginLeft: '6px',
     display: 'inline-flex',
-    ...(theme.direction === 'rtl' && { transform: 'scaleX(-1)' }),
+    ...(tokens.direction === 'rtl' && { transform: 'scaleX(-1)' }),
   }),
   captionIcon: { width: 16, height: 16 },
-  captionText: (theme: Theme) => ({
-    ...theme.mixins.maxLine({ line: 1 }),
-    ...theme.typography.caption,
+  captionText: () => ({
+    overflow: 'hidden',
+    display: '-webkit-box',
+    textOverflow: 'ellipsis',
+    WebkitLineClamp: 1,
+    WebkitBoxOrient: 'vertical',
+    ...tokens.typography.caption,
   }),
   disabled: { opacity: 0.48, pointerEvents: 'none' },
 };

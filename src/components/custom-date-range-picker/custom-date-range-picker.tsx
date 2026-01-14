@@ -6,10 +6,10 @@ import type { UseDateRangePickerReturn } from './use-date-range-picker';
 
 import { useCallback } from 'react';
 
-import useMediaQuery from '@mui/material/useMediaQuery';
 import FormHelperText from '@mui/material/FormHelperText';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DateCalendar, dateCalendarClasses } from '@mui/x-date-pickers/DateCalendar';
+import { tokens } from 'src/theme/design-tokens';
 
 import { ButtonWrapper as Button, DialogWrapper as Dialog, DialogTitleWrapper as DialogTitle, DialogActionsWrapper as DialogActions, DialogContentWrapper as DialogContent } from 'src/components/circuit-ui';
 
@@ -36,7 +36,7 @@ export function CustomDateRangePicker({
   title = 'Select date range',
   ...other
 }: CustomDateRangePickerProps) {
-  const mdUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
+  const mdUp = window.innerWidth >= tokens.breakpoints.values.md;
 
   const isCalendarView = mdUp && variant === 'calendar';
 
@@ -69,16 +69,16 @@ export function CustomDateRangePicker({
 
       <DialogContent
         sx={[
-          (theme) => ({
+          {
             gap: 3,
             display: 'flex',
             overflow: 'unset',
             flexDirection: isCalendarView ? 'row' : 'column',
             [`& .${dateCalendarClasses.root}`]: {
               borderRadius: 2,
-              border: `dashed 1px ${theme.vars.palette.divider}`,
+              border: `dashed 1px ${tokens.colors.divider}`,
             },
-          }),
+          },
         ]}
       >
         {isCalendarView ? (

@@ -2,7 +2,7 @@ import type { CardProps } from '@mui/material/Card';
 import type { ChartOptions } from 'src/components/chart';
 
 import Divider from '@mui/material/Divider';
-import { useTheme } from '@mui/material/styles';
+import { tokens } from 'src/theme/design-tokens';
 
 import { CardWrapper as Card, CardHeaderWrapper as CardHeader } from 'src/components/circuit-ui';
 
@@ -26,13 +26,11 @@ type Props = CardProps & {
 };
 
 export function AppCurrentDownload({ title, subheader, chart, sx, ...other }: Props) {
-  const theme = useTheme();
-
   const chartColors = chart.colors ?? [
-    theme.palette.primary.lighter,
-    theme.palette.primary.light,
-    theme.palette.primary.dark,
-    theme.palette.primary.darker,
+    tokens.colors.primary.lighter,
+    tokens.colors.primary.light,
+    tokens.colors.primary.dark,
+    tokens.colors.primary.darker,
   ];
 
   const chartSeries = chart.series.map((item) => item.value);

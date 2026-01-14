@@ -9,7 +9,6 @@ import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import Divider from '@mui/material/Divider';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
-import { useTheme } from '@mui/material/styles';
 import ListItemText from '@mui/material/ListItemText';
 import { tableRowClasses } from '@mui/material/TableRow';
 import { tableCellClasses } from '@mui/material/TableCell';
@@ -19,6 +18,7 @@ import { TableRowWrapper as TableRow, TableCellWrapper as TableCell, CheckboxWra
 import { TypographyWrapper as Typography, ButtonWrapper as Button } from 'src/components/circuit-ui';
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
+import { tokens } from 'src/theme/design-tokens';
 
 import { fData } from 'src/utils/format-number';
 import { fDate, fTime } from 'src/utils/format-time';
@@ -43,8 +43,6 @@ type Props = {
 };
 
 export function FileManagerTableRow({ row, selected, onSelectRow, onDeleteRow }: Props) {
-  const theme = useTheme();
-
   const { copy } = useCopyToClipboard();
 
   const [inviteEmail, setInviteEmail] = useState('');
@@ -71,18 +69,18 @@ export function FileManagerTableRow({ row, selected, onSelectRow, onDeleteRow }:
     copy(row.url);
   }, [copy, row.url]);
 
-  const defaultStyles: SxProps<Theme> = {
-    borderTop: `solid 1px ${varAlpha(theme.vars.palette.grey['500Channel'], 0.16)}`,
-    borderBottom: `solid 1px ${varAlpha(theme.vars.palette.grey['500Channel'], 0.16)}`,
+  const defaultStyles: any = {
+    borderTop: `solid 1px ${varAlpha(tokens.colors.grey['500Channel'], 0.16)}`,
+    borderBottom: `solid 1px ${varAlpha(tokens.colors.grey['500Channel'], 0.16)}`,
     '&:first-of-type': {
       borderTopLeftRadius: 16,
       borderBottomLeftRadius: 16,
-      borderLeft: `solid 1px ${varAlpha(theme.vars.palette.grey['500Channel'], 0.16)}`,
+      borderLeft: `solid 1px ${varAlpha(tokens.colors.grey['500Channel'], 0.16)}`,
     },
     '&:last-of-type': {
       borderTopRightRadius: 16,
       borderBottomRightRadius: 16,
-      borderRight: `solid 1px ${varAlpha(theme.vars.palette.grey['500Channel'], 0.16)}`,
+      borderRight: `solid 1px ${varAlpha(tokens.colors.grey['500Channel'], 0.16)}`,
     },
   };
 
@@ -121,7 +119,7 @@ export function FileManagerTableRow({ row, selected, onSelectRow, onDeleteRow }:
             confirmDialog.onTrue();
             menuActions.onClose();
           }}
-          sx={{ color: 'error.main' }}
+          sx={{ color: tokens.colors.error.main }}
         >
           <Iconify icon="solar:trash-bin-trash-bold" />
           Delete
@@ -177,14 +175,12 @@ export function FileManagerTableRow({ row, selected, onSelectRow, onDeleteRow }:
         sx={{
           borderRadius: 2,
           [`&.${tableRowClasses.selected}, &:hover`]: {
-            backgroundColor: 'background.paper',
-            boxShadow: theme.vars.customShadows.z20,
-            transition: theme.transitions.create(['background-color', 'box-shadow'], {
-              duration: theme.transitions.duration.shortest,
-            }),
+            backgroundColor: tokens.colors.background.paper,
+            boxShadow: tokens.customShadows.z20,
+            transition: `background-color 200ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1)`,
             '&:hover': {
-              backgroundColor: 'background.paper',
-              boxShadow: theme.vars.customShadows.z20,
+              backgroundColor: tokens.colors.background.paper,
+              boxShadow: tokens.customShadows.z20,
             },
           },
           [`& .${tableCellClasses.root}`]: {
@@ -212,39 +208,21 @@ export function FileManagerTableRow({ row, selected, onSelectRow, onDeleteRow }:
         </TableCell>
 
         <TableCell onClick={handleClick}>
-          {useCircuitLayoutsWithPathname() ? (
-            <div className="flex items-center gap-2">
-              <FileThumbnail file={row.type} />
+          <Box sx={{ gap: 2, display: 'flex', alignItems: 'center' }}>
+            <FileThumbnail file={row.type} />
 
-              <Typography
-                noWrap
-                variant="inherit"
-                sx={{
-                  maxWidth: 360,
-                  cursor: 'pointer',
-                  ...(detailsDrawer.value && { fontWeight: 'fontWeightBold' }),
-                }}
-              >
-                {row.name}
-              </Typography>
-            </div>
-          ) : (
-            <Box sx={{ gap: 2, display: 'flex', alignItems: 'center' }}>
-              <FileThumbnail file={row.type} />
-
-              <Typography
-                noWrap
-                variant="inherit"
-                sx={{
-                  maxWidth: 360,
-                  cursor: 'pointer',
-                  ...(detailsDrawer.value && { fontWeight: 'fontWeightBold' }),
-                }}
-              >
-                {row.name}
-              </Typography>
-            </Box>
-          )}
+            <Typography
+              noWrap
+              variant="inherit"
+              sx={{
+                maxWidth: 360,
+                cursor: 'pointer',
+                ...(detailsDrawer.value && { fontWeight: 'fontWeightBold' }),
+              }}
+            >
+              {row.name}
+            </Typography>
+          </Box>
         </TableCell>
 
         <TableCell onClick={handleClick} sx={{ whiteSpace: 'nowrap' }}>
@@ -282,7 +260,7 @@ export function FileManagerTableRow({ row, selected, onSelectRow, onDeleteRow }:
             sx={{ position: 'static' }}
           />
         </TableCell>
-      </TableRow>
+      </TableRow >
 
       {renderFileDetailsDrawer()}
       {renderShareDialog()}

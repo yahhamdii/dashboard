@@ -2,7 +2,7 @@
 
 import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import Grid from '@mui/material/Grid';
-import { useTheme } from '@mui/material/styles';
+import { tokens } from 'src/theme/design-tokens';
 
 import { ButtonWrapper as Button } from 'src/components/circuit-ui';
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
@@ -31,8 +31,6 @@ import { AppTopInstalledCountries } from '../app-top-installed-countries';
 export function OverviewAppView() {
   const { user } = useMockedUser();
 
-  const theme = useTheme();
-
   const useCircuit = useCircuitLayoutsWithPathname();
 
   return (
@@ -40,16 +38,16 @@ export function OverviewAppView() {
       {useCircuit ? (
         <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
           <div className="md:col-span-8">
-          <AppWelcome
-            title={`Welcome back 👋 \n ${user?.displayName}`}
-            description="If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything."
-            img={<SeoIllustration hideBackground />}
-            action={
-              <Button variant="contained" color="primary">
-                Go now
-              </Button>
-            }
-          />
+            <AppWelcome
+              title={`Welcome back 👋 \n ${user?.displayName}`}
+              description="If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything."
+              img={<SeoIllustration hideBackground />}
+              action={
+                <Button variant="contained" color="primary">
+                  Go now
+                </Button>
+              }
+            />
           </div>
 
           <div className="md:col-span-4">
@@ -74,7 +72,7 @@ export function OverviewAppView() {
               percent={0.2}
               total={4876}
               chart={{
-                colors: [theme.palette.info.main],
+                colors: [tokens.colors.info.main],
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
                 series: [20, 41, 63, 33, 28, 35, 50, 46],
               }}
@@ -87,7 +85,7 @@ export function OverviewAppView() {
               percent={-0.1}
               total={678}
               chart={{
-                colors: [theme.palette.error.main],
+                colors: [tokens.colors.error.main],
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
                 series: [18, 19, 31, 8, 16, 37, 12, 33],
               }}
@@ -113,49 +111,49 @@ export function OverviewAppView() {
             <AppAreaInstalled
               title="Area installed"
               subheader="(+43%) than last year"
-            chart={{
-              categories: [
-                'Jan',
-                'Feb',
-                'Mar',
-                'Apr',
-                'May',
-                'Jun',
-                'Jul',
-                'Aug',
-                'Sep',
-                'Oct',
-                'Nov',
-                'Dec',
-              ],
-              series: [
-                {
-                  name: '2022',
-                  data: [
-                    { name: 'Asia', data: [12, 10, 18, 22, 20, 12, 8, 21, 20, 14, 15, 16] },
-                    { name: 'Europe', data: [12, 10, 18, 22, 20, 12, 8, 21, 20, 14, 15, 16] },
-                    { name: 'Americas', data: [12, 10, 18, 22, 20, 12, 8, 21, 20, 14, 15, 16] },
-                  ],
-                },
-                {
-                  name: '2023',
-                  data: [
-                    { name: 'Asia', data: [6, 18, 14, 9, 20, 6, 22, 19, 8, 22, 8, 17] },
-                    { name: 'Europe', data: [6, 18, 14, 9, 20, 6, 22, 19, 8, 22, 8, 17] },
-                    { name: 'Americas', data: [6, 18, 14, 9, 20, 6, 22, 19, 8, 22, 8, 17] },
-                  ],
-                },
-                {
-                  name: '2024',
-                  data: [
-                    { name: 'Asia', data: [6, 20, 15, 18, 7, 24, 6, 10, 12, 17, 18, 10] },
-                    { name: 'Europe', data: [6, 20, 15, 18, 7, 24, 6, 10, 12, 17, 18, 10] },
-                    { name: 'Americas', data: [6, 20, 15, 18, 7, 24, 6, 10, 12, 17, 18, 10] },
-                  ],
-                },
-              ],
-            }}
-          />
+              chart={{
+                categories: [
+                  'Jan',
+                  'Feb',
+                  'Mar',
+                  'Apr',
+                  'May',
+                  'Jun',
+                  'Jul',
+                  'Aug',
+                  'Sep',
+                  'Oct',
+                  'Nov',
+                  'Dec',
+                ],
+                series: [
+                  {
+                    name: '2022',
+                    data: [
+                      { name: 'Asia', data: [12, 10, 18, 22, 20, 12, 8, 21, 20, 14, 15, 16] },
+                      { name: 'Europe', data: [12, 10, 18, 22, 20, 12, 8, 21, 20, 14, 15, 16] },
+                      { name: 'Americas', data: [12, 10, 18, 22, 20, 12, 8, 21, 20, 14, 15, 16] },
+                    ],
+                  },
+                  {
+                    name: '2023',
+                    data: [
+                      { name: 'Asia', data: [6, 18, 14, 9, 20, 6, 22, 19, 8, 22, 8, 17] },
+                      { name: 'Europe', data: [6, 18, 14, 9, 20, 6, 22, 19, 8, 22, 8, 17] },
+                      { name: 'Americas', data: [6, 18, 14, 9, 20, 6, 22, 19, 8, 22, 8, 17] },
+                    ],
+                  },
+                  {
+                    name: '2024',
+                    data: [
+                      { name: 'Asia', data: [6, 20, 15, 18, 7, 24, 6, 10, 12, 17, 18, 10] },
+                      { name: 'Europe', data: [6, 20, 15, 18, 7, 24, 6, 10, 12, 17, 18, 10] },
+                      { name: 'Americas', data: [6, 20, 15, 18, 7, 24, 6, 10, 12, 17, 18, 10] },
+                    ],
+                  },
+                ],
+              }}
+            />
           </div>
 
           <div className="lg:col-span-8">
@@ -199,9 +197,9 @@ export function OverviewAppView() {
                 icon="solar:letter-bold"
                 chart={{
                   series: 75,
-                  colors: [theme.vars.palette.info.light, theme.vars.palette.info.main],
+                  colors: [tokens.colors.info.light, tokens.colors.info.main],
                 }}
-                sx={{ bgcolor: 'info.dark', [`& .${svgColorClasses.root}`]: { color: 'info.light' } }}
+                sx={{ bgcolor: tokens.colors.info.dark, [`& .${svgColorClasses.root}`]: { color: tokens.colors.info.light } }}
               />
             </div>
           </div>
@@ -243,7 +241,7 @@ export function OverviewAppView() {
               percent={0.2}
               total={4876}
               chart={{
-                colors: [theme.palette.info.main],
+                colors: [tokens.colors.info.main],
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
                 series: [20, 41, 63, 33, 28, 35, 50, 46],
               }}
@@ -256,7 +254,7 @@ export function OverviewAppView() {
               percent={-0.1}
               total={678}
               chart={{
-                colors: [theme.palette.error.main],
+                colors: [tokens.colors.error.main],
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
                 series: [18, 19, 31, 8, 16, 37, 12, 33],
               }}
@@ -368,9 +366,9 @@ export function OverviewAppView() {
                 icon="solar:letter-bold"
                 chart={{
                   series: 75,
-                  colors: [theme.vars.palette.info.light, theme.vars.palette.info.main],
+                  colors: [tokens.colors.info.light, tokens.colors.info.main],
                 }}
-                sx={{ bgcolor: 'info.dark', [`& .${svgColorClasses.root}`]: { color: 'info.light' } }}
+                sx={{ bgcolor: tokens.colors.info.dark, [`& .${svgColorClasses.root}`]: { color: tokens.colors.info.light } }}
               />
             </Box>
           </Grid>

@@ -1,6 +1,7 @@
 import { varAlpha } from 'minimal-shared/utils';
 
 import { styled } from '@mui/material/styles';
+import { tokens } from 'src/theme/design-tokens';
 
 import { uploadClasses } from '../classes';
 
@@ -11,15 +12,15 @@ export const UploadWrapper = styled('div')({
   position: 'relative',
 });
 
-export const UploadArea = styled('div')(({ theme }) => ({
+export const UploadArea = styled('div')(() => ({
   width: 144,
   height: 144,
   margin: 'auto',
   cursor: 'pointer',
   borderRadius: '50%',
   position: 'relative',
-  padding: theme.spacing(1),
-  border: `1px dashed ${varAlpha(theme.vars.palette.grey['500Channel'], 0.2)}`,
+  padding: tokens.spacing(1),
+  border: `1px dashed ${varAlpha(tokens.colors.grey['500Channel'], 0.2)}`,
   [`&.${uploadClasses.state.dragActive}`]: {
     opacity: 0.72,
   },
@@ -28,20 +29,20 @@ export const UploadArea = styled('div')(({ theme }) => ({
     pointerEvents: 'none',
   },
   [`&.${uploadClasses.state.error}`]: {
-    borderColor: theme.vars.palette.error.main,
+    borderColor: tokens.colors.error.main,
     [`& .${uploadClasses.placeholder.root}`]: {
-      color: theme.vars.palette.error.main,
-      backgroundColor: varAlpha(theme.vars.palette.error.mainChannel, 0.08),
+      color: tokens.colors.error.main,
+      backgroundColor: varAlpha(tokens.colors.error.mainChannel, 0.08),
     },
     [`&.${uploadClasses.state.hasFile}`]: {
-      backgroundColor: varAlpha(theme.vars.palette.error.mainChannel, 0.08),
+      backgroundColor: varAlpha(tokens.colors.error.mainChannel, 0.08),
     },
   },
   [`&.${uploadClasses.state.hasFile}`]: {
     [`& .${uploadClasses.placeholder.root}`]: {
       opacity: 0,
-      color: theme.vars.palette.common.white,
-      backgroundColor: varAlpha(theme.vars.palette.grey['900Channel'], 0.64),
+      color: tokens.colors.common.white,
+      backgroundColor: varAlpha(tokens.colors.grey['900Channel'], 0.64),
     },
     [`&:hover .${uploadClasses.placeholder.root}`]: {
       opacity: 1,
@@ -63,7 +64,7 @@ export const PreviewImage = styled('img')({
   borderRadius: 'inherit',
 });
 
-export const PlaceholderContainer = styled('div')(({ theme }) => ({
+export const PlaceholderContainer = styled('div')(() => ({
   top: 0,
   left: 0,
   zIndex: 9,
@@ -75,12 +76,10 @@ export const PlaceholderContainer = styled('div')(({ theme }) => ({
   borderRadius: 'inherit',
   flexDirection: 'column',
   justifyContent: 'center',
-  gap: theme.spacing(1),
-  color: theme.vars.palette.text.disabled,
-  backgroundColor: varAlpha(theme.vars.palette.grey['500Channel'], 0.08),
-  transition: theme.transitions.create(['opacity'], {
-    duration: theme.transitions.duration.shorter,
-  }),
+  gap: tokens.spacing(1),
+  color: tokens.colors.text.disabled,
+  backgroundColor: varAlpha(tokens.colors.grey['500Channel'], 0.08),
+  transition: 'opacity 150ms cubic-bezier(0.4, 0, 0.2, 1)',
   '&:hover': {
     opacity: 0.72,
   },

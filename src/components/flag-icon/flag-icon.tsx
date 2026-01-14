@@ -3,6 +3,7 @@
 import { mergeClasses } from 'minimal-shared/utils';
 
 import { styled } from '@mui/material/styles';
+import { tokens } from 'src/theme/design-tokens';
 
 import { flagIconClasses } from './classes';
 
@@ -31,7 +32,7 @@ export function FlagIcon({ code, className, sx, ...other }: FlagIconProps) {
 
 // ----------------------------------------------------------------------
 
-const FlagRoot = styled('span')(({ theme }) => ({
+const FlagRoot = styled('span')(() => ({
   width: 26,
   height: 20,
   flexShrink: 0,
@@ -40,7 +41,7 @@ const FlagRoot = styled('span')(({ theme }) => ({
   alignItems: 'center',
   display: 'inline-flex',
   justifyContent: 'center',
-  backgroundColor: theme.vars.palette.background.neutral,
+  backgroundColor: tokens.colors.background.neutral,
 }));
 
 const FlagImg = styled('img')(() => ({

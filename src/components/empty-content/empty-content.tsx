@@ -9,6 +9,7 @@ import { varAlpha } from 'minimal-shared/utils';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 
+import { tokens } from 'src/theme/design-tokens';
 import { CONFIG } from 'src/global-config';
 import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
 
@@ -108,8 +109,8 @@ const ContentRoot = styled('div', {
   justifyContent: 'center',
   padding: theme.spacing(0, 3),
   ...(filled && {
-    borderRadius: Number(theme.shape.borderRadius) * 2,
-    backgroundColor: varAlpha(theme.vars.palette.grey['500Channel'], 0.04),
-    border: `dashed 1px ${varAlpha(theme.vars.palette.grey['500Channel'], 0.08)}`,
+    borderRadius: tokens.shape.borderRadius * 2,
+    backgroundColor: varAlpha(tokens.colors.grey['500Channel'], 0.04),
+    border: `dashed 1px ${varAlpha(tokens.colors.grey['500Channel'], 0.08)}`,
   }),
 }));

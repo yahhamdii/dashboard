@@ -11,6 +11,7 @@ import ListItemText from '@mui/material/ListItemText';
 import { TypographyWrapper as Typography, ButtonWrapper as Button } from 'src/components/circuit-ui';
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
+import { tokens } from 'src/theme/design-tokens';
 
 import { Iconify } from 'src/components/iconify';
 
@@ -42,35 +43,22 @@ export function ProfileFollowers({ followers }: Props) {
         Followers
       </Typography>
 
-      {useCircuitLayoutsWithPathname() ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-          {followers.map((follower) => (
-            <CardItem
-              key={follower.id}
-              follower={follower}
-              selected={followed.includes(follower.id)}
-              onSelected={() => handleClick(follower.id)}
-            />
-          ))}
-        </div>
-      ) : (
-        <Box
-          sx={{
-            gap: 3,
-            display: 'grid',
-            gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' },
-          }}
-        >
-          {followers.map((follower) => (
-            <CardItem
-              key={follower.id}
-              follower={follower}
-              selected={followed.includes(follower.id)}
-              onSelected={() => handleClick(follower.id)}
-            />
-          ))}
-        </Box>
-      )}
+      <Box
+        sx={{
+          gap: 3,
+          display: 'grid',
+          gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' },
+        }}
+      >
+        {followers.map((follower) => (
+          <CardItem
+            key={follower.id}
+            follower={follower}
+            selected={followed.includes(follower.id)}
+            onSelected={() => handleClick(follower.id)}
+          />
+        ))}
+      </Box>
     </>
   );
 }
@@ -87,11 +75,11 @@ function CardItem({ follower, selected, onSelected, sx, ...other }: CardItemProp
   return (
     <Card
       sx={[
-        (theme) => ({
+        {
           display: 'flex',
           alignItems: 'center',
-          p: theme.spacing(3, 2, 3, 3),
-        }),
+          p: tokens.spacing(3) + ' ' + tokens.spacing(2) + ' ' + tokens.spacing(3) + ' ' + tokens.spacing(3),
+        },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
       {...other}
@@ -120,7 +108,7 @@ function CardItem({ follower, selected, onSelected, sx, ...other }: CardItemProp
               display: 'flex',
               alignItems: 'center',
               typography: 'caption',
-              color: 'text.disabled',
+              color: tokens.colors.text.disabled,
             },
           },
         }}

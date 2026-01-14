@@ -15,6 +15,7 @@ import { InputWrapper as TextField } from 'src/components/circuit-ui';
 import { ButtonWrapper as Button } from 'src/components/circuit-ui';
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
+import { tokens } from 'src/theme/design-tokens';
 
 import { fDateRangeShortLabel } from 'src/utils/format-time';
 
@@ -103,7 +104,7 @@ export function FileManagerFilters({
         input: {
           startAdornment: (
             <InputAdornment position="start">
-              <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+              <Iconify icon="eva:search-fill" sx={{ color: tokens.colors.text.disabled }} />
             </InputAdornment>
           ),
         },
@@ -138,103 +139,57 @@ export function FileManagerFilters({
         onClose={menuActions.onClose}
         slotProps={{ paper: { sx: { p: 2.5 } } }}
       >
-        {useCircuitLayoutsWithPathname() ? (
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-1">
-            {options.types.map((type) => {
+        <Box
+          sx={{
+            gap: 1,
+            display: 'grid',
+            gridTemplateColumns: { xs: 'repeat(2, 1fr)', sm: 'repeat(4, 1fr)' },
+          }}
+        >
+          {options.types.map((type) => {
             const selected = currentFilters.type.includes(type);
 
             return (
               <ButtonBase
                 key={type}
                 onClick={() => handleFilterType(type)}
-                sx={[
-                  (theme) => ({
-                    p: 1,
-                    gap: 1,
-                    borderRadius: 1,
-                    typography: 'caption',
-                    textTransform: 'capitalize',
-                    justifyContent: 'flex-start',
-                    border: `solid 1px ${varAlpha(theme.vars.palette.grey['500Channel'], 0.08)}`,
-                    ...(selected && {
-                      bgcolor: 'action.selected',
-                      fontWeight: 'fontWeightSemiBold',
-                    }),
+                sx={{
+                  p: 1,
+                  gap: 1,
+                  borderRadius: 1,
+                  typography: 'caption',
+                  textTransform: 'capitalize',
+                  justifyContent: 'flex-start',
+                  border: `solid 1px ${varAlpha(tokens.colors.grey['500Channel'], 0.08)}`,
+                  ...(selected && {
+                    bgcolor: tokens.colors.action.selected,
+                    fontWeight: tokens.typography.fontWeightSemiBold,
                   }),
-                ]}
+                }}
               >
                 <FileThumbnail file={type} sx={{ width: 24, height: 24 }} />
                 {type}
               </ButtonBase>
             );
           })}
-          </div>
-        ) : (
-          <Box
-            sx={{
-              gap: 1,
-              display: 'grid',
-              gridTemplateColumns: { xs: 'repeat(2, 1fr)', sm: 'repeat(4, 1fr)' },
-            }}
-          >
-            {options.types.map((type) => {
-              const selected = currentFilters.type.includes(type);
+        </Box>
 
-              return (
-                <ButtonBase
-                  key={type}
-                  onClick={() => handleFilterType(type)}
-                  sx={[
-                    (theme) => ({
-                      p: 1,
-                      gap: 1,
-                      borderRadius: 1,
-                      typography: 'caption',
-                      textTransform: 'capitalize',
-                      justifyContent: 'flex-start',
-                      border: `solid 1px ${varAlpha(theme.vars.palette.grey['500Channel'], 0.08)}`,
-                      ...(selected && {
-                        bgcolor: 'action.selected',
-                        fontWeight: 'fontWeightSemiBold',
-                      }),
-                    }),
-                  ]}
-                >
-                  <FileThumbnail file={type} sx={{ width: 24, height: 24 }} />
-                  {type}
-                </ButtonBase>
-              );
-            })}
-          </Box>
-        )}
-
-        {useCircuitLayoutsWithPathname() ? (
-          <div className="flex items-center justify-end gap-1.5 mt-10">
-            <Button variant="outlined" color="inherit" onClick={handleResetType}>
-              Clear
-            </Button>
-            <Button variant="contained" onClick={menuActions.onClose}>
-              Apply
-            </Button>
-          </div>
-        ) : (
-          <Box
-            sx={{
-              mt: 2.5,
-              gap: 1.5,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-            }}
-          >
-            <Button variant="outlined" color="inherit" onClick={handleResetType}>
-              Clear
-            </Button>
-            <Button variant="contained" onClick={menuActions.onClose}>
-              Apply
-            </Button>
-          </Box>
-        )}
+        <Box
+          sx={{
+            mt: 2.5,
+            gap: 1.5,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <Button variant="outlined" color="inherit" onClick={handleResetType}>
+            Clear
+          </Button>
+          <Button variant="contained" onClick={menuActions.onClose}>
+            Apply
+          </Button>
+        </Box>
       </CustomPopover>
     </>
   );
@@ -270,18 +225,7 @@ export function FileManagerFilters({
     </>
   );
 
-  const useCircuit = useCircuitLayoutsWithPathname();
-
-  return useCircuit ? (
-    <div className="flex flex-col md:flex-row gap-1 w-full items-end md:items-center">
-      {renderFilterName()}
-
-      <div className="flex gap-1 flex-grow items-center justify-end">
-        {renderFilterDate()}
-        {renderFilterType()}
-      </div>
-    </div>
-  ) : (
+  return (
     <Box
       sx={{
         gap: 1,

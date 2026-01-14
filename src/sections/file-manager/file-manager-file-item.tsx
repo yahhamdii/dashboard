@@ -9,6 +9,7 @@ import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 
 import { ButtonWrapper as Button } from 'src/components/circuit-ui';
+import { tokens } from 'src/theme/design-tokens';
 
 import { fData } from 'src/utils/format-number';
 import { fDateTime } from 'src/utils/format-time';
@@ -95,7 +96,7 @@ export function FileManagerFileItem({ file, selected, onSelect, onDelete, sx, ..
             confirmDialog.onTrue();
             menuActions.onClose();
           }}
-          sx={{ color: 'error.main' }}
+          sx={{ color: tokens.colors.error.main }}
         >
           <Iconify icon="solar:trash-bin-trash-bold" />
           Delete

@@ -4,7 +4,7 @@ import type { NavGroupProps, NavSectionProps } from '../types';
 
 import { mergeClasses } from 'minimal-shared/utils';
 
-import { useTheme } from '@mui/material/styles';
+import { tokens } from 'src/theme/design-tokens';
 
 import { NavList } from './nav-list';
 import { Scrollbar } from '../../scrollbar';
@@ -24,9 +24,7 @@ export function NavSectionHorizontal({
   cssVars: overridesVars,
   ...other
 }: NavSectionProps) {
-  const theme = useTheme();
-
-  const cssVars = { ...navSectionCssVars.horizontal(theme), ...overridesVars };
+  const cssVars = { ...navSectionCssVars.horizontal(), ...overridesVars };
 
   return (
     <Scrollbar

@@ -6,6 +6,7 @@ import { mergeClasses } from 'minimal-shared/utils';
 
 import { styled } from '@mui/material/styles';
 import ButtonBase from '@mui/material/ButtonBase';
+import { tokens } from 'src/theme/design-tokens';
 
 import { carouselClasses } from '../classes';
 
@@ -35,17 +36,14 @@ export function CarouselThumb({
 
 const ThumbRoot = styled(ButtonBase, {
   shouldForwardProp: (prop: string) => !['selected', 'sx'].includes(prop),
-})<Pick<CarouselThumbProps, 'selected'>>(({ theme }) => ({
+})<Pick<CarouselThumbProps, 'selected'>>(() => ({
   width: 64,
   height: 64,
   opacity: 0.48,
   flexShrink: 0,
   cursor: 'pointer',
-  borderRadius: Number(theme.shape.borderRadius) * 1.25,
-  transition: theme.transitions.create(['opacity', 'box-shadow'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.short,
-  }),
+  borderRadius: tokens.shape.borderRadius * 1.25,
+  transition: 'opacity 200ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1)',
   [`& .${carouselClasses.thumbs.image}`]: {
     width: '100%',
     height: '100%',
@@ -55,7 +53,7 @@ const ThumbRoot = styled(ButtonBase, {
   variants: [
     {
       props: { selected: true },
-      style: { opacity: 1, boxShadow: `0 0 0 2px ${theme.vars.palette.primary.main}` },
+      style: { opacity: 1, boxShadow: `0 0 0 2px ${tokens.colors.primary.main}` },
     },
   ],
 }));

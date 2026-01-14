@@ -1,23 +1,23 @@
 'use client';
 
-import type { Theme } from '@mui/material/styles';
 import type { CarouselArrowButtonsProps } from '../types';
 
 import { varAlpha, mergeClasses } from 'minimal-shared/utils';
 
 import { styled } from '@mui/material/styles';
+import { tokens } from 'src/theme/design-tokens';
 
 import { ArrowButton } from './arrow-button';
 import { carouselClasses } from '../classes';
 
 // ----------------------------------------------------------------------
 
-const BasicButtonsRoot = styled('div')(({ theme }) => ({
+const BasicButtonsRoot = styled('div')(() => ({
   gap: '4px',
   zIndex: 9,
   alignItems: 'center',
   display: 'inline-flex',
-  color: theme.vars.palette.action.active,
+  color: tokens.colors.action.active,
 }));
 
 export function CarouselArrowBasicButtons({
@@ -71,18 +71,15 @@ export function CarouselArrowFloatButtons({
   disablePrev,
   disableNext,
 }: CarouselArrowButtonsProps) {
-  const baseStyles = (theme: Theme) => ({
+  const baseStyles = {
     zIndex: 9,
     top: '50%',
-    borderRadius: 1.5,
-    position: 'absolute',
-    color: 'common.white',
-    bgcolor: 'text.primary',
+    borderRadius: tokens.shape.borderRadius * 1.5,
+    position: 'absolute' as const,
+    color: tokens.colors.common.white,
+    bgcolor: tokens.colors.text.primary,
     '&:hover': { opacity: 0.8 },
-    ...theme.applyStyles('dark', {
-      color: 'grey.800',
-    }),
-  });
+  };
 
   return (
     <>
@@ -94,11 +91,11 @@ export function CarouselArrowFloatButtons({
         svgIcon={slotProps?.prevBtn?.svgIcon}
         svgSize={slotProps?.prevBtn?.svgSize}
         sx={[
-          (theme) => ({
-            ...baseStyles(theme),
+          {
+            ...baseStyles,
             left: 0,
             transform: 'translate(-50%, -50%)',
-          }),
+          },
           ...(Array.isArray(sx) ? sx : [sx]),
           ...(Array.isArray(slotProps?.prevBtn?.sx)
             ? slotProps.prevBtn.sx
@@ -114,11 +111,11 @@ export function CarouselArrowFloatButtons({
         svgIcon={slotProps?.nextBtn?.svgIcon}
         svgSize={slotProps?.nextBtn?.svgSize}
         sx={[
-          (theme) => ({
-            ...baseStyles(theme),
+          {
+            ...baseStyles,
             right: 0,
             transform: 'translate(50%, -50%)',
-          }),
+          },
           ...(Array.isArray(sx) ? sx : [sx]),
           ...(Array.isArray(slotProps?.nextBtn?.sx)
             ? slotProps.nextBtn.sx
@@ -131,26 +128,26 @@ export function CarouselArrowFloatButtons({
 
 // ----------------------------------------------------------------------
 
-const NumberButtonsRoot = styled('div')(({ theme }) => ({
+const NumberButtonsRoot = styled('div')(() => ({
   gap: '2px',
   zIndex: 9,
   alignItems: 'center',
   display: 'inline-flex',
-  padding: theme.spacing(0.5),
-  color: theme.vars.palette.common.white,
-  borderRadius: Number(theme.shape.borderRadius) * 1.25,
-  backgroundColor: varAlpha(theme.vars.palette.grey['900Channel'], 0.48),
+  padding: tokens.spacing(0.5),
+  color: tokens.colors.common.white,
+  borderRadius: tokens.shape.borderRadius * 1.25,
+  backgroundColor: varAlpha(tokens.colors.grey['900Channel'], 0.48),
   [`& .${carouselClasses.arrows.label}`]: {
-    ...theme.typography.subtitle2,
-    margin: theme.spacing(0, 0.5),
+    ...tokens.typography.subtitle2,
+    margin: tokens.spacing(0, 0.5),
   },
   [`& .${carouselClasses.arrows.prev}`]: {
     borderRadius: 'inherit',
-    padding: theme.spacing(0.75),
+    padding: tokens.spacing(0.75),
   },
   [`& .${carouselClasses.arrows.next}`]: {
     borderRadius: 'inherit',
-    padding: theme.spacing(0.75),
+    padding: tokens.spacing(0.75),
   },
 }));
 

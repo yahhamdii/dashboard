@@ -9,6 +9,7 @@ import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import { CardWrapper as Card, CardHeaderWrapper as CardHeader, AvatarWrapper } from 'src/components/circuit-ui';
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
+import { tokens } from 'src/theme/design-tokens';
 
 import { fShortenNumber } from 'src/utils/format-number';
 
@@ -32,26 +33,18 @@ export function AppTopAuthors({ title, subheader, list, sx, ...other }: Props) {
     <Card sx={sx} {...other}>
       <CardHeader title={title} subheader={subheader} />
 
-      {useCircuitLayoutsWithPathname() ? (
-        <div className="flex flex-col gap-3 p-3">
-          {orderBy(list, ['totalFavorites'], ['desc']).map((item, index) => (
-            <Item key={item.id} item={item} index={index} />
-          ))}
-        </div>
-      ) : (
-        <Box
-          sx={{
-            p: 3,
-            gap: 3,
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          {orderBy(list, ['totalFavorites'], ['desc']).map((item, index) => (
-            <Item key={item.id} item={item} index={index} />
-          ))}
-        </Box>
-      )}
+      <Box
+        sx={{
+          p: 3,
+          gap: 3,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        {orderBy(list, ['totalFavorites'], ['desc']).map((item, index) => (
+          <Item key={item.id} item={item} index={index} />
+        ))}
+      </Box>
     </Card>
   );
 }
@@ -64,37 +57,7 @@ type ItemProps = BoxProps & {
 };
 
 function Item({ item, index, sx, ...other }: ItemProps) {
-  const useCircuit = useCircuitLayoutsWithPathname();
-  
-  // Filtrer les props MUI spécifiques
-  const {
-    sx: _sx,
-    ...divProps
-  } = other as any;
-  
-  return useCircuit ? (
-    <div className={`flex items-center gap-2 ${sx ? '' : ''}`} {...(divProps as React.HTMLAttributes<HTMLDivElement>)}>
-      <AvatarWrapper alt={item.name} src={item.avatarUrl} />
-
-      <div className="flex-1">
-        <span className="text-sm font-medium">{item.name}</span>
-        <div className="flex items-center gap-0.5 mt-0.5 text-xs text-gray-500">
-          <Iconify icon="solar:heart-bold" width={14} />
-          {fShortenNumber(item.totalFavorites)}
-        </div>
-      </div>
-
-      <div
-        className={`w-10 h-10 flex items-center justify-center rounded-full ${
-          index === 0 ? 'text-blue-600 bg-blue-50' :
-          index === 1 ? 'text-cyan-600 bg-cyan-50' :
-          'text-red-600 bg-red-50'
-        }`}
-      >
-        <Iconify width={24} icon="solar:cup-star-bold" />
-      </div>
-    </div>
-  ) : (
+  return (
     <Box
       sx={[
         {
@@ -117,7 +80,7 @@ function Item({ item, index, sx, ...other }: ItemProps) {
             display: 'flex',
             alignItems: 'center',
             typography: 'caption',
-            color: 'text.secondary',
+            color: tokens.colors.text.secondary,
           }}
         >
           <Iconify icon="solar:heart-bold" width={14} />
@@ -126,26 +89,24 @@ function Item({ item, index, sx, ...other }: ItemProps) {
       </Box>
 
       <Box
-        sx={[
-          (theme) => ({
-            width: 40,
-            height: 40,
-            display: 'flex',
-            borderRadius: '50%',
-            alignItems: 'center',
-            color: 'primary.main',
-            justifyContent: 'center',
-            bgcolor: varAlpha(theme.vars.palette.primary.mainChannel, 0.08),
-            ...(index === 1 && {
-              color: 'info.main',
-              bgcolor: varAlpha(theme.vars.palette.info.mainChannel, 0.08),
-            }),
-            ...(index === 2 && {
-              color: 'error.main',
-              bgcolor: varAlpha(theme.vars.palette.error.mainChannel, 0.08),
-            }),
+        sx={{
+          width: 40,
+          height: 40,
+          display: 'flex',
+          borderRadius: '50%',
+          alignItems: 'center',
+          color: tokens.colors.primary.main,
+          justifyContent: 'center',
+          bgcolor: varAlpha(tokens.colors.primary.mainChannel, 0.08),
+          ...(index === 1 && {
+            color: tokens.colors.info.main,
+            bgcolor: varAlpha(tokens.colors.info.mainChannel, 0.08),
           }),
-        ]}
+          ...(index === 2 && {
+            color: tokens.colors.error.main,
+            bgcolor: varAlpha(tokens.colors.error.mainChannel, 0.08),
+          }),
+        }}
       >
         <Iconify width={24} icon="solar:cup-star-bold" />
       </Box>

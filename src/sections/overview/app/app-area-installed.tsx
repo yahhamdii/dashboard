@@ -2,8 +2,7 @@ import type { CardProps } from '@mui/material/Card';
 import type { ChartOptions } from 'src/components/chart';
 
 import { useState, useCallback } from 'react';
-
-import { useTheme } from '@mui/material/styles';
+import { tokens } from 'src/theme/design-tokens';
 
 import { CardWrapper as Card, CardHeaderWrapper as CardHeader } from 'src/components/circuit-ui';
 
@@ -31,14 +30,12 @@ type Props = CardProps & {
 };
 
 export function AppAreaInstalled({ title, subheader, chart, sx, ...other }: Props) {
-  const theme = useTheme();
-
   const [selectedSeries, setSelectedSeries] = useState('2023');
 
   const chartColors = chart.colors ?? [
-    theme.palette.primary.dark,
-    theme.palette.warning.main,
-    theme.palette.info.main,
+    tokens.colors.primary.dark,
+    tokens.colors.warning.main,
+    tokens.colors.info.main,
   ];
 
   const chartOptions = useChart({

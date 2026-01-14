@@ -4,6 +4,8 @@ import { memo } from 'react';
 
 import SvgIcon from '@mui/material/SvgIcon';
 
+import { tokens } from 'src/theme/design-tokens';
+
 // ----------------------------------------------------------------------
 
 function SentIcon({ sx, ...other }: SvgIconProps) {
@@ -13,13 +15,13 @@ function SentIcon({ sx, ...other }: SvgIconProps) {
       viewBox="0 0 96 96"
       xmlns="http://www.w3.org/2000/svg"
       sx={[
-        (theme) => ({
-          '--primary-main': theme.vars.palette.primary.main,
-          '--primary-dark': theme.vars.palette.primary.dark,
+        {
+          '--primary-main': tokens.colors.primary.main,
+          '--primary-dark': tokens.colors.primary.dark,
           width: 96,
           flexShrink: 0,
           height: 'auto',
-        }),
+        },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
       {...other}

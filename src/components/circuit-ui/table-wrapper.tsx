@@ -73,8 +73,11 @@ export function TableWrapper({
     ...filterValidStyles(sx),
   };
 
+  // Filtrer les props MUI spécifiques
+  const { classes, component, padding, size, ...tableProps } = other as any;
+
   return (
-    <table className={className} style={circuitStyles} {...other}>
+    <table className={className} style={circuitStyles} {...tableProps}>
       {children}
     </table>
   );
@@ -107,8 +110,11 @@ export function TableHeadWrapper({
     ...filterValidStyles(sx),
   };
 
+  // Filtrer les props MUI spécifiques
+  const { classes, component, ...theadProps } = other as any;
+
   return (
-    <thead className={className} style={circuitStyles} {...other}>
+    <thead className={className} style={circuitStyles} {...theadProps}>
       {children}
     </thead>
   );
@@ -141,8 +147,11 @@ export function TableBodyWrapper({
     ...filterValidStyles(sx),
   };
 
+  // Filtrer les props MUI spécifiques
+  const { classes, component, ...tbodyProps } = other as any;
+
   return (
-    <tbody className={className} style={circuitStyles} {...other}>
+    <tbody className={className} style={circuitStyles} {...tbodyProps}>
       {children}
     </tbody>
   );
@@ -176,8 +185,11 @@ export function TableRowWrapper({
     ...filterValidStyles(sx),
   };
 
+  // Filtrer les props MUI spécifiques
+  const { classes, component, hover, selected, ...trProps } = other as any;
+
   return (
-    <tr className={className} style={circuitStyles} {...other}>
+    <tr className={className} style={circuitStyles} {...trProps}>
       {children}
     </tr>
   );

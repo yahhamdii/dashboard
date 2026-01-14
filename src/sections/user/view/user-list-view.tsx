@@ -13,6 +13,7 @@ import { CardWrapper as Card, TableWrapper as Table, TableBodyWrapper as TableBo
 
 import { ButtonWrapper as Button } from 'src/components/circuit-ui';
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
+import { tokens } from 'src/theme/design-tokens';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
@@ -163,12 +164,10 @@ export function UserListView() {
           <TabsWrapper
             value={currentFilters.status}
             onChange={handleFilterStatus}
-            sx={[
-              (theme) => ({
-                px: { md: 2.5 },
-                boxShadow: `inset 0 -2px 0 0 ${varAlpha(theme.vars.palette.grey['500Channel'], 0.08)}`,
-              }),
-            ]}
+            sx={{
+              px: { md: 2.5 },
+              boxShadow: `inset 0 -2px 0 0 ${varAlpha(tokens.colors.grey['500Channel'], 0.08)}`,
+            }}
           >
             {STATUS_OPTIONS.map((tab) => (
               <TabWrapper

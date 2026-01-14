@@ -22,6 +22,7 @@ import { fNumber } from 'src/utils/format-number';
 
 import { _socials } from 'src/_mock';
 
+import { tokens } from 'src/theme/design-tokens';
 import { Iconify } from 'src/components/iconify';
 
 import { ProfilePostItem } from './profile-post-item';
@@ -44,7 +45,7 @@ export function ProfileHome({ info, posts, sx, ...other }: Props) {
 
   const renderFollows = () => {
     const useCircuit = useCircuitLayoutsWithPathname();
-    
+
     return (
       <Card sx={{ py: 3, textAlign: 'center', typography: 'h4' }}>
         {useCircuit ? (
@@ -229,12 +230,12 @@ export function ProfileHome({ info, posts, sx, ...other }: Props) {
         placeholder="Share what you are thinking here..."
         inputProps={{ id: 'post-input' }}
         sx={[
-          (theme) => ({
+          {
             p: 2,
             mb: 3,
-            borderRadius: 1,
-            border: `solid 1px ${varAlpha(theme.vars.palette.grey['500Channel'], 0.2)}`,
-          }),
+            borderRadius: tokens.borderRadius.md,
+            border: `solid 1px ${varAlpha(tokens.colors.grey['500Channel'], 0.2)}`,
+          },
         ]}
       />
 
@@ -363,7 +364,7 @@ export function ProfileHome({ info, posts, sx, ...other }: Props) {
   );
 
   const useCircuit = useCircuitLayoutsWithPathname();
-  
+
   return (
     <Grid container spacing={3} sx={sx} {...other}>
       <Grid size={{ xs: 12, md: 4 }}>

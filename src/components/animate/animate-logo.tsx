@@ -1,19 +1,19 @@
 'use client';
 
-import type { Theme, SxProps } from '@mui/material/styles';
 import type { LogoProps } from '../logo';
 
 import { m } from 'framer-motion';
 import { varAlpha } from 'minimal-shared/utils';
 
 import { styled } from '@mui/material/styles';
+import { tokens } from 'src/theme/design-tokens';
 
 import { Logo } from '../logo';
 
 // ----------------------------------------------------------------------
 
 export type AnimateLogoProps = React.ComponentProps<'div'> & {
-  sx?: SxProps<Theme>;
+  sx?: any;
   logo?: React.ReactNode;
   slotProps?: {
     logo?: LogoProps;
@@ -76,16 +76,16 @@ const LogoZoomRoot = styled('div')(() => ({
   justifyContent: 'center',
 }));
 
-const LogoZoomPrimaryOutline = styled(m.span)(({ theme }) => ({
+const LogoZoomPrimaryOutline = styled(m.span)(() => ({
   position: 'absolute',
   width: 'calc(100% - 20px)',
   height: 'calc(100% - 20px)',
-  border: `solid 3px ${varAlpha(theme.vars.palette.primary.darkChannel, 0.24)}`,
+  border: `solid 3px ${varAlpha(tokens.colors.primary.darkChannel, 0.24)}`,
 }));
 
-const LogoZoomSecondaryOutline = styled(m.span)(({ theme }) => ({
+const LogoZoomSecondaryOutline = styled(m.span)(() => ({
   width: '100%',
   height: '100%',
   position: 'absolute',
-  border: `solid 8px ${varAlpha(theme.vars.palette.primary.darkChannel, 0.24)}`,
+  border: `solid 8px ${varAlpha(tokens.colors.primary.darkChannel, 0.24)}`,
 }));

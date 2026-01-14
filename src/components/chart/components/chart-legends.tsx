@@ -3,6 +3,7 @@
 import { mergeClasses } from 'minimal-shared/utils';
 
 import { styled } from '@mui/material/styles';
+import { tokens } from 'src/theme/design-tokens';
 
 import { chartClasses } from '../classes';
 
@@ -79,10 +80,10 @@ export function ChartLegends({
 
 // ----------------------------------------------------------------------
 
-const ListRoot = styled('ul')(({ theme }) => ({
+const ListRoot = styled('ul')(() => ({
   display: 'flex',
   flexWrap: 'wrap',
-  gap: theme.spacing(2),
+  gap: tokens.spacing(2),
 }));
 
 const ItemWrapper = styled('li')(() => ({
@@ -90,13 +91,13 @@ const ItemWrapper = styled('li')(() => ({
   flexDirection: 'column',
 }));
 
-const ItemRoot = styled('div')(({ theme }) => ({
+const ItemRoot = styled('div')(() => ({
   gap: 6,
   alignItems: 'center',
   display: 'inline-flex',
   justifyContent: 'flex-start',
-  fontSize: theme.typography.pxToRem(13),
-  fontWeight: theme.typography.fontWeightMedium,
+  fontSize: tokens.typography.pxToRem(13),
+  fontWeight: tokens.typography.fontWeightMedium,
 }));
 
 const ItemIcon = styled('span')({
@@ -127,7 +128,7 @@ const ItemDot = styled('span')({
 
 const ItemLabel = styled('span')({ flexShrink: 0 });
 
-const ItemValue = styled('span')(({ theme }) => ({
-  ...theme.typography.h6,
-  marginTop: theme.spacing(1),
+const ItemValue = styled('span')(() => ({
+  ...tokens.typography.h6,
+  marginTop: tokens.spacing(1),
 }));

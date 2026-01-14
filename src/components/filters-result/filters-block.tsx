@@ -1,15 +1,14 @@
 'use client';
 
-import type { Theme, SxProps } from '@mui/material/styles';
-
 import { styled } from '@mui/material/styles';
+import { tokens } from 'src/theme/design-tokens';
 
 // ----------------------------------------------------------------------
 
 export type FilterBlockProps = React.ComponentProps<'div'> & {
   label: string;
   isShow: boolean;
-  sx?: SxProps<Theme>;
+  sx?: any;
   children: React.ReactNode;
 };
 
@@ -28,24 +27,24 @@ export function FiltersBlock({ label, children, isShow, sx, ...other }: FilterBl
 
 // ----------------------------------------------------------------------
 
-const BlockRoot = styled('div')(({ theme }) => ({
+const BlockRoot = styled('div')(() => ({
   display: 'flex',
   overflow: 'hidden',
-  gap: theme.spacing(1),
-  padding: theme.spacing(1),
-  borderRadius: theme.shape.borderRadius,
-  border: `dashed 1px ${theme.vars.palette.divider}`,
+  gap: tokens.spacing(1),
+  padding: tokens.spacing(1),
+  borderRadius: tokens.shape.borderRadius,
+  border: `dashed 1px ${tokens.colors.divider}`,
 }));
 
-const BlockLabel = styled('span')(({ theme }) => ({
+const BlockLabel = styled('span')(() => ({
   height: 24,
   lineHeight: '24px',
-  fontSize: theme.typography.subtitle2.fontSize,
-  fontWeight: theme.typography.subtitle2.fontWeight,
+  fontSize: tokens.typography.subtitle2.fontSize,
+  fontWeight: tokens.typography.subtitle2.fontWeight,
 }));
 
-const BlockContent = styled('div')(({ theme }) => ({
+const BlockContent = styled('div')(() => ({
   display: 'flex',
   flexWrap: 'wrap',
-  gap: theme.spacing(1),
+  gap: tokens.spacing(1),
 }));

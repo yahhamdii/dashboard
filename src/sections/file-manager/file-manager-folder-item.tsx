@@ -9,6 +9,7 @@ import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 
 import { ButtonWrapper as Button } from 'src/components/circuit-ui';
+import { tokens } from 'src/theme/design-tokens';
 
 import { fData } from 'src/utils/format-number';
 
@@ -119,7 +120,7 @@ export function FileManagerFolderItem({
             confirmDialog.onTrue();
             menuActions.onClose();
           }}
-          sx={{ color: 'error.main' }}
+          sx={{ color: tokens.colors.error.main }}
         >
           <Iconify icon="solar:trash-bin-trash-bold" />
           Delete
@@ -198,6 +199,7 @@ export function FileManagerFolderItem({
           hovered={checkbox.value}
           checked={selected}
           onChange={onSelect}
+          fileType="folder"
         />
 
         <FileItemInfo

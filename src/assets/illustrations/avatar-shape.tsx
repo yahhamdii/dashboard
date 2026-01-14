@@ -4,6 +4,8 @@ import { memo } from 'react';
 
 import SvgIcon from '@mui/material/SvgIcon';
 
+import { tokens } from 'src/theme/design-tokens';
+
 // ----------------------------------------------------------------------
 
 function AvatarShape({ sx, ...other }: SvgIconProps) {
@@ -16,7 +18,7 @@ function AvatarShape({ sx, ...other }: SvgIconProps) {
         {
           width: 144,
           height: 62,
-          color: 'background.paper',
+          color: tokens.colors.background.paper,
         },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}

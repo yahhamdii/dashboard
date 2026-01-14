@@ -1,5 +1,5 @@
 import type { Theme, CSSObject } from '@mui/material/styles';
-import type { PaletteColorKey, CommonColorsKeys } from '../palette';
+import { tokens } from '../../design-tokens';
 
 import { varAlpha, noRtlFlip } from 'minimal-shared/utils';
 
@@ -29,7 +29,7 @@ export function menuItemStyles(theme: Theme): CSSObject {
       marginBottom: 4,
     },
     [`&.${menuItemClasses.selected}`]: {
-      fontWeight: theme.typography.fontWeightSemiBold,
+      fontWeight: tokens.typography.fontWeightSemiBold,
       backgroundColor: theme.vars.palette.action.selected,
       '&:hover': { backgroundColor: theme.vars.palette.action.hover },
     },
@@ -92,18 +92,17 @@ export function paperStyles(theme: Theme, options?: PaperStyleOptions): CSSObjec
   const { blur = 20, color, dropdown } = options ?? {};
 
   return {
-    ...theme.mixins.bgGradient({
-      images: [`url(${cyanShape})`, `url(${redShape})`],
-      sizes: ['50%', '50%'],
-      positions: [noRtlFlip('top right'), noRtlFlip('left bottom')],
-    }),
+    background: `linear-gradient(to bottom right, rgba(0, 184, 217, 0.1), rgba(0, 184, 217, 0)), url(${cyanShape}), url(${redShape})`,
+    backgroundRepeat: 'no-repeat, no-repeat, no-repeat',
+    backgroundPosition: 'top right, top right, left bottom',
+    backgroundSize: '100%, 50%, 50%',
     backdropFilter: `blur(${blur}px)`,
     WebkitBackdropFilter: `blur(${blur}px)`,
     backgroundColor: color ?? varAlpha(theme.vars.palette.background.paperChannel, 0.9),
     ...(dropdown && {
       padding: theme.spacing(0.5),
-      boxShadow: theme.vars.customShadows.dropdown,
-      borderRadius: `${Number(theme.shape.borderRadius) * 1.25}px`,
+      boxShadow: tokens.customShadows.dropdown,
+      borderRadius: `${tokens.shape.borderRadius * 1.25}px`,
     }),
   };
 }
@@ -128,7 +127,7 @@ export function paperStyles(theme: Theme, options?: PaperStyleOptions): CSSObjec
  * ...theme.mixins.softStyles(theme, 'primary', { hover: true })
  */
 
-export type ColorKey = CommonColorsKeys | PaletteColorKey | 'default' | 'inherit';
+export type ColorKey = any | 'default' | 'inherit';
 
 export type StyleOptions = {
   hover?: boolean | CSSObject;
@@ -188,14 +187,14 @@ export function filledStyles(theme: Theme, colorKey: ColorKey, options?: StyleOp
 
   if (colorKey === 'white' || colorKey === 'black') {
     const base: CSSObject = {
-      color: `${theme.vars.palette.common[colorKey === 'white' ? 'black' : 'white']}`,
-      backgroundColor: theme.vars.palette.common[colorKey],
+      color: `${(theme.vars.palette.common as any)[colorKey === 'white' ? 'black' : 'white']}`,
+      backgroundColor: (theme.vars.palette.common as any)[colorKey],
     };
 
     const hover: CSSObject = getHoverStyles(options?.hover, {
       backgroundColor: varAlpha(
-        `${theme.vars.palette.common[`${colorKey}Channel`]}`,
-        theme.vars.opacity.filled.commonHoverBg
+        `${(theme.vars.palette.common as any)[`${colorKey}Channel`]}`,
+        tokens.opacity.filled.commonHoverBg
       ),
     });
 
@@ -204,11 +203,11 @@ export function filledStyles(theme: Theme, colorKey: ColorKey, options?: StyleOp
 
   const colorPalette: Record<'base' | 'hover', CSSObject> = {
     base: {
-      color: theme.vars.palette[colorKey].contrastText,
-      backgroundColor: theme.vars.palette[colorKey].main,
+      color: (theme.vars.palette as any)[colorKey].contrastText,
+      backgroundColor: (theme.vars.palette as any)[colorKey].main,
     },
     hover: getHoverStyles(options?.hover, {
-      backgroundColor: theme.vars.palette[colorKey].dark,
+      backgroundColor: (theme.vars.palette as any)[colorKey].dark,
     }),
   };
 
@@ -233,13 +232,13 @@ export function softStyles(theme: Theme, colorKey: ColorKey, options?: StyleOpti
   if (colorKey === 'inherit') {
     const base: CSSObject = {
       boxShadow: 'none',
-      backgroundColor: varAlpha(theme.vars.palette.grey['500Channel'], theme.vars.opacity.soft.bg),
+      backgroundColor: varAlpha(tokens.colors.grey['500Channel'], tokens.opacity.soft.bg),
     };
 
     const hover: CSSObject = getHoverStyles(options?.hover, {
       backgroundColor: varAlpha(
-        theme.vars.palette.grey['500Channel'],
-        theme.vars.opacity.soft.hoverBg
+        tokens.colors.grey['500Channel'],
+        tokens.opacity.soft.hoverBg
       ),
     });
 
@@ -249,12 +248,12 @@ export function softStyles(theme: Theme, colorKey: ColorKey, options?: StyleOpti
   if (colorKey === 'white' || colorKey === 'black') {
     const base: CSSObject = {
       boxShadow: 'none',
-      color: theme.vars.palette.common[colorKey],
-      backgroundColor: varAlpha('currentColor', theme.vars.opacity.soft.commonBg),
+      color: theme.vars.palette.common[colorKey as 'black' | 'white'],
+      backgroundColor: varAlpha('currentColor', tokens.opacity.soft.commonBg),
     };
 
     const hover: CSSObject = getHoverStyles(options?.hover, {
-      backgroundColor: varAlpha('currentColor', theme.vars.opacity.soft.commonHoverBg),
+      backgroundColor: varAlpha('currentColor', tokens.opacity.soft.commonHoverBg),
     });
 
     return { ...base, ...hover };
@@ -263,19 +262,19 @@ export function softStyles(theme: Theme, colorKey: ColorKey, options?: StyleOpti
   const colorPalette: Record<'base' | 'hover', CSSObject> = {
     base: {
       boxShadow: 'none',
-      color: theme.vars.palette[colorKey].dark,
+      color: (theme.vars.palette as any)[colorKey].dark,
       backgroundColor: varAlpha(
-        theme.vars.palette[colorKey].mainChannel,
-        theme.vars.opacity.soft.bg
+        (theme.vars.palette as any)[colorKey].mainChannel,
+        tokens.opacity.soft.bg
       ),
       ...theme.applyStyles('dark', {
-        color: theme.vars.palette[colorKey].light,
+        color: (theme.vars.palette as any)[colorKey].light,
       }),
     },
     hover: getHoverStyles(options?.hover, {
       backgroundColor: varAlpha(
-        theme.vars.palette[colorKey].mainChannel,
-        theme.vars.opacity.soft.hoverBg
+        (theme.vars.palette as any)[colorKey].mainChannel,
+        tokens.opacity.soft.hoverBg
       ),
     }),
   };

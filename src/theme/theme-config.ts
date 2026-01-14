@@ -1,8 +1,12 @@
 import type { Theme, Direction, CommonColors, ThemeProviderProps } from '@mui/material/styles';
 import type { ThemeCssVariables } from './types';
-import type { PaletteColorKey, PaletteColorNoChannels } from './core/palette';
+import type { PaletteColor } from '@mui/material/styles';
 
-// ----------------------------------------------------------------------
+export type PaletteColorKey = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error';
+export type PaletteColorNoChannels = Omit<PaletteColor, 'lighterChannel' | 'darkerChannel'> & {
+  lighter: string;
+  darker: string;
+};
 
 export type ThemeConfig = {
   direction: Direction;
@@ -11,7 +15,7 @@ export type ThemeConfig = {
   defaultMode: ThemeProviderProps<Theme>['defaultMode'];
   modeStorageKey: ThemeProviderProps<Theme>['modeStorageKey'];
   fontFamily: Record<'primary' | 'secondary', string>;
-  palette: Record<PaletteColorKey, PaletteColorNoChannels> & {
+  palette: Record<PaletteColorKey, PaletteColorNoChannels & { contrastText: string }> & {
     common: Pick<CommonColors, 'black' | 'white'>;
     grey: {
       [K in 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 as `${K}`]: string;

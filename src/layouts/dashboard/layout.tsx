@@ -9,14 +9,13 @@ import { useBoolean } from 'minimal-shared/hooks';
 
 import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import Alert from '@mui/material/Alert';
-import { useTheme } from '@mui/material/styles';
-import { iconButtonClasses } from '@mui/material/IconButton';
 
 import { Logo } from 'src/components/logo';
 import { useSettingsContext } from 'src/components/settings';
 
 import { useMockedUser } from 'src/hooks/use-mocked-user';
 import { useCircuitComponent } from 'src/lib/feature-flags';
+import { tokens } from 'src/theme/design-tokens';
 
 import { NavMobile } from './nav-mobile';
 import { VerticalDivider } from './content';
@@ -51,14 +50,13 @@ export function DashboardLayout({
   slotProps,
   layoutQuery = 'lg',
 }: DashboardLayoutProps) {
-  const theme = useTheme();
   const useCircuit = useCircuitComponent('USE_CIRCUIT_NAVIGATION');
 
   const { user } = useMockedUser();
 
   const settings = useSettingsContext();
 
-  const navVars = dashboardNavColorVars(theme, 'integrate', 'vertical');
+  const navVars = dashboardNavColorVars('integrate', 'vertical');
 
   const { value: open, onFalse: onClose, onTrue: onOpen } = useBoolean();
 
@@ -104,7 +102,7 @@ export function DashboardLayout({
           {/** @slot Nav mobile */}
           <MenuButton
             onClick={onOpen}
-            sx={{ mr: 1, ml: -1, [theme.breakpoints.up(layoutQuery)]: { display: 'none' } }}
+            sx={{ mr: 1, ml: -1, [`@media (min-width:${tokens.breakpoints.values[layoutQuery]}px)`]: { display: 'none' } }}
           />
           <NavMobile
             data={navData}
@@ -119,14 +117,14 @@ export function DashboardLayout({
             <Logo
               sx={{
                 display: 'none',
-                [theme.breakpoints.up(layoutQuery)]: { display: 'inline-flex' },
+                [`@media (min-width:${tokens.breakpoints.values[layoutQuery]}px)`]: { display: 'inline-flex' },
               }}
             />
           )}
 
           {/** @slot Divider */}
           {isNavHorizontal && (
-            <VerticalDivider sx={{ [theme.breakpoints.up(layoutQuery)]: { display: 'flex' } }} />
+            <VerticalDivider sx={{ [`@media (min-width:${tokens.breakpoints.values[layoutQuery]}px)`]: { display: 'flex' } }} />
           )}
 
           {/** @slot Workspace popover */}
@@ -193,16 +191,13 @@ export function DashboardLayout({
       /** **************************************
        * @Styles
        *************************************** */
-      cssVars={{ ...dashboardLayoutVars(theme), ...navVars.layout, ...cssVars }}
+      cssVars={{ ...dashboardLayoutVars(), ...navVars.layout, ...cssVars }}
       sx={[
         {
           [`& .${layoutClasses.sidebarContainer}`]: {
-            [theme.breakpoints.up(layoutQuery)]: {
+            [`@media (min-width:${tokens.breakpoints.values[layoutQuery]}px)`]: {
               pl: isNavMini ? 'var(--layout-nav-mini-width)' : 'var(--layout-nav-vertical-width)',
-              transition: theme.transitions.create(['padding-left'], {
-                easing: 'var(--layout-transition-easing)',
-                duration: 'var(--layout-transition-duration)',
-              }),
+              transition: `padding-left var(--layout-transition-duration) var(--layout-transition-easing)`,
             },
           },
         },

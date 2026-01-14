@@ -6,6 +6,7 @@ import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import IconButton from '@mui/material/IconButton';
 
 import { InputWrapper as TextField, ButtonWrapper as Button, DialogWrapper as Dialog, DialogTitleWrapper as DialogTitle, DialogActionsWrapper as DialogActions, DialogContentWrapper as DialogContent } from 'src/components/circuit-ui';
+import { tokens } from 'src/theme/design-tokens';
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
@@ -64,7 +65,7 @@ export function FileManagerCreateFolderDialog({
 
   return (
     <Dialog fullWidth maxWidth="sm" open={open} aria-hidden={!open} onClose={onClose} {...other}>
-      <DialogTitle sx={[(theme) => ({ p: theme.spacing(3, 3, 2, 3) })]}>{title}</DialogTitle>
+      <DialogTitle sx={{ p: tokens.spacing(3) + ' ' + tokens.spacing(3) + ' ' + tokens.spacing(2) + ' ' + tokens.spacing(3) }}>{title}</DialogTitle>
 
       <IconButton
         aria-label="Close"
@@ -104,19 +105,11 @@ export function FileManagerCreateFolderDialog({
         )}
 
         {(onCreate || onUpdate) && (
-          useCircuitLayoutsWithPathname() ? (
-            <div className="flex-grow flex justify-end">
-              <Button variant="soft" onClick={onCreate || onUpdate}>
-                {onUpdate ? 'Save' : 'Create'}
-              </Button>
-            </div>
-          ) : (
-            <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end' }}>
-              <Button variant="soft" onClick={onCreate || onUpdate}>
-                {onUpdate ? 'Save' : 'Create'}
-              </Button>
-            </Box>
-          )
+          <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end' }}>
+            <Button variant="soft" onClick={onCreate || onUpdate}>
+              {onUpdate ? 'Save' : 'Create'}
+            </Button>
+          </Box>
         )}
       </DialogActions>
     </Dialog>

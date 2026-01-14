@@ -1,12 +1,8 @@
 'use client';
 
-import type { Theme, SxProps } from '@mui/material/styles';
-import type { AnimateLogoProps } from '../animate';
-
-import { Fragment } from 'react';
-
-import Portal from '@mui/material/Portal';
+import React from 'react';
 import { styled } from '@mui/material/styles';
+import { tokens } from 'src/theme/design-tokens';
 
 import { AnimateLogoZoom } from '../animate';
 
@@ -14,18 +10,19 @@ import { AnimateLogoZoom } from '../animate';
 
 export type SplashScreenProps = React.ComponentProps<'div'> & {
   portal?: boolean;
-  sx?: SxProps<Theme>;
+  sx?: any;
   slots?: {
     logo?: React.ReactNode;
   };
   slotProps?: {
     wrapper?: React.ComponentProps<typeof LoadingWrapper>;
-    logo?: AnimateLogoProps;
+    logo?: any;
   };
 };
 
 export function SplashScreen({ portal = true, slots, slotProps, sx, ...other }: SplashScreenProps) {
-  const PortalWrapper = portal ? Portal : Fragment;
+  const Portal = require('@mui/material/Portal').default as React.ComponentType<any>;
+  const PortalWrapper = portal ? Portal : React.Fragment;
 
   return (
     <PortalWrapper>
@@ -46,7 +43,7 @@ const LoadingWrapper = styled('div')({
   flexDirection: 'column',
 });
 
-const LoadingContent = styled('div')(({ theme }) => ({
+const LoadingContent = styled('div')(() => ({
   right: 0,
   bottom: 0,
   zIndex: 9998,
@@ -57,5 +54,5 @@ const LoadingContent = styled('div')(({ theme }) => ({
   position: 'fixed',
   alignItems: 'center',
   justifyContent: 'center',
-  backgroundColor: theme.vars.palette.background.default,
+  backgroundColor: tokens.colors.background.default,
 }));

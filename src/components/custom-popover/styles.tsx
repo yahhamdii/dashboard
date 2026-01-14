@@ -5,6 +5,7 @@ import type { ArrowProps, PaperOffset, ArrowPlacement } from './types';
 import { varAlpha, noRtlFlip } from 'minimal-shared/utils';
 
 import { styled } from '@mui/material/styles';
+import { tokens } from 'src/theme/design-tokens';
 
 import { getArrowOffset } from './utils';
 
@@ -130,8 +131,8 @@ type StyledArrowProps = ArrowProps & {
 export const Arrow = styled('span', {
   shouldForwardProp: (prop: string) =>
     !['size', 'placement', 'anchorRect', 'paperRect', 'sx'].includes(prop),
-})<StyledArrowProps>(({ size = 0, placement = 'top-right', anchorRect, paperRect, theme }) => {
-  const isRtl = theme.direction === 'rtl';
+})<StyledArrowProps>(({ size = 0, placement = 'top-right', anchorRect, paperRect }) => {
+  const isRtl = tokens.direction === 'rtl';
   const { offsetX, offsetY } = getArrowOffset(anchorRect, paperRect, size);
 
   const arrowColor = getArrowColor({
@@ -149,11 +150,8 @@ export const Arrow = styled('span', {
     borderBottomLeftRadius: isRtl ? 0 : size / 4,
     borderBottomRightRadius: isRtl ? size / 4 : 0,
     clipPath: 'polygon(0% 0%, 100% 100%, 0% 100%)',
-    backgroundColor: theme.vars.palette.background.paper,
-    border: `solid 1px ${varAlpha(theme.vars.palette.grey['500Channel'], 0.12)}`,
-    ...theme.applyStyles('dark', {
-      border: `solid 1px ${varAlpha(theme.vars.palette.common.blackChannel, 0.12)}`,
-    }),
+    backgroundColor: tokens.colors.background.paper,
+    border: `solid 1px ${varAlpha(tokens.colors.grey['500Channel'], 0.12)}`,
   };
 
   const arrowBackgroundStyle: CSSObject = {
@@ -161,11 +159,11 @@ export const Arrow = styled('span', {
     backgroundSize: `${size * 3}px ${size * 3}px`,
     ...(arrowColor === 'cyan' && {
       backgroundPosition: noRtlFlip('top right'),
-      backgroundImage: `linear-gradient(45deg, ${varAlpha(theme.vars.palette.info.mainChannel, 0.08)}, ${varAlpha(theme.vars.palette.info.mainChannel, 0.08)})`,
+      backgroundImage: `linear-gradient(45deg, ${varAlpha(tokens.colors.info.mainChannel, 0.08)}, ${varAlpha(tokens.colors.info.mainChannel, 0.08)})`,
     }),
     ...(arrowColor === 'red' && {
       backgroundPosition: noRtlFlip('bottom left'),
-      backgroundImage: `linear-gradient(45deg, ${varAlpha(theme.vars.palette.error.mainChannel, 0.08)}, ${varAlpha(theme.vars.palette.error.mainChannel, 0.08)})`,
+      backgroundImage: `linear-gradient(45deg, ${varAlpha(tokens.colors.error.mainChannel, 0.08)}, ${varAlpha(tokens.colors.error.mainChannel, 0.08)})`,
     }),
   };
 
@@ -174,19 +172,19 @@ export const Arrow = styled('span', {
     ...arrowBackgroundStyle,
     variants: [
       {
-        props: (props) => props.placement?.startsWith('top-'),
+        props: (props: any) => props.placement?.startsWith('top-'),
         style: { ...getArrowPlacementStyles('top'), left: noRtlFlip(`${offsetX}px`) },
       },
       {
-        props: (props) => props.placement?.startsWith('bottom-'),
+        props: (props: any) => props.placement?.startsWith('bottom-'),
         style: { ...getArrowPlacementStyles('bottom'), left: noRtlFlip(`${offsetX}px`) },
       },
       {
-        props: (props) => props.placement?.startsWith('left-'),
+        props: (props: any) => props.placement?.startsWith('left-'),
         style: { ...getArrowPlacementStyles('left', isRtl), top: `${offsetY}px` },
       },
       {
-        props: (props) => props.placement?.startsWith('right-'),
+        props: (props: any) => props.placement?.startsWith('right-'),
         style: { ...getArrowPlacementStyles('right', isRtl), top: `${offsetY}px` },
       },
     ],

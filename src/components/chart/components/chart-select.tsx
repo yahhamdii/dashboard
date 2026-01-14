@@ -9,6 +9,7 @@ import { usePopover } from 'minimal-shared/hooks';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import ButtonBase from '@mui/material/ButtonBase';
+import { tokens } from 'src/theme/design-tokens';
 
 import { Iconify } from '../../iconify';
 import { CustomPopover } from '../../custom-popover';
@@ -53,15 +54,15 @@ export function ChartSelect({ options, value, onChange, slotProps, ...other }: C
         onClick={onOpen}
         {...slotProps?.button}
         sx={[
-          (theme) => ({
+          {
             pr: 1,
             pl: 1.5,
             gap: 1.5,
             height: 34,
             borderRadius: 1,
             typography: 'subtitle2',
-            border: `solid 1px ${varAlpha(theme.vars.palette.grey['500Channel'], 0.24)}`,
-          }),
+            border: `solid 1px ${varAlpha(tokens.colors.grey['500Channel'], 0.24)}`,
+          },
           ...(Array.isArray(slotProps?.button?.sx) ? slotProps.button.sx : [slotProps?.button?.sx]),
         ]}
         {...other}

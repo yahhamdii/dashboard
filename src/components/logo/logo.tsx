@@ -6,7 +6,9 @@ import { useId } from 'react';
 import { mergeClasses } from 'minimal-shared/utils';
 
 import Link from '@mui/material/Link';
-import { styled, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
+
+import { tokens } from 'src/theme/design-tokens';
 
 import { RouterLink } from 'src/routes/components';
 
@@ -27,14 +29,12 @@ export function Logo({
   isSingle = true,
   ...other
 }: LogoProps) {
-  const theme = useTheme();
-
   const uniqueId = useId();
 
-  const TEXT_PRIMARY = theme.vars.palette.text.primary;
-  const PRIMARY_LIGHT = theme.vars.palette.primary.light;
-  const PRIMARY_MAIN = theme.vars.palette.primary.main;
-  const PRIMARY_DARKER = theme.vars.palette.primary.dark;
+  const TEXT_PRIMARY = tokens.colors.text.primary;
+  const PRIMARY_LIGHT = tokens.colors.primary.light;
+  const PRIMARY_MAIN = tokens.colors.primary.main;
+  const PRIMARY_DARKER = tokens.colors.primary.dark;
 
   /*
     * OR using local (public folder)

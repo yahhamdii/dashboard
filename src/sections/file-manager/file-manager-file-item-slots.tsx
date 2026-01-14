@@ -1,311 +1,236 @@
-import type { BoxProps } from '@mui/material/Box';
-import type { CheckboxProps } from '@mui/material/Checkbox';
-import type { UsePopoverReturn } from 'minimal-shared/hooks';
-import type { AvatarGroupProps } from '@mui/material/AvatarGroup';
-import type { IFileManager } from 'src/types/file';
-import type { FileThumbnailProps } from 'src/components/file-thumbnail';
+import { varAlpha } from 'minimal-shared/utils';
 
-import React from 'react';
-
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
+import { tokens } from 'src/theme/design-tokens';
 
-import { TypographyWrapper as Typography, CheckboxWrapper as Checkbox, AvatarWrapper, IconButtonWrapper } from 'src/components/circuit-ui';
-
-import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
-
-import { CONFIG } from 'src/global-config';
+import { AvatarWrapper, BoxWrapper as Box } from 'src/components/circuit-ui';
 
 import { Iconify } from 'src/components/iconify';
-import { FileThumbnail } from 'src/components/file-thumbnail';
+import { fileThumbnailClasses } from 'src/components/file-thumbnail';
 
 // ----------------------------------------------------------------------
-
-const Z_INDEXES = {
-  overlay: 1,
-  actions: 2,
-} as const;
 
 export type FileItemProps = React.ComponentProps<typeof FileItem>;
 
-export const FileItem = styled(Paper, {
-  shouldForwardProp: (prop: string) => !['selected', 'sx'].includes(prop),
-})<{ selected?: boolean }>(({ selected, theme }) => {
-  const hoverStyles = {
-    boxShadow: theme.vars.customShadows.z20,
-    backgroundColor: theme.vars.palette.background.paper,
-  };
+export const FileItem = styled('div', {
+  shouldForwardProp: (prop: string) => !['selected', 'sx', 'variant'].includes(prop),
+})<{ selected?: boolean; variant?: string }>(({ selected }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  position: 'relative',
+  padding: tokens.spacing(2),
+  transition: 'background-color 200ms cubic-bezier(0.4, 0, 0.2, 1)',
+  borderRadius: tokens.shape.borderRadius,
+  border: `solid 1px ${varAlpha(tokens.colors.grey['500Channel'], 0.12)}`,
+  '&:hover': {
+    backgroundColor: tokens.colors.background.neutral,
+  },
+  ...(selected && {
+    backgroundColor: tokens.colors.background.paper,
+    boxShadow: tokens.customShadows.z20,
+  }),
+}));
 
-  return {
-    display: 'flex',
-    position: 'relative',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    gap: theme.spacing(1.5),
-    padding: theme.spacing(2.5),
-    backgroundColor: 'transparent',
-    borderRadius: Number(theme.shape.borderRadius) * 2,
-    '&:hover': hoverStyles,
-    ...(selected && hoverStyles),
-  };
-});
-
-export const FileItemActionOverlay = styled('span')({
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  cursor: 'pointer',
-  position: 'absolute',
-  borderRadius: 'inherit',
-  zIndex: Z_INDEXES.overlay,
-});
-
-// ----------------------------------------------------------------------
-
-export type FileItemIconProps = BoxProps &
-  Pick<CheckboxProps, 'checked' | 'onChange'> & {
-    hovered?: boolean;
-    fileType?: FileThumbnailProps['file'];
-  };
-
-export function FileItemIcon({
+export const FileItemIcon = ({
   id,
-  sx,
-  fileType,
-  checked,
   hovered,
-  onChange,
-  ...other
-}: FileItemIconProps) {
-  const renderIcon = () =>
-    fileType ? (
-      <FileThumbnail file={fileType} sx={{ width: 1, height: 1 }} />
-    ) : (
-      <Box
-        component="img"
-        src={`${CONFIG.assetsDir}/assets/icons/files/ic-folder.svg`}
-        sx={{ width: 1, height: 1 }}
-      />
-    );
-
-  return (
-    <Box
-      sx={[
-        {
-          width: 36,
-          height: 36,
-          display: 'inline-flex',
-          zIndex: Z_INDEXES.actions,
-        },
-        ...(Array.isArray(sx) ? sx : [sx]),
-      ]}
-      {...other}
-    >
-      {(hovered || checked) && onChange ? (
-        <Checkbox
-          checked={checked}
-          onChange={onChange}
-          icon={<Iconify icon="eva:radio-button-off-fill" width={22} />}
-          checkedIcon={<Iconify icon="solar:check-circle-bold" width={22} />}
-          slotProps={{
-            input: {
-              id: `${id}-checkbox`,
-              'aria-label': `${id} checkbox`,
-            },
-          }}
-          sx={{ p: 0, width: 1, height: 1 }}
-        />
-      ) : (
-        renderIcon()
-      )}
-    </Box>
-  );
-}
-
-// ----------------------------------------------------------------------
-
-export type FileItemInfoProps = BoxProps & {
-  values: string[];
-  type: 'file' | 'recent-file' | 'folder';
-};
-
-export function FileItemInfo({ type, title, values, sx, ...other }: FileItemInfoProps) {
-  const renderTitle = () => (
-    <Typography
-      variant={['file', 'recent-file'].includes(type) ? 'subtitle2' : 'subtitle1'}
-      sx={[
-        (theme) => ({
-          wordBreak: 'break-all',
-          ...theme.mixins.maxLine({
-            line: type === 'file' ? 2 : 1,
-            persistent: type === 'file' ? theme.typography.subtitle2 : undefined,
-          }),
-        }),
-      ]}
-    >
-      {title}
-    </Typography>
-  );
-
-  const useCircuit = useCircuitLayoutsWithPathname();
-  
-  // Filtrer les props MUI spécifiques
-  const {
-    sx: _sx,
-    ...divProps
-  } = other as any;
-  
-  const renderDetails = () => {
-    if (useCircuit) {
-      return (
-        <div className="flex flex-row items-center gap-1 text-xs text-gray-500">
-          {values.map((value, index) => (
-            <React.Fragment key={value}>
-              {index > 0 && (
-                <span className="w-0.5 h-0.5 flex-shrink-0 rounded-full bg-current" />
-              )}
-              <span className={index === values.length - 1 ? 'truncate' : 'whitespace-nowrap'}>
-                {value}
-              </span>
-            </React.Fragment>
-          ))}
-        </div>
-      );
-    }
-    
-    return (
-      <Box
-        sx={[
-          (theme) => ({
-            gap: 0.75,
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            typography: 'caption',
-            color: 'text.disabled',
-            '& span': {
-              '&:last-of-type': { ...theme.mixins.maxLine({ line: 1 }) },
-              '&:not(:last-of-type)': { whiteSpace: 'nowrap' },
-              '&:not(:first-of-type)::before': {
-                content: '""',
-                width: 2,
-                height: 2,
-                borderRadius: '50%',
-                backgroundColor: 'currentColor',
-                margin: '0 0.75rem',
-              },
-            },
-          }),
-        ]}
-      >
-        {values.map((value) => (
-          <span key={value}>{value}</span>
-        ))}
-      </Box>
-    );
-  };
-
-  return useCircuit ? (
-    <div className={`flex flex-col gap-0.5 w-full ${sx ? '' : ''}`} {...(divProps as React.HTMLAttributes<HTMLDivElement>)}>
-      {renderTitle()}
-      {renderDetails()}
-    </div>
-  ) : (
-    <Box
-      sx={[
-        {
-          gap: 0.5,
-          width: 1,
-          display: 'flex',
-          flexDirection: 'column',
-        },
-        ...(Array.isArray(sx) ? sx : [sx]),
-      ]}
-      {...other}
-    >
-      {renderTitle()}
-      {renderDetails()}
-    </Box>
-  );
-}
-
-// ----------------------------------------------------------------------
-
-export type FileItemActionsProps = BoxProps &
-  Pick<CheckboxProps, 'checked' | 'onChange'> & {
-    openMenu: UsePopoverReturn['open'];
-    onOpenMenu: UsePopoverReturn['onOpen'];
-  };
-
-export function FileItemActions({
-  sx,
-  id,
   checked,
   onChange,
-  openMenu,
-  onOpenMenu,
-  ...other
-}: FileItemActionsProps) {
-  return (
+  fileType,
+  onMouseEnter,
+  onMouseLeave,
+}: {
+  id: string;
+  hovered: boolean;
+  checked?: boolean;
+  onChange?: () => void;
+  fileType: string;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
+}) => (
+  <Box
+    onMouseEnter={onMouseEnter}
+    onMouseLeave={onMouseLeave}
+    sx={{
+      width: 36,
+      height: 36,
+      flexShrink: 0,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}
+  >
     <Box
-      sx={[
-        {
-          top: 8,
-          right: 8,
-          display: 'flex',
-          position: 'absolute',
-          alignItems: 'center',
-          zIndex: Z_INDEXES.actions,
-        },
-        ...(Array.isArray(sx) ? sx : [sx]),
-      ]}
-      {...other}
-    >
-      <Checkbox
-        color="warning"
-        icon={<Iconify icon="eva:star-outline" />}
-        checkedIcon={<Iconify icon="eva:star-fill" />}
-        checked={checked}
-        onChange={onChange}
-        slotProps={{
-          input: {
-            id: `favorite-${id}-checkbox`,
-            'aria-label': `Favorite ${id} checkbox`,
-          },
+      component="img"
+      {...({ src: `/assets/icons/files/ic_${fileType}.svg` } as any)}
+      sx={{
+        width: 1,
+        height: 1,
+        ...((hovered || checked) && { display: 'none' }),
+      }}
+    />
+
+    {(hovered || checked) && (
+      <Box
+        component="input"
+        {...({ type: 'checkbox', checked, onChange } as any)}
+        sx={{
+          width: 20,
+          height: 20,
+          cursor: 'pointer',
         }}
       />
+    )}
+  </Box>
+);
 
-      <IconButtonWrapper color={openMenu ? 'inherit' : 'default'} onClick={onOpenMenu}>
-        <Iconify icon="eva:more-vertical-fill" />
-      </IconButtonWrapper>
+export const FileItemInfo = ({
+  title,
+  values,
+  type,
+}: {
+  title: string;
+  values: string[];
+  type: 'file' | 'recent-file' | 'folder';
+}) => (
+  <Box
+    sx={{
+      ml: 2,
+      flexGrow: 1,
+      minWidth: 0,
+      display: 'flex',
+      flexDirection: 'column',
+    }}
+  >
+    <Box
+      sx={{
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+        ...tokens.typography.subtitle2,
+      }}
+    >
+      {title}
     </Box>
-  );
-}
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        ...tokens.typography.caption,
+        color: tokens.colors.text.disabled,
+      }}
+    >
+      {values.join(' • ')}
+    </Box>
+  </Box>
+);
 
-// ----------------------------------------------------------------------
-
-export type FileItemAvatarProps = AvatarGroupProps & {
-  sharedUsers: IFileManager['shared'];
-};
-
-export function FileItemAvatar({ sharedUsers, sx, ...other }: FileItemAvatarProps) {
+export const FileItemAvatar = ({ sharedUsers }: { sharedUsers?: any[] | null }) => {
   if (!sharedUsers?.length) {
     return null;
   }
 
   return (
-    <div className="flex -space-x-2" style={{ display: 'inline-flex' }}>
-      {sharedUsers.slice(0, 3).map((person) => (
-        <AvatarWrapper key={person.id} alt={person.name} src={person.avatarUrl} size="small" sx={{ width: 24, height: 24, border: '2px solid white' }} />
+    <Box sx={{ display: 'flex', ml: 1 }}>
+      {sharedUsers.slice(0, 3).map((user, index) => (
+        <AvatarWrapper
+          key={user.id}
+          alt={user.name}
+          src={user.avatarUrl}
+          size="xsmall"
+          sx={{
+            ml: index === 0 ? 0 : -0.75,
+            border: `solid 2px ${tokens.colors.background.paper}`,
+          }}
+        />
       ))}
       {sharedUsers.length > 3 && (
-        <AvatarWrapper size="small" sx={{ width: 24, height: 24, border: '2px solid white', bgcolor: 'grey.300' }}>
+        <Box
+          sx={{
+            ml: -0.75,
+            width: 20,
+            height: 20,
+            borderRadius: '50%',
+            bgcolor: tokens.colors.background.neutral,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            ...tokens.typography.caption,
+            fontSize: 10,
+            border: `solid 2px ${tokens.colors.background.paper}`,
+          }}
+        >
           +{sharedUsers.length - 3}
-        </AvatarWrapper>
+        </Box>
       )}
-    </div>
+    </Box>
   );
-}
+};
+
+export const FileItemActions = ({
+  id,
+  checked,
+  onChange,
+  openMenu,
+  onOpenMenu,
+  sx,
+}: {
+  id: string;
+  checked: boolean;
+  onChange: () => void;
+  openMenu: boolean;
+  onOpenMenu: (event: React.MouseEvent<HTMLElement>) => void;
+  sx?: any;
+}) => (
+  <Box
+    sx={[
+      {
+        display: 'flex',
+        alignItems: 'center',
+        ml: 1,
+      },
+      ...(Array.isArray(sx) ? sx : [sx]),
+    ]}
+  >
+    <Box
+      component="button"
+      onClick={onChange}
+      sx={{
+        p: 0.5,
+        display: 'flex',
+        color: checked ? tokens.colors.error.main : tokens.colors.text.disabled,
+        bgcolor: 'transparent',
+        border: 'none',
+        cursor: 'pointer',
+      }}
+    >
+      <Iconify icon={(checked ? 'solar:heart-bold' : 'solar:heart-linear') as any} width={18} />
+    </Box>
+
+    <Box
+      component="button"
+      onClick={onOpenMenu}
+      sx={{
+        p: 0.5,
+        display: 'flex',
+        color: tokens.colors.text.disabled,
+        bgcolor: 'transparent',
+        border: 'none',
+        cursor: 'pointer',
+        ...(openMenu && { color: tokens.colors.text.primary }),
+      }}
+    >
+      <Iconify icon="eva:more-vertical-fill" width={18} />
+    </Box>
+  </Box>
+);
+
+export const FileItemActionOverlay = styled('div')({
+  top: 0,
+  left: 0,
+  zIndex: 8,
+  width: '100%',
+  height: '100%',
+  cursor: 'pointer',
+  position: 'absolute',
+});

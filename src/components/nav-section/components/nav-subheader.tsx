@@ -4,6 +4,7 @@ import { mergeClasses } from 'minimal-shared/utils';
 
 import { styled } from '@mui/material/styles';
 import ListSubheader from '@mui/material/ListSubheader';
+import { tokens } from 'src/theme/design-tokens';
 
 import { navSectionClasses } from '../styles';
 import { Iconify, iconifyClasses } from '../../iconify';
@@ -25,30 +26,26 @@ export const NavSubheader = styled(({ open, children, className, ...other }: Nav
     />
     {children}
   </ListSubheader>
-))(({ theme }) => ({
-  ...theme.typography.overline,
+))(() => ({
+  ...tokens.typography.overline,
   cursor: 'pointer',
   alignItems: 'center',
   position: 'relative',
-  gap: theme.spacing(1),
+  gap: tokens.spacing(1),
   display: 'inline-flex',
   alignSelf: 'flex-start',
   color: 'var(--nav-subheader-color)',
-  padding: theme.spacing(2, 1, 1, 1.5),
-  fontSize: theme.typography.pxToRem(11),
-  transition: theme.transitions.create(['color', 'padding-left'], {
-    duration: theme.transitions.duration.standard,
-  }),
+  padding: tokens.spacing(2) + ' ' + tokens.spacing(1) + ' ' + tokens.spacing(1) + ' ' + tokens.spacing(1.5),
+  fontSize: tokens.typography.pxToRem(11),
+  transition: 'color 300ms cubic-bezier(0.4, 0, 0.2, 1), padding-left 300ms cubic-bezier(0.4, 0, 0.2, 1)',
   [`& .${iconifyClasses.root}`]: {
     left: -4,
     opacity: 0,
     position: 'absolute',
-    transition: theme.transitions.create(['opacity'], {
-      duration: theme.transitions.duration.standard,
-    }),
+    transition: 'opacity 300ms cubic-bezier(0.4, 0, 0.2, 1)',
   },
   '&:hover': {
-    paddingLeft: theme.spacing(2),
+    paddingLeft: tokens.spacing(2),
     color: 'var(--nav-subheader-hover-color)',
     [`& .${iconifyClasses.root}`]: { opacity: 1 },
   },

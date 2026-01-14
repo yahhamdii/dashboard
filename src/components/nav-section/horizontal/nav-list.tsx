@@ -6,10 +6,10 @@ import { useEffect, useCallback } from 'react';
 import { usePopoverHover } from 'minimal-shared/hooks';
 import { isActiveLink, isExternalLink } from 'minimal-shared/utils';
 
-import { useTheme } from '@mui/material/styles';
 import { popoverClasses } from '@mui/material/Popover';
 
 import { usePathname } from 'src/routes/hooks';
+import { tokens } from 'src/theme/design-tokens';
 
 import { NavItem } from './nav-item';
 import { navSectionClasses } from '../styles';
@@ -26,8 +26,6 @@ export function NavList({
   checkPermissions,
   enabledRootRedirect,
 }: NavListProps) {
-  const theme = useTheme();
-
   const pathname = usePathname();
 
   const isActive = isActiveLink(pathname, data.path, data.deepMatch ?? !!data.children);
@@ -40,7 +38,7 @@ export function NavList({
     elementRef: navItemRef,
   } = usePopoverHover<HTMLButtonElement>();
 
-  const isRtl = theme.direction === 'rtl';
+  const isRtl = tokens.direction === 'rtl';
   const id = open ? `${data.title}-popover` : undefined;
 
   useEffect(() => {
@@ -175,6 +173,3 @@ function NavSubList({
     </NavUl>
   );
 }
-
-
-

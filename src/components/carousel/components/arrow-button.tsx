@@ -7,6 +7,7 @@ import { mergeClasses } from 'minimal-shared/utils';
 import SvgIcon from '@mui/material/SvgIcon';
 import { styled } from '@mui/material/styles';
 import ButtonBase from '@mui/material/ButtonBase';
+import { tokens } from 'src/theme/design-tokens';
 
 import { carouselClasses } from '../classes';
 
@@ -63,14 +64,11 @@ export function ArrowButton({
 
 const ArrowButtonRoot = styled(ButtonBase, {
   shouldForwardProp: (prop: string) => !['axis', 'direction', 'sx'].includes(prop),
-})<Pick<CarouselOptions, 'axis' | 'direction'>>(({ theme }) => ({
+})<Pick<CarouselOptions, 'axis' | 'direction'>>(() => ({
   borderRadius: '50%',
   boxSizing: 'content-box',
-  padding: theme.spacing(1),
-  transition: theme.transitions.create(['all'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.short,
-  }),
+  padding: tokens.spacing(1),
+  transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
   variants: [
     { props: { disabled: true }, style: { opacity: 0.4 } },
     {

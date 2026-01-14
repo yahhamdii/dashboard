@@ -1,6 +1,7 @@
 import type { Theme, CSSObject, MixinsOptions } from '@mui/material/styles';
 
 import { varAlpha } from 'minimal-shared/utils';
+import { tokens } from '../../design-tokens';
 
 import { borderGradient } from './border';
 import { maxLine, textGradient } from './text';
@@ -37,7 +38,7 @@ export type MixinsExtend = {
 /* **********************************************************************
  * 📦 Final
  * **********************************************************************/
-export const mixins: MixinsOptions = {
+export const mixins: any = {
   hideScrollX: {
     msOverflowStyle: 'none',
     scrollbarWidth: 'none',
@@ -52,7 +53,7 @@ export const mixins: MixinsOptions = {
   },
   scrollbarStyles: (theme: Theme): CSSObject => ({
     scrollbarWidth: 'thin',
-    scrollbarColor: `${varAlpha(theme.vars.palette.text.disabledChannel, 0.4)} ${varAlpha(theme.vars.palette.text.disabledChannel, 0.08)}`,
+    scrollbarColor: `${varAlpha(tokens.colors.text.disabledChannel, 0.4)} ${varAlpha(tokens.colors.text.disabledChannel, 0.08)}`,
   }),
   bgBlur,
   maxLine,

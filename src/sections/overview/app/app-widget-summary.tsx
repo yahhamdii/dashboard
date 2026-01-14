@@ -2,7 +2,7 @@ import type { CardProps } from '@mui/material/Card';
 import type { ChartOptions } from 'src/components/chart';
 
 import Box from '@mui/material/Box';
-import { useTheme } from '@mui/material/styles';
+import { tokens } from 'src/theme/design-tokens';
 
 import { CardWrapper as Card } from 'src/components/circuit-ui';
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
@@ -27,9 +27,7 @@ type Props = CardProps & {
 };
 
 export function AppWidgetSummary({ title, percent, total, chart, sx, ...other }: Props) {
-  const theme = useTheme();
-
-  const chartColors = chart.colors ?? [theme.palette.primary.main];
+  const chartColors = chart.colors ?? [tokens.colors.primary.main];
 
   const chartOptions = useChart({
     chart: { sparkline: { enabled: true } },
@@ -45,7 +43,7 @@ export function AppWidgetSummary({ title, percent, total, chart, sx, ...other }:
 
   const renderTrending = () => {
     const useCircuit = useCircuitLayoutsWithPathname();
-    
+
     if (useCircuit) {
       return (
         <div className="flex gap-0.5 items-center">
@@ -58,8 +56,8 @@ export function AppWidgetSummary({ title, percent, total, chart, sx, ...other }:
             }
             sx={{
               flexShrink: 0,
-              color: 'success.main',
-              ...(percent < 0 && { color: 'error.main' }),
+              color: tokens.colors.success.main,
+              ...(percent < 0 && { color: tokens.colors.error.main }),
             }}
           />
 
@@ -74,7 +72,7 @@ export function AppWidgetSummary({ title, percent, total, chart, sx, ...other }:
         </div>
       );
     }
-    
+
     return (
       <Box sx={{ gap: 0.5, display: 'flex', alignItems: 'center' }}>
         <Iconify
@@ -86,8 +84,8 @@ export function AppWidgetSummary({ title, percent, total, chart, sx, ...other }:
           }
           sx={{
             flexShrink: 0,
-            color: 'success.main',
-            ...(percent < 0 && { color: 'error.main' }),
+            color: tokens.colors.success.main,
+            ...(percent < 0 && { color: tokens.colors.error.main }),
           }}
         />
 
@@ -96,7 +94,7 @@ export function AppWidgetSummary({ title, percent, total, chart, sx, ...other }:
           {fPercent(percent)}
         </Box>
 
-        <Box component="span" sx={{ typography: 'body2', color: 'text.secondary' }}>
+        <Box component="span" sx={{ typography: 'body2', color: tokens.colors.text.secondary }}>
           last 7 days
         </Box>
       </Box>
@@ -106,30 +104,22 @@ export function AppWidgetSummary({ title, percent, total, chart, sx, ...other }:
   return (
     <Card
       sx={[
-        () => ({
+        {
           p: 3,
           display: 'flex',
           zIndex: 'unset',
           overflow: 'unset',
           alignItems: 'center',
-        }),
+        },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
       {...other}
     >
-      {useCircuitLayoutsWithPathname() ? (
-        <div className="flex-grow">
-          <div className="text-sm font-medium">{title}</div>
-          <div className="text-3xl font-bold mt-1.5 mb-1">{fNumber(total)}</div>
-          {renderTrending()}
-        </div>
-      ) : (
-        <div className="flex-grow">
-          <div className="text-sm font-medium">{title}</div>
-          <div className="text-3xl font-bold mt-1.5 mb-1">{fNumber(total)}</div>
-          {renderTrending()}
-        </div>
-      )}
+      <div className="flex-grow">
+        <div className="text-sm font-medium">{title}</div>
+        <div className="text-3xl font-bold mt-1.5 mb-1">{fNumber(total)}</div>
+        {renderTrending()}
+      </div>
 
       <Chart
         type="bar"

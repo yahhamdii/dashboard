@@ -8,6 +8,7 @@ import { mergeClasses } from 'minimal-shared/utils';
 import Tooltip from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import ButtonBase from '@mui/material/ButtonBase';
+import { tokens } from 'src/theme/design-tokens';
 
 import { Iconify } from '../../iconify';
 import { createNavItem } from '../utils';
@@ -122,7 +123,6 @@ const shouldForwardProp = (prop: string) =>
 const ItemRoot = styled(ButtonBase, { shouldForwardProp })<StyledState>(({
   active,
   open,
-  theme,
 }) => {
   const rootItemStyles: CSSObject = {
     padding: 'var(--nav-item-root-padding)',
@@ -135,16 +135,13 @@ const ItemRoot = styled(ButtonBase, { shouldForwardProp })<StyledState>(({
       color: 'var(--nav-item-root-active-color)',
       backgroundColor: 'var(--nav-item-root-active-bg)',
       '&:hover': { backgroundColor: 'var(--nav-item-root-active-hover-bg)' },
-      ...theme.applyStyles('dark', {
-        color: 'var(--nav-item-root-active-color-on-dark)',
-      }),
     }),
   };
 
   const subItemStyles: CSSObject = {
     padding: 'var(--nav-item-sub-padding)',
     minHeight: 'var(--nav-item-sub-height)',
-    color: theme.vars.palette.text.secondary,
+    color: tokens.colors.text.secondary,
     ...(open && {
       color: 'var(--nav-item-sub-open-color)',
       backgroundColor: 'var(--nav-item-sub-open-bg)',
@@ -183,39 +180,36 @@ const ItemIcon = styled('span', { shouldForwardProp })<StyledState>(() => ({
 /**
  * @slot title
  */
-const ItemTitle = styled('span', { shouldForwardProp })<StyledState>(({ theme }) => ({
-  ...navItemStyles.title(theme),
-  ...theme.typography.body2,
+const ItemTitle = styled('span', { shouldForwardProp })<StyledState>(() => ({
+  ...navItemStyles.title(),
+  ...tokens.typography.body2,
   whiteSpace: 'nowrap',
-  fontWeight: theme.typography.fontWeightMedium,
+  fontWeight: tokens.typography.fontWeightMedium,
   variants: [
-    { props: { active: true }, style: { fontWeight: theme.typography.fontWeightSemiBold } },
+    { props: { active: true }, style: { fontWeight: tokens.typography.fontWeightSemiBold } },
   ],
 }));
 
 /**
  * @slot caption icon
  */
-const ItemCaptionIcon = styled(Iconify, { shouldForwardProp })<StyledState>(({ theme }) => ({
+const ItemCaptionIcon = styled(Iconify, { shouldForwardProp })<StyledState>(() => ({
   ...navItemStyles.captionIcon,
   color: 'var(--nav-item-caption-color)',
-  variants: [{ props: { variant: 'rootItem' }, style: { marginLeft: theme.spacing(0.75) } }],
+  variants: [{ props: { variant: 'rootItem' }, style: { marginLeft: tokens.spacing(0.75) } }],
 }));
 
 /**
  * @slot info
  */
-const ItemInfo = styled('span', { shouldForwardProp })<StyledState>(({ theme }) => ({
+const ItemInfo = styled('span', { shouldForwardProp })<StyledState>(() => ({
   ...navItemStyles.info,
 }));
 
 /**
  * @slot arrow
  */
-const ItemArrow = styled(Iconify, { shouldForwardProp })<StyledState>(({ theme }) => ({
-  ...navItemStyles.arrow(theme),
-  variants: [{ props: { variant: 'subItem' }, style: { marginRight: theme.spacing(-0.5) } }],
+const ItemArrow = styled(Iconify, { shouldForwardProp })<StyledState>(() => ({
+  ...navItemStyles.arrow(),
+  variants: [{ props: { variant: 'subItem' }, style: { marginRight: tokens.spacing(-0.5) } }],
 }));
-
-
-

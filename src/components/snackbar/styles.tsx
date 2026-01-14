@@ -1,15 +1,16 @@
-import type { Theme, CSSObject } from '@mui/material/styles';
+import type { CSSObject } from '@mui/material/styles';
 
 import { Toaster } from 'sonner';
 import { varAlpha } from 'minimal-shared/utils';
 
 import { styled } from '@mui/material/styles';
+import { tokens } from 'src/theme/design-tokens';
 
 import { snackbarClasses } from './classes';
 
 // ----------------------------------------------------------------------
 
-const loadingIconStyles = (theme: Theme): CSSObject => ({
+const loadingIconStyles = (): CSSObject => ({
   top: 0,
   left: 0,
   width: '100%',
@@ -21,7 +22,7 @@ const loadingIconStyles = (theme: Theme): CSSObject => ({
   position: 'relative',
   borderRadius: 'inherit',
   justifyContent: 'center',
-  background: theme.vars.palette.background.neutral,
+  background: tokens.colors.background.neutral,
   [snackbarClasses.loaderVisible]: {
     display: 'inline-flex',
   },
@@ -31,11 +32,11 @@ const loadingIconStyles = (theme: Theme): CSSObject => ({
     height: 24,
     borderRadius: '50%',
     animation: 'rotate 3s infinite linear',
-    background: `conic-gradient(transparent, ${varAlpha(theme.vars.palette.text.disabledChannel, 0.64)})`,
+    background: `conic-gradient(transparent, ${varAlpha(tokens.colors.text.disabledChannel, 0.64)})`,
   },
 });
 
-const iconStyles = (theme: Theme): CSSObject => ({
+const iconStyles = (): CSSObject => ({
   [`& .${snackbarClasses.icon}`]: {
     flexShrink: 0,
     display: 'flex',
@@ -52,13 +53,13 @@ const iconStyles = (theme: Theme): CSSObject => ({
         height: 24,
       },
       [`& .${snackbarClasses.loader}`]: {
-        ...loadingIconStyles(theme),
+        ...loadingIconStyles(),
       },
     },
   },
 });
 
-const contentStyles = (theme: Theme): CSSObject => ({
+const contentStyles = (): CSSObject => ({
   [`& .${snackbarClasses.content}`]: {
     gap: 2,
     display: 'flex',
@@ -67,17 +68,17 @@ const contentStyles = (theme: Theme): CSSObject => ({
   },
   [`& .${snackbarClasses.title}`]: {
     lineHeight: 20 / 13,
-    fontSize: theme.typography.pxToRem(13),
-    fontWeight: theme.typography.fontWeightMedium,
+    fontSize: tokens.typography.pxToRem(13),
+    fontWeight: tokens.typography.fontWeightMedium,
   },
   [`& .${snackbarClasses.description}`]: {
     opacity: 0.64,
     lineHeight: 18 / 13,
-    fontSize: theme.typography.pxToRem(13),
+    fontSize: tokens.typography.pxToRem(13),
   },
 });
 
-const actionsStyles = (theme: Theme): CSSObject => ({
+const actionsStyles = (): CSSObject => ({
   [`& .${snackbarClasses.actionButton}, .${snackbarClasses.closeButton}`]: {
     color: 'inherit',
     cursor: 'pointer',
@@ -86,7 +87,7 @@ const actionsStyles = (theme: Theme): CSSObject => ({
     justifyContent: 'center',
     backgroundColor: 'transparent',
     border: `solid 1px ${varAlpha('currentColor', 0.16)}`,
-    transition: theme.transitions.create(['background-color', 'border-color']),
+    // transition removed or simplified
     '&:hover': {
       borderColor: varAlpha('currentColor', 0.24),
       backgroundColor: varAlpha('currentColor', 0.08),
@@ -96,8 +97,8 @@ const actionsStyles = (theme: Theme): CSSObject => ({
     borderRadius: 6,
     lineHeight: 18 / 13,
     padding: ' 2px 8px',
-    fontSize: theme.typography.pxToRem(13),
-    fontWeight: theme.typography.fontWeightSemiBold,
+    fontSize: tokens.typography.pxToRem(13),
+    fontWeight: tokens.typography.fontWeightSemiBold,
   },
   [`& .${snackbarClasses.closeButton}`]: {
     top: 0,
@@ -112,7 +113,7 @@ const actionsStyles = (theme: Theme): CSSObject => ({
   },
 });
 
-const toastStyles = (theme: Theme): CSSObject => ({
+const toastStyles = (): CSSObject => ({
   [`& .${snackbarClasses.toast}`]: {
     gap: 12,
     minHeight: 52,
@@ -120,41 +121,41 @@ const toastStyles = (theme: Theme): CSSObject => ({
     width: '100%',
     display: 'flex',
     alignItems: 'center',
-    padding: theme.spacing(0.5, 1, 0.5, 0.5),
-    boxShadow: theme.vars.customShadows.z8,
-    backgroundColor: theme.vars.palette.background.paper,
+    padding: tokens.spacing(0.5) + ' ' + tokens.spacing(1) + ' ' + tokens.spacing(0.5) + ' ' + tokens.spacing(0.5),
+    boxShadow: tokens.customShadows.z8,
+    backgroundColor: tokens.colors.background.paper,
     [`&:has(${snackbarClasses.closeBtnVisible})`]: {
       [`& .${snackbarClasses.content}`]: { paddingRight: 24 },
     },
     [snackbarClasses.default]: {
-      padding: theme.spacing(1, 1, 1, 1.5),
-      color: theme.vars.palette.background.paper,
-      backgroundColor: theme.vars.palette.text.primary,
+      padding: tokens.spacing(1),
+      color: tokens.colors.background.paper,
+      backgroundColor: tokens.colors.text.primary,
     },
     [`&.${snackbarClasses.info} .${snackbarClasses.icon}`]: {
-      color: theme.vars.palette.info.main,
+      color: tokens.colors.info.main,
     },
     [`&.${snackbarClasses.success} .${snackbarClasses.icon}`]: {
-      color: theme.vars.palette.success.main,
+      color: tokens.colors.success.main,
     },
     [`&.${snackbarClasses.warning} .${snackbarClasses.icon}`]: {
-      color: theme.vars.palette.warning.main,
+      color: tokens.colors.warning.main,
     },
     [`&.${snackbarClasses.error} .${snackbarClasses.icon}`]: {
-      color: theme.vars.palette.error.main,
+      color: tokens.colors.error.main,
     },
   },
 });
 
 // ----------------------------------------------------------------------
 
-export const SnackbarRoot = styled(Toaster)(({ theme }) => ({
+export const SnackbarRoot = styled(Toaster)(() => ({
   '@keyframes rotate': {
     to: { transform: 'rotate(1turn)' },
   },
   width: 300,
-  ...toastStyles(theme),
-  ...iconStyles(theme),
-  ...contentStyles(theme),
-  ...actionsStyles(theme),
+  ...toastStyles(),
+  ...iconStyles(),
+  ...contentStyles(),
+  ...actionsStyles(),
 }));

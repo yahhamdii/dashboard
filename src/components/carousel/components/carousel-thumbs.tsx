@@ -6,6 +6,7 @@ import { Children, isValidElement } from 'react';
 import { mergeClasses } from 'minimal-shared/utils';
 
 import { styled } from '@mui/material/styles';
+import { tokens } from 'src/theme/design-tokens';
 
 import { carouselClasses } from '../classes';
 import { CarouselSlide } from './carousel-slide';
@@ -69,8 +70,8 @@ type ThumbsRootProps = Pick<CarouselOptions, 'axis'> & {
 
 const ThumbsRoot = styled('div', {
   shouldForwardProp: (prop: string) => !['axis', 'enableMask', 'sx'].includes(prop),
-})<ThumbsRootProps>(({ enableMask, theme }) => {
-  const maskBg = `${theme.vars.palette.background.paper} 20%, transparent 100%)`;
+})<ThumbsRootProps>(({ enableMask }) => {
+  const maskBg = `${tokens.colors.background.paper} 20%, transparent 100%)`;
 
   return {
     flexShrink: 0,
@@ -83,7 +84,7 @@ const ThumbsRoot = styled('div', {
         props: { axis: 'x' },
         style: {
           maxWidth: '100%',
-          padding: theme.spacing(0.5),
+          padding: tokens.spacing(0.5),
           ...(enableMask && {
             '&::before, &::after': {
               top: 0,
@@ -103,7 +104,7 @@ const ThumbsRoot = styled('div', {
         style: {
           height: '100%',
           maxHeight: '100%',
-          padding: theme.spacing(0.5),
+          padding: tokens.spacing(0.5),
           ...(enableMask && {
             '&::before, &::after': {
               left: 0,

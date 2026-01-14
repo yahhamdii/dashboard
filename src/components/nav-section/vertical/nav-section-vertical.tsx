@@ -6,7 +6,8 @@ import { useBoolean } from 'minimal-shared/hooks';
 import { mergeClasses } from 'minimal-shared/utils';
 
 import Collapse from '@mui/material/Collapse';
-import { useTheme } from '@mui/material/styles';
+
+import { tokens } from 'src/theme/design-tokens';
 
 import { NavList } from './nav-list';
 import { Nav, NavUl, NavLi, NavSubheader } from '../components';
@@ -25,9 +26,7 @@ export function NavSectionVertical({
   cssVars: overridesVars,
   ...other
 }: NavSectionProps) {
-  const theme = useTheme();
-
-  const cssVars = { ...navSectionCssVars.vertical(theme), ...overridesVars };
+  const cssVars = { ...navSectionCssVars.vertical(), ...overridesVars };
 
   return (
     <Nav

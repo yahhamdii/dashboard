@@ -6,6 +6,7 @@ import type { CarouselDotButtonsProps } from '../types';
 import { mergeClasses } from 'minimal-shared/utils';
 
 import Box from '@mui/material/Box';
+import { tokens } from 'src/theme/design-tokens';
 import { styled } from '@mui/material/styles';
 import ButtonBase from '@mui/material/ButtonBase';
 
@@ -102,7 +103,7 @@ const DotItem = styled(ButtonBase, {
     variants: [
       {
         props: { variant: 'circular' },
-        style: () => ({
+        style: {
           width: wrapperSize,
           height: wrapperSize,
           '&::before': {
@@ -110,11 +111,11 @@ const DotItem = styled(ButtonBase, {
             borderRadius: '50%',
             ...(selected && { opacity: 1 }),
           },
-        }),
+        },
       },
       {
         props: { variant: 'rounded' },
-        style: () => ({
+        style: {
           width: wrapperSize,
           height: wrapperSize,
           '&::before': {
@@ -122,7 +123,7 @@ const DotItem = styled(ButtonBase, {
             borderRadius: size / 2,
             ...(selected && { opacity: 1, width: 'calc(100% - 4px)' }),
           },
-        }),
+        },
       },
       {
         props: { variant: 'number' },
@@ -130,12 +131,13 @@ const DotItem = styled(ButtonBase, {
           width: size,
           height: size,
           borderRadius: '50%',
-          ...theme.typography.body2,
-          color: theme.vars.palette.text.disabled,
-          border: `solid 1px ${theme.vars.palette.shared.buttonOutlined}`,
+          ...tokens.typography.body2,
+          color: tokens.colors.text.disabled,
+          border: `solid 1px ${tokens.colors.shared.buttonOutlined}`,
           ...(selected && {
-            ...theme.mixins.filledStyles(theme, 'inherit'),
-            fontWeight: theme.typography.fontWeightSemiBold,
+            color: tokens.colors.common.white,
+            backgroundColor: tokens.colors.grey[800],
+            fontWeight: tokens.typography.fontWeightBold,
             borderColor: 'transparent',
           }),
         },
