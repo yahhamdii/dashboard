@@ -1,9 +1,7 @@
-import type { BoxProps } from '@mui/material/Box';
 import type { ChartOptions } from 'src/components/chart';
 import type { IconifyName } from 'src/components/iconify';
 
 import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import { useTheme } from '@mui/material/styles';
 
 import { fNumber } from 'src/utils/format-number';
 
@@ -14,10 +12,11 @@ import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 import { Iconify } from 'src/components/iconify';
 import { SvgColor } from 'src/components/svg-color';
 import { Chart, useChart } from 'src/components/chart';
+import { tokens } from 'src/theme/design-tokens';
 
 // ----------------------------------------------------------------------
 
-type Props = BoxProps & {
+type Props = React.ComponentProps<typeof Box> & {
   title: string;
   total: number;
   icon: IconifyName;
@@ -29,9 +28,10 @@ type Props = BoxProps & {
 };
 
 export function AppWidget({ title, total, icon, chart, sx, ...other }: Props) {
-  const theme = useTheme();
-
-  const chartColors = chart.colors ?? [theme.palette.primary.light, theme.palette.primary.main];
+  const chartColors = chart.colors ?? [
+    tokens.colors.primary.light,
+    tokens.colors.primary.main,
+  ];
 
   const chartOptions = useChart({
     chart: { sparkline: { enabled: true } },
@@ -51,8 +51,8 @@ export function AppWidget({ title, total, icon, chart, sx, ...other }: Props) {
           name: { show: false },
           value: {
             offsetY: 6,
-            color: theme.vars.palette.common.white,
-            fontSize: theme.typography.subtitle2.fontSize as string,
+            color: tokens.colors.common.white,
+            fontSize: '14px',
           },
         },
       },

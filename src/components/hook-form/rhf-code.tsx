@@ -1,26 +1,23 @@
-import type { BoxProps } from '@mui/material/Box';
-import type { MuiOtpInputProps } from 'mui-one-time-password-input';
-import type { FormHelperTextProps } from '@mui/material/FormHelperText';
+import React, { useRef } from 'react';
 
-import { MuiOtpInput } from 'mui-one-time-password-input';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import { inputBaseClasses } from '@mui/material/InputBase';
 
 import { HelperText } from './help-text';
 
 // ----------------------------------------------------------------------
 
-export interface RHFCodesProps extends Omit<MuiOtpInputProps, 'sx'> {
+export interface RHFCodesProps {
   name: string;
+  length?: number;
   maxSize?: number;
   placeholder?: string;
   helperText?: React.ReactNode;
   slotProps?: {
-    wrapper?: BoxProps;
-    helperText?: FormHelperTextProps;
-    textField?: MuiOtpInputProps['TextFieldsProps'];
+    wrapper?: React.ComponentProps<typeof Box>;
+    helperText?: React.ComponentProps<typeof HelperText>;
+    input?: React.InputHTMLAttributes<HTMLInputElement>;
   };
 }
 
@@ -33,6 +30,7 @@ export function RHFCode({
   ...other
 }: RHFCodesProps) {
   const { control } = useFormContext();
+  const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
 
   return (
     <Controller
@@ -41,32 +39,58 @@ export function RHFCode({
       render={({ field, fieldState: { error } }) => (
         <Box
           {...slotProps?.wrapper}
-          sx={[
-            {
-              [`& .${inputBaseClasses.input}`]: {
-                p: 0,
-                height: 'auto',
-                aspectRatio: '1/1',
-                maxWidth: maxSize,
-              },
-            },
-            ...(Array.isArray(slotProps?.wrapper?.sx)
-              ? slotProps.wrapper.sx
-              : [slotProps?.wrapper?.sx]),
-          ]}
+          sx={{
+            display: 'flex',
+            gap: 8,
+            ...(slotProps?.wrapper?.sx as any),
+          }}
         >
-          <MuiOtpInput
-            {...field}
-            autoFocus
-            gap={1.5}
-            length={6}
-            TextFieldsProps={{
-              placeholder,
-              error: !!error,
-              ...slotProps?.textField,
-            }}
-            {...other}
-          />
+          {Array.from({ length: other.length ?? 6 }).map((_, index) => {
+            const value: string = field.value || '';
+            const char = value[index] ?? '';
+
+            const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+              const nextChar = e.target.value.slice(-1);
+              const chars = value.split('');
+              chars[index] = nextChar;
+              const nextValue = chars.join('');
+              field.onChange(nextValue);
+
+              if (nextChar && index < (other.length ?? 6) - 1) {
+                inputsRef.current[index + 1]?.focus();
+              }
+            };
+
+            const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+              if (e.key === 'Backspace' && !char && index > 0) {
+                inputsRef.current[index - 1]?.focus();
+              }
+            };
+
+            return (
+              <input
+                key={index}
+                ref={(el) => {
+                  inputsRef.current[index] = el;
+                }}
+                value={char}
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
+                maxLength={1}
+                inputMode="numeric"
+                pattern="[0-9]*"
+                placeholder={placeholder}
+                style={{
+                  width: maxSize,
+                  height: maxSize,
+                  textAlign: 'center',
+                  borderRadius: 8,
+                  border: error ? '1px solid var(--cui-border-strong)' : '1px solid var(--cui-border-subtle)',
+                }}
+                {...slotProps?.input}
+              />
+            );
+          })}
 
           <HelperText
             {...slotProps?.helperText}

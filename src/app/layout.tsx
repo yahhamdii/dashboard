@@ -2,9 +2,6 @@ import 'src/global.css';
 
 import type { Metadata, Viewport } from 'next';
 
-import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
-
 import { CONFIG } from 'src/global-config';
 import { LocalizationProvider } from 'src/locales';
 import { detectLanguage } from 'src/locales/server';
@@ -67,32 +64,24 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang={appConfig.lang} dir={appConfig.dir} suppressHydrationWarning>
       <body>
-        <InitColorSchemeScript
-          modeStorageKey={themeConfig.modeStorageKey}
-          attribute={themeConfig.cssVariables.colorSchemeSelector}
-          defaultMode={themeConfig.defaultMode}
-        />
-
         <I18nProvider lang={appConfig.i18nLang}>
           <SettingsProvider
             defaultSettings={defaultSettings}
             cookieSettings={appConfig.cookieSettings}
           >
             <LocalizationProvider>
-              <AppRouterCacheProvider options={{ key: 'css' }}>
-                <ThemeProvider
-                  modeStorageKey={themeConfig.modeStorageKey}
-                  defaultMode={themeConfig.defaultMode}
-                >
-                  <MotionLazy>
-                    <>
-                      <Snackbar />
-                      <ProgressBar />
-                      {children}
-                    </>
-                  </MotionLazy>
-                </ThemeProvider>
-              </AppRouterCacheProvider>
+              <ThemeProvider
+                modeStorageKey={themeConfig.modeStorageKey}
+                defaultMode={themeConfig.defaultMode}
+              >
+                <MotionLazy>
+                  <>
+                    <Snackbar />
+                    <ProgressBar />
+                    {children}
+                  </>
+                </MotionLazy>
+              </ThemeProvider>
             </LocalizationProvider>
           </SettingsProvider>
         </I18nProvider>
