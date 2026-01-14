@@ -3,7 +3,7 @@
 import type { Theme, SxProps } from '@mui/material/styles';
 import type { TablePaginationProps } from '@mui/material/TablePagination';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import TablePagination from '@mui/material/TablePagination';
 import FormControlLabel from '@mui/material/FormControlLabel';
 

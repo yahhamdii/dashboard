@@ -3,7 +3,7 @@ import type { IUserProfilePost } from 'src/types/user';
 import { varAlpha } from 'minimal-shared/utils';
 import { useRef, useState, useCallback } from 'react';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';

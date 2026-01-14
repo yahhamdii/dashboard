@@ -678,7 +678,9 @@
       "Box",
       "Skeleton"
     ],
-    "circuitWrappers": [],
+    "circuitWrappers": [
+      "BoxWrapper"
+    ],
     "hasCircuitFlag": false
   },
   {
@@ -1263,6 +1265,7 @@
       "FormControl"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "CheckboxWrapper"
     ],
     "hasCircuitFlag": false
@@ -1273,7 +1276,9 @@
     "muiComponents": [
       "Box"
     ],
-    "circuitWrappers": [],
+    "circuitWrappers": [
+      "BoxWrapper"
+    ],
     "hasCircuitFlag": false
   },
   {
@@ -1300,7 +1305,9 @@
       "Box",
       "Rating"
     ],
-    "circuitWrappers": [],
+    "circuitWrappers": [
+      "BoxWrapper"
+    ],
     "hasCircuitFlag": false
   },
   {
@@ -1317,6 +1324,7 @@
       "Chip"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "SelectWrapper",
       "CheckboxWrapper"
     ],
@@ -1329,7 +1337,9 @@
       "Box",
       "Slider"
     ],
-    "circuitWrappers": [],
+    "circuitWrappers": [
+      "BoxWrapper"
+    ],
     "hasCircuitFlag": false
   },
   {
@@ -1341,6 +1351,7 @@
       "FormControl"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "SwitchWrapper"
     ],
     "hasCircuitFlag": false
@@ -1362,7 +1373,9 @@
     "muiComponents": [
       "Box"
     ],
-    "circuitWrappers": [],
+    "circuitWrappers": [
+      "BoxWrapper"
+    ],
     "hasCircuitFlag": false
   },
   {
@@ -1492,7 +1505,9 @@
     "muiComponents": [
       "Box"
     ],
-    "circuitWrappers": [],
+    "circuitWrappers": [
+      "BoxWrapper"
+    ],
     "hasCircuitFlag": false
   },
   {
@@ -1774,6 +1789,7 @@
       "Typography"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "TypographyWrapper"
     ],
     "hasCircuitFlag": true
@@ -1933,6 +1949,7 @@
       "Switch"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "SwitchWrapper"
     ],
     "hasCircuitFlag": false
@@ -1946,6 +1963,7 @@
       "Typography"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "CheckboxWrapper",
       "TypographyWrapper"
     ],
@@ -2053,6 +2071,7 @@
       "Button"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "ButtonWrapper"
     ],
     "hasCircuitFlag": false
@@ -2196,7 +2215,9 @@
       "IconButton",
       "Alert"
     ],
-    "circuitWrappers": [],
+    "circuitWrappers": [
+      "BoxWrapper"
+    ],
     "hasCircuitFlag": true
   },
   {
@@ -2205,7 +2226,9 @@
     "muiComponents": [
       "Box"
     ],
-    "circuitWrappers": [],
+    "circuitWrappers": [
+      "BoxWrapper"
+    ],
     "hasCircuitFlag": true
   },
   {
@@ -2215,7 +2238,9 @@
       "Box",
       "Drawer"
     ],
-    "circuitWrappers": [],
+    "circuitWrappers": [
+      "BoxWrapper"
+    ],
     "hasCircuitFlag": true
   },
   {
@@ -2224,7 +2249,9 @@
     "muiComponents": [
       "Box"
     ],
-    "circuitWrappers": [],
+    "circuitWrappers": [
+      "BoxWrapper"
+    ],
     "hasCircuitFlag": true
   },
   {
@@ -2256,7 +2283,9 @@
     "muiComponents": [
       "Box"
     ],
-    "circuitWrappers": [],
+    "circuitWrappers": [
+      "BoxWrapper"
+    ],
     "hasCircuitFlag": false
   },
   {
@@ -2274,7 +2303,9 @@
       "Alert",
       "Link"
     ],
-    "circuitWrappers": [],
+    "circuitWrappers": [
+      "BoxWrapper"
+    ],
     "hasCircuitFlag": false
   },
   {
@@ -2431,6 +2462,7 @@
       "Avatar"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "ButtonWrapper",
       "CardWrapper",
       "TypographyWrapper"
@@ -2542,6 +2574,7 @@
       "Checkbox"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "CheckboxWrapper"
     ],
     "hasCircuitFlag": true
@@ -2557,6 +2590,7 @@
       "Dialog"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "ButtonWrapper",
       "InputWrapper",
       "DialogWrapper"
@@ -2638,6 +2672,7 @@
       "InputAdornment"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "ButtonWrapper",
       "InputWrapper"
     ],
@@ -2665,6 +2700,7 @@
       "Button"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "ButtonWrapper"
     ],
     "hasCircuitFlag": true
@@ -2696,6 +2732,7 @@
       "IconButton"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "ButtonWrapper",
       "IconButtonWrapper"
     ],
@@ -2730,6 +2767,7 @@
       "MenuList"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "ButtonWrapper",
       "CheckboxWrapper",
       "TypographyWrapper"
@@ -2745,6 +2783,7 @@
       "Tooltip"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "ButtonWrapper",
       "IconButtonWrapper",
       "TooltipWrapper",
@@ -2770,6 +2809,7 @@
       "Card"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "CardWrapper"
     ],
     "hasCircuitFlag": true
@@ -2800,6 +2840,7 @@
       "Typography"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "ButtonWrapper",
       "CardWrapper",
       "TypographyWrapper",
@@ -2817,6 +2858,7 @@
       "Typography"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "ButtonWrapper",
       "TypographyWrapper"
     ],
@@ -2865,6 +2907,7 @@
       "Link"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "CardWrapper",
       "TypographyWrapper"
     ],
@@ -2882,6 +2925,7 @@
       "MenuList"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "ButtonWrapper",
       "CardWrapper",
       "CardHeaderWrapper",
@@ -2898,6 +2942,7 @@
       "CardHeader"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "CardWrapper",
       "CardHeaderWrapper",
       "AvatarWrapper"
@@ -2914,6 +2959,7 @@
       "Typography"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "CardWrapper",
       "CardHeaderWrapper",
       "TypographyWrapper"
@@ -2932,6 +2978,7 @@
       "Rating"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "CardWrapper",
       "CardHeaderWrapper",
       "TypographyWrapper",
@@ -2949,6 +2996,7 @@
       "Typography"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "TypographyWrapper"
     ],
     "hasCircuitFlag": true
@@ -2971,7 +3019,9 @@
     "muiComponents": [
       "Box"
     ],
-    "circuitWrappers": [],
+    "circuitWrappers": [
+      "BoxWrapper"
+    ],
     "hasCircuitFlag": true
   },
   {
@@ -2989,6 +3039,7 @@
       "Button"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "ButtonWrapper"
     ],
     "hasCircuitFlag": true
@@ -3000,6 +3051,7 @@
       "Box"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "AvatarWrapper"
     ],
     "hasCircuitFlag": true
@@ -3014,6 +3066,7 @@
       "Typography"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "ButtonWrapper",
       "CardWrapper",
       "TypographyWrapper",
@@ -3035,6 +3088,7 @@
       "Link"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "ButtonWrapper",
       "InputWrapper",
       "CardWrapper",
@@ -3053,6 +3107,7 @@
       "Typography"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "ButtonWrapper",
       "CardWrapper",
       "TypographyWrapper",
@@ -3095,6 +3150,7 @@
       "Link"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "ButtonWrapper",
       "CheckboxWrapper",
       "CardWrapper",
@@ -3112,7 +3168,9 @@
       "Box",
       "Pagination"
     ],
-    "circuitWrappers": [],
+    "circuitWrappers": [
+      "BoxWrapper"
+    ],
     "hasCircuitFlag": true
   },
   {
@@ -3143,6 +3201,7 @@
       "Avatar"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "ButtonWrapper",
       "SwitchWrapper",
       "CardWrapper",
@@ -3162,6 +3221,7 @@
       "Alert"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "ButtonWrapper",
       "DialogWrapper"
     ],
@@ -3212,6 +3272,7 @@
       "MenuList"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "ButtonWrapper",
       "InputWrapper",
       "SelectWrapper",
@@ -3262,6 +3323,7 @@
       "List"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "ButtonWrapper",
       "CardWrapper",
       "IconButtonWrapper",
@@ -3279,6 +3341,7 @@
       "Card"
     ],
     "circuitWrappers": [
+      "BoxWrapper",
       "CardWrapper",
       "TabsWrapper",
       "TabWrapper"
@@ -3300,166 +3363,7 @@
     "hasCircuitFlag": false
   },
   {
-    "file": "theme\\core\\components\\alert.tsx",
-    "muiImports": [],
-    "muiComponents": [
-      "Alert"
-    ],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\appbar.tsx",
-    "muiImports": [],
-    "muiComponents": [],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\autocomplete.tsx",
-    "muiImports": [],
-    "muiComponents": [
-      "Autocomplete"
-    ],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\avatar.tsx",
-    "muiImports": [],
-    "muiComponents": [
-      "Box",
-      "Avatar"
-    ],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\backdrop.tsx",
-    "muiImports": [],
-    "muiComponents": [],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\badge.tsx",
-    "muiImports": [],
-    "muiComponents": [],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\breadcrumbs.tsx",
-    "muiImports": [],
-    "muiComponents": [],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\button-fab.tsx",
-    "muiImports": [],
-    "muiComponents": [],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\button-icon.tsx",
-    "muiImports": [],
-    "muiComponents": [],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\button-toggle.tsx",
-    "muiImports": [],
-    "muiComponents": [],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\button.tsx",
-    "muiImports": [],
-    "muiComponents": [
-      "Button"
-    ],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\card.tsx",
-    "muiImports": [],
-    "muiComponents": [],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\checkbox.tsx",
-    "muiImports": [],
-    "muiComponents": [
-      "Checkbox"
-    ],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\chip.tsx",
-    "muiImports": [],
-    "muiComponents": [
-      "Chip"
-    ],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\dialog.tsx",
-    "muiImports": [],
-    "muiComponents": [],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\drawer.tsx",
-    "muiImports": [],
-    "muiComponents": [],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\form.tsx",
-    "muiImports": [],
-    "muiComponents": [
-      "TextField",
-      "Select",
-      "Checkbox",
-      "Switch",
-      "InputLabel"
-    ],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
     "file": "theme\\core\\components\\index.ts",
-    "muiImports": [],
-    "muiComponents": [],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\link.tsx",
-    "muiImports": [],
-    "muiComponents": [],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\list.tsx",
-    "muiImports": [],
-    "muiComponents": [],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\menu.tsx",
     "muiImports": [],
     "muiComponents": [],
     "circuitWrappers": [],
@@ -3477,130 +3381,9 @@
     "hasCircuitFlag": false
   },
   {
-    "file": "theme\\core\\components\\pagination.tsx",
-    "muiImports": [],
-    "muiComponents": [],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\paper.tsx",
-    "muiImports": [],
-    "muiComponents": [],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\popover.tsx",
-    "muiImports": [],
-    "muiComponents": [
-      "List"
-    ],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\progress.tsx",
-    "muiImports": [],
-    "muiComponents": [],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\radio.tsx",
-    "muiImports": [],
-    "muiComponents": [
-      "Radio"
-    ],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\rating.tsx",
-    "muiImports": [],
-    "muiComponents": [],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\select.tsx",
-    "muiImports": [],
-    "muiComponents": [],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\skeleton.tsx",
-    "muiImports": [],
-    "muiComponents": [],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\slider.tsx",
-    "muiImports": [],
-    "muiComponents": [
-      "Slider"
-    ],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\stack.tsx",
-    "muiImports": [],
-    "muiComponents": [],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\svg-icon.tsx",
-    "muiImports": [],
-    "muiComponents": [],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\switch.tsx",
-    "muiImports": [],
-    "muiComponents": [
-      "Switch"
-    ],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\table.tsx",
-    "muiImports": [],
-    "muiComponents": [],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\tabs.tsx",
-    "muiImports": [],
-    "muiComponents": [
-      "Tabs",
-      "Tab"
-    ],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
     "file": "theme\\core\\components\\text-field.tsx",
     "muiImports": [],
-    "muiComponents": [
-      "TextField",
-      "InputAdornment"
-    ],
-    "circuitWrappers": [],
-    "hasCircuitFlag": false
-  },
-  {
-    "file": "theme\\core\\components\\tooltip.tsx",
-    "muiImports": [],
-    "muiComponents": [
-      "Tooltip"
-    ],
+    "muiComponents": [],
     "circuitWrappers": [],
     "hasCircuitFlag": false
   },

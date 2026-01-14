@@ -6,7 +6,7 @@ import type { MainSectionProps, HeaderSectionProps, LayoutSectionProps } from '.
 
 import { merge } from 'es-toolkit';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import Link from '@mui/material/Link';
 import Alert from '@mui/material/Alert';
 

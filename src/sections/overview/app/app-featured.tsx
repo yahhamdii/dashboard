@@ -3,7 +3,7 @@ import type { CardProps } from '@mui/material/Card';
 
 import Autoplay from 'embla-carousel-autoplay';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import Link from '@mui/material/Link';
 
 import { CardWrapper as Card } from 'src/components/circuit-ui';

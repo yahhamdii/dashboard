@@ -2,7 +2,7 @@ import type { BoxProps } from '@mui/material/Box';
 import type { ChartOptions } from 'src/components/chart';
 import type { IconifyName } from 'src/components/iconify';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import { useTheme } from '@mui/material/styles';
 
 import { fNumber } from 'src/utils/format-number';

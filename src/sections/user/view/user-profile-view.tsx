@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from 'react';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 
 import { CardWrapper as Card, TabsWrapper, TabWrapper } from 'src/components/circuit-ui';
 

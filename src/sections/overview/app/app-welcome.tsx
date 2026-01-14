@@ -2,7 +2,7 @@ import type { BoxProps } from '@mui/material/Box';
 
 import { varAlpha } from 'minimal-shared/utils';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 
 import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
 

@@ -2,7 +2,7 @@ import type { BoxProps } from '@mui/material/Box';
 import type { CardProps } from '@mui/material/Card';
 import type { IconifyName } from 'src/components/iconify';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 
 import { CardWrapper as Card, CardHeaderWrapper as CardHeader } from 'src/components/circuit-ui';
 

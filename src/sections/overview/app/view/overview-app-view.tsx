@@ -1,6 +1,6 @@
 'use client';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import Grid from '@mui/material/Grid';
 import { useTheme } from '@mui/material/styles';
 

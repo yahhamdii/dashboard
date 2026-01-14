@@ -6,7 +6,7 @@ import type { IUserTableFilters } from 'src/types/user';
 import { useCallback } from 'react';
 import { usePopover } from 'minimal-shared/hooks';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';

@@ -4,7 +4,7 @@ import type { UseTableReturn } from 'src/components/table';
 import { useBoolean } from 'minimal-shared/hooks';
 import { useRef, useState, useCallback } from 'react';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import Divider from '@mui/material/Divider';
 import Collapse from '@mui/material/Collapse';
 

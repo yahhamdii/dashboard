@@ -5,7 +5,7 @@ import type { LightboxProps } from './types';
 import { mergeClasses } from 'minimal-shared/utils';
 import ReactLightbox, { useLightboxState } from 'yet-another-react-lightbox';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 
 import { Iconify } from '../iconify';
 import { getPlugins } from './utils';

@@ -3,7 +3,7 @@ import type { NavSectionProps } from 'src/components/nav-section';
 
 import { varAlpha, mergeClasses } from 'minimal-shared/utils';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import Divider from '@mui/material/Divider';
 import { useTheme } from '@mui/material/styles';
 

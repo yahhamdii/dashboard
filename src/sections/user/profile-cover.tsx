@@ -3,7 +3,7 @@ import type { IUserProfileCover } from 'src/types/user';
 
 import { varAlpha } from 'minimal-shared/utils';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import ListItemText from '@mui/material/ListItemText';
 
 import { AvatarWrapper } from 'src/components/circuit-ui';

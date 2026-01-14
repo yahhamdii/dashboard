@@ -6,7 +6,7 @@ import { useCallback } from 'react';
 import { varAlpha } from 'minimal-shared/utils';
 import { usePopover } from 'minimal-shared/hooks';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import ButtonBase from '@mui/material/ButtonBase';
 import InputAdornment from '@mui/material/InputAdornment';
 

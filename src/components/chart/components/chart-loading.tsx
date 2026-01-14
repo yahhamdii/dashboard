@@ -3,7 +3,7 @@ import type { ChartProps } from '../types';
 
 import { mergeClasses } from 'minimal-shared/utils';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import Skeleton from '@mui/material/Skeleton';
 
 import { chartClasses } from '../classes';

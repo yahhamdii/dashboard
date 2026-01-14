@@ -5,7 +5,7 @@ import type { FormHelperTextProps } from '@mui/material/FormHelperText';
 import { MuiOtpInput } from 'mui-one-time-password-input';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import { inputBaseClasses } from '@mui/material/InputBase';
 
 import { HelperText } from './help-text';

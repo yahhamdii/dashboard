@@ -7,7 +7,7 @@ import { useState, useCallback } from 'react';
 import { varAlpha } from 'minimal-shared/utils';
 import { useBoolean, useSetState } from 'minimal-shared/hooks';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 
 import { CardWrapper as Card, TableWrapper as Table, TableBodyWrapper as TableBody, TabsWrapper, TabWrapper, TooltipWrapper, IconButtonWrapper } from 'src/components/circuit-ui';
 

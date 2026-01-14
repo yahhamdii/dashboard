@@ -3,7 +3,7 @@ import type { NavSectionProps } from 'src/components/nav-section';
 import { useEffect } from 'react';
 import { mergeClasses } from 'minimal-shared/utils';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import Drawer from '@mui/material/Drawer';
 
 import { usePathname } from 'src/routes/hooks';

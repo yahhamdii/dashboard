@@ -3,7 +3,7 @@ import type { IUserProfileFollower } from 'src/types/user';
 
 import { useState, useCallback } from 'react';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 
 import { CardWrapper as Card, AvatarWrapper } from 'src/components/circuit-ui';
 import ListItemText from '@mui/material/ListItemText';

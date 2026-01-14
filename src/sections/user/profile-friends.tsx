@@ -2,7 +2,7 @@ import type { IUserProfileFriend } from 'src/types/user';
 
 import { usePopover } from 'minimal-shared/hooks';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import Link from '@mui/material/Link';
 
 import { CardWrapper as Card, AvatarWrapper, IconButtonWrapper } from 'src/components/circuit-ui';

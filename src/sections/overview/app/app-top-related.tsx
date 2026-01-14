@@ -3,7 +3,7 @@ import type { CardProps } from '@mui/material/Card';
 
 import { useTabs } from 'minimal-shared/hooks';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import Stack from '@mui/material/Stack';
 import Rating from '@mui/material/Rating';
 

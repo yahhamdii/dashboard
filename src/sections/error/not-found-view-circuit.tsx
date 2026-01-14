@@ -38,7 +38,7 @@ export function NotFoundViewCircuit() {
         </m.div>
 
         <m.div variants={varBounce('in')}>
-          <Body size="one" style={{ color: '#6B7280' }}>
+          <Body size="m" style={{ color: '#6B7280' }}>
             Sorry, we couldn't find the page you're looking for. Perhaps you've mistyped the URL? Be
             sure to check your spelling.
           </Body>

@@ -2,7 +2,7 @@ import type { DialogProps } from '@mui/material/Dialog';
 
 import { useState, useEffect, useCallback } from 'react';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import IconButton from '@mui/material/IconButton';
 
 import { InputWrapper as TextField, ButtonWrapper as Button, DialogWrapper as Dialog, DialogTitleWrapper as DialogTitle, DialogActionsWrapper as DialogActions, DialogContentWrapper as DialogContent } from 'src/components/circuit-ui';

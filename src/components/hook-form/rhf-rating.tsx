@@ -4,7 +4,7 @@ import type { FormHelperTextProps } from '@mui/material/FormHelperText';
 
 import { Controller, useFormContext } from 'react-hook-form';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import Rating from '@mui/material/Rating';
 
 import { HelperText } from './help-text';

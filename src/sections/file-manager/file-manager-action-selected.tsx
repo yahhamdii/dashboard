@@ -1,6 +1,6 @@
 import type { BoxProps } from '@mui/material/Box';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import Portal from '@mui/material/Portal';
 
 import { CheckboxWrapper as Checkbox } from 'src/components/circuit-ui';

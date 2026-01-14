@@ -3,7 +3,7 @@ import type { UploadProps } from '../types';
 import { useDropzone } from 'react-dropzone';
 import { mergeClasses } from 'minimal-shared/utils';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import FormHelperText from '@mui/material/FormHelperText';
 import CircularProgress from '@mui/material/CircularProgress';
 

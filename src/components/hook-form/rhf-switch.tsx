@@ -8,7 +8,7 @@ import type { FormControlLabelProps } from '@mui/material/FormControlLabel';
 
 import { Controller, useFormContext } from 'react-hook-form';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import FormGroup from '@mui/material/FormGroup';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';

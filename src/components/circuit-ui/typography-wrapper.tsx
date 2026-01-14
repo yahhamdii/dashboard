@@ -32,7 +32,7 @@ const variantMapping = {
   h6: { component: Headline, as: 'h6' as const, size: 's' as const },
   subtitle1: { component: Headline, as: 'h6' as const, size: 's' as const },
   subtitle2: { component: Headline, as: 'h6' as const, size: 's' as const },
-  body1: { component: Body, as: 'p' as const, size: 'one' as const },
+  body1: { component: Body, as: 'p' as const, size: 'm' as const },
   body2: { component: Body, as: 'p' as const, size: 's' as const },
   caption: { component: Body, as: 'span' as const, size: 's' as const },
   overline: { component: Body, as: 'span' as const, size: 's' as const },

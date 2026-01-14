@@ -2,7 +2,7 @@ import type { BoxProps } from '@mui/material/Box';
 import type { IFile } from 'src/types/file';
 import type { UseTableReturn, TableHeadCellProps } from 'src/components/table';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import { tableCellClasses } from '@mui/material/TableCell';

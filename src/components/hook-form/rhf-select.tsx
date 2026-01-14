@@ -9,7 +9,7 @@ import type { FormHelperTextProps } from '@mui/material/FormHelperText';
 import { merge } from 'es-toolkit';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 import Chip from '@mui/material/Chip';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';

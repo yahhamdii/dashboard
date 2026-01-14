@@ -1,6 +1,6 @@
 import type { CardProps } from '@mui/material/Card';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 
 import { CardWrapper as Card, IconButtonWrapper } from 'src/components/circuit-ui';
 import LinearProgress from '@mui/material/LinearProgress';

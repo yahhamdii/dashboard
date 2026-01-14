@@ -3,7 +3,7 @@ import type { UploadProps } from '../upload';
 
 import { Controller, useFormContext } from 'react-hook-form';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 
 import { HelperText } from './help-text';
 import { Upload, UploadBox, UploadAvatar } from '../upload';

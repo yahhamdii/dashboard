@@ -5,7 +5,7 @@ import type { Breakpoint } from '@mui/material/styles';
 
 import { mergeClasses } from 'minimal-shared/utils';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box } from 'src/components/circuit-ui';
 
 import { layoutClasses } from '../core';
 
