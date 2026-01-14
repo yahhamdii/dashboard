@@ -3,10 +3,10 @@
 import { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
 
-import { CardWrapper as Card } from 'src/components/circuit-ui';
+import { CardWrapper as Card, TabsWrapper, TabWrapper } from 'src/components/circuit-ui';
+
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
@@ -93,31 +93,48 @@ export function UserProfileView() {
           coverUrl={_userAbout.coverUrl}
         />
 
-        <Box
-          sx={{
-            width: 1,
-            bottom: 0,
-            zIndex: 9,
-            px: { md: 3 },
-            display: 'flex',
-            position: 'absolute',
-            bgcolor: 'background.paper',
-            justifyContent: { xs: 'center', md: 'flex-end' },
-          }}
-        >
-          <Tabs value={selectedTab}>
-            {NAV_ITEMS.map((tab) => (
-              <Tab
-                component={RouterLink}
-                key={tab.value}
-                value={tab.value}
-                icon={tab.icon}
-                label={tab.label}
-                href={createRedirectPath(pathname, tab.value)}
-              />
-            ))}
-          </Tabs>
-        </Box>
+        {useCircuitLayoutsWithPathname() ? (
+          <div className="w-full bottom-0 z-[9] px-0 md:px-3 flex absolute bg-white justify-center md:justify-end">
+            <TabsWrapper value={selectedTab}>
+              {NAV_ITEMS.map((tab) => (
+                <TabWrapper
+                  component={RouterLink}
+                  key={tab.value}
+                  value={tab.value}
+                  icon={tab.icon}
+                  label={tab.label}
+                  href={createRedirectPath(pathname, tab.value)}
+                />
+              ))}
+            </TabsWrapper>
+          </div>
+        ) : (
+          <Box
+            sx={{
+              width: 1,
+              bottom: 0,
+              zIndex: 9,
+              px: { md: 3 },
+              display: 'flex',
+              position: 'absolute',
+              bgcolor: 'background.paper',
+              justifyContent: { xs: 'center', md: 'flex-end' },
+            }}
+          >
+            <TabsWrapper value={selectedTab}>
+              {NAV_ITEMS.map((tab) => (
+                <TabWrapper
+                  component={RouterLink}
+                  key={tab.value}
+                  value={tab.value}
+                  icon={tab.icon}
+                  label={tab.label}
+                  href={createRedirectPath(pathname, tab.value)}
+                />
+              ))}
+            </TabsWrapper>
+          </Box>
+        )}
       </Card>
 
       {selectedTab === '' && <ProfileHome info={_userAbout} posts={_userFeeds} sx={{ mt: 3 }} />}

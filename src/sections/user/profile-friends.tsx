@@ -4,17 +4,16 @@ import { usePopover } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
-import Avatar from '@mui/material/Avatar';
 
-import { CardWrapper as Card } from 'src/components/circuit-ui';
+import { CardWrapper as Card, AvatarWrapper, IconButtonWrapper } from 'src/components/circuit-ui';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
-import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 
 import { InputWrapper as TextField } from 'src/components/circuit-ui';
 
 import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 import { _socials } from 'src/_mock';
 
@@ -35,38 +34,67 @@ export function ProfileFriends({ friends, searchFriends, onSearchFriends }: Prop
 
   const notFound = !dataFiltered.length && !!searchFriends;
 
+  const useCircuit = useCircuitLayoutsWithPathname();
+
   return (
     <>
-      <Box
-        sx={{
-          my: 5,
-          gap: 2,
-          display: 'flex',
-          justifyContent: 'space-between',
-          flexDirection: { xs: 'column', sm: 'row' },
-        }}
-      >
-        <Typography variant="h4">Friends</Typography>
-
-        <TextField
-          value={searchFriends}
-          onChange={onSearchFriends}
-          placeholder="Search friends..."
-          slotProps={{
-            input: {
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
-                </InputAdornment>
-              ),
-            },
+      {useCircuit ? (
+        <div className="flex flex-col sm:flex-row gap-2 my-5 justify-between">
+          <Typography variant="h4">Friends</Typography>
+          <TextField
+            value={searchFriends}
+            onChange={onSearchFriends}
+            placeholder="Search friends..."
+            slotProps={{
+              input: {
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+                  </InputAdornment>
+                ),
+              },
+            }}
+            sx={{ width: { xs: 1, sm: 260 } }}
+          />
+        </div>
+      ) : (
+        <Box
+          sx={{
+            my: 5,
+            gap: 2,
+            display: 'flex',
+            justifyContent: 'space-between',
+            flexDirection: { xs: 'column', sm: 'row' },
           }}
-          sx={{ width: { xs: 1, sm: 260 } }}
-        />
-      </Box>
+        >
+          <Typography variant="h4">Friends</Typography>
+
+          <TextField
+            value={searchFriends}
+            onChange={onSearchFriends}
+            placeholder="Search friends..."
+            slotProps={{
+              input: {
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+                  </InputAdornment>
+                ),
+              },
+            }}
+            sx={{ width: { xs: 1, sm: 260 } }}
+          />
+        </Box>
+      )}
 
       {notFound ? (
         <SearchNotFound query={searchFriends} sx={{ py: 10 }} />
+      ) : useCircuit ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+          {dataFiltered.map((item) => (
+            <FriendCard key={item.id} item={item} />
+          ))}
+        </div>
       ) : (
         <Box
           sx={{
@@ -139,7 +167,7 @@ function FriendCard({ item }: FriendCardProps) {
           flexDirection: 'column',
         }}
       >
-        <Avatar alt={item.name} src={item.avatarUrl} sx={{ width: 64, height: 64, mb: 3 }} />
+        <AvatarWrapper alt={item.name} src={item.avatarUrl} size="large" sx={{ width: 64, height: 64, mb: 3 }} />
 
         <Link variant="subtitle1" color="text.primary">
           {item.name}
@@ -149,24 +177,37 @@ function FriendCard({ item }: FriendCardProps) {
           {item.role}
         </Typography>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          {_socials.map((social) => (
-            <IconButton key={social.label}>
-              {social.value === 'twitter' && <Iconify icon="socials:twitter" />}
-              {social.value === 'facebook' && <Iconify icon="socials:facebook" />}
-              {social.value === 'instagram' && <Iconify icon="socials:instagram" />}
-              {social.value === 'linkedin' && <Iconify icon="socials:linkedin" />}
-            </IconButton>
-          ))}
-        </Box>
+        {useCircuitLayoutsWithPathname() ? (
+          <div className="flex items-center justify-center">
+            {_socials.map((social) => (
+              <IconButtonWrapper key={social.label}>
+                {social.value === 'twitter' && <Iconify icon="socials:twitter" />}
+                {social.value === 'facebook' && <Iconify icon="socials:facebook" />}
+                {social.value === 'instagram' && <Iconify icon="socials:instagram" />}
+                {social.value === 'linkedin' && <Iconify icon="socials:linkedin" />}
+              </IconButtonWrapper>
+            ))}
+          </div>
+        ) : (
+          <div className="flex items-center justify-center">
+            {_socials.map((social) => (
+              <IconButtonWrapper key={social.label}>
+                {social.value === 'twitter' && <Iconify icon="socials:twitter" />}
+                {social.value === 'facebook' && <Iconify icon="socials:facebook" />}
+                {social.value === 'instagram' && <Iconify icon="socials:instagram" />}
+                {social.value === 'linkedin' && <Iconify icon="socials:linkedin" />}
+              </IconButtonWrapper>
+            ))}
+          </div>
+        )}
 
-        <IconButton
+        <IconButtonWrapper
           color={menuActions.open ? 'inherit' : 'default'}
           onClick={menuActions.onOpen}
           sx={{ top: 8, right: 8, position: 'absolute' }}
         >
           <Iconify icon="eva:more-vertical-fill" />
-        </IconButton>
+        </IconButtonWrapper>
       </Card>
 
       {renderMenuActions()}

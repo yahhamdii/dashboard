@@ -98,7 +98,18 @@ export function CardHeaderWrapper({
     ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}),
   };
 
-  return <div className={className} style={circuitStyles} {...other} />;
+  // Filtrer les props MUI spécifiques qui ne sont pas compatibles avec un div
+  const {
+    action,
+    avatar,
+    title,
+    subheader,
+    classes,
+    disableTypography,
+    ...divProps
+  } = other as any;
+
+  return <div className={className} style={circuitStyles} {...(divProps as React.HTMLAttributes<HTMLDivElement>)} />;
 }
 
 // ----------------------------------------------------------------------
@@ -125,7 +136,14 @@ export function CardContentWrapper({
     ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}),
   };
 
-  return <div className={className} style={circuitStyles} {...other} />;
+  // Filtrer les props MUI spécifiques qui ne sont pas compatibles avec un div
+  const {
+    classes,
+    component,
+    ...divProps
+  } = other as any;
+
+  return <div className={className} style={circuitStyles} {...(divProps as React.HTMLAttributes<HTMLDivElement>)} />;
 }
 
 // ----------------------------------------------------------------------
@@ -155,6 +173,13 @@ export function CardActionsWrapper({
     ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}),
   };
 
-  return <div className={className} style={circuitStyles} {...other} />;
+  // Filtrer les props MUI spécifiques qui ne sont pas compatibles avec un div
+  const {
+    classes,
+    disableSpacing,
+    ...divProps
+  } = other as any;
+
+  return <div className={className} style={circuitStyles} {...(divProps as React.HTMLAttributes<HTMLDivElement>)} />;
 }
 

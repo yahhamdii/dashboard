@@ -5,6 +5,8 @@ import { useState, useCallback } from 'react';
 import Box from '@mui/material/Box';
 import Pagination from '@mui/material/Pagination';
 
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
+
 import { UserCard } from './user-card';
 
 // ----------------------------------------------------------------------
@@ -22,21 +24,33 @@ export function UserCardList({ users }: Props) {
     setPage(newPage);
   }, []);
 
+  const useCircuit = useCircuitLayoutsWithPathname();
+
   return (
     <>
-      <Box
-        sx={{
-          gap: 3,
-          display: 'grid',
-          gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' },
-        }}
-      >
-        {users
-          .slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage)
-          .map((user) => (
-            <UserCard key={user.id} user={user} />
-          ))}
-      </Box>
+      {useCircuit ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+          {users
+            .slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage)
+            .map((user) => (
+              <UserCard key={user.id} user={user} />
+            ))}
+        </div>
+      ) : (
+        <Box
+          sx={{
+            gap: 3,
+            display: 'grid',
+            gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' },
+          }}
+        >
+          {users
+            .slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage)
+            .map((user) => (
+              <UserCard key={user.id} user={user} />
+            ))}
+        </Box>
+      )}
 
       <Pagination
         page={page}

@@ -11,6 +11,8 @@ import MenuItem from '@mui/material/MenuItem';
 
 import { ButtonWrapper as Button, DialogWrapper as Dialog, DialogTitleWrapper as DialogTitle, DialogActionsWrapper as DialogActions, DialogContentWrapper as DialogContent } from 'src/components/circuit-ui';
 
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
+
 import { USER_STATUS_OPTIONS } from 'src/_mock';
 
 import { toast } from 'src/components/snackbar';
@@ -114,37 +116,68 @@ export function UserQuickEditForm({ currentUser, open, onClose }: Props) {
             Account is waiting for confirmation
           </Alert>
 
-          <Box
-            sx={{
-              rowGap: 3,
-              columnGap: 2,
-              display: 'grid',
-              gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
-            }}
-          >
-            <Field.Select name="status" label="Status">
-              {USER_STATUS_OPTIONS.map((status) => (
-                <MenuItem key={status.value} value={status.value}>
-                  {status.label}
-                </MenuItem>
-              ))}
-            </Field.Select>
+          {useCircuitLayoutsWithPathname() ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-3">
+              <Field.Select name="status" label="Status">
+                {USER_STATUS_OPTIONS.map((status) => (
+                  <MenuItem key={status.value} value={status.value}>
+                    {status.label}
+                  </MenuItem>
+                ))}
+              </Field.Select>
 
-            <Box sx={{ display: { xs: 'none', sm: 'block' } }} />
+              <div className="hidden sm:block" />
 
-            <Field.Text name="name" label="Full name" />
-            <Field.Text name="email" label="Email address" />
-            <Field.Text name="phoneNumber" label="Phone number" />
+              <Field.Text name="name" label="Full name" />
+              <Field.Text name="email" label="Email address" />
+              <Field.Text name="phoneNumber" label="Phone number" />
 
-            <Field.Text name="country" label="Country" />
+              <Field.Text name="country" label="Country" />
 
-            <Field.Text name="state" label="State/region" />
-            <Field.Text name="city" label="City" />
-            <Field.Text name="address" label="Address" />
-            <Field.Text name="zipCode" label="Zip/code" />
-            <Field.Text name="company" label="Company" />
-            <Field.Text name="role" label="Role" />
-          </Box>
+              <Field.Text name="state" label="State/region" />
+              <Field.Text name="city" label="City" />
+              <Field.Text name="address" label="Address" />
+              <Field.Text name="zipCode" label="Zip/code" />
+              <Field.Text name="company" label="Company" />
+              <Field.Text name="role" label="Role" />
+            </div>
+          ) : (
+            <Box
+              sx={{
+                rowGap: 3,
+                columnGap: 2,
+                display: 'grid',
+                gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
+              }}
+            >
+              <Field.Select name="status" label="Status">
+                {USER_STATUS_OPTIONS.map((status) => (
+                  <MenuItem key={status.value} value={status.value}>
+                    {status.label}
+                  </MenuItem>
+                ))}
+              </Field.Select>
+
+              {useCircuitLayoutsWithPathname() ? (
+                <div className="hidden sm:block" />
+              ) : (
+                <Box sx={{ display: { xs: 'none', sm: 'block' } }} />
+              )}
+
+              <Field.Text name="name" label="Full name" />
+              <Field.Text name="email" label="Email address" />
+              <Field.Text name="phoneNumber" label="Phone number" />
+
+              <Field.Text name="country" label="Country" />
+
+              <Field.Text name="state" label="State/region" />
+              <Field.Text name="city" label="City" />
+              <Field.Text name="address" label="Address" />
+              <Field.Text name="zipCode" label="Zip/code" />
+              <Field.Text name="company" label="Company" />
+              <Field.Text name="role" label="Role" />
+            </Box>
+          )}
         </DialogContent>
 
         <DialogActions>

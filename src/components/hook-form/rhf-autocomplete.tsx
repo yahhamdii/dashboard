@@ -72,7 +72,7 @@ export function RHFAutocomplete({
             ...otherSlotProps,
             chip: {
               size: 'small',
-              variant: 'soft',
+              variant: 'filled',
               ...otherSlotProps?.chip,
             },
           }}

@@ -2,10 +2,11 @@ import type { Theme, SxProps, CSSObject } from '@mui/material/styles';
 
 import Box from '@mui/material/Box';
 import TableRow from '@mui/material/TableRow';
-import Checkbox from '@mui/material/Checkbox';
 import TableHead from '@mui/material/TableHead';
 import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
+
+import { CheckboxWrapper as Checkbox } from 'src/components/circuit-ui';
 
 // ----------------------------------------------------------------------
 

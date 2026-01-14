@@ -7,9 +7,10 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
 import { CardWrapper as Card } from 'src/components/circuit-ui';
-import Stack from '@mui/material/Stack';
 
 import { TypographyWrapper as Typography, ButtonWrapper as Button } from 'src/components/circuit-ui';
+
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 import { fData } from 'src/utils/format-number';
 
@@ -94,18 +95,21 @@ export function AccountGeneral() {
     }
   });
 
+  const useCircuit = useCircuitLayoutsWithPathname();
+
   return (
     <Form methods={methods} onSubmit={onSubmit}>
-      <Grid container spacing={3}>
-        <Grid size={{ xs: 12, md: 4 }}>
-          <Card
-            sx={{
-              pt: 10,
-              pb: 5,
-              px: 3,
-              textAlign: 'center',
-            }}
-          >
+      {useCircuit ? (
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
+          <div className="md:col-span-4">
+            <Card
+              sx={{
+                pt: 10,
+                pb: 5,
+                px: 3,
+                textAlign: 'center',
+              }}
+            >
             <Field.UploadAvatar
               name="photoURL"
               maxSize={3145728}
@@ -137,40 +141,110 @@ export function AccountGeneral() {
               Delete user
             </Button>
           </Card>
-        </Grid>
+          </div>
 
-        <Grid size={{ xs: 12, md: 8 }}>
-          <Card sx={{ p: 3 }}>
-            <Box
+          <div className="md:col-span-8">
+            <Card sx={{ p: 3 }}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-3">
+                <Field.Text name="displayName" label="Name" />
+                <Field.Text name="email" label="Email address" />
+                <Field.Text name="phoneNumber" label="Phone number" />
+                <Field.Text name="address" label="Address" />
+
+                <Field.Text name="country" label="Country" />
+
+                <Field.Text name="state" label="State/region" />
+                <Field.Text name="city" label="City" />
+                <Field.Text name="zipCode" label="Zip/code" />
+              </div>
+
+              <div className="flex flex-col gap-3 mt-3 items-end">
+                <Field.Text name="about" multiline rows={4} label="About" />
+
+                <Button type="submit" variant="contained" loading={isSubmitting}>
+                  Save changes
+                </Button>
+              </div>
+            </Card>
+          </div>
+        </div>
+      ) : (
+        <Grid container spacing={3}>
+          <Grid size={{ xs: 12, md: 4 }}>
+            <Card
               sx={{
-                rowGap: 3,
-                columnGap: 2,
-                display: 'grid',
-                gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
+                pt: 10,
+                pb: 5,
+                px: 3,
+                textAlign: 'center',
               }}
             >
-              <Field.Text name="displayName" label="Name" />
-              <Field.Text name="email" label="Email address" />
-              <Field.Text name="phoneNumber" label="Phone number" />
-              <Field.Text name="address" label="Address" />
+              <Field.UploadAvatar
+                name="photoURL"
+                maxSize={3145728}
+                helperText={
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      mt: 3,
+                      mx: 'auto',
+                      display: 'block',
+                      textAlign: 'center',
+                      color: 'text.disabled',
+                    }}
+                  >
+                    Allowed *.jpeg, *.jpg, *.png, *.gif
+                    <br /> max size of {fData(3145728)}
+                  </Typography>
+                }
+              />
 
-              <Field.Text name="country" label="Country" />
+              <Field.Switch
+                name="isPublic"
+                labelPlacement="start"
+                label="Public profile"
+                sx={{ mt: 5 }}
+              />
 
-              <Field.Text name="state" label="State/region" />
-              <Field.Text name="city" label="City" />
-              <Field.Text name="zipCode" label="Zip/code" />
-            </Box>
-
-            <Stack spacing={3} sx={{ mt: 3, alignItems: 'flex-end' }}>
-              <Field.Text name="about" multiline rows={4} label="About" />
-
-              <Button type="submit" variant="contained" loading={isSubmitting}>
-                Save changes
+              <Button variant="soft" color="error" sx={{ mt: 3 }}>
+                Delete user
               </Button>
-            </Stack>
-          </Card>
+            </Card>
+          </Grid>
+
+          <Grid size={{ xs: 12, md: 8 }}>
+            <Card sx={{ p: 3 }}>
+              <Box
+                sx={{
+                  rowGap: 3,
+                  columnGap: 2,
+                  display: 'grid',
+                  gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
+                }}
+              >
+                <Field.Text name="displayName" label="Name" />
+                <Field.Text name="email" label="Email address" />
+                <Field.Text name="phoneNumber" label="Phone number" />
+                <Field.Text name="address" label="Address" />
+
+                <Field.Text name="country" label="Country" />
+
+                <Field.Text name="state" label="State/region" />
+                <Field.Text name="city" label="City" />
+                <Field.Text name="zipCode" label="Zip/code" />
+              </Box>
+
+              <Box sx={{ mt: 3, display: 'flex', flexDirection: 'column', gap: 3, alignItems: 'flex-end' }}>
+                <Field.Text name="about" multiline rows={4} label="About" />
+
+                <Button type="submit" variant="contained" loading={isSubmitting}>
+                  Save changes
+                </Button>
+              </Box>
+            </Card>
+          </Grid>
         </Grid>
-      </Grid>
+      )}
     </Form>
   );
 }

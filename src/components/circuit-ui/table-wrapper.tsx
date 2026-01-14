@@ -27,6 +27,24 @@ import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
+/**
+ * Filtre les styles valides de sx (exclut les sélecteurs MUI comme &.Mui-selected, &:hover)
+ */
+function filterValidStyles(sx: any): React.CSSProperties {
+  const validStyles: React.CSSProperties = {};
+  if (sx && typeof sx === 'object' && !Array.isArray(sx)) {
+    Object.keys(sx).forEach((key) => {
+      // Ne garder que les propriétés CSS valides (pas de sélecteurs commençant par & ou .)
+      if (!key.startsWith('&') && !key.startsWith('.')) {
+        validStyles[key as keyof React.CSSProperties] = sx[key];
+      }
+    });
+  }
+  return validStyles;
+}
+
+// ----------------------------------------------------------------------
+
 type TableWrapperProps = MuiTableProps;
 
 /**
@@ -52,7 +70,7 @@ export function TableWrapper({
   const circuitStyles: React.CSSProperties = {
     width: '100%',
     borderCollapse: 'collapse',
-    ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}),
+    ...filterValidStyles(sx),
   };
 
   return (
@@ -86,7 +104,7 @@ export function TableHeadWrapper({
   }
 
   const circuitStyles: React.CSSProperties = {
-    ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}),
+    ...filterValidStyles(sx),
   };
 
   return (
@@ -120,7 +138,7 @@ export function TableBodyWrapper({
   }
 
   const circuitStyles: React.CSSProperties = {
-    ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}),
+    ...filterValidStyles(sx),
   };
 
   return (
@@ -155,7 +173,7 @@ export function TableRowWrapper({
 
   const circuitStyles: React.CSSProperties = {
     borderBottom: '1px solid var(--cui-border-subtle)',
-    ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}),
+    ...filterValidStyles(sx),
   };
 
   return (
@@ -193,11 +211,19 @@ export function TableCellWrapper({
   const circuitStyles: React.CSSProperties = {
     padding: padding === 'none' ? 0 : padding === 'checkbox' ? '4px' : 'var(--cui-spacings-kilo)',
     textAlign: align || 'left',
-    ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}),
+    ...filterValidStyles(sx),
   };
 
+  // Filtrer les props MUI spécifiques
+  const {
+    classes,
+    component,
+    scope,
+    ...tdProps
+  } = other as any;
+
   return (
-    <td className={className} style={circuitStyles} {...other}>
+    <td className={className} style={circuitStyles} {...(tdProps as React.TdHTMLAttributes<HTMLTableDataCellElement>)}>
       {children}
     </td>
   );
@@ -229,11 +255,18 @@ export function TableContainerWrapper({
   const circuitStyles: React.CSSProperties = {
     width: '100%',
     overflowX: 'auto',
-    ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}),
+    ...filterValidStyles(sx),
   };
 
+  // Filtrer les props MUI spécifiques qui ne sont pas compatibles avec un div
+  const {
+    classes,
+    component,
+    ...divProps
+  } = other as any;
+
   return (
-    <div className={className} style={circuitStyles} {...other}>
+    <div className={className} style={circuitStyles} {...(divProps as React.HTMLAttributes<HTMLDivElement>)}>
       {children}
     </div>
   );

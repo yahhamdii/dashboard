@@ -6,6 +6,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 
 import { InputWrapper as TextField, ButtonWrapper as Button, DialogWrapper as Dialog, DialogTitleWrapper as DialogTitle, DialogActionsWrapper as DialogActions } from 'src/components/circuit-ui';
 
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
+
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
 
@@ -37,8 +39,9 @@ export function FileManagerShareDialog({
     <Dialog fullWidth maxWidth="xs" open={open} onClose={onClose} sx={sx} {...other}>
       <DialogTitle>Share</DialogTitle>
 
-      <Box sx={{ px: 3 }}>
-        {onChangeInvite && (
+      {useCircuitLayoutsWithPathname() ? (
+        <div className="px-3">
+          {onChangeInvite && (
           <TextField
             fullWidth
             value={inviteEmail}
@@ -62,16 +65,53 @@ export function FileManagerShareDialog({
             }}
             sx={{ mb: 2 }}
           />
-        )}
-      </Box>
+          )}
+        </div>
+      ) : (
+        <Box sx={{ px: 3 }}>
+          {onChangeInvite && (
+            <TextField
+              fullWidth
+              value={inviteEmail}
+              placeholder="Email"
+              onChange={onChangeInvite}
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Button
+                        color="inherit"
+                        variant="contained"
+                        disabled={!inviteEmail}
+                        sx={{ mr: -0.75 }}
+                      >
+                        Send Invite
+                      </Button>
+                    </InputAdornment>
+                  ),
+                },
+              }}
+              sx={{ mb: 2 }}
+            />
+          )}
+        </Box>
+      )}
 
       {hasShared && (
         <Scrollbar sx={{ height: 60 * 5, px: 3 }}>
-          <Box component="ul">
-            {shared.map((person) => (
-              <FileManagerInvitedItem key={person.id} person={person} />
-            ))}
-          </Box>
+          {useCircuitLayoutsWithPathname() ? (
+            <ul>
+              {shared.map((person) => (
+                <FileManagerInvitedItem key={person.id} person={person} />
+              ))}
+            </ul>
+          ) : (
+            <Box component="ul">
+              {shared.map((person) => (
+                <FileManagerInvitedItem key={person.id} person={person} />
+              ))}
+            </Box>
+          )}
         </Scrollbar>
       )}
 

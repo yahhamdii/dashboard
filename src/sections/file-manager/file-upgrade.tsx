@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack';
 import { CardWrapper as Card } from 'src/components/circuit-ui';
 
 import { TypographyWrapper as Typography, ButtonWrapper as Button } from 'src/components/circuit-ui';
-import { useCircuitComponent } from 'src/lib/feature-flags';
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 import { CONFIG } from 'src/global-config';
 
@@ -29,18 +29,26 @@ export function FileUpgrade({ sx, ...other }: CardProps) {
       ]}
       {...other}
     >
-      <Box
-        component="img"
-        alt="Upgrade Illustration"
-        src={`${CONFIG.assetsDir}/assets/illustrations/illustration-upgrade.webp`}
-        sx={{
-          right: 16,
-          zIndex: 9,
-          width: 120,
-          height: 150,
-          position: 'absolute',
-        }}
-      />
+      {useCircuitLayoutsWithPathname() ? (
+        <img
+          alt="Upgrade Illustration"
+          src={`${CONFIG.assetsDir}/assets/illustrations/illustration-upgrade.webp`}
+          className="absolute right-4 z-[9] w-[120px] h-[150px]"
+        />
+      ) : (
+        <Box
+          component="img"
+          alt="Upgrade Illustration"
+          src={`${CONFIG.assetsDir}/assets/illustrations/illustration-upgrade.webp`}
+          sx={{
+            right: 16,
+            zIndex: 9,
+            width: 120,
+            height: 150,
+            position: 'absolute',
+          }}
+        />
+      )}
 
       <SvgColor
         src={`${CONFIG.assetsDir}/assets/background/shape-circle-1.svg`}
@@ -54,7 +62,7 @@ export function FileUpgrade({ sx, ...other }: CardProps) {
         }}
       />
 
-      {useCircuitComponent('USE_CIRCUIT_LAYOUTS') ? (
+      {useCircuitLayoutsWithPathname() ? (
         <div className="flex flex-col gap-3 items-start">
           <Typography variant="h6" sx={{ maxWidth: 180 }}>
             Upgrade your plan and get more space
@@ -65,7 +73,7 @@ export function FileUpgrade({ sx, ...other }: CardProps) {
           </Button>
         </div>
       ) : (
-        <Stack spacing={3} sx={{ alignItems: 'flex-start' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, alignItems: 'flex-start' }}>
           <Typography variant="h6" sx={{ maxWidth: 180 }}>
             Upgrade your plan and get more space
           </Typography>
@@ -73,7 +81,7 @@ export function FileUpgrade({ sx, ...other }: CardProps) {
           <Button color="warning" variant="contained">
             Upgrade plan
           </Button>
-        </Stack>
+        </Box>
       )}
     </Card>
   );

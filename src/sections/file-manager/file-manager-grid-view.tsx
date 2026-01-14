@@ -9,6 +9,7 @@ import Divider from '@mui/material/Divider';
 import Collapse from '@mui/material/Collapse';
 
 import { ButtonWrapper as Button } from 'src/components/circuit-ui';
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 import { Iconify } from 'src/components/iconify';
 
@@ -93,30 +94,46 @@ export function FileManagerGridView({ table, dataFiltered, onDeleteItem, onOpenC
       />
 
       <Collapse in={!foldersCollapse.value} unmountOnExit>
-        <Box
-          sx={{
-            gap: 3,
-            display: 'grid',
-            gridTemplateColumns: {
-              xs: 'repeat(1, 1fr)',
-              sm: 'repeat(2, 1fr)',
-              md: 'repeat(3, 1fr)',
-              lg: 'repeat(4, 1fr)',
-            },
-          }}
-        >
-          {dataFiltered
-            .filter((i) => i.type === 'folder')
-            .map((folder) => (
-              <FileManagerFolderItem
-                key={folder.id}
-                folder={folder}
-                selected={selected.includes(folder.id)}
-                onSelect={() => onSelectItem(folder.id)}
-                onDelete={() => onDeleteItem(folder.id)}
-              />
-            ))}
-        </Box>
+        {useCircuitLayoutsWithPathname() ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            {dataFiltered
+              .filter((i) => i.type === 'folder')
+              .map((folder) => (
+                <FileManagerFolderItem
+                  key={folder.id}
+                  folder={folder}
+                  selected={selected.includes(folder.id)}
+                  onSelect={() => onSelectItem(folder.id)}
+                  onDelete={() => onDeleteItem(folder.id)}
+                />
+              ))}
+          </div>
+        ) : (
+          <Box
+            sx={{
+              gap: 3,
+              display: 'grid',
+              gridTemplateColumns: {
+                xs: 'repeat(1, 1fr)',
+                sm: 'repeat(2, 1fr)',
+                md: 'repeat(3, 1fr)',
+                lg: 'repeat(4, 1fr)',
+              },
+            }}
+          >
+            {dataFiltered
+              .filter((i) => i.type === 'folder')
+              .map((folder) => (
+                <FileManagerFolderItem
+                  key={folder.id}
+                  folder={folder}
+                  selected={selected.includes(folder.id)}
+                  onSelect={() => onSelectItem(folder.id)}
+                  onDelete={() => onDeleteItem(folder.id)}
+                />
+              ))}
+          </Box>
+        )}
       </Collapse>
     </>
   );
@@ -132,30 +149,46 @@ export function FileManagerGridView({ table, dataFiltered, onDeleteItem, onOpenC
       />
 
       <Collapse in={!filesCollapse.value} unmountOnExit>
-        <Box
-          sx={{
-            gap: 3,
-            display: 'grid',
-            gridTemplateColumns: {
-              xs: 'repeat(1, 1fr)',
-              sm: 'repeat(2, 1fr)',
-              md: 'repeat(3, 1fr)',
-              lg: 'repeat(4, 1fr)',
-            },
-          }}
-        >
-          {dataFiltered
-            .filter((i) => i.type !== 'folder')
-            .map((file) => (
-              <FileManagerFileItem
-                key={file.id}
-                file={file}
-                selected={selected.includes(file.id)}
-                onSelect={() => onSelectItem(file.id)}
-                onDelete={() => onDeleteItem(file.id)}
-              />
-            ))}
-        </Box>
+        {useCircuitLayoutsWithPathname() ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            {dataFiltered
+              .filter((i) => i.type !== 'folder')
+              .map((file) => (
+                <FileManagerFileItem
+                  key={file.id}
+                  file={file}
+                  selected={selected.includes(file.id)}
+                  onSelect={() => onSelectItem(file.id)}
+                  onDelete={() => onDeleteItem(file.id)}
+                />
+              ))}
+          </div>
+        ) : (
+          <Box
+            sx={{
+              gap: 3,
+              display: 'grid',
+              gridTemplateColumns: {
+                xs: 'repeat(1, 1fr)',
+                sm: 'repeat(2, 1fr)',
+                md: 'repeat(3, 1fr)',
+                lg: 'repeat(4, 1fr)',
+              },
+            }}
+          >
+            {dataFiltered
+              .filter((i) => i.type !== 'folder')
+              .map((file) => (
+                <FileManagerFileItem
+                  key={file.id}
+                  file={file}
+                  selected={selected.includes(file.id)}
+                  onSelect={() => onSelectItem(file.id)}
+                  onDelete={() => onDeleteItem(file.id)}
+                />
+              ))}
+          </Box>
+        )}
       </Collapse>
     </>
   );
@@ -199,14 +232,25 @@ export function FileManagerGridView({ table, dataFiltered, onDeleteItem, onOpenC
       />
     );
 
+  const useCircuit = useCircuitLayoutsWithPathname();
+  
   return (
     <>
-      <Box ref={containerRef}>
-        {renderFolders()}
-        <Divider sx={{ my: 5, borderStyle: 'dashed' }} />
-        {renderFiles()}
-        {renderSelectedActions()}
-      </Box>
+      {useCircuit ? (
+        <div ref={containerRef}>
+          {renderFolders()}
+          <Divider sx={{ my: 5, borderStyle: 'dashed' }} />
+          {renderFiles()}
+          {renderSelectedActions()}
+        </div>
+      ) : (
+        <Box ref={containerRef}>
+          {renderFolders()}
+          <Divider sx={{ my: 5, borderStyle: 'dashed' }} />
+          {renderFiles()}
+          {renderSelectedActions()}
+        </Box>
+      )}
 
       {renderShareDialog()}
       {renderUploadFilesDialog()}

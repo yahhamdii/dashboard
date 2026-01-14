@@ -1,12 +1,13 @@
 import type { CardProps } from '@mui/material/Card';
 
 import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
 
-import { CardWrapper as Card } from 'src/components/circuit-ui';
+import { CardWrapper as Card, IconButtonWrapper } from 'src/components/circuit-ui';
 import LinearProgress from '@mui/material/LinearProgress';
 
 import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
+
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 import { fData } from 'src/utils/format-number';
 
@@ -24,9 +25,9 @@ type Props = CardProps & {
 export function FileWidget({ sx, icon, title, value, total, ...other }: Props) {
   return (
     <Card sx={[{ p: 3 }, ...(Array.isArray(sx) ? sx : [sx])]} {...other}>
-      <IconButton sx={{ top: 8, right: 8, position: 'absolute' }}>
+      <IconButtonWrapper sx={{ top: 8, right: 8, position: 'absolute' }}>
         <Iconify icon="eva:more-vertical-fill" />
-      </IconButton>
+      </IconButtonWrapper>
 
       {icon}
 
@@ -36,19 +37,21 @@ export function FileWidget({ sx, icon, title, value, total, ...other }: Props) {
 
       <LinearProgress value={24} variant="determinate" color="inherit" sx={{ my: 2, height: 6 }} />
 
-      <Box
-        sx={{
-          gap: 0.5,
-          display: 'flex',
-          typography: 'subtitle2',
-          justifyContent: 'flex-end',
-        }}
-      >
-        <Box component="span" sx={{ typography: 'body2', color: 'text.secondary' }}>
-          {fData(value)}
-        </Box>
-        {` / ${fData(total)}`}
-      </Box>
+      {useCircuitLayoutsWithPathname() ? (
+        <div className="flex gap-0.5 justify-end text-sm">
+          <span className="text-xs text-gray-500">
+            {fData(value)}
+          </span>
+          {` / ${fData(total)}`}
+        </div>
+      ) : (
+        <div className="flex gap-0.5 justify-end text-sm">
+          <span className="text-xs text-gray-500">
+            {fData(value)}
+          </span>
+          {` / ${fData(total)}`}
+        </div>
+      )}
     </Card>
   );
 }

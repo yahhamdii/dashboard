@@ -7,9 +7,10 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
-import IconButton from '@mui/material/IconButton';
 
-import { ButtonWrapper as Button, CardWrapper as Card, CardHeaderWrapper as CardHeader, TableWrapper as Table, TableBodyWrapper as TableBody, TableRowWrapper as TableRow, TableCellWrapper as TableCell } from 'src/components/circuit-ui';
+import { ButtonWrapper as Button, CardWrapper as Card, CardHeaderWrapper as CardHeader, TableWrapper as Table, TableBodyWrapper as TableBody, TableRowWrapper as TableRow, TableCellWrapper as TableCell, IconButtonWrapper } from 'src/components/circuit-ui';
+
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 import { fCurrency } from 'src/utils/format-number';
 
@@ -53,15 +54,27 @@ export function AppNewInvoices({ title, subheader, tableData, headCells, sx, ...
 
       <Divider sx={{ borderStyle: 'dashed' }} />
 
-      <Box sx={{ p: 2, textAlign: 'right' }}>
-        <Button
-          size="small"
-          color="inherit"
-          endIcon={<Iconify icon="eva:arrow-ios-forward-fill" width={18} sx={{ ml: -0.5 }} />}
-        >
-          View all
-        </Button>
-      </Box>
+      {useCircuitLayoutsWithPathname() ? (
+        <div className="p-2 text-right">
+          <Button
+            size="small"
+            color="inherit"
+            endIcon={<Iconify icon="eva:arrow-ios-forward-fill" width={18} sx={{ ml: -0.5 }} />}
+          >
+            View all
+          </Button>
+        </div>
+      ) : (
+        <Box sx={{ p: 2, textAlign: 'right' }}>
+          <Button
+            size="small"
+            color="inherit"
+            endIcon={<Iconify icon="eva:arrow-ios-forward-fill" width={18} sx={{ ml: -0.5 }} />}
+          >
+            View all
+          </Button>
+        </Box>
+      )}
     </Card>
   );
 }
@@ -151,9 +164,9 @@ function RowItem({ row }: RowItemProps) {
         </TableCell>
 
         <TableCell align="right" sx={{ pr: 1 }}>
-          <IconButton color={menuActions.open ? 'inherit' : 'default'} onClick={menuActions.onOpen}>
+          <IconButtonWrapper color={menuActions.open ? 'inherit' : 'default'} onClick={menuActions.onOpen}>
             <Iconify icon="eva:more-vertical-fill" />
-          </IconButton>
+          </IconButtonWrapper>
         </TableCell>
       </TableRow>
 

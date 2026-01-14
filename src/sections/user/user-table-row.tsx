@@ -5,16 +5,13 @@ import { useBoolean, usePopover } from 'minimal-shared/hooks';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
-import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
-import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
 
-import { TableRowWrapper as TableRow, TableCellWrapper as TableCell } from 'src/components/circuit-ui';
+import { TableRowWrapper as TableRow, TableCellWrapper as TableCell, CheckboxWrapper as Checkbox, AvatarWrapper, TooltipWrapper, IconButtonWrapper } from 'src/components/circuit-ui';
 
 import { ButtonWrapper as Button } from 'src/components/circuit-ui';
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 import { RouterLink } from 'src/routes/components';
 
@@ -108,23 +105,43 @@ export function UserTableRow({ row, selected, editHref, onSelectRow, onDeleteRow
         </TableCell>
 
         <TableCell>
-          <Box sx={{ gap: 2, display: 'flex', alignItems: 'center' }}>
-            <Avatar alt={row.name} src={row.avatarUrl} />
+          {useCircuitLayoutsWithPathname() ? (
+            <div className="flex gap-2 items-center">
+              <AvatarWrapper alt={row.name} src={row.avatarUrl} />
 
-            <Stack sx={{ typography: 'body2', flex: '1 1 auto', alignItems: 'flex-start' }}>
-              <Link
-                component={RouterLink}
-                href={editHref}
-                color="inherit"
-                sx={{ cursor: 'pointer' }}
-              >
-                {row.name}
-              </Link>
-              <Box component="span" sx={{ color: 'text.disabled' }}>
-                {row.email}
-              </Box>
-            </Stack>
-          </Box>
+              <div className="flex flex-col flex-1 items-start text-sm">
+                <Link
+                  component={RouterLink}
+                  href={editHref}
+                  color="inherit"
+                  sx={{ cursor: 'pointer' }}
+                >
+                  {row.name}
+                </Link>
+                <span className="text-gray-500">
+                  {row.email}
+                </span>
+              </div>
+            </div>
+          ) : (
+            <Box sx={{ gap: 2, display: 'flex', alignItems: 'center' }}>
+              <AvatarWrapper alt={row.name} src={row.avatarUrl} />
+
+              <Stack sx={{ typography: 'body2', flex: '1 1 auto', alignItems: 'flex-start' }}>
+                <Link
+                  component={RouterLink}
+                  href={editHref}
+                  color="inherit"
+                  sx={{ cursor: 'pointer' }}
+                >
+                  {row.name}
+                </Link>
+                <Box component="span" sx={{ color: 'text.disabled' }}>
+                  {row.email}
+                </Box>
+              </Stack>
+            </Box>
+          )}
         </TableCell>
 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.phoneNumber}</TableCell>
@@ -148,23 +165,43 @@ export function UserTableRow({ row, selected, editHref, onSelectRow, onDeleteRow
         </TableCell>
 
         <TableCell>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Tooltip title="Quick edit" placement="top" arrow>
-              <IconButton
-                color={quickEditForm.value ? 'inherit' : 'default'}
-                onClick={quickEditForm.onTrue}
-              >
-                <Iconify icon="solar:pen-bold" />
-              </IconButton>
-            </Tooltip>
+          {useCircuitLayoutsWithPathname() ? (
+            <div className="flex items-center">
+              <TooltipWrapper title="Quick edit" placement="top" arrow>
+                <IconButtonWrapper
+                  color={quickEditForm.value ? 'inherit' : 'default'}
+                  onClick={quickEditForm.onTrue}
+                >
+                  <Iconify icon="solar:pen-bold" />
+                </IconButtonWrapper>
+              </TooltipWrapper>
 
-            <IconButton
-              color={menuActions.open ? 'inherit' : 'default'}
-              onClick={menuActions.onOpen}
-            >
-              <Iconify icon="eva:more-vertical-fill" />
-            </IconButton>
-          </Box>
+              <IconButtonWrapper
+                color={menuActions.open ? 'inherit' : 'default'}
+                onClick={menuActions.onOpen}
+              >
+                <Iconify icon="eva:more-vertical-fill" />
+              </IconButtonWrapper>
+            </div>
+          ) : (
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <TooltipWrapper title="Quick edit" placement="top" arrow>
+                <IconButtonWrapper
+                  color={quickEditForm.value ? 'inherit' : 'default'}
+                  onClick={quickEditForm.onTrue}
+                >
+                  <Iconify icon="solar:pen-bold" />
+                </IconButtonWrapper>
+              </TooltipWrapper>
+
+              <IconButtonWrapper
+                color={menuActions.open ? 'inherit' : 'default'}
+                onClick={menuActions.onOpen}
+              >
+                <Iconify icon="eva:more-vertical-fill" />
+              </IconButtonWrapper>
+            </Box>
+          )}
         </TableCell>
       </TableRow>
 

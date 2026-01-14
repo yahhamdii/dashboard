@@ -10,7 +10,7 @@
 import Stack from '@mui/material/Stack';
 import type { StackProps as MuiStackProps } from '@mui/material/Stack';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
@@ -27,7 +27,7 @@ type StackWrapperProps = MuiStackProps;
  * en convertissant manuellement les cas simples.
  */
 export function StackWrapper({ children, ...other }: StackWrapperProps) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_LAYOUTS');
+  const useCircuit = useCircuitLayoutsWithPathname();
 
   // Pour l'instant, on garde MUI Stack
   // La migration vers Tailwind sera faite manuellement cas par cas

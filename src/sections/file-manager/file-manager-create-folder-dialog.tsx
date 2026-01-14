@@ -7,6 +7,8 @@ import IconButton from '@mui/material/IconButton';
 
 import { InputWrapper as TextField, ButtonWrapper as Button, DialogWrapper as Dialog, DialogTitleWrapper as DialogTitle, DialogActionsWrapper as DialogActions, DialogContentWrapper as DialogContent } from 'src/components/circuit-ui';
 
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
+
 import { Upload } from 'src/components/upload';
 import { Iconify } from 'src/components/iconify';
 
@@ -102,11 +104,19 @@ export function FileManagerCreateFolderDialog({
         )}
 
         {(onCreate || onUpdate) && (
-          <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end' }}>
-            <Button variant="soft" onClick={onCreate || onUpdate}>
-              {onUpdate ? 'Save' : 'Create'}
-            </Button>
-          </Box>
+          useCircuitLayoutsWithPathname() ? (
+            <div className="flex-grow flex justify-end">
+              <Button variant="soft" onClick={onCreate || onUpdate}>
+                {onUpdate ? 'Save' : 'Create'}
+              </Button>
+            </div>
+          ) : (
+            <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end' }}>
+              <Button variant="soft" onClick={onCreate || onUpdate}>
+                {onUpdate ? 'Save' : 'Create'}
+              </Button>
+            </Box>
+          )
         )}
       </DialogActions>
     </Dialog>

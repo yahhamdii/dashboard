@@ -8,6 +8,8 @@ import { CardWrapper as Card, CardHeaderWrapper as CardHeader } from 'src/compon
 
 import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
 
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
+
 import { fShortenNumber } from 'src/utils/format-number';
 
 import { Iconify } from 'src/components/iconify';
@@ -35,19 +37,27 @@ export function AppTopInstalledCountries({ title, subheader, list, sx, ...other 
       <CardHeader title={title} subheader={subheader} />
 
       <Scrollbar sx={{ minHeight: 254 }}>
-        <Box
-          sx={{
-            p: 3,
-            gap: 3,
-            minWidth: 360,
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          {list.map((item) => (
-            <Item key={item.id} item={item} />
-          ))}
-        </Box>
+        {useCircuitLayoutsWithPathname() ? (
+          <div className="flex flex-col gap-3 p-3 min-w-[360px]">
+            {list.map((item) => (
+              <Item key={item.id} item={item} />
+            ))}
+          </div>
+        ) : (
+          <Box
+            sx={{
+              p: 3,
+              gap: 3,
+              minWidth: 360,
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            {list.map((item) => (
+              <Item key={item.id} item={item} />
+            ))}
+          </Box>
+        )}
       </Scrollbar>
     </Card>
   );
@@ -60,7 +70,16 @@ type CountryItemProps = BoxProps & {
 };
 
 function Item({ item, sx, ...other }: CountryItemProps) {
-  const largeItem = () => (
+  const useCircuit = useCircuitLayoutsWithPathname();
+  
+  const largeItem = () => useCircuit ? (
+    <div className="flex items-center gap-1 min-w-[120px]">
+      <FlagIcon code={item.countryCode} />
+      <Typography component="span" variant="subtitle2" noWrap>
+        {item.countryName}
+      </Typography>
+    </div>
+  ) : (
     <Box
       sx={{
         gap: 1,
@@ -76,7 +95,12 @@ function Item({ item, sx, ...other }: CountryItemProps) {
     </Box>
   );
 
-  const smallItem = (icon: IconifyName, system: number) => (
+  const smallItem = (icon: IconifyName, system: number) => useCircuit ? (
+    <div className="flex items-center gap-0.5 min-w-[80px] text-sm">
+      <Iconify icon={icon} width={14} sx={{ color: 'text.secondary' }} />
+      {fShortenNumber(system)}
+    </div>
+  ) : (
     <Box
       sx={{
         gap: 0.5,
@@ -91,7 +115,14 @@ function Item({ item, sx, ...other }: CountryItemProps) {
     </Box>
   );
 
-  return (
+  return useCircuit ? (
+    <div className="flex items-center gap-2">
+      {largeItem()}
+      {smallItem('mingcute:android-2-fill', item.android)}
+      {smallItem('mingcute:windows-fill', item.windows)}
+      {smallItem('mingcute:apple-fill', item.apple)}
+    </div>
+  ) : (
     <Box
       sx={[{ gap: 2, display: 'flex', alignItems: 'center' }, ...(Array.isArray(sx) ? sx : [sx])]}
       {...other}

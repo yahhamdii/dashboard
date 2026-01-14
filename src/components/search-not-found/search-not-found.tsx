@@ -7,7 +7,7 @@ import type { TypographyProps } from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
-import { useCircuitComponent } from 'src/lib/feature-flags';
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
@@ -21,7 +21,7 @@ type SearchNotFoundProps = BoxProps & {
 };
 
 export function SearchNotFound({ query, sx, slotProps, className, ...other }: SearchNotFoundProps) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_LAYOUTS');
+  const useCircuit = useCircuitLayoutsWithPathname();
 
   if (!query) {
     return (
@@ -35,11 +35,17 @@ export function SearchNotFound({ query, sx, slotProps, className, ...other }: Se
   const tailwindClasses = 'flex flex-col gap-1 rounded-xl text-center';
   const combinedClassName = className ? `${tailwindClasses} ${className}` : tailwindClasses;
 
+  // Filtrer les props MUI spécifiques
+  const {
+    sx: _sx,
+    ...divProps
+  } = other as any;
+
   if (useCircuit) {
     return (
       <div
         className={combinedClassName}
-        {...other}
+        {...(divProps as React.HTMLAttributes<HTMLDivElement>)}
       >
         <Typography
           variant="h6"

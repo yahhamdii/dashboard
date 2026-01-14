@@ -9,15 +9,16 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
-import Checkbox from '@mui/material/Checkbox';
 import { useTheme } from '@mui/material/styles';
 import ListItemText from '@mui/material/ListItemText';
 import { tableRowClasses } from '@mui/material/TableRow';
 import { tableCellClasses } from '@mui/material/TableCell';
 
-import { TableRowWrapper as TableRow, TableCellWrapper as TableCell } from 'src/components/circuit-ui';
+import { TableRowWrapper as TableRow, TableCellWrapper as TableCell, CheckboxWrapper as Checkbox } from 'src/components/circuit-ui';
 
 import { TypographyWrapper as Typography, ButtonWrapper as Button } from 'src/components/circuit-ui';
+
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 import { fData } from 'src/utils/format-number';
 import { fDate, fTime } from 'src/utils/format-time';
@@ -211,21 +212,39 @@ export function FileManagerTableRow({ row, selected, onSelectRow, onDeleteRow }:
         </TableCell>
 
         <TableCell onClick={handleClick}>
-          <Box sx={{ gap: 2, display: 'flex', alignItems: 'center' }}>
-            <FileThumbnail file={row.type} />
+          {useCircuitLayoutsWithPathname() ? (
+            <div className="flex items-center gap-2">
+              <FileThumbnail file={row.type} />
 
-            <Typography
-              noWrap
-              variant="inherit"
-              sx={{
-                maxWidth: 360,
-                cursor: 'pointer',
-                ...(detailsDrawer.value && { fontWeight: 'fontWeightBold' }),
-              }}
-            >
-              {row.name}
-            </Typography>
-          </Box>
+              <Typography
+                noWrap
+                variant="inherit"
+                sx={{
+                  maxWidth: 360,
+                  cursor: 'pointer',
+                  ...(detailsDrawer.value && { fontWeight: 'fontWeightBold' }),
+                }}
+              >
+                {row.name}
+              </Typography>
+            </div>
+          ) : (
+            <Box sx={{ gap: 2, display: 'flex', alignItems: 'center' }}>
+              <FileThumbnail file={row.type} />
+
+              <Typography
+                noWrap
+                variant="inherit"
+                sx={{
+                  maxWidth: 360,
+                  cursor: 'pointer',
+                  ...(detailsDrawer.value && { fontWeight: 'fontWeightBold' }),
+                }}
+              >
+                {row.name}
+              </Typography>
+            </Box>
+          )}
         </TableCell>
 
         <TableCell onClick={handleClick} sx={{ whiteSpace: 'nowrap' }}>

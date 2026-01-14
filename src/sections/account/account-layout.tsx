@@ -4,12 +4,11 @@ import type { DashboardContentProps } from 'src/layouts/dashboard';
 
 import { removeLastSlash } from 'minimal-shared/utils';
 
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
-
 import { paths } from 'src/routes/paths';
 import { usePathname } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
+
+import { TabsWrapper, TabWrapper } from 'src/components/circuit-ui';
 
 import { DashboardContent } from 'src/layouts/dashboard';
 
@@ -43,9 +42,9 @@ export function AccountLayout({ children, ...other }: DashboardContentProps) {
         sx={{ mb: 3 }}
       />
 
-      <Tabs value={removeLastSlash(pathname)} sx={{ mb: { xs: 3, md: 5 } }}>
+      <TabsWrapper value={removeLastSlash(pathname)} sx={{ mb: { xs: 3, md: 5 } }}>
         {NAV_ITEMS.map((tab) => (
-          <Tab
+          <TabWrapper
             component={RouterLink}
             key={tab.href}
             label={tab.label}
@@ -54,7 +53,7 @@ export function AccountLayout({ children, ...other }: DashboardContentProps) {
             href={tab.href}
           />
         ))}
-      </Tabs>
+      </TabsWrapper>
 
       {children}
     </DashboardContent>

@@ -9,6 +9,8 @@ import { fNumber } from 'src/utils/format-number';
 
 import { CONFIG } from 'src/global-config';
 
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
+
 import { Iconify } from 'src/components/iconify';
 import { SvgColor } from 'src/components/svg-color';
 import { Chart, useChart } from 'src/components/chart';
@@ -58,32 +60,11 @@ export function AppWidget({ title, total, icon, chart, sx, ...other }: Props) {
     ...chart.options,
   });
 
-  return (
-    <Box
-      sx={[
-        {
-          p: 3,
-          gap: 3,
-          borderRadius: 2,
-          display: 'flex',
-          overflow: 'hidden',
-          position: 'relative',
-          alignItems: 'center',
-          color: 'common.white',
-          bgcolor: 'primary.dark',
-        },
-        ...(Array.isArray(sx) ? sx : [sx]),
-      ]}
-      {...other}
-    >
-      <Box
-        sx={{
-          display: 'flex',
-          position: 'relative',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
+  const useCircuit = useCircuitLayoutsWithPathname();
+  
+  return useCircuit ? (
+    <div className="flex items-center gap-3 p-3 rounded-lg overflow-hidden relative text-white bg-blue-800">
+      <div className="flex relative items-center justify-center">
         <Chart
           type="radialBar"
           series={[chart.series]}
@@ -101,12 +82,102 @@ export function AppWidget({ title, total, icon, chart, sx, ...other }: Props) {
             color: 'primary.light',
           }}
         />
-      </Box>
+      </div>
 
       <div>
-        <Box sx={{ typography: 'h4' }}>{fNumber(total)}</Box>
-        <Box sx={{ typography: 'subtitle2', opacity: 0.64 }}>{title}</Box>
+        <div className="text-2xl font-bold">{fNumber(total)}</div>
+        <div className="text-sm opacity-64">{title}</div>
       </div>
+
+      <Iconify
+        icon={icon}
+        sx={{
+          width: 120,
+          right: -40,
+          height: 120,
+          opacity: 0.08,
+          position: 'absolute',
+        }}
+      />
+    </div>
+  ) : (
+    <Box
+      sx={[
+        {
+          p: 3,
+          gap: 3,
+          borderRadius: 2,
+          display: 'flex',
+          overflow: 'hidden',
+          position: 'relative',
+          alignItems: 'center',
+          color: 'common.white',
+          bgcolor: 'primary.dark',
+        },
+        ...(Array.isArray(sx) ? sx : [sx]),
+      ]}
+      {...other}
+    >
+      {useCircuit ? (
+        <div className="flex relative items-center justify-center">
+          <Chart
+            type="radialBar"
+            series={[chart.series]}
+            options={chartOptions}
+            sx={{ zIndex: 1, width: 80, height: 80 }}
+          />
+
+          <SvgColor
+            src={`${CONFIG.assetsDir}/assets/background/shape-circle-3.svg`}
+            sx={{
+              width: 200,
+              height: 200,
+              opacity: 0.08,
+              position: 'absolute',
+              color: 'primary.light',
+            }}
+          />
+        </div>
+      ) : (
+        <Box
+          sx={{
+            display: 'flex',
+            position: 'relative',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Chart
+            type="radialBar"
+            series={[chart.series]}
+            options={chartOptions}
+            sx={{ zIndex: 1, width: 80, height: 80 }}
+          />
+
+          <SvgColor
+            src={`${CONFIG.assetsDir}/assets/background/shape-circle-3.svg`}
+            sx={{
+              width: 200,
+              height: 200,
+              opacity: 0.08,
+              position: 'absolute',
+              color: 'primary.light',
+            }}
+          />
+        </Box>
+      )}
+
+      {useCircuit ? (
+        <div>
+          <div className="text-2xl font-bold">{fNumber(total)}</div>
+          <div className="text-sm opacity-64">{title}</div>
+        </div>
+      ) : (
+        <div>
+          <Box sx={{ typography: 'h4' }}>{fNumber(total)}</Box>
+          <Box sx={{ typography: 'subtitle2', opacity: 0.64 }}>{title}</Box>
+        </div>
+      )}
 
       <Iconify
         icon={icon}

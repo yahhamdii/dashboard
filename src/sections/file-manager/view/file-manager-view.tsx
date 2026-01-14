@@ -12,6 +12,8 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 import { TypographyWrapper as Typography, ButtonWrapper as Button } from 'src/components/circuit-ui';
 
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
+
 import { fIsAfter, fIsBetween } from 'src/utils/format-time';
 
 import { DashboardContent } from 'src/layouts/dashboard';
@@ -100,36 +102,62 @@ export function FileManagerView() {
     table.onUpdatePageDeleteRows(dataInPage.length, dataFiltered.length);
   }, [dataFiltered.length, dataInPage.length, table, tableData]);
 
-  const renderFilters = () => (
-    <Box
-      sx={{
-        gap: 2,
-        display: 'flex',
-        flexDirection: { xs: 'column', md: 'row' },
-        alignItems: { xs: 'flex-end', md: 'center' },
-      }}
-    >
-      <FileManagerFilters
-        filters={filters}
-        dateError={dateError}
-        onResetPage={table.onResetPage}
-        openDateRange={dateRange.value}
-        onOpenDateRange={dateRange.onTrue}
-        onCloseDateRange={dateRange.onFalse}
-        options={{ types: FILE_TYPE_OPTIONS }}
-      />
+  const renderFilters = () => {
+    const useCircuit = useCircuitLayoutsWithPathname();
+    
+    return useCircuit ? (
+      <div className="flex flex-col md:flex-row gap-2 items-end md:items-center">
+        <FileManagerFilters
+          filters={filters}
+          dateError={dateError}
+          onResetPage={table.onResetPage}
+          openDateRange={dateRange.value}
+          onOpenDateRange={dateRange.onTrue}
+          onCloseDateRange={dateRange.onFalse}
+          options={{ types: FILE_TYPE_OPTIONS }}
+        />
 
-      <ToggleButtonGroup size="small" value={displayMode} exclusive onChange={handleChangeView}>
-        <ToggleButton value="list">
-          <Iconify icon="solar:list-bold" />
-        </ToggleButton>
+        <ToggleButtonGroup size="small" value={displayMode} exclusive onChange={handleChangeView}>
+          <ToggleButton value="list">
+            <Iconify icon="solar:list-bold" />
+          </ToggleButton>
 
-        <ToggleButton value="grid">
-          <Iconify icon="mingcute:dot-grid-fill" />
-        </ToggleButton>
-      </ToggleButtonGroup>
-    </Box>
-  );
+          <ToggleButton value="grid">
+            <Iconify icon="mingcute:dot-grid-fill" />
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </div>
+    ) : (
+      <Box
+        sx={{
+          gap: 2,
+          display: 'flex',
+          flexDirection: { xs: 'column', md: 'row' },
+          alignItems: { xs: 'flex-end', md: 'center' },
+        }}
+      >
+        <FileManagerFilters
+          filters={filters}
+          dateError={dateError}
+          onResetPage={table.onResetPage}
+          openDateRange={dateRange.value}
+          onOpenDateRange={dateRange.onTrue}
+          onCloseDateRange={dateRange.onFalse}
+          options={{ types: FILE_TYPE_OPTIONS }}
+        />
+
+        <ToggleButtonGroup size="small" value={displayMode} exclusive onChange={handleChangeView}>
+          <ToggleButton value="list">
+            <Iconify icon="solar:list-bold" />
+          </ToggleButton>
+
+          <ToggleButton value="grid">
+            <Iconify icon="mingcute:dot-grid-fill" />
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </Box>
+    );
+  };
 
   const renderResults = () => (
     <FileManagerFiltersResult
@@ -189,21 +217,41 @@ export function FileManagerView() {
   return (
     <>
       <DashboardContent>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Typography variant="h4">File manager</Typography>
-          <Button
-            variant="contained"
-            startIcon={<Iconify icon="eva:cloud-upload-fill" />}
-            onClick={newFilesDialog.onTrue}
-          >
-            Upload
-          </Button>
-        </Box>
+        {useCircuitLayoutsWithPathname() ? (
+          <div className="flex items-center justify-between">
+            <Typography variant="h4">File manager</Typography>
+            <Button
+              variant="contained"
+              startIcon={<Iconify icon="eva:cloud-upload-fill" />}
+              onClick={newFilesDialog.onTrue}
+            >
+              Upload
+            </Button>
+          </div>
+        ) : (
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Typography variant="h4">File manager</Typography>
+            <Button
+              variant="contained"
+              startIcon={<Iconify icon="eva:cloud-upload-fill" />}
+              onClick={newFilesDialog.onTrue}
+            >
+              Upload
+            </Button>
+          </Box>
+        )}
 
-        <Stack spacing={2.5} sx={{ my: { xs: 3, md: 5 } }}>
-          {renderFilters()}
-          {canReset && renderResults()}
-        </Stack>
+        {useCircuitLayoutsWithPathname() ? (
+          <div className="flex flex-col gap-2.5 my-3 md:my-5">
+            {renderFilters()}
+            {canReset && renderResults()}
+          </div>
+        ) : (
+          <Stack spacing={2.5} sx={{ my: { xs: 3, md: 5 } }}>
+            {renderFilters()}
+            {canReset && renderResults()}
+          </Stack>
+        )}
 
         {notFound ? <EmptyContent filled sx={{ py: 10 }} /> : renderList()}
       </DashboardContent>

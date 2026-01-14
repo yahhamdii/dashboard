@@ -11,7 +11,9 @@ import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
 
-import { ButtonWrapper as Button } from 'src/components/circuit-ui';
+import { ButtonWrapper as Button, AvatarWrapper, TooltipWrapper } from 'src/components/circuit-ui';
+
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 import { Iconify } from 'src/components/iconify';
 import { CustomPopover } from 'src/components/custom-popover';
@@ -70,17 +72,20 @@ export function FileManagerInvitedItem({ person }: Props) {
     </CustomPopover>
   );
 
+  const useCircuit = useCircuitLayoutsWithPathname();
+
   return (
     <>
-      <Box component="li" sx={{ display: 'flex', alignItems: 'center', py: 1 }}>
-        <Avatar alt={person.name} src={person.avatarUrl} sx={{ mr: 2 }} />
+      {useCircuit ? (
+        <li className="flex items-center py-1">
+          <AvatarWrapper alt={person.name} src={person.avatarUrl} size="medium" sx={{ mr: 2 }} />
 
         <ListItemText
           primary={person.name}
           secondary={
-            <Tooltip title={person.email}>
+            <TooltipWrapper title={person.email}>
               <span>{person.email}</span>
-            </Tooltip>
+            </TooltipWrapper>
           }
           sx={{ flexGrow: 1, pr: 1 }}
           slotProps={{
@@ -110,7 +115,48 @@ export function FileManagerInvitedItem({ person }: Props) {
         >
           Can {permission}
         </Button>
-      </Box>
+        </li>
+      ) : (
+        <Box component="li" sx={{ display: 'flex', alignItems: 'center', py: 1 }}>
+          <AvatarWrapper alt={person.name} src={person.avatarUrl} size="medium" sx={{ mr: 2 }} />
+
+          <ListItemText
+            primary={person.name}
+            secondary={
+              <TooltipWrapper title={person.email}>
+                <span>{person.email}</span>
+              </TooltipWrapper>
+            }
+            sx={{ flexGrow: 1, pr: 1 }}
+            slotProps={{
+              primary: { noWrap: true },
+              secondary: { noWrap: true },
+            }}
+          />
+
+          <Button
+            size="small"
+            color="inherit"
+            endIcon={
+              <Iconify
+                width={16}
+                icon={menuActions.open ? 'eva:arrow-ios-upward-fill' : 'eva:arrow-ios-downward-fill'}
+                sx={{ ml: -0.5 }}
+              />
+            }
+            onClick={menuActions.onOpen}
+            sx={[
+              (theme) => ({
+                flexShrink: 0,
+                fontSize: theme.typography.pxToRem(12),
+                ...(menuActions.open && { bgcolor: 'action.selected' }),
+              }),
+            ]}
+          >
+            Can {permission}
+          </Button>
+        </Box>
+      )}
 
       {renderMenuActions()}
     </>

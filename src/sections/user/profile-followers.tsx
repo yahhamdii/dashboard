@@ -4,12 +4,13 @@ import type { IUserProfileFollower } from 'src/types/user';
 import { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
 
-import { CardWrapper as Card } from 'src/components/circuit-ui';
+import { CardWrapper as Card, AvatarWrapper } from 'src/components/circuit-ui';
 import ListItemText from '@mui/material/ListItemText';
 
 import { TypographyWrapper as Typography, ButtonWrapper as Button } from 'src/components/circuit-ui';
+
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 import { Iconify } from 'src/components/iconify';
 
@@ -41,22 +42,35 @@ export function ProfileFollowers({ followers }: Props) {
         Followers
       </Typography>
 
-      <Box
-        sx={{
-          gap: 3,
-          display: 'grid',
-          gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' },
-        }}
-      >
-        {followers.map((follower) => (
-          <CardItem
-            key={follower.id}
-            follower={follower}
-            selected={followed.includes(follower.id)}
-            onSelected={() => handleClick(follower.id)}
-          />
-        ))}
-      </Box>
+      {useCircuitLayoutsWithPathname() ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+          {followers.map((follower) => (
+            <CardItem
+              key={follower.id}
+              follower={follower}
+              selected={followed.includes(follower.id)}
+              onSelected={() => handleClick(follower.id)}
+            />
+          ))}
+        </div>
+      ) : (
+        <Box
+          sx={{
+            gap: 3,
+            display: 'grid',
+            gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' },
+          }}
+        >
+          {followers.map((follower) => (
+            <CardItem
+              key={follower.id}
+              follower={follower}
+              selected={followed.includes(follower.id)}
+              onSelected={() => handleClick(follower.id)}
+            />
+          ))}
+        </Box>
+      )}
     </>
   );
 }
@@ -82,9 +96,10 @@ function CardItem({ follower, selected, onSelected, sx, ...other }: CardItemProp
       ]}
       {...other}
     >
-      <Avatar
+      <AvatarWrapper
         alt={follower?.name}
         src={follower?.avatarUrl}
+        size="medium"
         sx={{ width: 48, height: 48, mr: 2 }}
       />
 

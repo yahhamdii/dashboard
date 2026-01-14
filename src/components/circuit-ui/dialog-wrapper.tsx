@@ -97,8 +97,14 @@ export function DialogWrapper({
     ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}),
   };
 
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget && onClose) {
+      onClose({} as any, 'backdropClick');
+    }
+  };
+
   return (
-    <div style={overlayStyles} onClick={onClose} className="circuit-dialog-overlay">
+    <div style={overlayStyles} onClick={handleOverlayClick} className="circuit-dialog-overlay">
       <div
         className={className}
         style={dialogStyles}
@@ -141,8 +147,15 @@ export function DialogTitleWrapper({
     ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}),
   };
 
+  // Filtrer les props MUI spécifiques
+  const {
+    classes,
+    component,
+    ...divProps
+  } = other as any;
+
   return (
-    <div className={className} style={circuitStyles} {...other}>
+    <div className={className} style={circuitStyles} {...(divProps as React.HTMLAttributes<HTMLDivElement>)}>
       {children}
     </div>
   );
@@ -182,8 +195,15 @@ export function DialogContentWrapper({
     ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}),
   };
 
+  // Filtrer les props MUI spécifiques
+  const {
+    classes,
+    component,
+    ...divProps
+  } = other as any;
+
   return (
-    <div className={className} style={circuitStyles} {...other}>
+    <div className={className} style={circuitStyles} {...(divProps as React.HTMLAttributes<HTMLDivElement>)}>
       {children}
     </div>
   );
@@ -222,8 +242,14 @@ export function DialogActionsWrapper({
     ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}),
   };
 
+  // Filtrer les props MUI spécifiques
+  const {
+    classes,
+    ...divProps
+  } = other as any;
+
   return (
-    <div className={className} style={circuitStyles} {...other}>
+    <div className={className} style={circuitStyles} {...(divProps as React.HTMLAttributes<HTMLDivElement>)}>
       {children}
     </div>
   );

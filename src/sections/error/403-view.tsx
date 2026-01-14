@@ -2,10 +2,9 @@
 
 import { m } from 'framer-motion';
 
-import Container from '@mui/material/Container';
-
 import { RouterLink } from 'src/routes/components';
-import { TypographyWrapper as Typography, ButtonWrapper as Button } from 'src/components/circuit-ui';
+import { TypographyWrapper as Typography, ButtonWrapper as Button, ContainerWrapper } from 'src/components/circuit-ui';
+import { useCircuitComponent } from 'src/lib/feature-flags';
 
 import { SimpleLayout } from 'src/layouts/simple';
 import { ForbiddenIllustration } from 'src/assets/illustrations';
@@ -15,13 +14,15 @@ import { varBounce, MotionContainer } from 'src/components/animate';
 // ----------------------------------------------------------------------
 
 export function View403() {
+  const useCircuit = useCircuitComponent('USE_CIRCUIT_ERROR_PAGES');
+  
   return (
     <SimpleLayout
       slotProps={{
         content: { compact: true },
       }}
     >
-      <Container component={MotionContainer}>
+      <ContainerWrapper component={MotionContainer}>
         <m.div variants={varBounce('in')}>
           <Typography variant="h3" sx={{ mb: 2 }}>
             No permission
@@ -42,7 +43,7 @@ export function View403() {
         <Button component={RouterLink} href="/" size="large" variant="contained">
           Go to home
         </Button>
-      </Container>
+      </ContainerWrapper>
     </SimpleLayout>
   );
 }

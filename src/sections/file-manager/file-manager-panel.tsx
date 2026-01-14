@@ -3,7 +3,9 @@ import type { BoxProps } from '@mui/material/Box';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 
-import { ButtonWrapper as Button } from 'src/components/circuit-ui';
+import { ButtonWrapper as Button, IconButtonWrapper } from 'src/components/circuit-ui';
+
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 import { RouterLink } from 'src/routes/components';
 
@@ -30,7 +32,60 @@ export function FileManagerPanel({
   onCollapse,
   ...other
 }: Props) {
-  return (
+  const useCircuit = useCircuitLayoutsWithPathname();
+
+  // Filtrer les props MUI spécifiques
+  const {
+    sx: _sx,
+    ...divProps
+  } = other as any;
+
+  return useCircuit ? (
+    <div className={`flex items-center mb-3 ${sx ? '' : ''}`} {...(divProps as React.HTMLAttributes<HTMLDivElement>)}>
+      <div className="flex-1">
+        <div className="flex gap-1 items-center text-lg">
+          {title}
+
+          <IconButtonWrapper
+            size="small"
+            color="primary"
+            onClick={onOpen}
+            sx={{
+              width: 24,
+              height: 24,
+              bgcolor: 'primary.main',
+              color: 'primary.contrastText',
+              '&:hover': { bgcolor: 'primary.dark' },
+            }}
+          >
+            <Iconify width={16} icon="mingcute:add-line" />
+          </IconButtonWrapper>
+        </div>
+
+        {subtitle && (
+          <p className="text-sm text-gray-500 mt-0.5">{subtitle}</p>
+        )}
+      </div>
+
+      {link && (
+        <Button
+          href={link}
+          component={RouterLink}
+          size="small"
+          color="inherit"
+          endIcon={<Iconify icon="eva:arrow-ios-forward-fill" width={18} sx={{ ml: -0.5 }} />}
+        >
+          View all
+        </Button>
+      )}
+
+      {onCollapse && (
+        <IconButtonWrapper onClick={onCollapse}>
+          <Iconify icon={collapse ? 'eva:arrow-ios-downward-fill' : 'eva:arrow-ios-upward-fill'} />
+        </IconButtonWrapper>
+      )}
+    </div>
+  ) : (
     <Box
       sx={[
         {

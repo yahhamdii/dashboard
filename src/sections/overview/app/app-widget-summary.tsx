@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
 
 import { CardWrapper as Card } from 'src/components/circuit-ui';
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 import { fNumber, fPercent } from 'src/utils/format-number';
 
@@ -42,32 +43,65 @@ export function AppWidgetSummary({ title, percent, total, chart, sx, ...other }:
     ...chart.options,
   });
 
-  const renderTrending = () => (
-    <Box sx={{ gap: 0.5, display: 'flex', alignItems: 'center' }}>
-      <Iconify
-        width={24}
-        icon={
-          percent < 0
-            ? 'solar:double-alt-arrow-down-bold-duotone'
-            : 'solar:double-alt-arrow-up-bold-duotone'
-        }
-        sx={{
-          flexShrink: 0,
-          color: 'success.main',
-          ...(percent < 0 && { color: 'error.main' }),
-        }}
-      />
+  const renderTrending = () => {
+    const useCircuit = useCircuitLayoutsWithPathname();
+    
+    if (useCircuit) {
+      return (
+        <div className="flex gap-0.5 items-center">
+          <Iconify
+            width={24}
+            icon={
+              percent < 0
+                ? 'solar:double-alt-arrow-down-bold-duotone'
+                : 'solar:double-alt-arrow-up-bold-duotone'
+            }
+            sx={{
+              flexShrink: 0,
+              color: 'success.main',
+              ...(percent < 0 && { color: 'error.main' }),
+            }}
+          />
 
-      <Box component="span" sx={{ typography: 'subtitle2' }}>
-        {percent > 0 && '+'}
-        {fPercent(percent)}
-      </Box>
+          <span className="text-sm">
+            {percent > 0 && '+'}
+            {fPercent(percent)}
+          </span>
 
-      <Box component="span" sx={{ typography: 'body2', color: 'text.secondary' }}>
-        last 7 days
+          <span className="text-xs text-gray-500">
+            last 7 days
+          </span>
+        </div>
+      );
+    }
+    
+    return (
+      <Box sx={{ gap: 0.5, display: 'flex', alignItems: 'center' }}>
+        <Iconify
+          width={24}
+          icon={
+            percent < 0
+              ? 'solar:double-alt-arrow-down-bold-duotone'
+              : 'solar:double-alt-arrow-up-bold-duotone'
+          }
+          sx={{
+            flexShrink: 0,
+            color: 'success.main',
+            ...(percent < 0 && { color: 'error.main' }),
+          }}
+        />
+
+        <Box component="span" sx={{ typography: 'subtitle2' }}>
+          {percent > 0 && '+'}
+          {fPercent(percent)}
+        </Box>
+
+        <Box component="span" sx={{ typography: 'body2', color: 'text.secondary' }}>
+          last 7 days
+        </Box>
       </Box>
-    </Box>
-  );
+    );
+  };
 
   return (
     <Card
@@ -83,13 +117,19 @@ export function AppWidgetSummary({ title, percent, total, chart, sx, ...other }:
       ]}
       {...other}
     >
-      <Box sx={{ flexGrow: 1 }}>
-        <Box sx={{ typography: 'subtitle2' }}>{title}</Box>
-
-        <Box sx={{ mt: 1.5, mb: 1, typography: 'h3' }}>{fNumber(total)}</Box>
-
-        {renderTrending()}
-      </Box>
+      {useCircuitLayoutsWithPathname() ? (
+        <div className="flex-grow">
+          <div className="text-sm font-medium">{title}</div>
+          <div className="text-3xl font-bold mt-1.5 mb-1">{fNumber(total)}</div>
+          {renderTrending()}
+        </div>
+      ) : (
+        <div className="flex-grow">
+          <div className="text-sm font-medium">{title}</div>
+          <div className="text-3xl font-bold mt-1.5 mb-1">{fNumber(total)}</div>
+          {renderTrending()}
+        </div>
+      )}
 
       <Chart
         type="bar"

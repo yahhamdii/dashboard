@@ -6,6 +6,8 @@ import Box from '@mui/material/Box';
 
 import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
 
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
+
 import { CONFIG } from 'src/global-config';
 
 // ----------------------------------------------------------------------
@@ -18,7 +20,51 @@ type Props = BoxProps & {
 };
 
 export function AppWelcome({ title, description, action, img, sx, ...other }: Props) {
-  return (
+  const useCircuit = useCircuitLayoutsWithPathname();
+  
+  const content = (
+    <>
+      {useCircuit ? (
+        <div className="flex flex-1 flex-col items-center md:items-start">
+          <Typography variant="h4" sx={{ whiteSpace: 'pre-line', mb: 1 }}>
+            {title}
+          </Typography>
+
+          <Typography variant="body2" sx={{ opacity: 0.64, maxWidth: 360, ...(action && { mb: 3 }) }}>
+            {description}
+          </Typography>
+
+          {action && action}
+        </div>
+      ) : (
+        <div className="flex flex-1 flex-col items-center md:items-start">
+          <Typography variant="h4" sx={{ whiteSpace: 'pre-line', mb: 1 }}>
+            {title}
+          </Typography>
+
+          <Typography variant="body2" sx={{ opacity: 0.64, maxWidth: 360, ...(action && { mb: 3 }) }}>
+            {description}
+          </Typography>
+
+          {action && action}
+        </div>
+      )}
+
+      {img && <div className="max-w-[260px]">{img}</div>}
+    </>
+  );
+  
+  return useCircuit ? (
+    <div
+      className="pt-5 pb-5 pr-3 pl-3 md:pl-5 gap-5 rounded-lg flex flex-col md:flex-row md:h-full relative items-center text-white text-center md:text-left"
+      style={{
+        backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.88) 0%, #212121 75%), url(${CONFIG.assetsDir}/assets/background/background-5.webp)`,
+        border: '1px solid #424242',
+      }}
+    >
+      {content}
+    </div>
+  ) : (
     <Box
       sx={[
         (theme) => ({
@@ -47,26 +93,7 @@ export function AppWelcome({ title, description, action, img, sx, ...other }: Pr
       ]}
       {...other}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          flex: '1 1 auto',
-          flexDirection: 'column',
-          alignItems: { xs: 'center', md: 'flex-start' },
-        }}
-      >
-        <Typography variant="h4" sx={{ whiteSpace: 'pre-line', mb: 1 }}>
-          {title}
-        </Typography>
-
-        <Typography variant="body2" sx={{ opacity: 0.64, maxWidth: 360, ...(action && { mb: 3 }) }}>
-          {description}
-        </Typography>
-
-        {action && action}
-      </Box>
-
-      {img && <Box sx={{ maxWidth: 260 }}>{img}</Box>}
+      {content}
     </Box>
   );
 }

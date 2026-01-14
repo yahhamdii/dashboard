@@ -5,16 +5,16 @@ import type { AvatarGroupProps } from '@mui/material/AvatarGroup';
 import type { IFileManager } from 'src/types/file';
 import type { FileThumbnailProps } from 'src/components/file-thumbnail';
 
+import React from 'react';
+
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
-import Avatar from '@mui/material/Avatar';
 import { styled } from '@mui/material/styles';
-import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
-import AvatarGroup, { avatarGroupClasses } from '@mui/material/AvatarGroup';
 
-import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
+import { TypographyWrapper as Typography, CheckboxWrapper as Checkbox, AvatarWrapper, IconButtonWrapper } from 'src/components/circuit-ui';
+
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 import { CONFIG } from 'src/global-config';
 
@@ -150,35 +150,70 @@ export function FileItemInfo({ type, title, values, sx, ...other }: FileItemInfo
     </Typography>
   );
 
-  const renderDetails = () => (
-    <Stack
-      divider={
-        <Box
-          component="span"
-          sx={{ width: 2, height: 2, flexShrink: 0, borderRadius: '50%', bgcolor: 'currentColor' }}
-        />
-      }
-      sx={[
-        (theme) => ({
-          gap: 0.75,
-          flexDirection: 'row',
-          alignItems: 'center',
-          typography: 'caption',
-          color: 'text.disabled',
-          '& span': {
-            '&:last-of-type': { ...theme.mixins.maxLine({ line: 1 }) },
-            '&:not(:last-of-type)': { whiteSpace: 'nowrap' },
-          },
-        }),
-      ]}
-    >
-      {values.map((value) => (
-        <span key={value}>{value}</span>
-      ))}
-    </Stack>
-  );
+  const useCircuit = useCircuitLayoutsWithPathname();
+  
+  // Filtrer les props MUI spécifiques
+  const {
+    sx: _sx,
+    ...divProps
+  } = other as any;
+  
+  const renderDetails = () => {
+    if (useCircuit) {
+      return (
+        <div className="flex flex-row items-center gap-1 text-xs text-gray-500">
+          {values.map((value, index) => (
+            <React.Fragment key={value}>
+              {index > 0 && (
+                <span className="w-0.5 h-0.5 flex-shrink-0 rounded-full bg-current" />
+              )}
+              <span className={index === values.length - 1 ? 'truncate' : 'whitespace-nowrap'}>
+                {value}
+              </span>
+            </React.Fragment>
+          ))}
+        </div>
+      );
+    }
+    
+    return (
+      <Box
+        sx={[
+          (theme) => ({
+            gap: 0.75,
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            typography: 'caption',
+            color: 'text.disabled',
+            '& span': {
+              '&:last-of-type': { ...theme.mixins.maxLine({ line: 1 }) },
+              '&:not(:last-of-type)': { whiteSpace: 'nowrap' },
+              '&:not(:first-of-type)::before': {
+                content: '""',
+                width: 2,
+                height: 2,
+                borderRadius: '50%',
+                backgroundColor: 'currentColor',
+                margin: '0 0.75rem',
+              },
+            },
+          }),
+        ]}
+      >
+        {values.map((value) => (
+          <span key={value}>{value}</span>
+        ))}
+      </Box>
+    );
+  };
 
-  return (
+  return useCircuit ? (
+    <div className={`flex flex-col gap-0.5 w-full ${sx ? '' : ''}`} {...(divProps as React.HTMLAttributes<HTMLDivElement>)}>
+      {renderTitle()}
+      {renderDetails()}
+    </div>
+  ) : (
     <Box
       sx={[
         {
@@ -243,9 +278,9 @@ export function FileItemActions({
         }}
       />
 
-      <IconButton color={openMenu ? 'inherit' : 'default'} onClick={onOpenMenu}>
+      <IconButtonWrapper color={openMenu ? 'inherit' : 'default'} onClick={onOpenMenu}>
         <Iconify icon="eva:more-vertical-fill" />
-      </IconButton>
+      </IconButtonWrapper>
     </Box>
   );
 }
@@ -262,23 +297,15 @@ export function FileItemAvatar({ sharedUsers, sx, ...other }: FileItemAvatarProp
   }
 
   return (
-    <AvatarGroup
-      max={3}
-      sx={[
-        {
-          display: 'inline-flex',
-          [`& .${avatarGroupClasses.avatar}`]: {
-            width: 24,
-            height: 24,
-          },
-        },
-        ...(Array.isArray(sx) ? sx : [sx]),
-      ]}
-      {...other}
-    >
-      {sharedUsers.map((person) => (
-        <Avatar key={person.id} alt={person.name} src={person.avatarUrl} />
+    <div className="flex -space-x-2" style={{ display: 'inline-flex' }}>
+      {sharedUsers.slice(0, 3).map((person) => (
+        <AvatarWrapper key={person.id} alt={person.name} src={person.avatarUrl} size="small" sx={{ width: 24, height: 24, border: '2px solid white' }} />
       ))}
-    </AvatarGroup>
+      {sharedUsers.length > 3 && (
+        <AvatarWrapper size="small" sx={{ width: 24, height: 24, border: '2px solid white', bgcolor: 'grey.300' }}>
+          +{sharedUsers.length - 3}
+        </AvatarWrapper>
+      )}
+    </div>
   );
 }

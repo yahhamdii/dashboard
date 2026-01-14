@@ -5,9 +5,10 @@ import { orderBy } from 'es-toolkit';
 import { varAlpha } from 'minimal-shared/utils';
 
 import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
 
-import { CardWrapper as Card, CardHeaderWrapper as CardHeader } from 'src/components/circuit-ui';
+import { CardWrapper as Card, CardHeaderWrapper as CardHeader, AvatarWrapper } from 'src/components/circuit-ui';
+
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 import { fShortenNumber } from 'src/utils/format-number';
 
@@ -31,18 +32,26 @@ export function AppTopAuthors({ title, subheader, list, sx, ...other }: Props) {
     <Card sx={sx} {...other}>
       <CardHeader title={title} subheader={subheader} />
 
-      <Box
-        sx={{
-          p: 3,
-          gap: 3,
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        {orderBy(list, ['totalFavorites'], ['desc']).map((item, index) => (
-          <Item key={item.id} item={item} index={index} />
-        ))}
-      </Box>
+      {useCircuitLayoutsWithPathname() ? (
+        <div className="flex flex-col gap-3 p-3">
+          {orderBy(list, ['totalFavorites'], ['desc']).map((item, index) => (
+            <Item key={item.id} item={item} index={index} />
+          ))}
+        </div>
+      ) : (
+        <Box
+          sx={{
+            p: 3,
+            gap: 3,
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          {orderBy(list, ['totalFavorites'], ['desc']).map((item, index) => (
+            <Item key={item.id} item={item} index={index} />
+          ))}
+        </Box>
+      )}
     </Card>
   );
 }
@@ -55,7 +64,37 @@ type ItemProps = BoxProps & {
 };
 
 function Item({ item, index, sx, ...other }: ItemProps) {
-  return (
+  const useCircuit = useCircuitLayoutsWithPathname();
+  
+  // Filtrer les props MUI spécifiques
+  const {
+    sx: _sx,
+    ...divProps
+  } = other as any;
+  
+  return useCircuit ? (
+    <div className={`flex items-center gap-2 ${sx ? '' : ''}`} {...(divProps as React.HTMLAttributes<HTMLDivElement>)}>
+      <AvatarWrapper alt={item.name} src={item.avatarUrl} />
+
+      <div className="flex-1">
+        <span className="text-sm font-medium">{item.name}</span>
+        <div className="flex items-center gap-0.5 mt-0.5 text-xs text-gray-500">
+          <Iconify icon="solar:heart-bold" width={14} />
+          {fShortenNumber(item.totalFavorites)}
+        </div>
+      </div>
+
+      <div
+        className={`w-10 h-10 flex items-center justify-center rounded-full ${
+          index === 0 ? 'text-blue-600 bg-blue-50' :
+          index === 1 ? 'text-cyan-600 bg-cyan-50' :
+          'text-red-600 bg-red-50'
+        }`}
+      >
+        <Iconify width={24} icon="solar:cup-star-bold" />
+      </div>
+    </div>
+  ) : (
     <Box
       sx={[
         {
@@ -67,7 +106,7 @@ function Item({ item, index, sx, ...other }: ItemProps) {
       ]}
       {...other}
     >
-      <Avatar alt={item.name} src={item.avatarUrl} />
+      <AvatarWrapper alt={item.name} src={item.avatarUrl} />
 
       <Box sx={{ flex: '1 1 auto' }}>
         <Box sx={{ typography: 'subtitle2' }}>{item.name}</Box>

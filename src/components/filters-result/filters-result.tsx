@@ -11,7 +11,7 @@ import { Iconify } from '../iconify';
 
 // ----------------------------------------------------------------------
 
-export const chipProps: ChipProps = { size: 'small', variant: 'soft' };
+export const chipProps: ChipProps = { size: 'small', variant: 'filled' };
 
 export type FiltersResultProps = React.ComponentProps<'div'> & {
   totalResults: number;

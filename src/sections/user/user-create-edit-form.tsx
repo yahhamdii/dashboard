@@ -8,12 +8,13 @@ import { isValidPhoneNumber } from 'react-phone-number-input/input';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
-import { CardWrapper as Card } from 'src/components/circuit-ui';
+import { CardWrapper as Card, SwitchWrapper as Switch } from 'src/components/circuit-ui';
 import Stack from '@mui/material/Stack';
-import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { TypographyWrapper as Typography, ButtonWrapper as Button } from 'src/components/circuit-ui';
+
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
@@ -119,27 +120,51 @@ export function UserCreateEditForm({ currentUser }: Props) {
               </Label>
             )}
 
-            <Box sx={{ mb: 5 }}>
-              <Field.UploadAvatar
-                name="avatarUrl"
-                maxSize={3145728}
-                helperText={
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      mt: 3,
-                      mx: 'auto',
-                      display: 'block',
-                      textAlign: 'center',
-                      color: 'text.disabled',
-                    }}
-                  >
-                    Allowed *.jpeg, *.jpg, *.png, *.gif
-                    <br /> max size of {fData(3145728)}
-                  </Typography>
-                }
-              />
-            </Box>
+            {useCircuitLayoutsWithPathname() ? (
+              <div className="mb-5">
+                <Field.UploadAvatar
+                  name="avatarUrl"
+                  maxSize={3145728}
+                  helperText={
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        mt: 3,
+                        mx: 'auto',
+                        display: 'block',
+                        textAlign: 'center',
+                        color: 'text.disabled',
+                      }}
+                    >
+                      Allowed *.jpeg, *.jpg, *.png, *.gif
+                      <br /> max size of {fData(3145728)}
+                    </Typography>
+                  }
+                />
+              </div>
+            ) : (
+              <Box sx={{ mb: 5 }}>
+                <Field.UploadAvatar
+                  name="avatarUrl"
+                  maxSize={3145728}
+                  helperText={
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        mt: 3,
+                        mx: 'auto',
+                        display: 'block',
+                        textAlign: 'center',
+                        color: 'text.disabled',
+                      }}
+                    >
+                      Allowed *.jpeg, *.jpg, *.png, *.gif
+                      <br /> max size of {fData(3145728)}
+                    </Typography>
+                  }
+                />
+              </Box>
+            )}
 
             {currentUser && (
               <FormControlLabel
@@ -195,25 +220,49 @@ export function UserCreateEditForm({ currentUser }: Props) {
             />
 
             {currentUser && (
-              <Stack sx={{ mt: 3, alignItems: 'center', justifyContent: 'center' }}>
-                <Button variant="soft" color="error">
-                  Delete user
-                </Button>
-              </Stack>
+              useCircuitLayoutsWithPathname() ? (
+                <div className="flex items-center justify-center mt-3">
+                  <Button variant="soft" color="error">
+                    Delete user
+                  </Button>
+                </div>
+              ) : (
+                <Box sx={{ mt: 3, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Button variant="soft" color="error">
+                    Delete user
+                  </Button>
+                </Box>
+              )
             )}
           </Card>
         </Grid>
 
         <Grid size={{ xs: 12, md: 8 }}>
           <Card sx={{ p: 3 }}>
-            <Box
-              sx={{
-                rowGap: 3,
-                columnGap: 2,
-                display: 'grid',
-                gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
-              }}
-            >
+            {useCircuitLayoutsWithPathname() ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-3">
+                <Field.Text name="name" label="Full name" />
+                <Field.Text name="email" label="Email address" />
+                <Field.Text name="phoneNumber" label="Phone number" />
+
+                <Field.Text name="country" label="Country" />
+
+                <Field.Text name="state" label="State/region" />
+                <Field.Text name="city" label="City" />
+                <Field.Text name="address" label="Address" />
+                <Field.Text name="zipCode" label="Zip/code" />
+                <Field.Text name="company" label="Company" />
+                <Field.Text name="role" label="Role" />
+              </div>
+            ) : (
+              <Box
+                sx={{
+                  rowGap: 3,
+                  columnGap: 2,
+                  display: 'grid',
+                  gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
+                }}
+              >
               <Field.Text name="name" label="Full name" />
               <Field.Text name="email" label="Email address" />
               <Field.Text name="phoneNumber" label="Phone number" />
@@ -226,13 +275,22 @@ export function UserCreateEditForm({ currentUser }: Props) {
               <Field.Text name="zipCode" label="Zip/code" />
               <Field.Text name="company" label="Company" />
               <Field.Text name="role" label="Role" />
-            </Box>
+              </Box>
+            )}
 
-            <Stack sx={{ mt: 3, alignItems: 'flex-end' }}>
-              <Button type="submit" variant="contained" loading={isSubmitting}>
-                {!currentUser ? 'Create user' : 'Save changes'}
-              </Button>
-            </Stack>
+            {useCircuitLayoutsWithPathname() ? (
+              <div className="flex mt-3 justify-end">
+                <Button type="submit" variant="contained" loading={isSubmitting}>
+                  {!currentUser ? 'Create user' : 'Save changes'}
+                </Button>
+              </div>
+            ) : (
+              <Box sx={{ mt: 3, display: 'flex', alignItems: 'flex-end' }}>
+                <Button type="submit" variant="contained" loading={isSubmitting}>
+                  {!currentUser ? 'Create user' : 'Save changes'}
+                </Button>
+              </Box>
+            )}
           </Card>
         </Grid>
       </Grid>

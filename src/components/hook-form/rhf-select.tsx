@@ -11,12 +11,12 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
-import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+
+import { SelectWrapper as Select, CheckboxWrapper as Checkbox } from 'src/components/circuit-ui';
 
 import { HelperText } from './help-text';
 
@@ -160,7 +160,7 @@ export function RHFMultiSelect({
                         <Chip
                           key={item.value}
                           size="small"
-                          variant="soft"
+                          variant="filled"
                           label={item.label}
                           {...slotProps?.chip}
                         />

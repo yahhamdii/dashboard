@@ -8,7 +8,9 @@ import IconButton from '@mui/material/IconButton';
 import { tableCellClasses } from '@mui/material/TableCell';
 import { tablePaginationClasses } from '@mui/material/TablePagination';
 
-import { TableWrapper as Table, TableBodyWrapper as TableBody, TableContainerWrapper as TableContainer } from 'src/components/circuit-ui';
+import { TableWrapper as Table, TableBodyWrapper as TableBody, TableContainerWrapper as TableContainer, TooltipWrapper, IconButtonWrapper } from 'src/components/circuit-ui';
+
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 import { Iconify } from 'src/components/iconify';
 import {
@@ -67,15 +69,18 @@ export function FileManagerTable({
     onChangeRowsPerPage,
   } = table;
 
+  const useCircuit = useCircuitLayoutsWithPathname();
+  
+  // Filtrer les props MUI spécifiques
+  const {
+    sx: _sx,
+    ...divProps
+  } = other as any;
+  
   return (
     <>
-      <Box
-        sx={[
-          (theme) => ({ position: 'relative', m: { md: theme.spacing(-2, -3, 0, -3) } }),
-          ...(Array.isArray(sx) ? sx : [sx]),
-        ]}
-        {...other}
-      >
+      {useCircuit ? (
+        <div className={`relative ${sx ? '' : ''} md:-mx-3 md:-mt-2 md:mb-0`} {...(divProps as React.HTMLAttributes<HTMLDivElement>)}>
         <TableSelectedAction
           dense={dense}
           numSelected={selected.length}
@@ -88,17 +93,17 @@ export function FileManagerTable({
           }
           action={
             <>
-              <Tooltip title="Share">
-                <IconButton color="primary">
+              <TooltipWrapper title="Share">
+                <IconButtonWrapper color="primary">
                   <Iconify icon="solar:share-bold" />
-                </IconButton>
-              </Tooltip>
+                </IconButtonWrapper>
+              </TooltipWrapper>
 
-              <Tooltip title="Delete">
-                <IconButton color="primary" onClick={onOpenConfirm}>
+              <TooltipWrapper title="Delete">
+                <IconButtonWrapper color="primary" onClick={onOpenConfirm}>
                   <Iconify icon="solar:trash-bin-trash-bold" />
-                </IconButton>
-              </Tooltip>
+                </IconButtonWrapper>
+              </TooltipWrapper>
             </>
           }
           sx={{
@@ -112,59 +117,157 @@ export function FileManagerTable({
           }}
         />
 
-        <TableContainer sx={{ px: { md: 3 } }}>
-          <Table
-            size={dense ? 'small' : 'medium'}
-            sx={{ minWidth: 960, borderCollapse: 'separate', borderSpacing: '0 16px' }}
-          >
-            <TableHeadCustom
-              order={order}
-              orderBy={orderBy}
-              headCells={TABLE_HEAD}
-              rowCount={dataFiltered.length}
-              numSelected={selected.length}
-              onSort={onSort}
-              onSelectAllRows={(checked) =>
-                onSelectAllRows(
-                  checked,
-                  dataFiltered.map((row) => row.id)
-                )
-              }
-              sx={{
-                [`& .${tableCellClasses.head}`]: {
-                  '&:first-of-type': { borderTopLeftRadius: 12, borderBottomLeftRadius: 12 },
-                  '&:last-of-type': { borderTopRightRadius: 12, borderBottomRightRadius: 12 },
-                },
-              }}
-            />
-
-            <TableBody>
-              {dataFiltered
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => (
-                  <FileManagerTableRow
-                    key={row.id}
-                    row={row}
-                    selected={selected.includes(row.id)}
-                    onSelectRow={() => onSelectRow(row.id)}
-                    onDeleteRow={() => onDeleteRow(row.id)}
-                  />
-                ))}
-
-              <TableNoData
-                notFound={notFound}
-                sx={[
-                  (theme) => ({
-                    m: -2,
-                    borderRadius: 1.5,
-                    border: `dashed 1px ${theme.vars.palette.divider}`,
-                  }),
-                ]}
+          <TableContainer className="px-0 md:px-3">
+            <Table
+              size={dense ? 'small' : 'medium'}
+              sx={{ minWidth: 960, borderCollapse: 'separate', borderSpacing: '0 16px' }}
+            >
+              <TableHeadCustom
+                order={order}
+                orderBy={orderBy}
+                headCells={TABLE_HEAD}
+                rowCount={dataFiltered.length}
+                numSelected={selected.length}
+                onSort={onSort}
+                onSelectAllRows={(checked) =>
+                  onSelectAllRows(
+                    checked,
+                    dataFiltered.map((row) => row.id)
+                  )
+                }
+                sx={{
+                  [`& .${tableCellClasses.head}`]: {
+                    '&:first-of-type': { borderTopLeftRadius: 12, borderBottomLeftRadius: 12 },
+                    '&:last-of-type': { borderTopRightRadius: 12, borderBottomRightRadius: 12 },
+                  },
+                }}
               />
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Box>
+
+              <TableBody>
+                {dataFiltered
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => (
+                    <FileManagerTableRow
+                      key={row.id}
+                      row={row}
+                      selected={selected.includes(row.id)}
+                      onSelectRow={() => onSelectRow(row.id)}
+                      onDeleteRow={() => onDeleteRow(row.id)}
+                    />
+                  ))}
+
+                <TableNoData
+                  notFound={notFound}
+                  sx={[
+                    (theme) => ({
+                      m: -2,
+                      borderRadius: 1.5,
+                      border: `dashed 1px ${theme.vars.palette.divider}`,
+                    }),
+                  ]}
+                />
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+      ) : (
+        <Box
+          sx={[
+            (theme) => ({ position: 'relative', m: { md: theme.spacing(-2, -3, 0, -3) } }),
+            ...(Array.isArray(sx) ? sx : [sx]),
+          ]}
+          {...other}
+        >
+          <TableSelectedAction
+            dense={dense}
+            numSelected={selected.length}
+            rowCount={dataFiltered.length}
+            onSelectAllRows={(checked) =>
+              onSelectAllRows(
+                checked,
+                dataFiltered.map((row) => row.id)
+              )
+            }
+            action={
+              <>
+                <Tooltip title="Share">
+                  <IconButton color="primary">
+                    <Iconify icon="solar:share-bold" />
+                  </IconButton>
+                </Tooltip>
+
+                <Tooltip title="Delete">
+                  <IconButton color="primary" onClick={onOpenConfirm}>
+                    <Iconify icon="solar:trash-bin-trash-bold" />
+                  </IconButton>
+                </Tooltip>
+              </>
+            }
+            sx={{
+              pl: 1,
+              pr: 2,
+              top: 16,
+              left: 24,
+              right: 24,
+              width: 'auto',
+              borderRadius: 1.5,
+            }}
+          />
+
+          <TableContainer sx={{ px: { md: 3 } }}>
+            <Table
+              size={dense ? 'small' : 'medium'}
+              sx={{ minWidth: 960, borderCollapse: 'separate', borderSpacing: '0 16px' }}
+            >
+              <TableHeadCustom
+                order={order}
+                orderBy={orderBy}
+                headCells={TABLE_HEAD}
+                rowCount={dataFiltered.length}
+                numSelected={selected.length}
+                onSort={onSort}
+                onSelectAllRows={(checked) =>
+                  onSelectAllRows(
+                    checked,
+                    dataFiltered.map((row) => row.id)
+                  )
+                }
+                sx={{
+                  [`& .${tableCellClasses.head}`]: {
+                    '&:first-of-type': { borderTopLeftRadius: 12, borderBottomLeftRadius: 12 },
+                    '&:last-of-type': { borderTopRightRadius: 12, borderBottomRightRadius: 12 },
+                  },
+                }}
+              />
+
+              <TableBody>
+                {dataFiltered
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => (
+                    <FileManagerTableRow
+                      key={row.id}
+                      row={row}
+                      selected={selected.includes(row.id)}
+                      onSelectRow={() => onSelectRow(row.id)}
+                      onDeleteRow={() => onDeleteRow(row.id)}
+                    />
+                  ))}
+
+                <TableNoData
+                  notFound={notFound}
+                  sx={[
+                    (theme) => ({
+                      m: -2,
+                      borderRadius: 1.5,
+                      border: `dashed 1px ${theme.vars.palette.divider}`,
+                    }),
+                  ]}
+                />
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+      )}
 
       <TablePaginationCustom
         page={page}

@@ -7,6 +7,8 @@ import ListItemText from '@mui/material/ListItemText';
 
 import { CardWrapper as Card } from 'src/components/circuit-ui';
 
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
+
 import { fData } from 'src/utils/format-number';
 
 import { Chart, useChart } from 'src/components/chart';
@@ -77,41 +79,53 @@ export function FileStorageOverview({ data, total, chart, sx, ...other }: Props)
         sx={{ mx: 'auto', width: 240, height: 240 }}
       />
 
-      <Box
-        sx={{
-          px: 3,
-          pb: 5,
-          mt: -4,
-          gap: 3,
-          zIndex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        {data.map((category) => (
-          <Box
-            key={category.name}
-            sx={{
-              gap: 2,
-              display: 'flex',
-              alignItems: 'center',
-              typography: 'subtitle2',
-            }}
-          >
-            <Box sx={{ width: 36, height: 36 }}>{category.icon}</Box>
+      {useCircuitLayoutsWithPathname() ? (
+        <div className="flex flex-col gap-3 px-3 pb-5 -mt-4 z-10">
+          {data.map((category) => (
+            <div key={category.name} className="flex items-center gap-2 text-sm">
+              <div className="w-9 h-9">{category.icon}</div>
 
-            <ListItemText
-              primary={category.name}
-              secondary={`${category.filesCount} files`}
-              slotProps={{
-                secondary: { sx: { mt: 0.5, typography: 'caption', color: 'text.disabled' } },
-              }}
-            />
+              <ListItemText
+                primary={category.name}
+                secondary={`${category.filesCount} files`}
+                slotProps={{
+                  secondary: { sx: { mt: 0.5, typography: 'caption', color: 'text.disabled' } },
+                }}
+              />
 
-            <Box component="span"> {fData(category.usedStorage)} </Box>
-          </Box>
-        ))}
-      </Box>
+              <span> {fData(category.usedStorage)} </span>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <Box
+          sx={{
+            px: 3,
+            pb: 5,
+            mt: -4,
+            gap: 3,
+            zIndex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          {data.map((category) => (
+            <div key={category.name} className="flex items-center gap-2 text-sm">
+              <div className="w-9 h-9">{category.icon}</div>
+
+              <ListItemText
+                primary={category.name}
+                secondary={`${category.filesCount} files`}
+                slotProps={{
+                  secondary: { sx: { mt: 0.5, typography: 'caption', color: 'text.disabled' } },
+                }}
+              />
+
+              <span> {fData(category.usedStorage)} </span>
+            </div>
+          ))}
+        </Box>
+      )}
     </Card>
   );
 }

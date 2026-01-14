@@ -4,16 +4,15 @@ import type { CardProps } from '@mui/material/Card';
 import { useTabs } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
 import Stack from '@mui/material/Stack';
 import Rating from '@mui/material/Rating';
-import Avatar from '@mui/material/Avatar';
 
-import { CardWrapper as Card, CardHeaderWrapper as CardHeader } from 'src/components/circuit-ui';
+import { CardWrapper as Card, CardHeaderWrapper as CardHeader, TabsWrapper, TabWrapper, AvatarWrapper } from 'src/components/circuit-ui';
 import { svgIconClasses } from '@mui/material/SvgIcon';
 
 import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
+
+import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 import { fData, fCurrency, fShortenNumber } from 'src/utils/format-number';
 
@@ -50,17 +49,17 @@ export function AppTopRelated({ title, subheader, list, sx, ...other }: Props) {
   const tabs = useTabs('7days');
 
   const renderTabs = () => (
-    <Tabs
+    <TabsWrapper
       value={tabs.value}
       onChange={tabs.onChange}
       variant="fullWidth"
-      indicatorColor="custom"
+      indicatorColor="primary"
       sx={{ '--item-padding-x': 0 }}
     >
       {TABS.map((tab) => (
-        <Tab key={tab.value} value={tab.value} label={tab.label} />
+        <TabWrapper key={tab.value} value={tab.value} label={tab.label} />
       ))}
-    </Tabs>
+    </TabsWrapper>
   );
 
   return (
@@ -70,19 +69,27 @@ export function AppTopRelated({ title, subheader, list, sx, ...other }: Props) {
       {renderTabs()}
 
       <Scrollbar sx={{ minHeight: 384 }}>
-        <Box
-          sx={{
-            p: 3,
-            gap: 3,
-            minWidth: 360,
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          {list.map((item) => (
-            <Item key={item.id} item={item} />
-          ))}
-        </Box>
+        {useCircuitLayoutsWithPathname() ? (
+          <div className="flex flex-col gap-3 p-3 min-w-[360px]">
+            {list.map((item) => (
+              <Item key={item.id} item={item} />
+            ))}
+          </div>
+        ) : (
+          <Box
+            sx={{
+              p: 3,
+              gap: 3,
+              minWidth: 360,
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            {list.map((item) => (
+              <Item key={item.id} item={item} />
+            ))}
+          </Box>
+        )}
       </Scrollbar>
     </Card>
   );
@@ -95,14 +102,72 @@ type ItemProps = BoxProps & {
 };
 
 function Item({ item, sx, ...other }: ItemProps) {
-  return (
+  const useCircuit = useCircuitLayoutsWithPathname();
+  
+  return useCircuit ? (
+    <div className="flex items-center gap-2">
+      <AvatarWrapper
+        variant="rounded"
+        src={item.shortcut}
+        size="medium"
+        sx={{
+          p: 1,
+          width: 48,
+          height: 48,
+          bgcolor: 'background.neutral',
+        }}
+      />
+
+      <div>
+        <div className="flex items-center gap-1 mb-1">
+          <Typography variant="subtitle2" noWrap>
+            {item.name}
+          </Typography>
+
+          <Label color={item.price === 0 ? 'default' : 'success'} sx={{ height: 20 }}>
+            {item.price === 0 ? 'Free' : fCurrency(item.price)}
+          </Label>
+        </div>
+
+        <div className="flex items-center gap-1 text-xs">
+          <div className="flex items-center gap-0.5">
+            <Iconify width={16} icon="solar:download-bold" sx={{ color: 'text.disabled' }} />
+            {fShortenNumber(item.downloaded)}
+          </div>
+
+          <span className="w-1 h-1 rounded-full bg-gray-400" />
+
+          <div className="flex items-center gap-0.5">
+            <Iconify width={16} icon="solar:ssd-round-bold" sx={{ color: 'text.disabled' }} />
+            {fData(item.size)}
+          </div>
+
+          <span className="w-1 h-1 rounded-full bg-gray-400" />
+
+          <div className="flex items-center gap-0.5">
+            <Rating
+              max={1}
+              readOnly
+              size="small"
+              name="reviews"
+              precision={0.5}
+              value={item.ratingNumber}
+              sx={{ [`& .${svgIconClasses.root}`]: { width: 16, height: 16 } }}
+            />
+            {fShortenNumber(item.totalReviews)}
+          </div>
+        </div>
+      </div>
+    </div>
+  ) : (
     <Box
       sx={[{ gap: 2, display: 'flex', alignItems: 'center' }, ...(Array.isArray(sx) ? sx : [sx])]}
       {...other}
     >
-      <Avatar
+      <AvatarWrapper
         variant="rounded"
         src={item.shortcut}
+        size="medium"
         sx={{
           p: 1,
           width: 48,
@@ -129,47 +194,78 @@ function Item({ item, sx, ...other }: ItemProps) {
           </Label>
         </Box>
 
-        <Stack
-          divider={
-            <Box
-              sx={{
-                width: 4,
-                height: 4,
-                borderRadius: '50%',
-                bgcolor: 'text.disabled',
-              }}
-            />
-          }
-          sx={{
-            gap: 1,
-            flexDirection: 'row',
-            alignItems: 'center',
-            typography: 'caption',
-          }}
-        >
-          <Box sx={{ gap: 0.5, display: 'flex', alignItems: 'center' }}>
-            <Iconify width={16} icon="solar:download-bold" sx={{ color: 'text.disabled' }} />
-            {fShortenNumber(item.downloaded)}
-          </Box>
+        {useCircuit ? (
+          <div className="flex items-center gap-1 text-xs">
+            <div className="flex items-center gap-0.5">
+              <Iconify width={16} icon="solar:download-bold" sx={{ color: 'text.disabled' }} />
+              {fShortenNumber(item.downloaded)}
+            </div>
 
-          <Box sx={{ gap: 0.5, display: 'flex', alignItems: 'center' }}>
-            <Iconify width={16} icon="solar:ssd-round-bold" sx={{ color: 'text.disabled' }} />
-            {fData(item.size)}
-          </Box>
+            <span className="w-1 h-1 rounded-full bg-gray-400" />
 
-          <Box sx={{ gap: 0.5, display: 'flex', alignItems: 'center' }}>
-            <Rating
-              max={1}
-              readOnly
-              size="small"
-              name="reviews"
-              precision={0.5}
-              value={item.ratingNumber}
-              sx={{ [`& .${svgIconClasses.root}`]: { width: 16, height: 16 } }}
-            />
-            {fShortenNumber(item.totalReviews)}
-          </Box>
-        </Stack>
+            <div className="flex items-center gap-0.5">
+              <Iconify width={16} icon="solar:ssd-round-bold" sx={{ color: 'text.disabled' }} />
+              {fData(item.size)}
+            </div>
+
+            <span className="w-1 h-1 rounded-full bg-gray-400" />
+
+            <div className="flex items-center gap-0.5">
+              <Rating
+                max={1}
+                readOnly
+                size="small"
+                name="reviews"
+                precision={0.5}
+                value={item.ratingNumber}
+                sx={{ [`& .${svgIconClasses.root}`]: { width: 16, height: 16 } }}
+              />
+              {fShortenNumber(item.totalReviews)}
+            </div>
+          </div>
+        ) : (
+          <Stack
+            divider={
+              <Box
+                sx={{
+                  width: 4,
+                  height: 4,
+                  borderRadius: '50%',
+                  bgcolor: 'text.disabled',
+                }}
+              />
+            }
+            sx={{
+              gap: 1,
+              flexDirection: 'row',
+              alignItems: 'center',
+              typography: 'caption',
+            }}
+          >
+            <Box sx={{ gap: 0.5, display: 'flex', alignItems: 'center' }}>
+              <Iconify width={16} icon="solar:download-bold" sx={{ color: 'text.disabled' }} />
+              {fShortenNumber(item.downloaded)}
+            </Box>
+
+            <Box sx={{ gap: 0.5, display: 'flex', alignItems: 'center' }}>
+              <Iconify width={16} icon="solar:ssd-round-bold" sx={{ color: 'text.disabled' }} />
+              {fData(item.size)}
+            </Box>
+
+            <Box sx={{ gap: 0.5, display: 'flex', alignItems: 'center' }}>
+              <Rating
+                max={1}
+                readOnly
+                size="small"
+                name="reviews"
+                precision={0.5}
+                value={item.ratingNumber}
+                sx={{ [`& .${svgIconClasses.root}`]: { width: 16, height: 16 } }}
+              />
+              {fShortenNumber(item.totalReviews)}
+            </Box>
+          </Stack>
+        )}
       </div>
     </Box>
   );

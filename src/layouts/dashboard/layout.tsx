@@ -16,6 +16,7 @@ import { Logo } from 'src/components/logo';
 import { useSettingsContext } from 'src/components/settings';
 
 import { useMockedUser } from 'src/hooks/use-mocked-user';
+import { useCircuitComponent } from 'src/lib/feature-flags';
 
 import { NavMobile } from './nav-mobile';
 import { VerticalDivider } from './content';
@@ -51,6 +52,7 @@ export function DashboardLayout({
   layoutQuery = 'lg',
 }: DashboardLayoutProps) {
   const theme = useTheme();
+  const useCircuit = useCircuitComponent('USE_CIRCUIT_NAVIGATION');
 
   const { user } = useMockedUser();
 
@@ -80,7 +82,11 @@ export function DashboardLayout({
     };
 
     const headerSlots: HeaderSectionProps['slots'] = {
-      topArea: (
+      topArea: useCircuit ? (
+        <div className="hidden">
+          This is an info Alert.
+        </div>
+      ) : (
         <Alert severity="info" sx={{ display: 'none', borderRadius: 0 }}>
           This is an info Alert.
         </Alert>
@@ -127,7 +133,11 @@ export function DashboardLayout({
           <WorkspacesPopover data={_workspaces} />
         </>
       ),
-      rightArea: (
+      rightArea: useCircuit ? (
+        <div className="flex items-center gap-0 sm:gap-3">
+          {/** Header components removed */}
+        </div>
+      ) : (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0, sm: 0.75 } }}>
           {/** Header components removed */}
         </Box>
