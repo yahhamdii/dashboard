@@ -5,10 +5,12 @@ import type { IFile, IFileFilters } from 'src/types/file';
 import { useState, useCallback } from 'react';
 import { useBoolean, useSetState } from 'minimal-shared/hooks';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import Stack from '@mui/material/Stack';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import {
+  BoxWrapper as Box,
+  StackWrapper as Stack,
+  ToggleButtonWrapper as ToggleButton,
+  ToggleButtonGroupWrapper as ToggleButtonGroup
+} from 'src/components/circuit-ui';
 
 import { TypographyWrapper as Typography, ButtonWrapper as Button } from 'src/components/circuit-ui';
 
@@ -104,7 +106,7 @@ export function FileManagerView() {
 
   const renderFilters = () => {
     const useCircuit = useCircuitLayoutsWithPathname();
-    
+
     return useCircuit ? (
       <div className="flex flex-col md:flex-row gap-2 items-end md:items-center">
         <FileManagerFilters

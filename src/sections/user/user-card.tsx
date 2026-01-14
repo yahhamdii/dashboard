@@ -3,11 +3,14 @@ import type { IUserCard } from 'src/types/user';
 
 import { varAlpha } from 'minimal-shared/utils';
 
-import Box from '@mui/material/Box';
-
-import { CardWrapper as Card, AvatarWrapper, IconButtonWrapper } from 'src/components/circuit-ui';
-import Divider from '@mui/material/Divider';
-import ListItemText from '@mui/material/ListItemText';
+import {
+  BoxWrapper as Box,
+  CardWrapper as Card,
+  AvatarWrapper,
+  IconButtonWrapper,
+  DividerWrapper as Divider,
+  ListItemTextWrapper as ListItemText
+} from 'src/components/circuit-ui';
 
 import { fShortenNumber } from 'src/utils/format-number';
 

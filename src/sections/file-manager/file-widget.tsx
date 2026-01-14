@@ -1,11 +1,12 @@
 import type { CardProps } from '@mui/material/Card';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-
-import { CardWrapper as Card, IconButtonWrapper } from 'src/components/circuit-ui';
-import LinearProgress from '@mui/material/LinearProgress';
-
-import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
+import {
+  BoxWrapper as Box,
+  CardWrapper as Card,
+  IconButtonWrapper,
+  LinearProgressWrapper as LinearProgress,
+  TypographyWrapper as Typography
+} from 'src/components/circuit-ui';
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 

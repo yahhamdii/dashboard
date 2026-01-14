@@ -1,10 +1,15 @@
 import type { DialogProps } from '@mui/material/Dialog';
 import type { IFileShared } from 'src/types/file';
 
-import Box from '@mui/material/Box';
-import InputAdornment from '@mui/material/InputAdornment';
-
-import { InputWrapper as TextField, ButtonWrapper as Button, DialogWrapper as Dialog, DialogTitleWrapper as DialogTitle, DialogActionsWrapper as DialogActions } from 'src/components/circuit-ui';
+import {
+  BoxWrapper as Box,
+  InputAdornmentWrapper as InputAdornment,
+  InputWrapper as TextField,
+  ButtonWrapper as Button,
+  DialogWrapper as Dialog,
+  DialogTitleWrapper as DialogTitle,
+  DialogActionsWrapper as DialogActions
+} from 'src/components/circuit-ui';
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
@@ -42,29 +47,29 @@ export function FileManagerShareDialog({
       {useCircuitLayoutsWithPathname() ? (
         <div className="px-3">
           {onChangeInvite && (
-          <TextField
-            fullWidth
-            value={inviteEmail}
-            placeholder="Email"
-            onChange={onChangeInvite}
-            slotProps={{
-              input: {
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Button
-                      color="inherit"
-                      variant="contained"
-                      disabled={!inviteEmail}
-                      sx={{ mr: -0.75 }}
-                    >
-                      Send Invite
-                    </Button>
-                  </InputAdornment>
-                ),
-              },
-            }}
-            sx={{ mb: 2 }}
-          />
+            <TextField
+              fullWidth
+              value={inviteEmail}
+              placeholder="Email"
+              onChange={onChangeInvite}
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Button
+                        color="inherit"
+                        variant="contained"
+                        disabled={!inviteEmail}
+                        sx={{ mr: -0.75 }}
+                      >
+                        Send Invite
+                      </Button>
+                    </InputAdornment>
+                  ),
+                },
+              }}
+              sx={{ mb: 2 }}
+            />
           )}
         </div>
       ) : (

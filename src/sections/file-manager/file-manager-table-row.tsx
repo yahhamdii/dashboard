@@ -5,17 +5,20 @@ import { useState, useCallback } from 'react';
 import { varAlpha } from 'minimal-shared/utils';
 import { useBoolean, usePopover, useDoubleClick, useCopyToClipboard } from 'minimal-shared/hooks';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import Divider from '@mui/material/Divider';
-import MenuList from '@mui/material/MenuList';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemText from '@mui/material/ListItemText';
-import { tableRowClasses } from '@mui/material/TableRow';
-import { tableCellClasses } from '@mui/material/TableCell';
-
-import { TableRowWrapper as TableRow, TableCellWrapper as TableCell, CheckboxWrapper as Checkbox } from 'src/components/circuit-ui';
-
-import { TypographyWrapper as Typography, ButtonWrapper as Button } from 'src/components/circuit-ui';
+import {
+  BoxWrapper as Box,
+  DividerWrapper as Divider,
+  MenuListWrapper as MenuList,
+  MenuItemWrapper as MenuItem,
+  ListItemTextWrapper as ListItemText,
+  IconButtonWrapper as IconButton,
+  TableRowWrapper as TableRow,
+  TableCellWrapper as TableCell,
+  CheckboxWrapper as Checkbox,
+  TypographyWrapper as Typography,
+  ButtonWrapper as Button,
+  StackWrapper as Stack
+} from 'src/components/circuit-ui';
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 import { tokens } from 'src/theme/design-tokens';
@@ -174,7 +177,7 @@ export function FileManagerTableRow({ row, selected, onSelectRow, onDeleteRow }:
         selected={selected}
         sx={{
           borderRadius: 2,
-          [`&.${tableRowClasses.selected}, &:hover`]: {
+          [`&.Mui-selected, &:hover`]: {
             backgroundColor: tokens.colors.background.paper,
             boxShadow: tokens.customShadows.z20,
             transition: `background-color 200ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1)`,
@@ -183,11 +186,11 @@ export function FileManagerTableRow({ row, selected, onSelectRow, onDeleteRow }:
               boxShadow: tokens.customShadows.z20,
             },
           },
-          [`& .${tableCellClasses.root}`]: {
+          [`& .MuiTableCell-root`]: {
             ...defaultStyles,
           },
           ...(detailsDrawer.value && {
-            [`& .${tableCellClasses.root}`]: {
+            [`& .MuiTableCell-root`]: {
               ...defaultStyles,
             },
           }),

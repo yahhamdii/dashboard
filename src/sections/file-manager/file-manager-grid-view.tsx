@@ -4,11 +4,12 @@ import type { UseTableReturn } from 'src/components/table';
 import { useBoolean } from 'minimal-shared/hooks';
 import { useRef, useState, useCallback } from 'react';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import Divider from '@mui/material/Divider';
-import Collapse from '@mui/material/Collapse';
-
-import { ButtonWrapper as Button } from 'src/components/circuit-ui';
+import {
+  BoxWrapper as Box,
+  DividerWrapper as Divider,
+  CollapseWrapper as Collapse,
+  ButtonWrapper as Button
+} from 'src/components/circuit-ui';
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 import { Iconify } from 'src/components/iconify';
@@ -233,7 +234,7 @@ export function FileManagerGridView({ table, dataFiltered, onDeleteItem, onOpenC
     );
 
   const useCircuit = useCircuitLayoutsWithPathname();
-  
+
   return (
     <>
       {useCircuit ? (

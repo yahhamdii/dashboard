@@ -2,13 +2,14 @@ import type { BoxProps } from '@mui/material/Box';
 import type { IFile } from 'src/types/file';
 import type { UseTableReturn, TableHeadCellProps } from 'src/components/table';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
-import { tableCellClasses } from '@mui/material/TableCell';
-import { tablePaginationClasses } from '@mui/material/TablePagination';
-
-import { TableWrapper as Table, TableBodyWrapper as TableBody, TableContainerWrapper as TableContainer, TooltipWrapper, IconButtonWrapper } from 'src/components/circuit-ui';
+import {
+  BoxWrapper as Box,
+  TooltipWrapper as Tooltip,
+  IconButtonWrapper as IconButton,
+  TableWrapper as Table,
+  TableBodyWrapper as TableBody,
+  TableContainerWrapper as TableContainer
+} from 'src/components/circuit-ui';
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
@@ -70,52 +71,52 @@ export function FileManagerTable({
   } = table;
 
   const useCircuit = useCircuitLayoutsWithPathname();
-  
+
   // Filtrer les props MUI spécifiques
   const {
     sx: _sx,
     ...divProps
   } = other as any;
-  
+
   return (
     <>
       {useCircuit ? (
         <div className={`relative ${sx ? '' : ''} md:-mx-3 md:-mt-2 md:mb-0`} {...(divProps as React.HTMLAttributes<HTMLDivElement>)}>
-        <TableSelectedAction
-          dense={dense}
-          numSelected={selected.length}
-          rowCount={dataFiltered.length}
-          onSelectAllRows={(checked) =>
-            onSelectAllRows(
-              checked,
-              dataFiltered.map((row) => row.id)
-            )
-          }
-          action={
-            <>
-              <TooltipWrapper title="Share">
-                <IconButtonWrapper color="primary">
-                  <Iconify icon="solar:share-bold" />
-                </IconButtonWrapper>
-              </TooltipWrapper>
+          <TableSelectedAction
+            dense={dense}
+            numSelected={selected.length}
+            rowCount={dataFiltered.length}
+            onSelectAllRows={(checked) =>
+              onSelectAllRows(
+                checked,
+                dataFiltered.map((row) => row.id)
+              )
+            }
+            action={
+              <>
+                <Tooltip title="Share">
+                  <IconButton color="primary">
+                    <Iconify icon="solar:share-bold" />
+                  </IconButton>
+                </Tooltip>
 
-              <TooltipWrapper title="Delete">
-                <IconButtonWrapper color="primary" onClick={onOpenConfirm}>
-                  <Iconify icon="solar:trash-bin-trash-bold" />
-                </IconButtonWrapper>
-              </TooltipWrapper>
-            </>
-          }
-          sx={{
-            pl: 1,
-            pr: 2,
-            top: 16,
-            left: 24,
-            right: 24,
-            width: 'auto',
-            borderRadius: 1.5,
-          }}
-        />
+                <Tooltip title="Delete">
+                  <IconButton color="primary" onClick={onOpenConfirm}>
+                    <Iconify icon="solar:trash-bin-trash-bold" />
+                  </IconButton>
+                </Tooltip>
+              </>
+            }
+            sx={{
+              pl: 1,
+              pr: 2,
+              top: 16,
+              left: 24,
+              right: 24,
+              width: 'auto',
+              borderRadius: 1.5,
+            }}
+          />
 
           <TableContainer className="px-0 md:px-3">
             <Table
@@ -136,7 +137,7 @@ export function FileManagerTable({
                   )
                 }
                 sx={{
-                  [`& .${tableCellClasses.head}`]: {
+                  [`& th`]: {
                     '&:first-of-type': { borderTopLeftRadius: 12, borderBottomLeftRadius: 12 },
                     '&:last-of-type': { borderTopRightRadius: 12, borderBottomRightRadius: 12 },
                   },
@@ -233,7 +234,7 @@ export function FileManagerTable({
                   )
                 }
                 sx={{
-                  [`& .${tableCellClasses.head}`]: {
+                  [`& th`]: {
                     '&:first-of-type': { borderTopLeftRadius: 12, borderBottomLeftRadius: 12 },
                     '&:last-of-type': { borderTopRightRadius: 12, borderBottomRightRadius: 12 },
                   },
@@ -277,7 +278,7 @@ export function FileManagerTable({
         onPageChange={onChangePage}
         onChangeDense={onChangeDense}
         onRowsPerPageChange={onChangeRowsPerPage}
-        sx={{ [`& .${tablePaginationClasses.toolbar}`]: { borderTopColor: 'transparent' } }}
+        sx={{ [`& .MuiTablePagination-toolbar`]: { borderTopColor: 'transparent' } }}
       />
     </>
   );

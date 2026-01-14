@@ -6,12 +6,10 @@ import type { UseDateRangePickerReturn } from './use-date-range-picker';
 
 import { useCallback } from 'react';
 
-import FormHelperText from '@mui/material/FormHelperText';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { DateCalendar, dateCalendarClasses } from '@mui/x-date-pickers/DateCalendar';
-import { tokens } from 'src/theme/design-tokens';
+import { DatePickerWrapper as DatePicker, CalendarWrapper as DateCalendar } from 'src/components/circuit-ui';
+import { ButtonWrapper as Button, DialogWrapper as Dialog, DialogTitleWrapper as DialogTitle, DialogActionsWrapper as DialogActions, DialogContentWrapper as DialogContent, BoxWrapper as Box } from 'src/components/circuit-ui';
 
-import { ButtonWrapper as Button, DialogWrapper as Dialog, DialogTitleWrapper as DialogTitle, DialogActionsWrapper as DialogActions, DialogContentWrapper as DialogContent } from 'src/components/circuit-ui';
+import { tokens } from 'src/theme/design-tokens';
 
 // ----------------------------------------------------------------------
 
@@ -36,7 +34,7 @@ export function CustomDateRangePicker({
   title = 'Select date range',
   ...other
 }: CustomDateRangePickerProps) {
-  const mdUp = window.innerWidth >= tokens.breakpoints.values.md;
+  const mdUp = typeof window !== 'undefined' && window.innerWidth >= tokens.breakpoints.values.md;
 
   const isCalendarView = mdUp && variant === 'calendar';
 
@@ -74,10 +72,6 @@ export function CustomDateRangePicker({
             display: 'flex',
             overflow: 'unset',
             flexDirection: isCalendarView ? 'row' : 'column',
-            [`& .${dateCalendarClasses.root}`]: {
-              borderRadius: 2,
-              border: `dashed 1px ${tokens.colors.divider}`,
-            },
           },
         ]}
       >
@@ -94,9 +88,9 @@ export function CustomDateRangePicker({
         )}
 
         {error && (
-          <FormHelperText error sx={{ px: 2 }}>
+          <Box sx={{ px: 2, color: 'error.main', typography: 'caption' }}>
             End date must be later than start date
-          </FormHelperText>
+          </Box>
         )}
       </DialogContent>
 

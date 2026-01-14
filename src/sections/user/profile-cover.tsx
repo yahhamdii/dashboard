@@ -3,10 +3,7 @@ import type { IUserProfileCover } from 'src/types/user';
 
 import { varAlpha } from 'minimal-shared/utils';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import ListItemText from '@mui/material/ListItemText';
-
-import { AvatarWrapper } from 'src/components/circuit-ui';
+import { BoxWrapper as Box, ListItemTextWrapper as ListItemText, AvatarWrapper } from 'src/components/circuit-ui';
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 import { tokens } from 'src/theme/design-tokens';
 

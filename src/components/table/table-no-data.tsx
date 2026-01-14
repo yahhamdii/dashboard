@@ -2,8 +2,7 @@
 
 import type { Theme, SxProps } from '@mui/material/styles';
 
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
+import { TableRowWrapper as TableRow, TableCellWrapper as TableCell } from 'src/components/circuit-ui';
 
 import { EmptyContent } from '../empty-content';
 
@@ -11,7 +10,7 @@ import { EmptyContent } from '../empty-content';
 
 export type TableNoDataProps = {
   notFound: boolean;
-  sx?: SxProps<Theme>;
+  sx?: any;
 };
 
 export function TableNoData({ notFound, sx }: TableNoDataProps) {

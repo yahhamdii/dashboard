@@ -1,15 +1,11 @@
-'use client';
-
-import type { TableRowProps } from '@mui/material/TableRow';
-
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
+import { TableRowWrapper as TableRow, TableCellWrapper as TableCell } from 'src/components/circuit-ui';
 
 // ----------------------------------------------------------------------
 
-export type TableEmptyRowsProps = TableRowProps & {
+export type TableEmptyRowsProps = {
   height?: number;
   emptyRows: number;
+  sx?: any;
 };
 
 export function TableEmptyRows({ emptyRows, height, sx, ...other }: TableEmptyRowsProps) {
@@ -20,9 +16,9 @@ export function TableEmptyRows({ emptyRows, height, sx, ...other }: TableEmptyRo
   return (
     <TableRow
       sx={[
-        () => ({
+        {
           ...(height && { height: height * emptyRows }),
-        }),
+        },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
       {...other}

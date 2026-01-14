@@ -1,13 +1,14 @@
 import type { CardProps } from '@mui/material/Card';
 import type { ChartOptions } from 'src/components/chart';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import { tokens } from 'src/theme/design-tokens';
-import ListItemText from '@mui/material/ListItemText';
-
-import { CardWrapper as Card } from 'src/components/circuit-ui';
+import {
+  BoxWrapper as Box,
+  CardWrapper as Card,
+  ListItemTextWrapper as ListItemText
+} from 'src/components/circuit-ui';
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
+import { tokens } from 'src/theme/design-tokens';
 
 import { fData } from 'src/utils/format-number';
 

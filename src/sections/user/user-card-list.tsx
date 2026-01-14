@@ -2,8 +2,7 @@ import type { IUserCard } from 'src/types/user';
 
 import { useState, useCallback } from 'react';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import Pagination from '@mui/material/Pagination';
+import { BoxWrapper as Box, PaginationWrapper as Pagination } from 'src/components/circuit-ui';
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 

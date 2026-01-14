@@ -5,11 +5,16 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isValidPhoneNumber } from 'react-phone-number-input/input';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import Alert from '@mui/material/Alert';
-import MenuItem from '@mui/material/MenuItem';
-
-import { ButtonWrapper as Button, DialogWrapper as Dialog, DialogTitleWrapper as DialogTitle, DialogActionsWrapper as DialogActions, DialogContentWrapper as DialogContent } from 'src/components/circuit-ui';
+import {
+  BoxWrapper as Box,
+  AlertWrapper as Alert,
+  MenuItemWrapper as MenuItem,
+  ButtonWrapper as Button,
+  DialogWrapper as Dialog,
+  DialogTitleWrapper as DialogTitle,
+  DialogActionsWrapper as DialogActions,
+  DialogContentWrapper as DialogContent
+} from 'src/components/circuit-ui';
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 

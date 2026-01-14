@@ -6,13 +6,13 @@ import { useCallback } from 'react';
 import { varAlpha } from 'minimal-shared/utils';
 import { usePopover } from 'minimal-shared/hooks';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import ButtonBase from '@mui/material/ButtonBase';
-import InputAdornment from '@mui/material/InputAdornment';
-
-import { InputWrapper as TextField } from 'src/components/circuit-ui';
-
-import { ButtonWrapper as Button } from 'src/components/circuit-ui';
+import {
+  BoxWrapper as Box,
+  ButtonBaseWrapper as ButtonBase,
+  InputAdornmentWrapper as InputAdornment,
+  InputWrapper as TextField,
+  ButtonWrapper as Button
+} from 'src/components/circuit-ui';
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 import { tokens } from 'src/theme/design-tokens';

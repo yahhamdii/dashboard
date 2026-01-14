@@ -7,8 +7,7 @@ import type { MainSectionProps, HeaderSectionProps, LayoutSectionProps } from '.
 import { merge } from 'es-toolkit';
 import { useBoolean } from 'minimal-shared/hooks';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import Alert from '@mui/material/Alert';
+import { BoxWrapper as Box, AlertWrapper as Alert } from 'src/components/circuit-ui';
 
 import { Logo } from 'src/components/logo';
 import { useSettingsContext } from 'src/components/settings';

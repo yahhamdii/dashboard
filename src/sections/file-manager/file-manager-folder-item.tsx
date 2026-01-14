@@ -4,11 +4,17 @@ import type { FileItemProps } from './file-manager-file-item-slots';
 import { useState, useCallback } from 'react';
 import { useBoolean, usePopover, useCopyToClipboard } from 'minimal-shared/hooks';
 
-import Divider from '@mui/material/Divider';
-import MenuList from '@mui/material/MenuList';
-import MenuItem from '@mui/material/MenuItem';
-
-import { ButtonWrapper as Button } from 'src/components/circuit-ui';
+import {
+  DividerWrapper as Divider,
+  MenuListWrapper as MenuList,
+  MenuItemWrapper as MenuItem,
+  BoxWrapper as Box,
+  StackWrapper as Stack,
+  IconButtonWrapper as IconButton,
+  TypographyWrapper as Typography,
+  CheckboxWrapper as Checkbox,
+  ButtonWrapper as Button
+} from 'src/components/circuit-ui';
 import { tokens } from 'src/theme/design-tokens';
 
 import { fData } from 'src/utils/format-number';

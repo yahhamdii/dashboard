@@ -1,11 +1,12 @@
 import type { IUserProfileGallery } from 'src/types/user';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-
-import { CardWrapper as Card, IconButtonWrapper } from 'src/components/circuit-ui';
-import ListItemText from '@mui/material/ListItemText';
-
-import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
+import {
+  BoxWrapper as Box,
+  CardWrapper as Card,
+  IconButtonWrapper,
+  ListItemTextWrapper as ListItemText,
+  TypographyWrapper as Typography
+} from 'src/components/circuit-ui';
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 import { tokens } from 'src/theme/design-tokens';

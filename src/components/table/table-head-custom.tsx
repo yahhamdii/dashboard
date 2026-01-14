@@ -1,16 +1,13 @@
-import type { Theme, SxProps, CSSObject } from '@mui/material/styles';
+import type { CSSObject } from '@emotion/styled';
 
-import Box from '@mui/material/Box';
-import TableRow from '@mui/material/TableRow';
-import TableHead from '@mui/material/TableHead';
-import TableCell from '@mui/material/TableCell';
-import TableSortLabel from '@mui/material/TableSortLabel';
+import { tokens } from 'src/theme/design-tokens';
+import { BoxWrapper as Box, TableHeadWrapper as TableHead, TableRowWrapper as TableRow, TableCellWrapper as TableCell, CheckboxWrapper as Checkbox } from 'src/components/circuit-ui';
 
-import { CheckboxWrapper as Checkbox } from 'src/components/circuit-ui';
+import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-const visuallyHidden: CSSObject = {
+const visuallyHidden: React.CSSProperties = {
   border: 0,
   padding: 0,
   width: '1px',
@@ -27,15 +24,15 @@ const visuallyHidden: CSSObject = {
 export type TableHeadCellProps = {
   id: string;
   label?: string;
-  width?: CSSObject['width'];
+  width?: number | string;
   align?: 'left' | 'center' | 'right';
-  sx?: SxProps<Theme>;
+  sx?: any;
 };
 
 export type TableHeadCustomProps = {
   orderBy?: string;
   rowCount?: number;
-  sx?: SxProps<Theme>;
+  sx?: any;
   numSelected?: number;
   order?: 'asc' | 'desc';
   headCells: TableHeadCellProps[];
@@ -78,30 +75,44 @@ export function TableHeadCustom({
           <TableCell
             key={headCell.id}
             align={headCell.align || 'left'}
-            sortDirection={orderBy === headCell.id ? order : false}
             sx={[
-              { width: headCell.width },
+              {
+                width: headCell.width,
+                ...(onSort && { cursor: 'pointer', userSelect: 'none' })
+              },
               ...(Array.isArray(headCell.sx) ? headCell.sx : [headCell.sx]),
             ]}
+            onClick={() => onSort?.(headCell.id)}
           >
-            {onSort ? (
-              <TableSortLabel
-                hideSortIcon
-                active={orderBy === headCell.id}
-                direction={orderBy === headCell.id ? order : 'asc'}
-                onClick={() => onSort(headCell.id)}
-              >
-                {headCell.label}
+            <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+              {headCell.label}
 
-                {orderBy === headCell.id ? (
-                  <Box component="span" sx={visuallyHidden}>
-                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                  </Box>
-                ) : null}
-              </TableSortLabel>
-            ) : (
-              headCell.label
-            )}
+              {onSort && (
+                <Box
+                  sx={{
+                    ml: 0.5,
+                    display: 'inline-flex',
+                    flexDirection: 'column',
+                    ...(orderBy !== headCell.id && { opacity: 0.48 }),
+                  }}
+                >
+                  <Iconify
+                    icon={
+                      orderBy === headCell.id && order === 'desc'
+                        ? 'eva:arrow-ios-downward-fill'
+                        : 'eva:arrow-ios-upward-fill'
+                    }
+                    sx={{ width: 16, height: 16 }}
+                  />
+                </Box>
+              )}
+
+              {orderBy === headCell.id ? (
+                <Box component="span" sx={visuallyHidden}>
+                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                </Box>
+              ) : null}
+            </Box>
           </TableCell>
         ))}
       </TableRow>

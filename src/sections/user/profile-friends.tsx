@@ -2,17 +2,18 @@ import type { IUserProfileFriend } from 'src/types/user';
 
 import { usePopover } from 'minimal-shared/hooks';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import Link from '@mui/material/Link';
-
-import { CardWrapper as Card, AvatarWrapper, IconButtonWrapper } from 'src/components/circuit-ui';
-import MenuList from '@mui/material/MenuList';
-import MenuItem from '@mui/material/MenuItem';
-import InputAdornment from '@mui/material/InputAdornment';
-
-import { InputWrapper as TextField } from 'src/components/circuit-ui';
-
-import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
+import {
+  BoxWrapper as Box,
+  LinkWrapper as Link,
+  CardWrapper as Card,
+  AvatarWrapper,
+  IconButtonWrapper,
+  MenuListWrapper as MenuList,
+  MenuItemWrapper as MenuItem,
+  InputAdornmentWrapper as InputAdornment,
+  InputWrapper as TextField,
+  TypographyWrapper as Typography
+} from 'src/components/circuit-ui';
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 import { _socials } from 'src/_mock';

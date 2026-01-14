@@ -1,19 +1,14 @@
-'use client';
-
-import type { BoxProps } from '@mui/material/Box';
-
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-
-import { TypographyWrapper as Typography, CheckboxWrapper as Checkbox } from 'src/components/circuit-ui';
+import { BoxWrapper as Box, TypographyWrapper as Typography, CheckboxWrapper as Checkbox } from 'src/components/circuit-ui';
 
 // ----------------------------------------------------------------------
 
-export type TableSelectedActionProps = BoxProps & {
+export type TableSelectedActionProps = {
   dense?: boolean;
   rowCount: number;
   numSelected: number;
   action?: React.ReactNode;
   onSelectAllRows: (checked: boolean) => void;
+  sx?: any;
 };
 
 export function TableSelectedAction({
@@ -32,7 +27,7 @@ export function TableSelectedAction({
   return (
     <Box
       sx={[
-        () => ({
+        {
           pl: 1,
           pr: 2,
           top: 0,
@@ -45,7 +40,7 @@ export function TableSelectedAction({
           alignItems: 'center',
           bgcolor: 'primary.lighter',
           ...(dense && { height: 38 }),
-        }),
+        },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
       {...other}

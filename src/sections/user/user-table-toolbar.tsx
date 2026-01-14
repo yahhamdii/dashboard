@@ -6,14 +6,18 @@ import type { IUserTableFilters } from 'src/types/user';
 import { useCallback } from 'react';
 import { usePopover } from 'minimal-shared/hooks';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import MenuList from '@mui/material/MenuList';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import InputAdornment from '@mui/material/InputAdornment';
-
-import { InputWrapper as TextField, SelectWrapper as Select, CheckboxWrapper as Checkbox, IconButtonWrapper } from 'src/components/circuit-ui';
+import {
+  BoxWrapper as Box,
+  MenuListWrapper as MenuList,
+  MenuItemWrapper as MenuItem,
+  FormControlWrapper as FormControl,
+  InputLabelWrapper as InputLabel,
+  InputAdornmentWrapper as InputAdornment,
+  InputWrapper as TextField,
+  SelectWrapper as Select,
+  CheckboxWrapper as Checkbox,
+  IconButtonWrapper
+} from 'src/components/circuit-ui';
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 

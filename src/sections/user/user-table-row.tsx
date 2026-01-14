@@ -2,15 +2,20 @@ import type { IUserItem } from 'src/types/user';
 
 import { useBoolean, usePopover } from 'minimal-shared/hooks';
 
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
-import Stack from '@mui/material/Stack';
-import MenuList from '@mui/material/MenuList';
-import MenuItem from '@mui/material/MenuItem';
-
-import { TableRowWrapper as TableRow, TableCellWrapper as TableCell, CheckboxWrapper as Checkbox, AvatarWrapper, TooltipWrapper, IconButtonWrapper } from 'src/components/circuit-ui';
-
-import { ButtonWrapper as Button } from 'src/components/circuit-ui';
+import {
+  TableRowWrapper as TableRow,
+  TableCellWrapper as TableCell,
+  CheckboxWrapper as Checkbox,
+  AvatarWrapper,
+  TooltipWrapper,
+  IconButtonWrapper,
+  BoxWrapper as Box,
+  LinkWrapper as Link,
+  StackWrapper as Stack,
+  MenuListWrapper as MenuList,
+  MenuItemWrapper as MenuItem,
+  ButtonWrapper as Button
+} from 'src/components/circuit-ui';
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 import { RouterLink } from 'src/routes/components';

@@ -1,9 +1,11 @@
 import type { BoxProps } from '@mui/material/Box';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import IconButton from '@mui/material/IconButton';
-
-import { ButtonWrapper as Button, IconButtonWrapper } from 'src/components/circuit-ui';
+import {
+  BoxWrapper as Box,
+  ButtonWrapper as Button,
+  IconButtonWrapper as IconButton,
+  IconButtonWrapper
+} from 'src/components/circuit-ui';
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 

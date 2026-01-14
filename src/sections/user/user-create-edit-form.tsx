@@ -5,14 +5,16 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from 'react-hook-form';
 import { isValidPhoneNumber } from 'react-phone-number-input/input';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import Grid from '@mui/material/Grid';
-
-import { CardWrapper as Card, SwitchWrapper as Switch } from 'src/components/circuit-ui';
-import Stack from '@mui/material/Stack';
-import FormControlLabel from '@mui/material/FormControlLabel';
-
-import { TypographyWrapper as Typography, ButtonWrapper as Button } from 'src/components/circuit-ui';
+import {
+  BoxWrapper as Box,
+  GridWrapper as Grid,
+  CardWrapper as Card,
+  SwitchWrapper as Switch,
+  StackWrapper as Stack,
+  FormControlLabelWrapper as FormControlLabel,
+  TypographyWrapper as Typography,
+  ButtonWrapper as Button
+} from 'src/components/circuit-ui';
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
@@ -263,18 +265,18 @@ export function UserCreateEditForm({ currentUser }: Props) {
                   gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
                 }}
               >
-              <Field.Text name="name" label="Full name" />
-              <Field.Text name="email" label="Email address" />
-              <Field.Text name="phoneNumber" label="Phone number" />
+                <Field.Text name="name" label="Full name" />
+                <Field.Text name="email" label="Email address" />
+                <Field.Text name="phoneNumber" label="Phone number" />
 
-              <Field.Text name="country" label="Country" />
+                <Field.Text name="country" label="Country" />
 
-              <Field.Text name="state" label="State/region" />
-              <Field.Text name="city" label="City" />
-              <Field.Text name="address" label="Address" />
-              <Field.Text name="zipCode" label="Zip/code" />
-              <Field.Text name="company" label="Company" />
-              <Field.Text name="role" label="Role" />
+                <Field.Text name="state" label="State/region" />
+                <Field.Text name="city" label="City" />
+                <Field.Text name="address" label="Address" />
+                <Field.Text name="zipCode" label="Zip/code" />
+                <Field.Text name="company" label="Company" />
+                <Field.Text name="role" label="Role" />
               </Box>
             )}
 

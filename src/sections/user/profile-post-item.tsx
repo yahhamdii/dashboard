@@ -3,20 +3,24 @@ import type { IUserProfilePost } from 'src/types/user';
 import { varAlpha } from 'minimal-shared/utils';
 import { useRef, useState, useCallback } from 'react';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Stack from '@mui/material/Stack';
-import InputBase from '@mui/material/InputBase';
-import IconButton from '@mui/material/IconButton';
-import Avatar from '@mui/material/Avatar';
-import AvatarGroup, { avatarGroupClasses } from '@mui/material/AvatarGroup';
-
-import { CardWrapper as Card, CardHeaderWrapper as CardHeader, CheckboxWrapper as Checkbox, AvatarWrapper, IconButtonWrapper } from 'src/components/circuit-ui';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormControlLabel from '@mui/material/FormControlLabel';
-
-import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
+import {
+  BoxWrapper as Box,
+  LinkWrapper as Link,
+  PaperWrapper as Paper,
+  StackWrapper as Stack,
+  InputBaseWrapper as InputBase,
+  IconButtonWrapper as IconButton,
+  IconButtonWrapper,
+  AvatarWrapper as Avatar,
+  AvatarWrapper,
+  AvatarGroupWrapper as AvatarGroup,
+  InputAdornmentWrapper as InputAdornment,
+  FormControlLabelWrapper as FormControlLabel,
+  CardWrapper as Card,
+  CardHeaderWrapper as CardHeader,
+  CheckboxWrapper as Checkbox,
+  TypographyWrapper as Typography
+} from 'src/components/circuit-ui';
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
@@ -306,7 +310,7 @@ export function ProfilePostItem({ post }: Props) {
         {!!post.personLikes.length && (
           <AvatarGroup
             sx={{
-              [`& .${avatarGroupClasses.avatar}`]: {
+              [`& .MuiAvatarGroup-avatar`]: {
                 width: 32,
                 height: 32,
               },

@@ -6,7 +6,7 @@ import type { PaperOffset, ArrowPlacement, CustomPopoverProps } from './types';
 import { useRef } from 'react';
 import { mergeRefs } from 'minimal-shared/utils';
 
-import Popover from '@mui/material/Popover';
+import { PopoverWrapper as Popover } from 'src/components/circuit-ui';
 import { listClasses } from '@mui/material/List';
 import { menuItemClasses } from '@mui/material/MenuItem';
 

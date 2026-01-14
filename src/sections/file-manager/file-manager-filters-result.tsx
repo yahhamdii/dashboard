@@ -4,7 +4,7 @@ import type { FiltersResultProps } from 'src/components/filters-result';
 
 import { useCallback } from 'react';
 
-import Chip from '@mui/material/Chip';
+import { ChipWrapper as Chip } from 'src/components/circuit-ui';
 
 import { fDateRangeShortLabel } from 'src/utils/format-time';
 

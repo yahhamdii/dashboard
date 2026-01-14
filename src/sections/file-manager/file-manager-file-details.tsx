@@ -4,15 +4,18 @@ import type { IFile } from 'src/types/file';
 import { useState, useCallback } from 'react';
 import { useBoolean } from 'minimal-shared/hooks';
 
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import Drawer from '@mui/material/Drawer';
-import Divider from '@mui/material/Divider';
-import Autocomplete from '@mui/material/Autocomplete';
-
-import { InputWrapper as TextField, CheckboxWrapper as Checkbox, IconButtonWrapper } from 'src/components/circuit-ui';
-
-import { TypographyWrapper as Typography, ButtonWrapper as Button } from 'src/components/circuit-ui';
+import {
+  BoxWrapper as Box,
+  StackWrapper as Stack,
+  DrawerWrapper as Drawer,
+  DividerWrapper as Divider,
+  AutocompleteWrapper as Autocomplete,
+  InputWrapper as TextField,
+  CheckboxWrapper as Checkbox,
+  IconButtonWrapper,
+  TypographyWrapper as Typography,
+  ButtonWrapper as Button
+} from 'src/components/circuit-ui';
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 import { fData } from 'src/utils/format-number';
@@ -65,7 +68,7 @@ export function FileManagerFileDetails({
 
   const renderHead = () => {
     const useCircuit = useCircuitLayoutsWithPathname();
-    
+
     return useCircuit ? (
       <div className="flex items-center p-2.5">
         <Typography variant="h6" className="flex-grow">
@@ -94,23 +97,23 @@ export function FileManagerFileDetails({
           alignItems: 'center',
         }}
       >
-      <Typography variant="h6" sx={{ flexGrow: 1 }}>
-        Info
-      </Typography>
+        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+          Info
+        </Typography>
 
-      <Checkbox
-        color="warning"
-        icon={<Iconify icon="eva:star-outline" />}
-        checkedIcon={<Iconify icon="eva:star-fill" />}
-        checked={favorited}
-        onChange={onFavorite}
-        slotProps={{
-          input: {
-            id: `favorite-details-${file.id}-checkbox`,
-            'aria-label': `Favorite details ${file.id} checkbox`,
-          },
-        }}
-      />
+        <Checkbox
+          color="warning"
+          icon={<Iconify icon="eva:star-outline" />}
+          checkedIcon={<Iconify icon="eva:star-fill" />}
+          checked={favorited}
+          onChange={onFavorite}
+          slotProps={{
+            input: {
+              id: `favorite-details-${file.id}-checkbox`,
+              'aria-label': `Favorite details ${file.id} checkbox`,
+            },
+          }}
+        />
       </Box>
     );
   };
@@ -123,7 +126,7 @@ export function FileManagerFileDetails({
     ];
 
     const useCircuit = useCircuitLayoutsWithPathname();
-    
+
     return useCircuit ? (
       <div className="flex flex-col gap-1.5">
         <div className="flex items-center justify-between text-sm">
@@ -185,7 +188,7 @@ export function FileManagerFileDetails({
 
   const renderTags = () => {
     const useCircuit = useCircuitLayoutsWithPathname();
-    
+
     return useCircuit ? (
       <div className="flex flex-col gap-1.5">
         <div className="flex items-center justify-between text-sm">
@@ -267,7 +270,7 @@ export function FileManagerFileDetails({
 
   const renderShared = () => {
     const useCircuit = useCircuitLayoutsWithPathname();
-    
+
     return (
       <>
         {useCircuit ? (
@@ -298,25 +301,25 @@ export function FileManagerFileDetails({
               justifyContent: 'space-between',
             }}
           >
-        Share with
-        <IconButtonWrapper
-          size="small"
-          color="primary"
-          onClick={shareDialog.onTrue}
-          sx={{
-            width: 24,
-            height: 24,
-            bgcolor: 'primary.main',
-            color: 'primary.contrastText',
-            '&:hover': { bgcolor: 'primary.dark' },
-          }}
-        >
-          <Iconify width={16} icon="mingcute:add-line" />
+            Share with
+            <IconButtonWrapper
+              size="small"
+              color="primary"
+              onClick={shareDialog.onTrue}
+              sx={{
+                width: 24,
+                height: 24,
+                bgcolor: 'primary.main',
+                color: 'primary.contrastText',
+                '&:hover': { bgcolor: 'primary.dark' },
+              }}
+            >
+              <Iconify width={16} icon="mingcute:add-line" />
             </IconButtonWrapper>
           </Box>
         )}
 
-          {hasShared && (
+        {hasShared && (
           useCircuit ? (
             <ul className="pl-2 pr-1">
               {file?.shared?.map((person) => (

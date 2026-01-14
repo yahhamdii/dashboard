@@ -4,17 +4,18 @@ import type { IUserProfile, IUserProfilePost } from 'src/types/user';
 import { useRef } from 'react';
 import { varAlpha } from 'minimal-shared/utils';
 
-import Fab from '@mui/material/Fab';
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import Divider from '@mui/material/Divider';
-import InputBase from '@mui/material/InputBase';
-
-import { CardWrapper as Card, CardHeaderWrapper as CardHeader } from 'src/components/circuit-ui';
-
-import { ButtonWrapper as Button } from 'src/components/circuit-ui';
+import {
+  BoxWrapper as Box,
+  LinkWrapper as Link,
+  GridWrapper as Grid,
+  StackWrapper as Stack,
+  DividerWrapper as Divider,
+  FabWrapper as Fab,
+  InputBaseWrapper as InputBase,
+  CardWrapper as Card,
+  CardHeaderWrapper as CardHeader,
+  ButtonWrapper as Button
+} from 'src/components/circuit-ui';
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 

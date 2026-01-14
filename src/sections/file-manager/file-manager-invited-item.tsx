@@ -3,15 +3,19 @@ import type { IFileShared } from 'src/types/file';
 import { useState, useCallback } from 'react';
 import { usePopover } from 'minimal-shared/hooks';
 
-import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
-import Divider from '@mui/material/Divider';
-import Tooltip from '@mui/material/Tooltip';
-import MenuList from '@mui/material/MenuList';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemText from '@mui/material/ListItemText';
-
-import { ButtonWrapper as Button, AvatarWrapper, TooltipWrapper } from 'src/components/circuit-ui';
+import {
+  BoxWrapper as Box,
+  AvatarWrapper as Avatar,
+  AvatarWrapper,
+  DividerWrapper as Divider,
+  TooltipWrapper as Tooltip,
+  TooltipWrapper,
+  MenuListWrapper as MenuList,
+  MenuItemWrapper as MenuItem,
+  ListItemTextWrapper as ListItemText,
+  ButtonWrapper as Button,
+  IconButtonWrapper
+} from 'src/components/circuit-ui';
 import { tokens } from 'src/theme/design-tokens';
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';

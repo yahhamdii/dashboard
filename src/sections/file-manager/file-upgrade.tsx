@@ -1,11 +1,12 @@
 import type { CardProps } from '@mui/material/Card';
 
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-
-import { CardWrapper as Card } from 'src/components/circuit-ui';
-
-import { TypographyWrapper as Typography, ButtonWrapper as Button } from 'src/components/circuit-ui';
+import {
+  BoxWrapper as Box,
+  StackWrapper as Stack,
+  CardWrapper as Card,
+  TypographyWrapper as Typography,
+  ButtonWrapper as Button
+} from 'src/components/circuit-ui';
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 import { CONFIG } from 'src/global-config';
@@ -36,11 +37,10 @@ export function FileUpgrade({ sx, ...other }: CardProps) {
           className="absolute right-4 z-[9] w-[120px] h-[150px]"
         />
       ) : (
-        <Box
-          component="img"
+        <img
           alt="Upgrade Illustration"
           src={`${CONFIG.assetsDir}/assets/illustrations/illustration-upgrade.webp`}
-          sx={{
+          style={{
             right: 16,
             zIndex: 9,
             width: 120,
