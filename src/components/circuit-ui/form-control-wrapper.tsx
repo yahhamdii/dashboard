@@ -5,14 +5,22 @@
 'use client';
 
 import React from 'react';
-import FormControl from '@mui/material/FormControl';
-import type { FormControlProps as MuiFormControlProps } from '@mui/material/FormControl';
+// import FormControl from '@mui/material/FormControl';
+// import type { FormControlProps as MuiFormControlProps } from '@mui/material/FormControl';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type FormControlWrapperProps = MuiFormControlProps;
+export interface FormControlWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
+    fullWidth?: boolean;
+    error?: boolean;
+    focused?: boolean;
+    disabled?: boolean;
+    required?: boolean;
+    sx?: any;
+    [key: string]: any;
+}
 
 export function FormControlWrapper({
     children,
@@ -21,20 +29,7 @@ export function FormControlWrapper({
     sx,
     ...other
 }: FormControlWrapperProps) {
-    const useCircuit = useCircuitComponent('USE_CIRCUIT_FORMS');
-
-    if (!useCircuit) {
-        return (
-            <FormControl
-                fullWidth={fullWidth}
-                className={className}
-                sx={sx}
-                {...other}
-            >
-                {children}
-            </FormControl>
-        );
-    }
+    // const useCircuit = useCircuitComponent('USE_CIRCUIT_FORMS');
 
     const circuitStyles: React.CSSProperties = {
         display: 'inline-flex',
@@ -50,11 +45,25 @@ export function FormControlWrapper({
         ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}),
     };
 
+    // Filter sensitive non-DOM attributes 
+    const {
+        error,
+        focused,
+        disabled,
+        required,
+        variant, // MUI form variant
+        color,
+        size,
+        hiddenLabel,
+        margin,
+        ...divProps
+    } = other as any;
+
     return (
         <div
             className={`form-control ${className || ''}`}
             style={circuitStyles}
-            {...(other as any)}
+            {...(divProps as React.HTMLAttributes<HTMLDivElement>)}
         >
             {children}
         </div>

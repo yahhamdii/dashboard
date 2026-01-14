@@ -5,14 +5,20 @@
 'use client';
 
 import React from 'react';
-import Chip from '@mui/material/Chip';
-import type { ChipProps as MuiChipProps } from '@mui/material/Chip';
+// import Chip from '@mui/material/Chip';
+// import type { ChipProps as MuiChipProps } from '@mui/material/Chip';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type ChipWrapperProps = MuiChipProps;
+export interface ChipWrapperProps {
+    label?: React.ReactNode;
+    onDelete?: React.EventHandler<any>;
+    className?: string;
+    sx?: any;
+    [key: string]: any;
+}
 
 export function ChipWrapper({
     label,
@@ -21,19 +27,7 @@ export function ChipWrapper({
     sx,
     ...other
 }: ChipWrapperProps) {
-    const useCircuit = useCircuitComponent('USE_CIRCUIT_LAYOUTS');
-
-    if (!useCircuit) {
-        return (
-            <Chip
-                label={label}
-                onDelete={onDelete}
-                className={className}
-                sx={sx}
-                {...other}
-            />
-        );
-    }
+    // const useCircuit = useCircuitComponent('USE_CIRCUIT_LAYOUTS');
 
     const circuitStyles: React.CSSProperties = {
         display: 'inline-flex',

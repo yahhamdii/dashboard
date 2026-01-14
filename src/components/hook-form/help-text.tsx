@@ -1,10 +1,10 @@
-import type { FormHelperTextProps } from '@mui/material/FormHelperText';
+import type { FormHelperTextWrapperProps } from 'src/components/circuit-ui/form-helper-text-wrapper';
 
-import FormHelperText from '@mui/material/FormHelperText';
+import { FormHelperTextWrapper as FormHelperText } from 'src/components/circuit-ui';
 
 // ----------------------------------------------------------------------
 
-export type HelperTextProps = FormHelperTextProps & {
+export type HelperTextProps = FormHelperTextWrapperProps & {
   errorMessage?: string;
   disableGutters?: boolean;
   helperText?: React.ReactNode;

@@ -1,9 +1,10 @@
-import type { TooltipProps } from '@mui/material/Tooltip';
+import type { TooltipWrapperProps } from 'src/components/circuit-ui/tooltip-wrapper';
 import type { RemoveButton, ThumbnailRoot, ThumbnailImage, DownloadButton } from './styles';
 
 // ----------------------------------------------------------------------
 
 export type FileThumbnailProps = React.ComponentProps<typeof ThumbnailRoot> & {
+  sx?: any;
   tooltip?: boolean;
   showImage?: boolean;
   previewUrl?: string;
@@ -11,7 +12,7 @@ export type FileThumbnailProps = React.ComponentProps<typeof ThumbnailRoot> & {
   onDownload?: () => void;
   onRemove?: () => void;
   slotProps?: {
-    tooltip?: TooltipProps;
+    tooltip?: TooltipWrapperProps;
     img?: React.ComponentProps<typeof ThumbnailImage>;
     icon?: React.ComponentProps<typeof ThumbnailImage>;
     removeBtn?: React.ComponentProps<typeof RemoveButton>;

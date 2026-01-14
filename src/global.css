@@ -29,9 +29,14 @@
 @import './components/chart/styles.css';
 
 /** **************************************
+* Palette Variables (MUI-compatible CSS variables)
+* These variables provide the color system for the application
+*************************************** */
+@import './styles/palette-variables.css';
+
+/** **************************************
 * Circuit UI
-* Imported for progressive migration from MUI
-* Styles use CSS variables and shouldn't conflict with MUI
+* Design system styles with CSS variables
 *************************************** */
 @import '@sumup-oss/circuit-ui/styles.css';
 

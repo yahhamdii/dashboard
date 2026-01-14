@@ -1,30 +1,24 @@
 import type { InitOptions } from 'i18next';
-import type { Theme, Components } from '@mui/material/styles';
 
 import resourcesToBackend from 'i18next-resources-to-backend';
 
-// MUI Core Locales
-import {
-  frFR as frFRCore,
-  viVN as viVNCore,
-  zhCN as zhCNCore,
-  arSA as arSACore,
-} from '@mui/material/locale';
-// MUI Date Pickers Locales
-import {
-  enUS as enUSDate,
-  frFR as frFRDate,
-  viVN as viVNDate,
-  zhCN as zhCNDate,
-} from '@mui/x-date-pickers/locales';
-// MUI Data Grid Locales
-import {
-  enUS as enUSDataGrid,
-  frFR as frFRDataGrid,
-  viVN as viVNDataGrid,
-  zhCN as zhCNDataGrid,
-  arSD as arSDDataGrid,
-} from '@mui/x-data-grid/locales';
+// Placeholders pour les locales MUI (MUI a été supprimé)
+// Ces objets vides maintiennent la structure du code sans dépendances MUI
+const frFRCore = { components: {} };
+const viVNCore = { components: {} };
+const zhCNCore = { components: {} };
+const arSACore = { components: {} };
+
+const enUSDate = { components: {} };
+const frFRDate = { components: {} };
+const viVNDate = { components: {} };
+const zhCNDate = { components: {} };
+
+const enUSDataGrid = { components: {} };
+const frFRDataGrid = { components: {} };
+const viVNDataGrid = { components: {} };
+const zhCNDataGrid = { components: {} };
+const arSDDataGrid = { components: {} };
 
 // ----------------------------------------------------------------------
 
@@ -56,7 +50,7 @@ export type LangOption = {
   countryCode: string;
   adapterLocale?: string;
   numberFormat: { code: string; currency: string };
-  systemValue?: { components: Components<Theme> };
+  systemValue?: { components: Record<string, any> };
 };
 
 export const allLangs: LangOption[] = [

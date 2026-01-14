@@ -1,5 +1,3 @@
-import type { Opacity } from '@mui/material/styles';
-
 // ----------------------------------------------------------------------
 
 export type OpacityExtend = {
@@ -16,6 +14,14 @@ export type OpacityExtend = {
     commonHoverBg: number;
     border: number;
   };
+};
+
+type Opacity = {
+  switchTrack?: number;
+  switchTrackDisabled?: number;
+  inputPlaceholder?: number;
+  inputUnderline?: number;
+  [key: string]: any;
 };
 
 export const opacity: Partial<Opacity> & OpacityExtend = {

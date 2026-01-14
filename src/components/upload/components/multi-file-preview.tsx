@@ -1,11 +1,11 @@
 import type { UploadProps, FilesUploadType } from '../types';
 import type { FileThumbnailProps } from '../../file-thumbnail';
 
-import { varAlpha, mergeClasses } from 'minimal-shared/utils';
+import { mergeClasses, varAlpha } from 'minimal-shared/utils';
 
-import { styled } from '@mui/material/styles';
-import IconButton from '@mui/material/IconButton';
-import ListItemText from '@mui/material/ListItemText';
+// import { styled } from '@mui/material/styles';
+// import IconButton from '@mui/material/IconButton';
+// import ListItemText from '@mui/material/ListItemText';
 
 import { tokens } from 'src/theme/design-tokens';
 import { fData } from 'src/utils/format-number';
@@ -13,18 +13,20 @@ import { fData } from 'src/utils/format-number';
 import { Iconify } from '../../iconify';
 import { uploadClasses } from '../classes';
 import { getFileMeta, FileThumbnail, useFilesPreview } from '../../file-thumbnail';
+import '../upload.css';
 
 // ----------------------------------------------------------------------
 
 export type PreviewOrientation = 'horizontal' | 'vertical';
 
-export type MultiFilePreviewProps = React.ComponentProps<typeof PreviewList> &
+export type MultiFilePreviewProps = React.ComponentProps<'ul'> & // React.ComponentProps<typeof PreviewList> &
   Pick<UploadProps, 'onRemove'> & {
     files: FilesUploadType;
     startNode?: React.ReactNode;
     endNode?: React.ReactNode;
     orientation?: PreviewOrientation;
     thumbnail?: Omit<FileThumbnailProps, 'file'>;
+    sx?: any;
   };
 
 export function MultiFilePreview({
@@ -52,7 +54,7 @@ export function MultiFilePreview({
 
       if (orientation === 'horizontal') {
         return (
-          <PreviewItem key={fileMeta.key} orientation="horizontal">
+          <li key={fileMeta.key} className="multi-preview-item orientation-horizontal">
             <FileThumbnail
               tooltip
               showImage
@@ -71,93 +73,51 @@ export function MultiFilePreview({
                 ...thumbnailProps?.slotProps,
               }}
             />
-          </PreviewItem>
+          </li>
         );
       }
 
       return (
-        <PreviewItem key={fileMeta.key} orientation="vertical">
+        <li key={fileMeta.key} className="multi-preview-item orientation-vertical">
           <FileThumbnail {...commonProps} />
 
-          <ListItemText
-            primary={fileMeta.name}
-            secondary={fileMeta.size ? fData(fileMeta.size) : ''}
-            slotProps={{
-              secondary: { sx: { typography: 'caption' } },
-            }}
-          />
+          <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minWidth: 0 }}>
+            <span style={{ fontWeight: 600, fontSize: '0.875rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {fileMeta.name}
+            </span>
+            {fileMeta.size && (
+              <span style={{ fontSize: '0.75rem', color: 'var(--cui-fg-subtle)' }}>
+                {fData(fileMeta.size)}
+              </span>
+            )}
+          </div>
 
           {onRemove && (
-            <IconButton size="small" onClick={() => onRemove(file)}>
+            <button type="button" className="preview-remove-btn" onClick={() => onRemove(file)}>
               <Iconify width={16} icon="mingcute:close-line" />
-            </IconButton>
+            </button>
           )}
-        </PreviewItem>
+        </li>
       );
     });
 
+  const rootStyles = sx && typeof sx === 'object' && !Array.isArray(sx) ? sx : {};
+
   return (
-    <PreviewList
-      orientation={orientation}
-      className={mergeClasses([uploadClasses.preview.multi, className])}
-      sx={sx}
+    <ul
+      className={mergeClasses(['multi-preview-list', `orientation-${orientation}`, uploadClasses.preview.multi, className])}
+      style={rootStyles}
       {...other}
     >
-      {startNode && <SlotNode orientation={orientation}>{startNode}</SlotNode>}
+      {startNode && <li className="multi-preview-slot">{startNode}</li>}
       {renderList()}
-      {endNode && <SlotNode orientation={orientation}>{endNode}</SlotNode>}
-    </PreviewList>
+      {endNode && <li className="multi-preview-slot">{endNode}</li>}
+    </ul>
   );
 }
 
 // ----------------------------------------------------------------------
 
-export const PreviewList = styled('ul', {
-  shouldForwardProp: (prop: string) => !['orientation', 'sx'].includes(prop),
-})<{ orientation?: PreviewOrientation }>(() => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: tokens.spacing(1),
-  variants: [
-    {
-      props: (props) => props.orientation === 'horizontal',
-      style: {
-        flexWrap: 'wrap',
-        flexDirection: 'row',
-      },
-    },
-  ],
-}));
-
-const PreviewItem = styled('li', {
-  shouldForwardProp: (prop: string) => !['orientation', 'sx'].includes(prop),
-})<{ orientation?: PreviewOrientation }>({
-  display: 'inline-flex',
-  variants: [
-    {
-      props: (props) => props.orientation === 'vertical',
-      style: () => ({
-        display: 'flex',
-        alignItems: 'center',
-        gap: tokens.spacing(1.5),
-        padding: tokens.spacing(1) + ' ' + tokens.spacing(1) + ' ' + tokens.spacing(1) + ' ' + tokens.spacing(1.5),
-        borderRadius: tokens.shape.borderRadius,
-        border: `solid 1px ${varAlpha(tokens.colors.grey['500Channel'], 0.16)}`,
-      }),
-    },
-  ],
-});
-
-const SlotNode = styled('li', {
-  shouldForwardProp: (prop: string) => !['orientation', 'sx'].includes(prop),
-})<{ orientation?: PreviewOrientation }>({
-  variants: [
-    {
-      props: (props) => props.orientation === 'horizontal',
-      style: {
-        width: 'auto',
-        display: 'inline-flex',
-      },
-    },
-  ],
-});
+// export const PreviewList = styled('ul', {...})
+// const PreviewItem = styled('li', {...})
+// const SlotNode = styled('li', {...})

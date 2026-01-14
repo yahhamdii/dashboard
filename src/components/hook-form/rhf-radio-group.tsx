@@ -1,31 +1,33 @@
-import type { RadioProps } from '@mui/material/Radio';
-import type { FormLabelProps } from '@mui/material/FormLabel';
-import type { RadioGroupProps } from '@mui/material/RadioGroup';
-import type { FormControlProps } from '@mui/material/FormControl';
-import type { FormHelperTextProps } from '@mui/material/FormHelperText';
+import type { RadioWrapperProps } from 'src/components/circuit-ui/radio-wrapper';
+import type { FormLabelWrapperProps } from 'src/components/circuit-ui/form-label-wrapper';
+import type { RadioGroupWrapperProps } from 'src/components/circuit-ui/radio-group-wrapper';
+import type { FormControlWrapperProps } from 'src/components/circuit-ui/form-control-wrapper';
+import type { FormHelperTextWrapperProps } from 'src/components/circuit-ui/form-helper-text-wrapper';
 
 import { Controller, useFormContext } from 'react-hook-form';
 
-import Radio from '@mui/material/Radio';
-import FormLabel from '@mui/material/FormLabel';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import {
+  RadioWrapper as Radio,
+  FormLabelWrapper as FormLabel,
+  RadioGroupWrapper as RadioGroup,
+  FormControlWrapper as FormControl,
+  FormControlLabelWrapper as FormControlLabel,
+} from 'src/components/circuit-ui';
 
 import { HelperText } from './help-text';
 
 // ----------------------------------------------------------------------
 
-export type RHFRadioGroupProps = RadioGroupProps & {
+export type RHFRadioGroupProps = RadioGroupWrapperProps & {
   name: string;
   label?: string;
   options: { label: string; value: string }[];
   helperText?: React.ReactNode;
   slotProps?: {
-    wrapper?: FormControlProps;
-    radio?: RadioProps;
-    formLabel?: FormLabelProps;
-    helperText?: FormHelperTextProps;
+    wrapper?: FormControlWrapperProps;
+    radio?: RadioWrapperProps;
+    formLabel?: FormLabelWrapperProps;
+    helperText?: FormHelperTextWrapperProps;
   };
 };
 

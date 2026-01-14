@@ -1,8 +1,6 @@
-import type { SvgIconProps } from '@mui/material/SvgIcon';
-
+// import type { SvgIconWrapperProps as SvgIconProps } from 'src/components/circuit-ui';
 import { memo } from 'react';
-
-import SvgIcon from '@mui/material/SvgIcon';
+// import { SvgIconWrapper as SvgIcon } from 'src/components/circuit-ui/svg-icon-wrapper';
 
 import { BackgroundShape } from './background-shape';
 
@@ -10,25 +8,26 @@ import { tokens } from 'src/theme/design-tokens';
 
 // ----------------------------------------------------------------------
 
-type SvgProps = SvgIconProps & { hideBackground?: boolean };
+type SvgProps = React.SVGProps<SVGSVGElement> & { hideBackground?: boolean; sx?: any };
 
 function UploadIllustration({ hideBackground, sx, ...other }: SvgProps) {
+  const baseStyle: any = {
+    '--primary-main': tokens.colors.primary.main,
+    '--primary-dark': tokens.colors.primary.dark,
+    '--primary-darker': tokens.colors.primary.darker,
+    width: 320,
+    maxWidth: '100%', // 1 -> 100%
+    flexShrink: 0,
+    height: 'auto',
+  };
+
+  const combinedStyle = { ...baseStyle, ...(typeof sx === 'object' && !Array.isArray(sx) ? sx : {}) };
+
   return (
-    <SvgIcon
+    <svg
       viewBox="0 0 480 360"
       xmlns="http://www.w3.org/2000/svg"
-      sx={[
-        {
-          '--primary-main': tokens.colors.primary.main,
-          '--primary-dark': tokens.colors.primary.dark,
-          '--primary-darker': tokens.colors.primary.darker,
-          width: 320,
-          maxWidth: 1,
-          flexShrink: 0,
-          height: 'auto',
-        },
-        ...(Array.isArray(sx) ? sx : [sx]),
-      ]}
+      style={combinedStyle}
       {...other}
     >
       {!hideBackground && <BackgroundShape />}
@@ -616,7 +615,7 @@ function UploadIllustration({ hideBackground, sx, ...other }: SvgProps) {
         fillRule="nonzero"
         d="M200.058 225.406l-.699-.681a.721.721 0 010-1.065l6.127-5.984a.753.753 0 01.546-.231c.206 0 .404.083.545.231l6.127 5.978a.733.733 0 010 1.065l-.699.682a.768.768 0 01-1.091 0l-3.622-3.727v8.843a.725.725 0 01-.219.523.76.76 0 01-.534.217h-1.009a.75.75 0 01-.759-.74v-8.832l-3.622 3.726a.768.768 0 01-1.091-.005z"
       />
-    </SvgIcon>
+    </svg>
   );
 }
 

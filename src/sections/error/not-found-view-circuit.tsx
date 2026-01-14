@@ -9,7 +9,7 @@
 
 import { m } from 'framer-motion';
 
-import Container from '@mui/material/Container';
+import { ContainerWrapper as Container } from 'src/components/circuit-ui';
 
 import { Headline, Body } from '@sumup-oss/circuit-ui';
 

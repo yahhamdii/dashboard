@@ -1,6 +1,6 @@
 'use client';
 
-import type { Theme, SxProps } from '@mui/material/styles';
+import type { SxProps } from 'src/types/component-props';
 
 import { TableRowWrapper as TableRow, TableCellWrapper as TableCell } from 'src/components/circuit-ui';
 

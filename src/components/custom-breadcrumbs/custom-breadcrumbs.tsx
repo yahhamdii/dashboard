@@ -1,11 +1,11 @@
 'use client';
 
-import type { Theme, SxProps } from '@mui/material/styles';
-import type { BreadcrumbsProps } from '@mui/material/Breadcrumbs';
+// import type { Theme, SxProps } from '@mui/material/styles';
+// import type { BreadcrumbsProps } from '@mui/material/Breadcrumbs';
 import type { MoreLinksProps } from './more-links';
 import type { BreadcrumbsLinkProps } from './breadcrumb-link';
 
-import Breadcrumbs from '@mui/material/Breadcrumbs';
+// import Breadcrumbs from '@mui/material/Breadcrumbs';
 
 import { BackLink } from './back-link';
 import { MoreLinks } from './more-links';
@@ -21,7 +21,7 @@ import {
 // ----------------------------------------------------------------------
 
 export type CustomBreadcrumbsSlotProps = {
-  breadcrumbs: BreadcrumbsProps;
+  breadcrumbs: any; // BreadcrumbsProps;
   moreLinks: Omit<MoreLinksProps, 'links'>;
   heading: React.ComponentProps<typeof BreadcrumbsHeading>;
   content: React.ComponentProps<typeof BreadcrumbsContent>;
@@ -33,7 +33,7 @@ export type CustomBreadcrumbsSlots = {
 };
 
 export type CustomBreadcrumbsProps = React.ComponentProps<'div'> & {
-  sx?: SxProps<Theme>;
+  sx?: any; // SxProps<Theme>;
   heading?: string;
   activeLast?: boolean;
   backHref?: string;
@@ -66,23 +66,44 @@ export function CustomBreadcrumbs({
 
   const renderLinks = () =>
     slots?.breadcrumbs ?? (
-      <Breadcrumbs separator={<BreadcrumbsSeparator />} {...slotProps?.breadcrumbs}>
-        {links.map((link, index) => (
-          <BreadcrumbsLink
-            key={link.name ?? index}
-            icon={link.icon}
-            href={link.href}
-            name={link.name}
-            disabled={link.name === lastLink && !activeLast}
-          />
-        ))}
-      </Breadcrumbs>
+      <nav aria-label="breadcrumb">
+        <ol
+          style={{
+            display: 'flex',
+            listStyle: 'none',
+            padding: 0,
+            margin: 0,
+            alignItems: 'center',
+          }}
+        >
+          {links.map((link, index) => {
+            const isLast = index === links.length - 1;
+            return (
+              <li key={link.name ?? index} style={{ display: 'flex', alignItems: 'center' }}>
+                <BreadcrumbsLink
+                  icon={link.icon}
+                  href={link.href}
+                  name={link.name}
+                  disabled={link.name === lastLink && !activeLast}
+                />
+                {!isLast && (
+                  <span style={{ margin: '0 8px' }}>
+                    <BreadcrumbsSeparator />
+                  </span>
+                )}
+              </li>
+            );
+          })}
+        </ol>
+      </nav>
     );
 
   const renderMoreLinks = () => <MoreLinks links={moreLinks} {...slotProps?.moreLinks} />;
 
+  const sxStyles = Array.isArray(sx) ? Object.assign({}, ...sx) : sx;
+
   return (
-    <BreadcrumbsRoot sx={sx} {...other}>
+    <BreadcrumbsRoot style={sxStyles as React.CSSProperties} {...other}>
       <BreadcrumbsContainer {...slotProps?.container}>
         <BreadcrumbsContent {...slotProps?.content}>
           {(heading || backHref) && renderHeading()}

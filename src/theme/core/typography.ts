@@ -1,10 +1,30 @@
-import type { Breakpoint, TypographyVariantsOptions } from '@mui/material/styles';
-
 import { pxToRem, setFont } from 'minimal-shared/utils';
 
-import { createTheme } from '@mui/material/styles';
-
 import { themeConfig } from '../theme-config';
+
+type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+
+type TypographyVariantsOptions = {
+  fontFamily?: string;
+  fontWeightLight?: number;
+  fontWeightRegular?: number;
+  fontWeightMedium?: number;
+  fontWeightBold?: number;
+  h1?: React.CSSProperties;
+  h2?: React.CSSProperties;
+  h3?: React.CSSProperties;
+  h4?: React.CSSProperties;
+  h5?: React.CSSProperties;
+  h6?: React.CSSProperties;
+  subtitle1?: React.CSSProperties;
+  subtitle2?: React.CSSProperties;
+  body1?: React.CSSProperties;
+  body2?: React.CSSProperties;
+  caption?: React.CSSProperties;
+  overline?: React.CSSProperties;
+  button?: React.CSSProperties;
+  [key: string]: any;
+};
 
 // ----------------------------------------------------------------------
 
@@ -18,9 +38,16 @@ type FontSizesInput = Partial<Record<Breakpoint, number>>;
 type FontSizesResult = Record<string, { fontSize: React.CSSProperties['fontSize'] }>;
 
 function responsiveFontSizes(sizes: FontSizesInput): FontSizesResult {
-  const {
-    breakpoints: { keys, up },
-  } = createTheme();
+  const breakpointValues: Record<Breakpoint, number> = {
+    xs: 0,
+    sm: 600,
+    md: 900,
+    lg: 1200,
+    xl: 1536,
+  };
+
+  const keys: Breakpoint[] = ['xs', 'sm', 'md', 'lg', 'xl'];
+  const up = (key: Breakpoint) => `@media (min-width:${breakpointValues[key]}px)`;
 
   return keys.reduce((styles, breakpoint) => {
     const size = sizes[breakpoint];

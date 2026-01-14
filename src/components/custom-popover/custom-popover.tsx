@@ -1,14 +1,14 @@
 'use client';
 
-import type { Theme, SxProps } from '@mui/material/styles';
+// import type { Theme, SxProps } from '@mui/material/styles';
 import type { PaperOffset, ArrowPlacement, CustomPopoverProps } from './types';
 
 import { useRef } from 'react';
 import { mergeRefs } from 'minimal-shared/utils';
 
 import { PopoverWrapper as Popover } from 'src/components/circuit-ui';
-import { listClasses } from '@mui/material/List';
-import { menuItemClasses } from '@mui/material/MenuItem';
+// import { listClasses } from '@mui/material/List';
+// import { menuItemClasses } from '@mui/material/MenuItem';
 
 import { tokens } from 'src/theme/design-tokens';
 import { useElementRect } from './hooks';
@@ -40,16 +40,16 @@ export function CustomPopover({
   const { anchorOrigin, transformOrigin } = getPopoverOrigin(arrowPlacement, isRtl);
 
   const paperRef = useRef<HTMLDivElement>(null);
-  const paperRect = useElementRect(paperRef.current, 'popoverPaper', open);
-  const anchorRect = useElementRect(anchorEl as HTMLElement, 'anchor', open);
+  const paperRect = useElementRect(paperRef.current, 'popoverPaper', !!open);
+  const anchorRect = useElementRect(anchorEl as HTMLElement, 'anchor', !!open);
 
   const isArrowVisible = !arrowProps?.hide && !!paperRect && !!anchorRect;
 
-  const paperStyles: SxProps<Theme> = {
+  const paperStyles: any = {
     ...getPaperOffsetStyles(arrowPlacement, paperOffset, isRtl),
     overflow: 'inherit',
-    [`& .${listClasses.root}`]: { minWidth: 140 },
-    [`& .${menuItemClasses.root}`]: { gap: 2 },
+    // [`& .${listClasses.root}`]: { minWidth: 140 },
+    // [`& .${menuItemClasses.root}`]: { gap: 2 },
   };
 
   return (

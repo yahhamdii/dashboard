@@ -1,28 +1,30 @@
-import type { ChipProps } from '@mui/material/Chip';
-import type { SelectProps } from '@mui/material/Select';
-import type { CheckboxProps } from '@mui/material/Checkbox';
-import type { TextFieldProps } from '@mui/material/TextField';
-import type { InputLabelProps } from '@mui/material/InputLabel';
-import type { FormControlProps } from '@mui/material/FormControl';
-import type { FormHelperTextProps } from '@mui/material/FormHelperText';
+import type { ChipWrapperProps } from 'src/components/circuit-ui/chip-wrapper';
+import type { SelectWrapperProps } from 'src/components/circuit-ui/select-wrapper';
+import type { CheckboxWrapperProps } from 'src/components/circuit-ui/checkbox-wrapper';
+import type { InputWrapperProps } from 'src/components/circuit-ui/input-wrapper';
+import type { InputLabelWrapperProps } from 'src/components/circuit-ui/input-label-wrapper';
+import type { FormControlWrapperProps } from 'src/components/circuit-ui/form-control-wrapper';
+import type { FormHelperTextWrapperProps } from 'src/components/circuit-ui/form-helper-text-wrapper';
 
 import { merge } from 'es-toolkit';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import Chip from '@mui/material/Chip';
-import MenuItem from '@mui/material/MenuItem';
-import TextField from '@mui/material/TextField';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-
-import { SelectWrapper as Select, CheckboxWrapper as Checkbox } from 'src/components/circuit-ui';
+import {
+  BoxWrapper as Box,
+  ChipWrapper as Chip,
+  MenuItemWrapper as MenuItem,
+  InputWrapper as TextField,
+  InputLabelWrapper as InputLabel,
+  FormControlWrapper as FormControl,
+  SelectWrapper as Select,
+  CheckboxWrapper as Checkbox,
+} from 'src/components/circuit-ui';
 
 import { HelperText } from './help-text';
 
 // ----------------------------------------------------------------------
 
-type RHFSelectProps = TextFieldProps & {
+type RHFSelectProps = InputWrapperProps & {
   name: string;
   children: React.ReactNode;
 };
@@ -38,7 +40,7 @@ export function RHFSelect({
 
   const labelId = `${name}-select`;
 
-  const baseSlotProps: TextFieldProps['slotProps'] = {
+  const baseSlotProps: InputWrapperProps['slotProps'] = {
     select: {
       sx: { textTransform: 'capitalize' },
       MenuProps: {
@@ -60,6 +62,7 @@ export function RHFSelect({
       render={({ field, fieldState: { error } }) => (
         <TextField
           {...field}
+          // @ts-ignore
           select
           fullWidth
           error={!!error}
@@ -76,7 +79,7 @@ export function RHFSelect({
 
 // ----------------------------------------------------------------------
 
-type RHFMultiSelectProps = FormControlProps & {
+type RHFMultiSelectProps = FormControlWrapperProps & {
   name: string;
   label?: string;
   chip?: boolean;
@@ -85,11 +88,11 @@ type RHFMultiSelectProps = FormControlProps & {
   helperText?: React.ReactNode;
   options: { label: string; value: string }[];
   slotProps?: {
-    chip?: ChipProps;
-    select?: SelectProps;
-    checkbox?: CheckboxProps;
-    inputLabel?: InputLabelProps;
-    helperText?: FormHelperTextProps;
+    chip?: ChipWrapperProps;
+    select?: SelectWrapperProps;
+    checkbox?: CheckboxWrapperProps;
+    inputLabel?: InputLabelWrapperProps;
+    helperText?: FormHelperTextWrapperProps;
   };
 };
 

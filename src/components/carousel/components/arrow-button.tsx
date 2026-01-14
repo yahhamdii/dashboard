@@ -1,12 +1,12 @@
 'use client';
 
+import React from 'react';
+import styled from '@emotion/styled';
 import type { CarouselOptions, CarouselArrowButtonProps } from '../types';
 
 import { mergeClasses } from 'minimal-shared/utils';
 
-import SvgIcon from '@mui/material/SvgIcon';
-import { styled } from '@mui/material/styles';
-import ButtonBase from '@mui/material/ButtonBase';
+import { ButtonBaseWrapper as ButtonBase } from 'src/components/circuit-ui';
 import { tokens } from 'src/theme/design-tokens';
 
 import { carouselClasses } from '../classes';
@@ -38,46 +38,58 @@ export function ArrowButton({
   variant,
   className,
   svgSize = 20,
+  style,
+  disabled,
   ...other
 }: CarouselArrowButtonProps) {
   const isPrev = variant === 'prev';
 
   const svgContent = svgIcon || (isPrev ? prevSvgPath : nextSvgPath);
 
+  const mergedSx = sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {};
+
+  const buttonStyles: React.CSSProperties = {
+    borderRadius: '50%',
+    boxSizing: 'content-box',
+    padding: tokens.spacing(1),
+    transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
+    opacity: disabled ? 0.4 : 1,
+    ...mergedSx,
+    ...(style || {}),
+  };
+
+  const svgTransform = [];
+  if (options?.axis === 'y') {
+    svgTransform.push('rotate(90deg)');
+  }
+  if (options?.direction === 'rtl') {
+    svgTransform.push('scaleX(-1)');
+  }
+
+  const svgStyles: React.CSSProperties = {
+    width: svgSize,
+    height: svgSize,
+    ...(svgTransform.length > 0 && { transform: svgTransform.join(' ') }),
+  };
+
   return (
-    <ArrowButtonRoot
-      axis={options?.axis}
-      direction={options?.direction}
+    <ButtonBase
       aria-label={isPrev ? 'Prev button' : 'Next button'}
       className={mergeClasses([carouselClasses.arrows[isPrev ? 'prev' : 'next'], className])}
-      sx={sx}
+      style={buttonStyles}
+      disabled={disabled}
       {...other}
     >
-      <SvgIcon className={carouselClasses.arrows.svg} sx={{ width: svgSize, height: svgSize }}>
+      <svg
+        className={carouselClasses.arrows.svg}
+        style={svgStyles}
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         {svgContent}
-      </SvgIcon>
-    </ArrowButtonRoot>
+      </svg>
+    </ButtonBase>
   );
 }
 
-// ----------------------------------------------------------------------
-
-const ArrowButtonRoot = styled(ButtonBase, {
-  shouldForwardProp: (prop: string) => !['axis', 'direction', 'sx'].includes(prop),
-})<Pick<CarouselOptions, 'axis' | 'direction'>>(() => ({
-  borderRadius: '50%',
-  boxSizing: 'content-box',
-  padding: tokens.spacing(1),
-  transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
-  variants: [
-    { props: { disabled: true }, style: { opacity: 0.4 } },
-    {
-      props: { axis: 'y' },
-      style: { [`& .${carouselClasses.arrows.svg}`]: { transform: 'rotate(90deg)' } },
-    },
-    {
-      props: { direction: 'rtl' },
-      style: { [`& .${carouselClasses.arrows.svg}`]: { transform: 'scaleX(-1)' } },
-    },
-  ],
-}));

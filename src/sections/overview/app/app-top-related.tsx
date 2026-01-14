@@ -1,14 +1,16 @@
-import type { BoxProps } from '@mui/material/Box';
-import type { CardProps } from '@mui/material/Card';
+// import type { BoxProps } from '@mui/material/Box';
+// import type { CardProps } from '@mui/material/Card';
+
+type BoxProps = React.ComponentProps<typeof Box>;
+type CardProps = React.ComponentProps<typeof Card>;
 
 import { useTabs } from 'minimal-shared/hooks';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import Stack from '@mui/material/Stack';
-import Rating from '@mui/material/Rating';
+import { BoxWrapper as Box, StackWrapper as Stack } from 'src/components/circuit-ui';
+// import Rating from '@mui/material/Rating';
 
 import { CardWrapper as Card, CardHeaderWrapper as CardHeader, TabsWrapper, TabWrapper, AvatarWrapper } from 'src/components/circuit-ui';
-import { svgIconClasses } from '@mui/material/SvgIcon';
+// import { svgIconClasses } from '@mui/material/SvgIcon';
 
 import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
 
@@ -103,7 +105,7 @@ type ItemProps = BoxProps & {
 
 function Item({ item, sx, ...other }: ItemProps) {
   const useCircuit = useCircuitLayoutsWithPathname();
-  
+
   return useCircuit ? (
     <div className="flex items-center gap-2">
       <AvatarWrapper
@@ -145,15 +147,7 @@ function Item({ item, sx, ...other }: ItemProps) {
           <span className="w-1 h-1 rounded-full bg-gray-400" />
 
           <div className="flex items-center gap-0.5">
-            <Rating
-              max={1}
-              readOnly
-              size="small"
-              name="reviews"
-              precision={0.5}
-              value={item.ratingNumber}
-              sx={{ [`& .${svgIconClasses.root}`]: { width: 16, height: 16 } }}
-            />
+            <Iconify width={16} icon="eva:star-fill" sx={{ color: 'warning.main' }} />
             {fShortenNumber(item.totalReviews)}
           </div>
         </div>
@@ -211,15 +205,7 @@ function Item({ item, sx, ...other }: ItemProps) {
             <span className="w-1 h-1 rounded-full bg-gray-400" />
 
             <div className="flex items-center gap-0.5">
-              <Rating
-                max={1}
-                readOnly
-                size="small"
-                name="reviews"
-                precision={0.5}
-                value={item.ratingNumber}
-                sx={{ [`& .${svgIconClasses.root}`]: { width: 16, height: 16 } }}
-              />
+              <Iconify width={16} icon="eva:star-fill" sx={{ color: 'warning.main' }} />
               {fShortenNumber(item.totalReviews)}
             </div>
           </div>
@@ -253,15 +239,7 @@ function Item({ item, sx, ...other }: ItemProps) {
             </Box>
 
             <Box sx={{ gap: 0.5, display: 'flex', alignItems: 'center' }}>
-              <Rating
-                max={1}
-                readOnly
-                size="small"
-                name="reviews"
-                precision={0.5}
-                value={item.ratingNumber}
-                sx={{ [`& .${svgIconClasses.root}`]: { width: 16, height: 16 } }}
-              />
+              <Iconify width={16} icon="eva:star-fill" sx={{ color: 'warning.main' }} />
               {fShortenNumber(item.totalReviews)}
             </Box>
           </Stack>

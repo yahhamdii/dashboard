@@ -5,14 +5,20 @@
 'use client';
 
 import React from 'react';
-import Alert from '@mui/material/Alert';
-import type { AlertProps as MuiAlertProps } from '@mui/material/Alert';
+// import Alert from '@mui/material/Alert'; // Removed
+// import type { AlertProps as MuiAlertProps } from '@mui/material/Alert'; // Removed
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags'; // Removed
 
 // ----------------------------------------------------------------------
 
-type AlertWrapperProps = MuiAlertProps;
+export interface AlertWrapperProps {
+    children?: React.ReactNode;
+    severity?: 'success' | 'info' | 'warning' | 'error';
+    className?: string;
+    sx?: any;
+    [key: string]: any;
+}
 
 export function AlertWrapper({
     children,
@@ -21,15 +27,7 @@ export function AlertWrapper({
     sx,
     ...other
 }: AlertWrapperProps) {
-    const useCircuit = useCircuitComponent('USE_CIRCUIT_LAYOUTS');
-
-    if (!useCircuit) {
-        return (
-            <Alert severity={severity} className={className} sx={sx} {...other}>
-                {children}
-            </Alert>
-        );
-    }
+    // Default to true/Circuit UI
 
     const colorClasses =
         severity === 'success' ? 'bg-green-100 text-green-800 border-green-200' :
@@ -53,7 +51,7 @@ export function AlertWrapper({
             role="alert"
             className={`alert ${colorClasses} ${className || ''}`}
             style={circuitStyles}
-            {...(other as any)}
+            {...other}
         >
             {children}
         </div>

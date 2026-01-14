@@ -1,20 +1,18 @@
 'use client';
 
-import type { Theme, SxProps } from '@mui/material/styles';
-import type { ButtonBaseProps } from '@mui/material/ButtonBase';
-
-import { useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { usePopover } from 'minimal-shared/hooks';
 
-import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
-import Divider from '@mui/material/Divider';
-import MenuList from '@mui/material/MenuList';
-import MenuItem from '@mui/material/MenuItem';
-import ButtonBase from '@mui/material/ButtonBase';
-import { buttonClasses } from '@mui/material/Button';
-
-import { TypographyWrapper as Typography, ButtonWrapper as Button } from 'src/components/circuit-ui';
+import {
+  TypographyWrapper as Typography,
+  ButtonWrapper as Button,
+  BoxWrapper as Box,
+  AvatarWrapper as Avatar,
+  DividerWrapper as Divider,
+  MenuListWrapper as MenuList,
+  MenuItemWrapper as MenuItem,
+  ButtonBaseWrapper as ButtonBase,
+} from 'src/components/circuit-ui';
 
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
@@ -23,13 +21,14 @@ import { CustomPopover } from 'src/components/custom-popover';
 
 // ----------------------------------------------------------------------
 
-export type WorkspacesPopoverProps = ButtonBaseProps & {
+export type WorkspacesPopoverProps = React.ComponentProps<typeof ButtonBase> & {
   data?: {
     id: string;
     name: string;
     logo: string;
     plan: string;
   }[];
+  sx?: any;
 };
 
 export function WorkspacesPopover({ data = [], sx, ...other }: WorkspacesPopoverProps) {
@@ -47,69 +46,70 @@ export function WorkspacesPopover({ data = [], sx, ...other }: WorkspacesPopover
     [onClose]
   );
 
-  const buttonBg: SxProps<Theme> = {
-    height: 1,
+  const buttonBg: React.CSSProperties = {
+    height: '100%',
     zIndex: -1,
-    opacity: 0,
-    content: "''",
-    borderRadius: 1,
+    opacity: open ? 1 : 0,
+    borderRadius: '4px',
     position: 'absolute',
-    visibility: 'hidden',
-    bgcolor: 'action.hover',
+    visibility: open ? 'visible' : 'hidden',
+    backgroundColor: 'var(--cui-bg-subtle)',
     width: 'calc(100% + 8px)',
-    transition: (theme) =>
-      theme.transitions.create(['opacity', 'visibility'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.shorter,
-      }),
-    ...(open && {
-      opacity: 1,
-      visibility: 'visible',
-    }),
+    transition: 'opacity 200ms cubic-bezier(0.4, 0, 0.2, 1), visibility 200ms cubic-bezier(0.4, 0, 0.2, 1)',
   };
 
-  const renderButton = () => (
-    <ButtonBase
-      disableRipple
-      onClick={onOpen}
-      sx={[
-        {
-          py: 0.5,
-          gap: { xs: 0.5, [mediaQuery]: 1 },
-          '&::before': buttonBg,
-        },
-        ...(Array.isArray(sx) ? sx : [sx]),
-      ]}
-      {...other}
-    >
-      <Box
-        component="img"
-        alt={workspace?.name}
-        src={workspace?.logo}
-        sx={{ width: 24, height: 24, borderRadius: '50%' }}
-      />
+  const renderButton = () => {
+    const mergedSx = Array.isArray(sx) ? sx : [sx];
+    const sxStyles = mergedSx.reduce((acc, style) => {
+      if (style && typeof style === 'object') {
+        return { ...acc, ...style };
+      }
+      return acc;
+    }, {});
 
-      <Box
-        component="span"
-        sx={{ typography: 'subtitle2', display: { xs: 'none', [mediaQuery]: 'inline-flex' } }}
+    const buttonStyles: React.CSSProperties = {
+      paddingTop: '4px',
+      paddingBottom: '4px',
+      gap: '4px',
+      position: 'relative',
+      ...sxStyles,
+    };
+
+    return (
+      <ButtonBase
+        onClick={onOpen}
+        style={buttonStyles}
+        {...other}
       >
-        {workspace?.name}
-      </Box>
+        <div style={buttonBg} />
+        <img
+          alt={workspace?.name}
+          src={workspace?.logo}
+          style={{ width: 24, height: 24, borderRadius: '50%' }}
+        />
 
-      <Label
-        color={workspace?.plan === 'Free' ? 'default' : 'info'}
-        sx={{
-          height: 22,
-          cursor: 'inherit',
-          display: { xs: 'none', [mediaQuery]: 'inline-flex' },
-        }}
-      >
-        {workspace?.plan}
-      </Label>
+        <span
+          className="hidden sm:inline-flex"
+          style={{ fontSize: '0.875rem', fontWeight: 600 }}
+        >
+          {workspace?.name}
+        </span>
 
-      <Iconify width={16} icon="carbon:chevron-sort" sx={{ color: 'text.disabled' }} />
-    </ButtonBase>
-  );
+        <Label
+          color={workspace?.plan === 'Free' ? 'default' : 'info'}
+          className="hidden sm:inline-flex"
+          style={{
+            height: 22,
+            cursor: 'inherit',
+          }}
+        >
+          {workspace?.plan}
+        </Label>
+
+        <Iconify width={16} icon="carbon:chevron-sort" style={{ color: 'var(--cui-fg-subtle)' }} />
+      </ButtonBase>
+    );
+  };
 
   const renderMenuList = () => (
     <CustomPopover
@@ -118,7 +118,7 @@ export function WorkspacesPopover({ data = [], sx, ...other }: WorkspacesPopover
       onClose={onClose}
       slotProps={{
         arrow: { placement: 'top-left' },
-        paper: { sx: { mt: 0.5, ml: -1.55, width: 240 } },
+        paper: { sx: { marginTop: '4px', marginLeft: '-24.8px', width: 240 } },
       }}
     >
       <Scrollbar sx={{ maxHeight: 240 }}>
@@ -136,7 +136,7 @@ export function WorkspacesPopover({ data = [], sx, ...other }: WorkspacesPopover
                 noWrap
                 component="span"
                 variant="body2"
-                sx={{ flexGrow: 1, fontWeight: 'fontWeightMedium' }}
+                sx={{ flexGrow: 1, fontWeight: 500 }}
               >
                 {option.name}
               </Typography>
@@ -147,7 +147,7 @@ export function WorkspacesPopover({ data = [], sx, ...other }: WorkspacesPopover
         </MenuList>
       </Scrollbar>
 
-      <Divider sx={{ my: 0.5, borderStyle: 'dashed' }} />
+      <Divider sx={{ marginTop: '4px', marginBottom: '4px', borderStyle: 'dashed' }} />
 
       <Button
         fullWidth
@@ -156,17 +156,9 @@ export function WorkspacesPopover({ data = [], sx, ...other }: WorkspacesPopover
           onClose();
         }}
         sx={{
-          gap: 2,
+          gap: '16px',
           justifyContent: 'flex-start',
-          fontWeight: 'fontWeightMedium',
-          [`& .${buttonClasses.startIcon}`]: {
-            m: 0,
-            width: 24,
-            height: 24,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          },
+          fontWeight: 500,
         }}
       >
         Create workspace

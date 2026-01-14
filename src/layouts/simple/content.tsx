@@ -1,7 +1,6 @@
 'use client';
 
-import type { BoxProps } from '@mui/material/Box';
-import type { Breakpoint } from '@mui/material/styles';
+import type { BoxProps, Breakpoint } from 'src/types/component-props';
 
 import { mergeClasses } from 'minimal-shared/utils';
 

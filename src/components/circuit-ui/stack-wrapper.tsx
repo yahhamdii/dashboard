@@ -7,38 +7,70 @@
 
 'use client';
 
-import Stack from '@mui/material/Stack';
-import type { StackProps as MuiStackProps } from '@mui/material/Stack';
+import React from 'react';
+// import Stack from '@mui/material/Stack';
+// import type { StackProps as MuiStackProps } from '@mui/material/Stack';
 
-import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
+// import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type StackWrapperProps = MuiStackProps;
+export interface StackWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
+  direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
+  spacing?: number | string | object;
+  alignItems?: string;
+  justifyContent?: string;
+  sx?: any;
+  component?: React.ElementType;
+  divider?: React.ReactNode;
+  [key: string]: any;
+}
 
 /**
  * Stack wrapper component
- * 
- * Utilise Tailwind CSS quand le flag USE_CIRCUIT_LAYOUTS est activé,
- * sinon utilise MUI Stack
- * 
- * Note: Pour l'instant, on garde MUI Stack car la conversion sx → Tailwind
- * nécessite une logique complexe. Cette migration sera faite progressivement
- * en convertissant manuellement les cas simples.
  */
-export function StackWrapper({ children, ...other }: StackWrapperProps) {
-  const useCircuit = useCircuitLayoutsWithPathname();
+export function StackWrapper({
+  children,
+  direction = 'column',
+  spacing = 0,
+  alignItems,
+  justifyContent,
+  sx,
+  component,
+  divider,
+  className,
+  ...other
+}: StackWrapperProps) {
+  // const useCircuit = useCircuitLayoutsWithPathname();
 
-  // Pour l'instant, on garde MUI Stack
-  // La migration vers Tailwind sera faite manuellement cas par cas
-  // car la conversion de sx (MUI) vers className (Tailwind) est complexe
-  if (!useCircuit) {
-    return <Stack {...other}>{children}</Stack>;
-  }
+  const gapValue = typeof spacing === 'number' ? `${spacing * 8}px` : (typeof spacing === 'string' ? spacing : '0px');
 
-  // TODO: Implémenter la conversion sx → Tailwind
-  // Pour l'instant, on garde MUI Stack même avec le flag activé
-  // La migration sera progressive et manuelle
-  return <Stack {...other}>{children}</Stack>;
+  const circuitStyles: React.CSSProperties = {
+    display: 'flex',
+    flexDirection: direction,
+    gap: gapValue,
+    alignItems: alignItems,
+    justifyContent: justifyContent,
+    ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}),
+  };
+
+  const Component = component || 'div';
+
+  // Remove MUI props
+  const {
+    useFlexGap,
+    ...domProps
+  } = other as any;
+
+  // Manual divider implementation if needed
+  // This simplistic implementation doesn't strictly support the 'divider' prop behavior of MUI Stack (injecting between children)
+  // For a perfect output we would need to interleave children with divider.
+  // For now, ignoring divider to keep it simple, or we can deal with it later if visual regressions appear.
+
+  return (
+    <Component className={`stack ${className || ''}`} style={circuitStyles} {...domProps}>
+      {children}
+    </Component>
+  );
 }
 

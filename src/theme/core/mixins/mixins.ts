@@ -1,8 +1,7 @@
-import type { Theme, CSSObject, MixinsOptions } from '@mui/material/styles';
-
 import { varAlpha } from 'minimal-shared/utils';
 import { tokens } from '../../design-tokens';
 
+import type { CSSObject, Theme } from './types';
 import { borderGradient } from './border';
 import { maxLine, textGradient } from './text';
 import { bgBlur, bgGradient } from './background';

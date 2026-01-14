@@ -1,4 +1,4 @@
-'use client';
+// Skipping usage of replace_file_content for nav-list.tsx in this turn because I want to fix the root cause in nav-elements.tsx instead.
 
 import type { NavListProps, NavSubListProps } from '../types';
 
@@ -115,7 +115,7 @@ function NavSubList({
   enabledRootRedirect,
 }: NavSubListProps) {
   return (
-    <NavUl sx={{ gap: 'var(--nav-item-gap)' }}>
+    <NavUl style={{ gap: 'var(--nav-item-gap)' } as React.CSSProperties}>
       {data.map((list) => (
         <NavList
           key={list.title}

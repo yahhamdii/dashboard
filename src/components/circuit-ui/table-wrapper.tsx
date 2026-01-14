@@ -10,20 +10,20 @@
 
 'use client';
 
-import Table from '@mui/material/Table';
-import TableHead from '@mui/material/TableHead';
-import TableBody from '@mui/material/TableBody';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import type { TableProps as MuiTableProps } from '@mui/material/Table';
-import type { TableHeadProps as MuiTableHeadProps } from '@mui/material/TableHead';
-import type { TableBodyProps as MuiTableBodyProps } from '@mui/material/TableBody';
-import type { TableRowProps as MuiTableRowProps } from '@mui/material/TableRow';
-import type { TableCellProps as MuiTableCellProps } from '@mui/material/TableCell';
-import type { TableContainerProps as MuiTableContainerProps } from '@mui/material/TableContainer';
+// import Table from '@mui/material/Table';
+// import TableHead from '@mui/material/TableHead';
+// import TableBody from '@mui/material/TableBody';
+// import TableRow from '@mui/material/TableRow';
+// import TableCell from '@mui/material/TableCell';
+// import TableContainer from '@mui/material/TableContainer';
+// import type { TableProps as MuiTableProps } from '@mui/material/Table';
+// import type { TableHeadProps as MuiTableHeadProps } from '@mui/material/TableHead';
+// import type { TableBodyProps as MuiTableBodyProps } from '@mui/material/TableBody';
+// import type { TableRowProps as MuiTableRowProps } from '@mui/material/TableRow';
+// import type { TableCellProps as MuiTableCellProps } from '@mui/material/TableCell';
+// import type { TableContainerProps as MuiTableContainerProps } from '@mui/material/TableContainer';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
@@ -45,7 +45,13 @@ function filterValidStyles(sx: any): React.CSSProperties {
 
 // ----------------------------------------------------------------------
 
-type TableWrapperProps = MuiTableProps;
+export interface TableWrapperProps extends React.TableHTMLAttributes<HTMLTableElement> {
+  size?: 'small' | 'medium';
+  padding?: 'normal' | 'checkbox' | 'none';
+  stickyHeader?: boolean;
+  sx?: any;
+  [key: string]: any;
+}
 
 /**
  * Table wrapper component
@@ -56,15 +62,7 @@ export function TableWrapper({
   sx,
   ...other
 }: TableWrapperProps) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_TABLES');
-
-  if (!useCircuit) {
-    return (
-      <Table className={className} sx={sx} {...other}>
-        {children}
-      </Table>
-    );
-  }
+  // const useCircuit = useCircuitComponent('USE_CIRCUIT_TABLES');
 
   // Utiliser un élément HTML natif avec styles Circuit UI
   const circuitStyles: React.CSSProperties = {
@@ -74,7 +72,7 @@ export function TableWrapper({
   };
 
   // Filtrer les props MUI spécifiques
-  const { classes, component, padding, size, ...tableProps } = other as any;
+  const { classes, component, padding, size, stickyHeader, ...tableProps } = other as any;
 
   return (
     <table className={className} style={circuitStyles} {...tableProps}>
@@ -85,7 +83,10 @@ export function TableWrapper({
 
 // ----------------------------------------------------------------------
 
-type TableHeadWrapperProps = MuiTableHeadProps;
+export interface TableHeadWrapperProps extends React.HTMLAttributes<HTMLTableSectionElement> {
+  sx?: any;
+  [key: string]: any;
+}
 
 /**
  * TableHead wrapper component
@@ -96,15 +97,7 @@ export function TableHeadWrapper({
   sx,
   ...other
 }: TableHeadWrapperProps) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_TABLES');
-
-  if (!useCircuit) {
-    return (
-      <TableHead className={className} sx={sx} {...other}>
-        {children}
-      </TableHead>
-    );
-  }
+  // const useCircuit = useCircuitComponent('USE_CIRCUIT_TABLES');
 
   const circuitStyles: React.CSSProperties = {
     ...filterValidStyles(sx),
@@ -122,7 +115,10 @@ export function TableHeadWrapper({
 
 // ----------------------------------------------------------------------
 
-type TableBodyWrapperProps = MuiTableBodyProps;
+export interface TableBodyWrapperProps extends React.HTMLAttributes<HTMLTableSectionElement> {
+  sx?: any;
+  [key: string]: any;
+}
 
 /**
  * TableBody wrapper component
@@ -133,15 +129,7 @@ export function TableBodyWrapper({
   sx,
   ...other
 }: TableBodyWrapperProps) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_TABLES');
-
-  if (!useCircuit) {
-    return (
-      <TableBody className={className} sx={sx} {...other}>
-        {children}
-      </TableBody>
-    );
-  }
+  // const useCircuit = useCircuitComponent('USE_CIRCUIT_TABLES');
 
   const circuitStyles: React.CSSProperties = {
     ...filterValidStyles(sx),
@@ -159,7 +147,12 @@ export function TableBodyWrapper({
 
 // ----------------------------------------------------------------------
 
-type TableRowWrapperProps = MuiTableRowProps;
+export interface TableRowWrapperProps extends React.HTMLAttributes<HTMLTableRowElement> {
+  selected?: boolean;
+  hover?: boolean;
+  sx?: any;
+  [key: string]: any;
+}
 
 /**
  * TableRow wrapper component
@@ -170,15 +163,7 @@ export function TableRowWrapper({
   sx,
   ...other
 }: TableRowWrapperProps) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_TABLES');
-
-  if (!useCircuit) {
-    return (
-      <TableRow className={className} sx={sx} {...other}>
-        {children}
-      </TableRow>
-    );
-  }
+  // const useCircuit = useCircuitComponent('USE_CIRCUIT_TABLES');
 
   const circuitStyles: React.CSSProperties = {
     borderBottom: '1px solid var(--cui-border-subtle)',
@@ -197,7 +182,15 @@ export function TableRowWrapper({
 
 // ----------------------------------------------------------------------
 
-type TableCellWrapperProps = MuiTableCellProps;
+export interface TableCellWrapperProps extends Omit<React.TdHTMLAttributes<HTMLTableCellElement>, 'align'> {
+  align?: 'inherit' | 'left' | 'center' | 'right' | 'justify';
+  padding?: 'normal' | 'checkbox' | 'none';
+  variant?: 'head' | 'body' | 'footer';
+  sx?: any;
+  component?: React.ElementType; // Sometimes used for 'th'
+  scope?: string;
+  [key: string]: any;
+}
 
 /**
  * TableCell wrapper component
@@ -208,17 +201,10 @@ export function TableCellWrapper({
   sx,
   align,
   padding,
+  component,
   ...other
 }: TableCellWrapperProps) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_TABLES');
-
-  if (!useCircuit) {
-    return (
-      <TableCell className={className} sx={sx} align={align} padding={padding} {...other}>
-        {children}
-      </TableCell>
-    );
-  }
+  // const useCircuit = useCircuitComponent('USE_CIRCUIT_TABLES');
 
   const circuitStyles: React.CSSProperties = {
     padding: padding === 'none' ? 0 : padding === 'checkbox' ? '4px' : 'var(--cui-spacings-kilo)',
@@ -227,23 +213,33 @@ export function TableCellWrapper({
   };
 
   // Filtrer les props MUI spécifiques
+  // component can be used to set 'th' or 'td'
   const {
     classes,
-    component,
     scope,
+    sortDirection, // MUI specific
+    variant,
     ...tdProps
   } = other as any;
 
+  const Component = (component as React.ElementType) || 'td';
+  // If variant="head", default to th if not specified
+  const FinalComponent = component ? Component : (other.variant === 'head' ? 'th' : 'td');
+
   return (
-    <td className={className} style={circuitStyles} {...(tdProps as React.TdHTMLAttributes<HTMLTableDataCellElement>)}>
+    <FinalComponent className={className} style={circuitStyles} {...tdProps}>
       {children}
-    </td>
+    </FinalComponent>
   );
 }
 
 // ----------------------------------------------------------------------
 
-type TableContainerWrapperProps = MuiTableContainerProps;
+export interface TableContainerWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
+  sx?: any;
+  component?: React.ElementType;
+  [key: string]: any;
+}
 
 /**
  * TableContainer wrapper component
@@ -254,15 +250,7 @@ export function TableContainerWrapper({
   sx,
   ...other
 }: TableContainerWrapperProps) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_TABLES');
-
-  if (!useCircuit) {
-    return (
-      <TableContainer className={className} sx={sx} {...other}>
-        {children}
-      </TableContainer>
-    );
-  }
+  // const useCircuit = useCircuitComponent('USE_CIRCUIT_TABLES');
 
   const circuitStyles: React.CSSProperties = {
     width: '100%',

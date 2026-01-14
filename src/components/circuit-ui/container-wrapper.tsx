@@ -8,20 +8,22 @@
 'use client';
 
 import React from 'react';
-import Container from '@mui/material/Container';
-import type { ContainerProps as MuiContainerProps } from '@mui/material/Container';
+// import Container from '@mui/material/Container';
+// import type { ContainerProps as MuiContainerProps } from '@mui/material/Container';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type ContainerWrapperProps = MuiContainerProps;
+export interface ContainerWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
+  maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false;
+  component?: React.ElementType;
+  sx?: any;
+  [key: string]: any;
+}
 
 /**
  * Container wrapper component
- * 
- * Utilise un div avec classes Tailwind quand le flag USE_CIRCUIT_LAYOUTS est activé,
- * sinon utilise MUI Container
  */
 export function ContainerWrapper({
   children,
@@ -31,19 +33,7 @@ export function ContainerWrapper({
   component,
   ...other
 }: ContainerWrapperProps) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_LAYOUTS');
-
-  if (!useCircuit) {
-    const containerProps: any = { maxWidth, className, sx, ...other };
-    if (component) {
-      containerProps.component = component;
-    }
-    return (
-      <Container {...containerProps}>
-        {children}
-      </Container>
-    );
-  }
+  // const useCircuit = useCircuitComponent('USE_CIRCUIT_LAYOUTS');
 
   // Si un component est fourni (comme MotionContainer), l'utiliser comme wrapper
   if (component) {
@@ -57,12 +47,12 @@ export function ContainerWrapper({
 
   // Convertir maxWidth MUI vers classes Tailwind
   const maxWidthClass = maxWidth === false ? 'max-w-none' :
-                       maxWidth === 'xs' ? 'max-w-screen-xs' :
-                       maxWidth === 'sm' ? 'max-w-screen-sm' :
-                       maxWidth === 'md' ? 'max-w-screen-md' :
-                       maxWidth === 'lg' ? 'max-w-screen-lg' :
-                       maxWidth === 'xl' ? 'max-w-screen-xl' :
-                       'max-w-screen-lg';
+    maxWidth === 'xs' ? 'max-w-screen-xs' :
+      maxWidth === 'sm' ? 'max-w-screen-sm' :
+        maxWidth === 'md' ? 'max-w-screen-md' :
+          maxWidth === 'lg' ? 'max-w-screen-lg' :
+            maxWidth === 'xl' ? 'max-w-screen-xl' :
+              'max-w-screen-lg';
 
   const circuitStyles: React.CSSProperties = {
     width: '100%',

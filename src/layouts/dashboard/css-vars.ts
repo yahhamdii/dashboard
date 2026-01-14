@@ -1,4 +1,4 @@
-import type { CSSObject } from '@mui/material/styles';
+// import type { CSSObject } from '@mui/material/styles';
 import type { SettingsState } from 'src/components/settings';
 
 import { tokens } from 'src/theme/design-tokens';
@@ -26,7 +26,7 @@ export function dashboardLayoutVars() {
 export function dashboardNavColorVars(
   navColor: SettingsState['navColor'] = 'integrate',
   navLayout: SettingsState['navLayout'] = 'vertical'
-): Record<'layout' | 'section', CSSObject | undefined> {
+): Record<'layout' | 'section', Record<string, string | number> | undefined> {
   const { colors: palette } = tokens;
 
   switch (navColor) {

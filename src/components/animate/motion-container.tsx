@@ -1,22 +1,22 @@
 'use client';
 
 import type { MotionProps } from 'framer-motion';
-import type { BoxProps } from '@mui/material/Box';
 
 import { m } from 'framer-motion';
-import { styled } from '@mui/material/styles';
+import styled from '@emotion/styled';
 
 import { varContainer } from './variants';
 
 // ----------------------------------------------------------------------
 
-export type MotionContainerProps = BoxProps &
+export type MotionContainerProps = React.ComponentProps<'div'> &
   MotionProps & {
     animate?: boolean;
     action?: boolean;
+    sx?: React.CSSProperties; // Simplified sx support
   };
 
-const MotionDiv = styled(m.div)(({ theme }) => ({}));
+const MotionDiv = styled(m.div)(() => ({}));
 
 export function MotionContainer({
   sx,
@@ -25,7 +25,7 @@ export function MotionContainer({
   action = false,
   ...other
 }: MotionContainerProps) {
-  // Extraire les props MUI (sx, etc.) des props framer-motion
+  // Extract framer-motion props
   const { component, ...motionProps } = other as any;
   const motionOnlyProps = {
     variants: varContainer(),
@@ -38,7 +38,7 @@ export function MotionContainer({
     <MotionDiv
       {...motionOnlyProps}
       {...motionProps}
-      style={sx && typeof sx === 'object' && !Array.isArray(sx) ? sx as React.CSSProperties : undefined}
+      style={sx}
     >
       {children}
     </MotionDiv>

@@ -8,14 +8,20 @@
 'use client';
 
 import React from 'react';
-import IconButton from '@mui/material/IconButton';
-import type { IconButtonProps as MuiIconButtonProps } from '@mui/material/IconButton';
+// import IconButton from '@mui/material/IconButton';
+// import type { IconButtonProps as MuiIconButtonProps } from '@mui/material/IconButton';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type IconButtonWrapperProps = MuiIconButtonProps;
+export interface IconButtonWrapperProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  size?: 'small' | 'medium' | 'large';
+  color?: 'default' | 'inherit' | 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success';
+  sx?: any;
+  edge?: any;
+  [key: string]: any;
+}
 
 /**
  * IconButton wrapper component
@@ -32,28 +38,20 @@ export function IconButtonWrapper({
   sx,
   ...other
 }: IconButtonWrapperProps) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_BUTTONS');
-
-  if (!useCircuit) {
-    return (
-      <IconButton size={size} color={color} disabled={disabled} className={className} sx={sx} {...other}>
-        {children}
-      </IconButton>
-    );
-  }
+  // const useCircuit = useCircuitComponent('USE_CIRCUIT_BUTTONS');
 
   // Circuit UI n'a pas de composant IconButton natif, utiliser un bouton natif avec Tailwind
   const sizeClasses = size === 'small' ? 'w-8 h-8' :
-                     size === 'large' ? 'w-12 h-12' :
-                     'w-10 h-10';
+    size === 'large' ? 'w-12 h-12' :
+      'w-10 h-10';
 
   const colorClasses = color === 'primary' ? 'text-blue-600 hover:bg-blue-50' :
-                      color === 'secondary' ? 'text-purple-600 hover:bg-purple-50' :
-                      color === 'error' ? 'text-red-600 hover:bg-red-50' :
-                      color === 'warning' ? 'text-orange-600 hover:bg-orange-50' :
-                      color === 'info' ? 'text-cyan-600 hover:bg-cyan-50' :
-                      color === 'success' ? 'text-green-600 hover:bg-green-50' :
-                      'text-gray-600 hover:bg-gray-100';
+    color === 'secondary' ? 'text-purple-600 hover:bg-purple-50' :
+      color === 'error' ? 'text-red-600 hover:bg-red-50' :
+        color === 'warning' ? 'text-orange-600 hover:bg-orange-50' :
+          color === 'info' ? 'text-cyan-600 hover:bg-cyan-50' :
+            color === 'success' ? 'text-green-600 hover:bg-green-50' :
+              'text-gray-600 hover:bg-gray-100';
 
   const circuitStyles: React.CSSProperties = {
     display: 'inline-flex',
@@ -90,6 +88,7 @@ export function IconButtonWrapper({
     </button>
   );
 }
+
 
 
 

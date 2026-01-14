@@ -1,6 +1,6 @@
 'use client';
 
-import type { Breakpoint } from '@mui/material/styles';
+import type { Breakpoint } from 'src/types/component-props';
 import type { NavItemProps, NavSectionProps } from 'src/components/nav-section';
 import type { MainSectionProps, HeaderSectionProps, LayoutSectionProps } from '../core';
 

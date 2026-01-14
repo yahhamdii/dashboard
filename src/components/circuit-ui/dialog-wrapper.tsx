@@ -10,21 +10,28 @@
 
 'use client';
 
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import type { DialogProps as MuiDialogProps } from '@mui/material/Dialog';
-import type { DialogTitleProps as MuiDialogTitleProps } from '@mui/material/DialogTitle';
-import type { DialogContentProps as MuiDialogContentProps } from '@mui/material/DialogContent';
-import type { DialogActionsProps as MuiDialogActionsProps } from '@mui/material/DialogActions';
-
-import { useCircuitComponent } from 'src/lib/feature-flags';
 import React from 'react';
+// import Dialog from '@mui/material/Dialog';
+// import DialogTitle from '@mui/material/DialogTitle';
+// import DialogContent from '@mui/material/DialogContent';
+// import DialogActions from '@mui/material/DialogActions';
+// import type { DialogProps as MuiDialogProps } from '@mui/material/Dialog';
+// import type { DialogTitleProps as MuiDialogTitleProps } from '@mui/material/DialogTitle';
+// import type { DialogContentProps as MuiDialogContentProps } from '@mui/material/DialogContent';
+// import type { DialogActionsProps as MuiDialogActionsProps } from '@mui/material/DialogActions';
+
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type DialogWrapperProps = MuiDialogProps;
+export interface DialogWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
+  open: boolean;
+  onClose?: (event: {}, reason: 'backdropClick' | 'escapeKeyDown') => void;
+  fullWidth?: boolean;
+  maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false;
+  sx?: any;
+  [key: string]: any;
+}
 
 /**
  * Dialog wrapper component
@@ -39,23 +46,7 @@ export function DialogWrapper({
   maxWidth,
   ...other
 }: DialogWrapperProps) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_DIALOGS');
-
-  if (!useCircuit) {
-    return (
-      <Dialog
-        open={open}
-        onClose={onClose}
-        className={className}
-        sx={sx}
-        fullWidth={fullWidth}
-        maxWidth={maxWidth}
-        {...other}
-      >
-        {children}
-      </Dialog>
-    );
-  }
+  // const useCircuit = useCircuitComponent('USE_CIRCUIT_DIALOGS');
 
   // Utiliser un overlay avec modal pour Circuit UI
   if (!open) {
@@ -119,7 +110,10 @@ export function DialogWrapper({
 
 // ----------------------------------------------------------------------
 
-type DialogTitleWrapperProps = MuiDialogTitleProps;
+export interface DialogTitleWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
+  sx?: any;
+  [key: string]: any;
+}
 
 /**
  * DialogTitle wrapper component
@@ -130,15 +124,7 @@ export function DialogTitleWrapper({
   sx,
   ...other
 }: DialogTitleWrapperProps) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_DIALOGS');
-
-  if (!useCircuit) {
-    return (
-      <DialogTitle className={className} sx={sx} {...other}>
-        {children}
-      </DialogTitle>
-    );
-  }
+  // const useCircuit = useCircuitComponent('USE_CIRCUIT_DIALOGS');
 
   const circuitStyles: React.CSSProperties = {
     padding: 'var(--cui-spacings-giga)',
@@ -163,7 +149,11 @@ export function DialogTitleWrapper({
 
 // ----------------------------------------------------------------------
 
-type DialogContentWrapperProps = MuiDialogContentProps;
+export interface DialogContentWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
+  dividers?: boolean;
+  sx?: any;
+  [key: string]: any;
+}
 
 /**
  * DialogContent wrapper component
@@ -175,15 +165,7 @@ export function DialogContentWrapper({
   dividers,
   ...other
 }: DialogContentWrapperProps) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_DIALOGS');
-
-  if (!useCircuit) {
-    return (
-      <DialogContent className={className} sx={sx} dividers={dividers} {...other}>
-        {children}
-      </DialogContent>
-    );
-  }
+  // const useCircuit = useCircuitComponent('USE_CIRCUIT_DIALOGS');
 
   const circuitStyles: React.CSSProperties = {
     padding: dividers ? 'var(--cui-spacings-giga) 0' : '0 var(--cui-spacings-giga)',
@@ -211,7 +193,11 @@ export function DialogContentWrapper({
 
 // ----------------------------------------------------------------------
 
-type DialogActionsWrapperProps = MuiDialogActionsProps;
+export interface DialogActionsWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
+  disableSpacing?: boolean;
+  sx?: any;
+  [key: string]: any;
+}
 
 /**
  * DialogActions wrapper component
@@ -223,15 +209,7 @@ export function DialogActionsWrapper({
   disableSpacing,
   ...other
 }: DialogActionsWrapperProps) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_DIALOGS');
-
-  if (!useCircuit) {
-    return (
-      <DialogActions className={className} sx={sx} disableSpacing={disableSpacing} {...other}>
-        {children}
-      </DialogActions>
-    );
-  }
+  // const useCircuit = useCircuitComponent('USE_CIRCUIT_DIALOGS');
 
   const circuitStyles: React.CSSProperties = {
     display: 'flex',

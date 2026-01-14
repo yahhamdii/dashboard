@@ -1,12 +1,25 @@
-import type { Theme, CSSObject } from '@mui/material/styles';
 import { tokens } from '../../design-tokens';
 
 import { varAlpha, noRtlFlip } from 'minimal-shared/utils';
 
-import { dividerClasses } from '@mui/material/Divider';
-import { checkboxClasses } from '@mui/material/Checkbox';
-import { menuItemClasses } from '@mui/material/MenuItem';
-import { autocompleteClasses } from '@mui/material/Autocomplete';
+import type { CSSObject, Theme } from './types';
+
+// Classes CSS équivalentes (utilisées comme sélecteurs CSS)
+const dividerClasses = {
+  root: 'divider-root',
+};
+
+const checkboxClasses = {
+  root: 'checkbox-root',
+};
+
+const menuItemClasses = {
+  selected: 'menu-item-selected',
+};
+
+const autocompleteClasses = {
+  option: 'autocomplete-option',
+};
 
 // ----------------------------------------------------------------------
 

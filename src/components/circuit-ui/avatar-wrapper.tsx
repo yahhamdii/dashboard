@@ -8,14 +8,20 @@
 'use client';
 
 import React from 'react';
-import Avatar from '@mui/material/Avatar';
-import type { AvatarProps as MuiAvatarProps } from '@mui/material/Avatar';
+// import Avatar from '@mui/material/Avatar';
+// import type { AvatarProps as MuiAvatarProps } from '@mui/material/Avatar';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type AvatarWrapperProps = MuiAvatarProps;
+export interface AvatarWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
+  src?: string;
+  alt?: string;
+  size?: 'xsmall' | 'small' | 'medium' | 'large';
+  sx?: any;
+  [key: string]: any;
+}
 
 /**
  * Avatar wrapper component
@@ -31,16 +37,8 @@ export function AvatarWrapper({
   className,
   sx,
   ...other
-}: AvatarWrapperProps & { size?: 'xsmall' | 'small' | 'medium' | 'large' }) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_FORMS');
-
-  if (!useCircuit) {
-    return (
-      <Avatar src={src} alt={alt} className={className} sx={sx} {...other}>
-        {children}
-      </Avatar>
-    );
-  }
+}: AvatarWrapperProps) {
+  // const useCircuit = useCircuitComponent('USE_CIRCUIT_FORMS');
 
   // Circuit UI n'a pas de composant Avatar natif, utiliser un div avec Tailwind
   const sizeClasses = size === 'small' ? 'w-8 h-8 text-xs' :
@@ -89,6 +87,7 @@ export function AvatarWrapper({
     </div>
   );
 }
+
 
 
 

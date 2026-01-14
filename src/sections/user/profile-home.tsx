@@ -1,4 +1,4 @@
-import type { GridProps } from '@mui/material/Grid';
+import type { GridProps } from 'src/types/component-props';
 import type { IUserProfile, IUserProfilePost } from 'src/types/user';
 
 import { useRef } from 'react';

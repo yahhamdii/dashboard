@@ -1,5 +1,5 @@
 import type { DropzoneOptions } from 'react-dropzone';
-import type { Theme, SxProps } from '@mui/material/styles';
+// import type { Theme, SxProps } from '@mui/material/styles';
 import type { UploadWrapper } from './default/styles';
 import type { RejectedFiles } from './components/rejected-files';
 import type { PreviewOrientation, MultiFilePreviewProps } from './components/multi-file-preview';
@@ -13,7 +13,7 @@ export type UploadProps = DropzoneOptions & {
   error?: boolean;
   loading?: boolean;
   className?: string;
-  sx?: SxProps<Theme>;
+  sx?: any; // SxProps<Theme>;
   hideFilesRejected?: boolean;
   helperText?: React.ReactNode;
   placeholder?: React.ReactNode;

@@ -1,7 +1,7 @@
 'use client';
 
 import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import Grid from '@mui/material/Grid';
+import { GridWrapper as Grid } from 'src/components/circuit-ui';
 import { tokens } from 'src/theme/design-tokens';
 
 import { ButtonWrapper as Button } from 'src/components/circuit-ui';

@@ -5,14 +5,20 @@
 'use client';
 
 import React from 'react';
-import LinearProgress from '@mui/material/LinearProgress';
-import type { LinearProgressProps as MuiLinearProgressProps } from '@mui/material/LinearProgress';
+// import LinearProgress from '@mui/material/LinearProgress';
+// import type { LinearProgressProps as MuiLinearProgressProps } from '@mui/material/LinearProgress';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type LinearProgressWrapperProps = MuiLinearProgressProps;
+export interface LinearProgressWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
+    value?: number;
+    variant?: 'determinate' | 'indeterminate' | 'buffer' | 'query';
+    color?: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning' | 'inherit';
+    sx?: any;
+    [key: string]: any;
+}
 
 export function LinearProgressWrapper({
     value,
@@ -22,20 +28,7 @@ export function LinearProgressWrapper({
     sx,
     ...other
 }: LinearProgressWrapperProps) {
-    const useCircuit = useCircuitComponent('USE_CIRCUIT_LAYOUTS');
-
-    if (!useCircuit) {
-        return (
-            <LinearProgress
-                value={value}
-                variant={variant}
-                color={color}
-                className={className}
-                sx={sx}
-                {...other}
-            />
-        );
-    }
+    // const useCircuit = useCircuitComponent('USE_CIRCUIT_LAYOUTS');
 
     const circuitStyles: React.CSSProperties = {
         position: 'relative',
@@ -65,6 +58,7 @@ export function LinearProgressWrapper({
         <span
             className={`linear-progress ${className || ''}`}
             style={circuitStyles}
+            {...(other as any)}
         >
             <span style={progressStyles} />
         </span>

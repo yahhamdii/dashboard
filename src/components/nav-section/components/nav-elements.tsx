@@ -1,33 +1,41 @@
-import { mergeClasses } from 'minimal-shared/utils';
+import React from 'react';
 
-import { styled } from '@mui/material/styles';
+import { mergeClasses } from 'minimal-shared/utils';
 
 import { navSectionClasses } from '../styles';
 
-// ----------------------------------------------------------------------
-
-export const Nav = styled('nav')``;
+import styled from '@emotion/styled';
 
 // ----------------------------------------------------------------------
 
-type NavLiProps = React.ComponentProps<'li'> & {
-  disabled?: boolean;
-};
+export const Nav = React.forwardRef<HTMLElement, React.ComponentProps<'nav'>>(
+  ({ className, ...other }, ref) => {
+    return <nav ref={ref} className={className} {...other} />;
+  }
+);
 
-export const NavLi = styled(
-  (props: NavLiProps) => (
-    <li {...props} className={mergeClasses([navSectionClasses.li, props.className])} />
-  ),
-  { shouldForwardProp: (prop: string) => !['disabled', 'sx'].includes(prop) }
-)(() => ({
-  display: 'inline-block',
-  variants: [{ props: { disabled: true }, style: { cursor: 'not-allowed' } }],
-}));
+Nav.displayName = 'Nav';
 
 // ----------------------------------------------------------------------
 
-type NavUlProps = React.ComponentProps<'ul'>;
+export const NavLi = styled('li', {
+  shouldForwardProp: (prop: string) => !['sx', 'disabled'].includes(prop),
+})<{ disabled?: boolean; sx?: any }>(({ disabled, sx }: any) => [
+  {
+    display: 'inline-block',
+    ...(disabled && { cursor: 'not-allowed' }),
+  },
+  ...(Array.isArray(sx) ? sx : [sx]),
+]);
 
-export const NavUl = styled((props: NavUlProps) => (
-  <ul {...props} className={mergeClasses([navSectionClasses.ul, props.className])} />
-))(() => ({ display: 'flex', flexDirection: 'column' }));
+// ----------------------------------------------------------------------
+
+export const NavUl = styled('ul', {
+  shouldForwardProp: (prop: string) => !['sx'].includes(prop),
+})<{ sx?: any }>(({ sx }: any) => [
+  {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  ...(Array.isArray(sx) ? sx : [sx]),
+]);

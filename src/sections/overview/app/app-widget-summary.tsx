@@ -1,7 +1,6 @@
-import type { CardProps } from '@mui/material/Card';
+import React from 'react';
 import type { ChartOptions } from 'src/components/chart';
 
-import Box from '@mui/material/Box';
 import { tokens } from 'src/theme/design-tokens';
 
 import { CardWrapper as Card } from 'src/components/circuit-ui';
@@ -14,7 +13,7 @@ import { Chart, useChart } from 'src/components/chart';
 
 // ----------------------------------------------------------------------
 
-type Props = CardProps & {
+type Props = React.ComponentProps<typeof Card> & {
   title: string;
   total: number;
   percent: number;
@@ -24,6 +23,7 @@ type Props = CardProps & {
     series: number[];
     options?: ChartOptions;
   };
+  sx?: any;
 };
 
 export function AppWidgetSummary({ title, percent, total, chart, sx, ...other }: Props) {
@@ -54,7 +54,7 @@ export function AppWidgetSummary({ title, percent, total, chart, sx, ...other }:
                 ? 'solar:double-alt-arrow-down-bold-duotone'
                 : 'solar:double-alt-arrow-up-bold-duotone'
             }
-            sx={{
+            style={{
               flexShrink: 0,
               color: tokens.colors.success.main,
               ...(percent < 0 && { color: tokens.colors.error.main }),
@@ -74,7 +74,7 @@ export function AppWidgetSummary({ title, percent, total, chart, sx, ...other }:
     }
 
     return (
-      <Box sx={{ gap: 0.5, display: 'flex', alignItems: 'center' }}>
+      <div style={{ gap: '4px', display: 'flex', alignItems: 'center' }}>
         <Iconify
           width={24}
           icon={
@@ -82,37 +82,45 @@ export function AppWidgetSummary({ title, percent, total, chart, sx, ...other }:
               ? 'solar:double-alt-arrow-down-bold-duotone'
               : 'solar:double-alt-arrow-up-bold-duotone'
           }
-          sx={{
+          style={{
             flexShrink: 0,
             color: tokens.colors.success.main,
             ...(percent < 0 && { color: tokens.colors.error.main }),
           }}
         />
 
-        <Box component="span" sx={{ typography: 'subtitle2' }}>
+        <span style={{ fontSize: tokens.typography.pxToRem(14), fontWeight: 600 }}>
           {percent > 0 && '+'}
           {fPercent(percent)}
-        </Box>
+        </span>
 
-        <Box component="span" sx={{ typography: 'body2', color: tokens.colors.text.secondary }}>
+        <span style={{ fontSize: tokens.typography.pxToRem(14), fontWeight: 400, color: tokens.colors.text.secondary }}>
           last 7 days
-        </Box>
-      </Box>
+        </span>
+      </div>
     );
+  };
+
+  const mergedSx = Array.isArray(sx) ? sx : [sx];
+  const sxStyles = mergedSx.reduce((acc, style) => {
+    if (style && typeof style === 'object') {
+      return { ...acc, ...style };
+    }
+    return acc;
+  }, {});
+
+  const cardStyles: React.CSSProperties = {
+    padding: '24px',
+    display: 'flex',
+    zIndex: 'unset',
+    overflow: 'unset',
+    alignItems: 'center',
+    ...sxStyles,
   };
 
   return (
     <Card
-      sx={[
-        {
-          p: 3,
-          display: 'flex',
-          zIndex: 'unset',
-          overflow: 'unset',
-          alignItems: 'center',
-        },
-        ...(Array.isArray(sx) ? sx : [sx]),
-      ]}
+      style={cardStyles}
       {...other}
     >
       <div className="flex-grow">

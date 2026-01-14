@@ -8,14 +8,20 @@
 'use client';
 
 import React, { useState } from 'react';
-import Tooltip from '@mui/material/Tooltip';
-import type { TooltipProps as MuiTooltipProps } from '@mui/material/Tooltip';
+// import Tooltip from '@mui/material/Tooltip';
+// import type { TooltipProps as MuiTooltipProps } from '@mui/material/Tooltip';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type TooltipWrapperProps = MuiTooltipProps;
+export interface TooltipWrapperProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
+  title: React.ReactNode;
+  placement?: 'top' | 'bottom' | 'left' | 'right';
+  arrow?: boolean;
+  sx?: any;
+  [key: string]: any;
+}
 
 /**
  * Tooltip wrapper component
@@ -32,15 +38,7 @@ export function TooltipWrapper({
   sx,
   ...other
 }: TooltipWrapperProps) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_FORMS');
-
-  if (!useCircuit || !title) {
-    return (
-      <Tooltip title={title} placement={placement} arrow={arrow} className={className} sx={sx} {...other}>
-        {children}
-      </Tooltip>
-    );
-  }
+  // const useCircuit = useCircuitComponent('USE_CIRCUIT_FORMS');
 
   // Circuit UI n'a pas de composant Tooltip natif, utiliser un tooltip natif avec Tailwind
   const [isVisible, setIsVisible] = useState(false);
@@ -62,19 +60,41 @@ export function TooltipWrapper({
   };
   const arrowClasses = arrow ? (arrowMap[placement || 'top'] || arrowMap.top) : '';
 
+  // Filter MUI props
+  const {
+    enterDelay,
+    enterNextDelay,
+    enterTouchDelay,
+    followCursor,
+    leaveDelay,
+    leaveTouchDelay,
+    onClose,
+    onOpen,
+    open, // Controlled tooltip note: simplified here to uncontrolled hover
+    PopperProps,
+    slotProps,
+    TransitionComponent,
+    TransitionProps,
+    ...divProps
+  } = other as any;
+
+  if (!title) return <>{children}</>;
+
   return (
     <div
-      className="relative inline-block"
+      className={`relative inline-block ${className || ''}`}
       onMouseEnter={() => setIsVisible(true)}
       onMouseLeave={() => setIsVisible(false)}
       onFocus={() => setIsVisible(true)}
       onBlur={() => setIsVisible(false)}
+      {...divProps}
     >
       {children}
       {isVisible && (
         <div
-          className={`absolute z-50 px-2 py-1 text-xs text-white bg-gray-900 rounded shadow-lg ${placementClasses} ${arrowClasses} ${className || ''}`}
+          className={`absolute z-50 px-2 py-1 text-xs text-white bg-gray-900 rounded shadow-lg ${placementClasses} ${arrowClasses}`}
           role="tooltip"
+          style={{ whiteSpace: 'nowrap' }}
         >
           {title}
         </div>

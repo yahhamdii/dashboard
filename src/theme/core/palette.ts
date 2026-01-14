@@ -1,9 +1,9 @@
-import type {
-  TypeAction,
-  PaletteColor,
-  ColorSystemOptions,
-  PaletteColorChannel,
-} from '@mui/material/styles';
+// import type {
+//   TypeAction,
+//   PaletteColor,
+//   ColorSystemOptions,
+//   PaletteColorChannel,
+// } from '@mui/material/styles';
 import type { SchemesRecord } from '../types';
 
 import { varAlpha, createPaletteChannel } from 'minimal-shared/utils';
@@ -43,7 +43,7 @@ export const background = {
   dark: createPaletteChannel({ paper: grey[800], default: grey[900], neutral: '#28323D' }),
 };
 
-export const action = (mode: 'light' | 'dark'): Partial<TypeAction> => ({
+export const action = (mode: 'light' | 'dark'): Partial<any> => ({
   active: mode === 'light' ? grey[600] : grey[500],
   hover: varAlpha(grey['500Channel'], 0.08),
   selected: varAlpha(grey['500Channel'], 0.16),
@@ -57,7 +57,7 @@ export const action = (mode: 'light' | 'dark'): Partial<TypeAction> => ({
   disabledOpacity: 0.48,
 });
 
-const basePalette: ColorSystemOptions['palette'] = {
+const basePalette: any = {
   primary,
   secondary,
   info,
@@ -73,7 +73,7 @@ const basePalette: ColorSystemOptions['palette'] = {
 /* **********************************************************************
  * 📦 Final
  * **********************************************************************/
-export const palette: SchemesRecord<ColorSystemOptions['palette']> = {
+export const palette: SchemesRecord<any> = {
   light: {
     ...basePalette,
     text: text.light,

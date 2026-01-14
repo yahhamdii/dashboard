@@ -1,4 +1,4 @@
-import type { CardProps } from '@mui/material/Card';
+import type { CardProps } from 'src/types/component-props';
 import type { IUserCard } from 'src/types/user';
 
 import { varAlpha } from 'minimal-shared/utils';

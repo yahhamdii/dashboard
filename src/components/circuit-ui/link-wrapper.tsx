@@ -5,16 +5,19 @@
 'use client';
 
 import React from 'react';
-import Link from '@mui/material/Link';
-import type { LinkProps as MuiLinkProps } from '@mui/material/Link';
+// import Link from '@mui/material/Link';
+// import type { LinkProps as MuiLinkProps } from '@mui/material/Link';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type LinkWrapperProps = MuiLinkProps & {
+export interface LinkWrapperProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+    component?: React.ElementType;
+    underline?: 'none' | 'hover' | 'always';
+    sx?: any;
     [key: string]: any;
-};
+}
 
 export function LinkWrapper({
     children,
@@ -26,24 +29,7 @@ export function LinkWrapper({
     sx,
     ...other
 }: LinkWrapperProps) {
-    const useCircuit = useCircuitComponent('USE_CIRCUIT_NAVIGATION');
-
-    if (!useCircuit) {
-        const MuiLink = Link as any;
-        return (
-            <MuiLink
-                component={component}
-                href={href}
-                color={color}
-                underline={underline}
-                className={className}
-                sx={sx}
-                {...other}
-            >
-                {children}
-            </MuiLink>
-        );
-    }
+    // const useCircuit = useCircuitComponent('USE_CIRCUIT_NAVIGATION');
 
     const circuitStyles: React.CSSProperties = {
         color: color === 'inherit' ? 'inherit' : 'var(--cui-fg-accent)',
@@ -54,12 +40,19 @@ export function LinkWrapper({
 
     const Component = component || 'a';
 
+    // Remove MUI props that might cause issues if passed to DOM
+    const {
+        variant,
+        typographyClasses,
+        ...domProps
+    } = other as any;
+
     return (
         <Component
             href={href}
             className={`link ${className || ''}`}
             style={circuitStyles}
-            {...(other as any)}
+            {...domProps}
         >
             {children}
         </Component>

@@ -1,11 +1,10 @@
 'use client';
 
+import React, { Children, isValidElement } from 'react';
 import type { CarouselOptions, CarouselThumbsProps } from '../types';
 
-import { Children, isValidElement } from 'react';
 import { mergeClasses } from 'minimal-shared/utils';
 
-import { styled } from '@mui/material/styles';
 import { tokens } from 'src/theme/design-tokens';
 
 import { carouselClasses } from '../classes';
@@ -19,10 +18,69 @@ export function CarouselThumbs({
   children,
   slotProps,
   className,
+  style,
   ...other
 }: CarouselThumbsProps) {
   const axis = options?.axis ?? 'x';
   const slideSpacing = options?.slideSpacing ?? '12px';
+  const enableMask = !slotProps?.disableMask;
+
+  const mergedSx = Array.isArray(sx) ? sx : [sx];
+  const sxStyles = mergedSx.reduce((acc, style) => {
+    if (style && typeof style === 'object') {
+      return { ...acc, ...style };
+    }
+    return acc;
+  }, {});
+
+  const containerMergedSx = Array.isArray(slotProps?.container) ? slotProps.container : [slotProps?.container];
+  const containerSxStyles = containerMergedSx.reduce((acc, style) => {
+    if (style && typeof style === 'object') {
+      return { ...acc, ...style };
+    }
+    return acc;
+  }, {});
+
+  const maskBg = `${tokens.colors.background.paper} 20%, transparent 100%)`;
+
+  const rootStyles: React.CSSProperties = {
+    flexShrink: 0,
+    margin: 'auto',
+    maxWidth: '100%',
+    overflow: 'hidden',
+    position: 'relative',
+    ...(axis === 'x' ? {
+      maxWidth: '100%',
+      padding: tokens.spacing(0.5),
+      ...(enableMask && {
+        position: 'relative',
+      }),
+    } : {
+      height: '100%',
+      maxHeight: '100%',
+      padding: tokens.spacing(0.5),
+      ...(enableMask && {
+        position: 'relative',
+      }),
+    }),
+    ...sxStyles,
+    ...(style || {}),
+  };
+
+  const containerStyles: React.CSSProperties = {
+    display: 'flex',
+    backfaceVisibility: 'hidden',
+    ...(axis === 'x' ? {
+      touchAction: 'pan-y pinch-zoom',
+      marginLeft: `calc(${slideSpacing} * -1)`,
+    } : {
+      height: '100%',
+      flexDirection: 'column',
+      touchAction: 'pan-x pinch-zoom',
+      marginTop: `calc(${slideSpacing} * -1)`,
+    }),
+    ...containerSxStyles,
+  };
 
   const renderChildren = () =>
     Children.map(children, (child) => {
@@ -43,109 +101,74 @@ export function CarouselThumbs({
     });
 
   return (
-    <ThumbsRoot
-      axis={axis}
-      enableMask={!slotProps?.disableMask}
+    <div
       className={mergeClasses([carouselClasses.thumbs.root, className])}
-      sx={sx}
+      style={rootStyles}
       {...other}
     >
-      <ThumbsContainer
-        axis={axis}
-        slideSpacing={slideSpacing}
-        className={carouselClasses.thumbs.container}
-        sx={slotProps?.container}
-      >
-        {renderChildren()}
-      </ThumbsContainer>
-    </ThumbsRoot>
-  );
-}
-
-// ----------------------------------------------------------------------
-
-type ThumbsRootProps = Pick<CarouselOptions, 'axis'> & {
-  enableMask?: boolean;
-};
-
-const ThumbsRoot = styled('div', {
-  shouldForwardProp: (prop: string) => !['axis', 'enableMask', 'sx'].includes(prop),
-})<ThumbsRootProps>(({ enableMask }) => {
-  const maskBg = `${tokens.colors.background.paper} 20%, transparent 100%)`;
-
-  return {
-    flexShrink: 0,
-    margin: 'auto',
-    maxWidth: '100%',
-    overflow: 'hidden',
-    position: 'relative',
-    variants: [
-      {
-        props: { axis: 'x' },
-        style: {
-          maxWidth: '100%',
-          padding: tokens.spacing(0.5),
-          ...(enableMask && {
-            '&::before, &::after': {
+      {enableMask && axis === 'x' && (
+        <>
+          <div
+            style={{
               top: 0,
               zIndex: 9,
               width: 40,
-              content: '""',
               height: '100%',
               position: 'absolute',
-            },
-            '&::before': { left: -8, background: `linear-gradient(to right, ${maskBg}` },
-            '&::after': { right: -8, background: `linear-gradient(to left, ${maskBg}` },
-          }),
-        },
-      },
-      {
-        props: { axis: 'y' },
-        style: {
-          height: '100%',
-          maxHeight: '100%',
-          padding: tokens.spacing(0.5),
-          ...(enableMask && {
-            '&::before, &::after': {
+              left: -8,
+              background: `linear-gradient(to right, ${maskBg}`,
+              pointerEvents: 'none',
+            }}
+          />
+          <div
+            style={{
+              top: 0,
+              zIndex: 9,
+              width: 40,
+              height: '100%',
+              position: 'absolute',
+              right: -8,
+              background: `linear-gradient(to left, ${maskBg}`,
+              pointerEvents: 'none',
+            }}
+          />
+        </>
+      )}
+      {enableMask && axis === 'y' && (
+        <>
+          <div
+            style={{
               left: 0,
               zIndex: 9,
               height: 40,
-              content: '""',
               width: '100%',
               position: 'absolute',
-            },
-            '&::before': { top: -8, background: `linear-gradient(to bottom, ${maskBg}` },
-            '&::after': { bottom: -8, background: `linear-gradient(to top, ${maskBg}` },
-          }),
-        },
-      },
-    ],
-  };
-});
+              top: -8,
+              background: `linear-gradient(to bottom, ${maskBg}`,
+              pointerEvents: 'none',
+            }}
+          />
+          <div
+            style={{
+              left: 0,
+              zIndex: 9,
+              height: 40,
+              width: '100%',
+              position: 'absolute',
+              bottom: -8,
+              background: `linear-gradient(to top, ${maskBg}`,
+              pointerEvents: 'none',
+            }}
+          />
+        </>
+      )}
+      <ul
+        className={carouselClasses.thumbs.container}
+        style={containerStyles}
+      >
+        {renderChildren()}
+      </ul>
+    </div>
+  );
+}
 
-type ThumbsContainerProps = Pick<CarouselOptions, 'axis' | 'slideSpacing'>;
-
-const ThumbsContainer = styled('ul', {
-  shouldForwardProp: (prop: string) => !['axis', 'slideSpacing', 'sx'].includes(prop),
-})<ThumbsContainerProps>(({ slideSpacing }) => ({
-  display: 'flex',
-  backfaceVisibility: 'hidden',
-  variants: [
-    {
-      props: { axis: 'x' },
-      style: {
-        touchAction: 'pan-y pinch-zoom',
-        marginLeft: `calc(${slideSpacing} * -1)`,
-      },
-    },
-    {
-      props: { axis: 'y' },
-      style: {
-        height: '100%',
-        flexDirection: 'column',
-        touchAction: 'pan-x pinch-zoom',
-        marginTop: `calc(${slideSpacing} * -1)`,
-      },
-    },
-  ],
-}));

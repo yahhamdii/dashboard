@@ -1,7 +1,7 @@
 import type { CardProps } from '@mui/material/Card';
 import type { ChartOptions } from 'src/components/chart';
 
-import Divider from '@mui/material/Divider';
+import { DividerWrapper as Divider } from 'src/components/circuit-ui';
 import { tokens } from 'src/theme/design-tokens';
 
 import { CardWrapper as Card, CardHeaderWrapper as CardHeader } from 'src/components/circuit-ui';

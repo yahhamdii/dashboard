@@ -1,74 +1,108 @@
 /**
- * Card Wrapper - Compatibilité MUI → Circuit UI
- * 
- * Wrapper qui permet d'utiliser un Card compatible Circuit UI avec l'API MUI Card
- * pour faciliter la migration progressive.
- * 
- * Note: Circuit UI n'a pas de composant Card direct, donc on utilise un div
- * avec des styles basés sur les design tokens de Circuit UI.
+ * Card Wrapper - Compatibilité MUI → Circuit UI / Tailwind
+ *
+ * Wrapper qui fournit un Card compatible avec l'API MUI Card
+ * en utilisant les design tokens et styles CSS.
  */
 
 'use client';
 
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import type { CardProps as MuiCardProps } from '@mui/material/Card';
-import type { CardHeaderProps as MuiCardHeaderProps } from '@mui/material/CardHeader';
-import type { CardContentProps as MuiCardContentProps } from '@mui/material/CardContent';
-import type { CardActionsProps as MuiCardActionsProps } from '@mui/material/CardActions';
-
-import { useCircuitComponent } from 'src/lib/feature-flags';
+import React from 'react';
 
 // ----------------------------------------------------------------------
 
-type CardWrapperProps = MuiCardProps;
+// Conversion spacing MUI (facteur 8px)
+function convertSpacing(value: any): string | undefined {
+  if (value === undefined || value === null) return undefined;
+  if (typeof value === 'number') return `${value * 8}px`;
+  if (typeof value === 'string') return value;
+  return undefined;
+}
+
+// Conversion des props sx en styles CSS
+function convertSxToStyles(sx: any): React.CSSProperties {
+  if (!sx || typeof sx !== 'object' || Array.isArray(sx)) return {};
+
+  const styles: React.CSSProperties = {};
+
+  for (const [key, value] of Object.entries(sx)) {
+    if (value === undefined || value === null) continue;
+    if (key.startsWith('@') || key.startsWith('&') || key.startsWith('.')) continue;
+
+    // Spacing properties
+    if (['p', 'pt', 'pb', 'pl', 'pr', 'px', 'py', 'm', 'mt', 'mb', 'ml', 'mr', 'mx', 'my'].includes(key)) {
+      const spacingValue = typeof value === 'object' ? (value as any).xs ?? Object.values(value)[0] : value;
+      const converted = convertSpacing(spacingValue);
+
+      switch (key) {
+        case 'p': styles.padding = converted; break;
+        case 'pt': styles.paddingTop = converted; break;
+        case 'pb': styles.paddingBottom = converted; break;
+        case 'pl': styles.paddingLeft = converted; break;
+        case 'pr': styles.paddingRight = converted; break;
+        case 'px': styles.paddingLeft = converted; styles.paddingRight = converted; break;
+        case 'py': styles.paddingTop = converted; styles.paddingBottom = converted; break;
+        case 'm': styles.margin = converted; break;
+        case 'mt': styles.marginTop = converted; break;
+        case 'mb': styles.marginBottom = converted; break;
+        case 'ml': styles.marginLeft = converted; break;
+        case 'mr': styles.marginRight = converted; break;
+        case 'mx': styles.marginLeft = converted; styles.marginRight = converted; break;
+        case 'my': styles.marginTop = converted; styles.marginBottom = converted; break;
+      }
+      continue;
+    }
+
+    // Direct CSS properties
+    if (key === 'bgcolor' || key === 'backgroundColor') {
+      styles.backgroundColor = value as string;
+      continue;
+    }
+
+    if (typeof value === 'string' || typeof value === 'number') {
+      (styles as any)[key] = value;
+    }
+  }
+
+  return styles;
+}
+
+// ----------------------------------------------------------------------
+
+export interface CardWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
+  sx?: any;
+  elevation?: number;
+  raised?: boolean;
+  [key: string]: any;
+}
 
 /**
  * Card wrapper component
- * 
- * Utilise un div avec styles Circuit UI quand le flag USE_CIRCUIT_CARDS est activé,
- * sinon utilise MUI Card
  */
 export function CardWrapper({
   children,
   className,
   sx,
+  elevation,
+  raised,
   ...other
 }: CardWrapperProps) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_CARDS');
-
-  // Si Circuit UI n'est pas activé, utiliser MUI
-  if (!useCircuit) {
-    return (
-      <Card className={className} sx={sx} {...other}>
-        {children}
-      </Card>
-    );
-  }
-
-  // Utiliser un div avec styles Circuit UI
-  // Circuit UI utilise des design tokens pour les ombres, bordures, etc.
-  const circuitStyles: React.CSSProperties = {
+  const baseStyles: React.CSSProperties = {
     position: 'relative',
-    backgroundColor: 'var(--cui-bg-normal)',
-    borderRadius: 'var(--cui-border-radius-mega)',
-    boxShadow: 'var(--cui-shadow-mega)',
-    border: '1px solid var(--cui-border-subtle)',
-    // Convertir sx en styles si nécessaire
-    ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}),
+    backgroundColor: 'var(--palette-background-paper)',
+    borderRadius: '16px',
+    boxShadow: 'var(--customShadows-card)',
+    overflow: 'hidden',
   };
 
-  // Filtrer les props MUI spécifiques qui ne sont pas compatibles avec un div
-  const {
-    elevation, // MUI specific prop
-    raised, // MUI specific prop
-    ...divProps
-  } = other as any;
+  const sxStyles = convertSxToStyles(sx);
 
   return (
-    <div className={className} style={circuitStyles} {...divProps}>
+    <div
+      className={`card ${className || ''}`}
+      style={{ ...baseStyles, ...sxStyles }}
+      {...other}
+    >
       {children}
     </div>
   );
@@ -76,110 +110,214 @@ export function CardWrapper({
 
 // ----------------------------------------------------------------------
 
-type CardHeaderWrapperProps = MuiCardHeaderProps;
+export interface CardHeaderWrapperProps {
+  title?: React.ReactNode;
+  subheader?: React.ReactNode;
+  action?: React.ReactNode;
+  avatar?: React.ReactNode;
+  className?: string;
+  sx?: any;
+  [key: string]: any;
+}
 
 /**
  * CardHeader wrapper component
  */
 export function CardHeaderWrapper({
+  title,
+  subheader,
+  action,
+  avatar,
   className,
   sx,
   ...other
 }: CardHeaderWrapperProps) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_CARDS');
-
-  if (!useCircuit) {
-    return <CardHeader className={className} sx={sx} {...other} />;
-  }
-
-  // Circuit UI n'a pas de CardHeader, utiliser un div avec styles
-  const circuitStyles: React.CSSProperties = {
-    padding: 'var(--cui-spacings-giga) var(--cui-spacings-giga) 0',
-    ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}),
+  const baseStyles: React.CSSProperties = {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '24px 24px 0',
   };
 
-  // Filtrer les props MUI spécifiques qui ne sont pas compatibles avec un div
-  const {
-    action,
-    avatar,
-    title,
-    subheader,
-    classes,
-    disableTypography,
-    ...divProps
-  } = other as any;
+  const sxStyles = convertSxToStyles(sx);
 
-  return <div className={className} style={circuitStyles} {...(divProps as React.HTMLAttributes<HTMLDivElement>)} />;
+  // Filter invalid props
+  const { classes, disableTypography, titleTypographyProps, subheaderTypographyProps, ...divProps } = other as any;
+
+  return (
+    <div
+      className={`card-header ${className || ''}`}
+      style={{ ...baseStyles, ...sxStyles }}
+      {...(divProps as React.HTMLAttributes<HTMLDivElement>)}
+    >
+      {avatar && (
+        <div style={{ marginRight: '16px', flexShrink: 0 }}>
+          {avatar}
+        </div>
+      )}
+      <div style={{ flex: 1, minWidth: 0 }}>
+        {title && (
+          <h6 style={{
+            margin: 0,
+            fontSize: '1.125rem',
+            fontWeight: 600,
+            lineHeight: 1.5,
+            color: 'var(--palette-text-primary)',
+          }}>
+            {title}
+          </h6>
+        )}
+        {subheader && (
+          <p style={{
+            margin: '4px 0 0',
+            fontSize: '0.875rem',
+            fontWeight: 400,
+            lineHeight: 1.57,
+            color: 'var(--palette-text-secondary)',
+          }}>
+            {subheader}
+          </p>
+        )}
+      </div>
+      {action && (
+        <div style={{ marginLeft: '16px', flexShrink: 0 }}>
+          {action}
+        </div>
+      )}
+    </div>
+  );
 }
 
 // ----------------------------------------------------------------------
 
-type CardContentWrapperProps = MuiCardContentProps;
+export interface CardContentWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
+  sx?: any;
+  [key: string]: any;
+}
 
 /**
  * CardContent wrapper component
  */
 export function CardContentWrapper({
+  children,
   className,
   sx,
   ...other
 }: CardContentWrapperProps) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_CARDS');
-
-  if (!useCircuit) {
-    return <CardContent className={className} sx={sx} {...other} />;
-  }
-
-  // Circuit UI n'a pas de CardContent, utiliser un div avec styles
-  const circuitStyles: React.CSSProperties = {
-    padding: 'var(--cui-spacings-giga)',
-    ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}),
+  const baseStyles: React.CSSProperties = {
+    padding: '24px',
   };
 
-  // Filtrer les props MUI spécifiques qui ne sont pas compatibles avec un div
-  const {
-    classes,
-    component,
-    ...divProps
-  } = other as any;
+  const sxStyles = convertSxToStyles(sx);
 
-  return <div className={className} style={circuitStyles} {...(divProps as React.HTMLAttributes<HTMLDivElement>)} />;
+  // Filter invalid props
+  const { classes, component, ...divProps } = other as any;
+
+  return (
+    <div
+      className={`card-content ${className || ''}`}
+      style={{ ...baseStyles, ...sxStyles }}
+      {...(divProps as React.HTMLAttributes<HTMLDivElement>)}
+    >
+      {children}
+    </div>
+  );
 }
 
 // ----------------------------------------------------------------------
 
-type CardActionsWrapperProps = MuiCardActionsProps;
+export interface CardActionsWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
+  sx?: any;
+  disableSpacing?: boolean;
+  [key: string]: any;
+}
 
 /**
  * CardActions wrapper component
  */
 export function CardActionsWrapper({
+  children,
   className,
   sx,
+  disableSpacing,
   ...other
 }: CardActionsWrapperProps) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_CARDS');
-
-  if (!useCircuit) {
-    return <CardActions className={className} sx={sx} {...other} />;
-  }
-
-  // Circuit UI n'a pas de CardActions, utiliser un div avec styles
-  const circuitStyles: React.CSSProperties = {
+  const baseStyles: React.CSSProperties = {
     display: 'flex',
     alignItems: 'center',
-    padding: 'var(--cui-spacings-kilo) var(--cui-spacings-giga)',
-    gap: 'var(--cui-spacings-kilo)',
-    ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}),
+    padding: disableSpacing ? '8px' : '8px 24px 24px',
+    gap: disableSpacing ? '0' : '8px',
   };
 
-  // Filtrer les props MUI spécifiques qui ne sont pas compatibles avec un div
-  const {
-    classes,
-    disableSpacing,
-    ...divProps
-  } = other as any;
+  const sxStyles = convertSxToStyles(sx);
 
-  return <div className={className} style={circuitStyles} {...(divProps as React.HTMLAttributes<HTMLDivElement>)} />;
+  // Filter invalid props
+  const { classes, ...divProps } = other as any;
+
+  return (
+    <div
+      className={`card-actions ${className || ''}`}
+      style={{ ...baseStyles, ...sxStyles }}
+      {...(divProps as React.HTMLAttributes<HTMLDivElement>)}
+    >
+      {children}
+    </div>
+  );
 }
 
+// ----------------------------------------------------------------------
+
+export interface CardMediaWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
+  image?: string;
+  component?: 'img' | 'div';
+  alt?: string;
+  sx?: any;
+  [key: string]: any;
+}
+
+/**
+ * CardMedia wrapper component
+ */
+export function CardMediaWrapper({
+  image,
+  component = 'div',
+  alt,
+  className,
+  sx,
+  children,
+  ...other
+}: CardMediaWrapperProps) {
+  const baseStyles: React.CSSProperties = {
+    display: 'block',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    ...(image && component === 'div' ? { backgroundImage: `url(${image})` } : {}),
+  };
+
+  const sxStyles = convertSxToStyles(sx);
+
+  // Filter invalid props
+  const { classes, ...divProps } = other as any;
+
+  if (component === 'img' && image) {
+    return (
+      <img
+        src={image}
+        alt={alt || ''}
+        className={`card-media ${className || ''}`}
+        style={{ ...baseStyles, ...sxStyles, width: '100%', display: 'block' }}
+        {...(divProps as React.ImgHTMLAttributes<HTMLImageElement>)}
+      />
+    );
+  }
+
+  return (
+    <div
+      className={`card-media ${className || ''}`}
+      style={{ ...baseStyles, ...sxStyles }}
+      {...(divProps as React.HTMLAttributes<HTMLDivElement>)}
+    >
+      {children}
+    </div>
+  );
+}

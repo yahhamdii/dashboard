@@ -5,36 +5,45 @@
 'use client';
 
 import React from 'react';
-import ButtonBase from '@mui/material/ButtonBase';
-import type { ButtonBaseProps as MuiButtonBaseProps } from '@mui/material/ButtonBase';
+// import ButtonBase from '@mui/material/ButtonBase';
+// import type { ButtonBaseProps as MuiButtonBaseProps } from '@mui/material/ButtonBase';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type ButtonBaseWrapperProps = MuiButtonBaseProps;
+export interface ButtonBaseWrapperProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    sx?: any;
+    // Add other specific props if needed, or rely on [key: string]: any
+    [key: string]: any;
+}
 
-export function ButtonBaseWrapper({
-    children,
-    onClick,
-    className,
-    sx,
-    ...other
-}: ButtonBaseWrapperProps) {
-    const useCircuit = useCircuitComponent('USE_CIRCUIT_BUTTONS');
+export function ButtonBaseWrapper(props: ButtonBaseWrapperProps) {
+    // const useCircuit = useCircuitComponent('USE_CIRCUIT_BUTTONS'); // Removed
 
-    if (!useCircuit) {
-        return (
-            <ButtonBase
-                onClick={onClick}
-                className={className}
-                sx={sx}
-                {...other}
-            >
-                {children}
-            </ButtonBase>
-        );
-    }
+    const {
+        children,
+        onClick,
+        className,
+        sx,
+        // Filter out MUI-specific props that are not valid for a <button>
+        action,
+        centerRipple,
+        disableRipple,
+        disableTouchRipple,
+        focusRipple,
+        focusVisibleClassName,
+        LinkComponent,
+        onFocusVisible,
+        TouchRippleProps,
+        touchRippleRef,
+        slotProps,
+        slots,
+        component,
+        href,
+        type,
+        ...other
+    } = props as any;
 
     const circuitStyles: React.CSSProperties = {
         padding: 0,
@@ -49,18 +58,32 @@ export function ButtonBaseWrapper({
         fontSize: 'inherit',
         color: 'inherit',
         textAlign: 'inherit',
+        textDecoration: 'none', // Reset text decoration for links
         ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}),
     };
 
+    let Component: any = component || 'button';
+    if (!component && href) {
+        Component = 'a';
+    }
+
+    const extraProps: any = {};
+    if (Component === 'button') {
+        extraProps.type = type || 'button';
+    }
+    if (href) {
+        extraProps.href = href;
+    }
+
     return (
-        <button
-            type="button"
+        <Component
             onClick={onClick}
             className={`button-base ${className || ''}`}
             style={circuitStyles}
-            {...(other as any)}
+            {...extraProps}
+            {...other}
         >
             {children}
-        </button>
+        </Component>
     );
 }

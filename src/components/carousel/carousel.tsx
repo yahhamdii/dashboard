@@ -5,7 +5,7 @@ import type { CarouselProps, CarouselOptions } from './types';
 import { Children, isValidElement } from 'react';
 import { mergeClasses } from 'minimal-shared/utils';
 
-import { styled } from '@mui/material/styles';
+import styled from '@emotion/styled';
 
 import { carouselClasses } from './classes';
 import { CarouselSlide } from './components/carousel-slide';
@@ -52,15 +52,12 @@ export function Carousel({
         slideSpacing={slideSpacing}
         className={carouselClasses.container}
         sx={[
-          (theme) => ({
+          {
             ...(carousel.pluginNames?.includes('autoHeight') && {
               alignItems: 'flex-start',
-              transition: theme.transitions.create(['height'], {
-                easing: theme.transitions.easing.easeInOut,
-                duration: theme.transitions.duration.shorter,
-              }),
+              transition: 'height 200ms cubic-bezier(0.4, 0, 0.2, 1)',
             }),
-          }),
+          },
           ...(Array.isArray(slotProps?.container) ? slotProps.container : [slotProps?.container]),
         ]}
       >
@@ -74,35 +71,33 @@ export function Carousel({
 
 const CarouselRoot = styled('div', {
   shouldForwardProp: (prop: string) => !['axis', 'sx'].includes(prop),
-})<Pick<CarouselOptions, 'axis'>>(() => ({
-  margin: 'auto',
-  maxWidth: '100%',
-  overflow: 'hidden',
-  position: 'relative',
-  variants: [{ props: { axis: 'y' }, style: { height: '100%' } }],
-}));
+})<Pick<CarouselOptions, 'axis'> & { sx?: any }>(({ axis, sx }) => [
+  {
+    margin: 'auto',
+    maxWidth: '100%',
+    overflow: 'hidden',
+    position: 'relative',
+  },
+  axis === 'y' && { height: '100%' },
+  ...(Array.isArray(sx) ? sx : [sx]),
+]);
 
 const CarouselContainer = styled('ul', {
   shouldForwardProp: (prop: string) => !['axis', 'slideSpacing', 'sx'].includes(prop),
-})<Pick<CarouselOptions, 'axis' | 'slideSpacing'>>(({ slideSpacing }) => ({
-  display: 'flex',
-  backfaceVisibility: 'hidden',
-  variants: [
-    {
-      props: { axis: 'x' },
-      style: {
-        touchAction: 'pan-y pinch-zoom',
-        marginLeft: `calc(${slideSpacing} * -1)`,
-      },
-    },
-    {
-      props: { axis: 'y' },
-      style: {
-        height: '100%',
-        flexDirection: 'column',
-        touchAction: 'pan-x pinch-zoom',
-        marginTop: `calc(${slideSpacing} * -1)`,
-      },
-    },
-  ],
-}));
+})<Pick<CarouselOptions, 'axis' | 'slideSpacing'> & { sx?: any }>(({ axis, slideSpacing, sx }) => [
+  {
+    display: 'flex',
+    backfaceVisibility: 'hidden',
+  },
+  axis === 'x' && {
+    touchAction: 'pan-y pinch-zoom',
+    marginLeft: `calc(${slideSpacing} * -1)`,
+  },
+  axis === 'y' && {
+    height: '100%',
+    flexDirection: 'column',
+    touchAction: 'pan-x pinch-zoom',
+    marginTop: `calc(${slideSpacing} * -1)`,
+  },
+  ...(Array.isArray(sx) ? sx : [sx]),
+]);

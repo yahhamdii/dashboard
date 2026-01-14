@@ -3,9 +3,10 @@ import type { UploadProps } from '../types';
 import { useDropzone } from 'react-dropzone';
 import { mergeClasses } from 'minimal-shared/utils';
 
-import { UploadArea } from './styles';
 import { Iconify } from '../../iconify';
 import { uploadClasses } from '../classes';
+// import { UploadArea } from './styles';
+import '../upload.css';
 
 // ----------------------------------------------------------------------
 
@@ -24,18 +25,23 @@ export function UploadBox({
 
   const hasError = isDragReject || !!error;
 
+  const rootStyles = sx && typeof sx === 'object' && !Array.isArray(sx) ? sx : {};
+
   return (
-    <UploadArea
+    <div
       {...getRootProps()}
-      className={mergeClasses([uploadClasses.box, className], {
+      className={mergeClasses(['upload-area', uploadClasses.box, className], {
+        'upload-state-drag-active': isDragActive,
+        'upload-state-disabled': disabled,
+        'upload-state-error': hasError,
         [uploadClasses.state.dragActive]: isDragActive,
         [uploadClasses.state.disabled]: disabled,
         [uploadClasses.state.error]: hasError,
       })}
-      sx={sx}
+      style={rootStyles}
     >
       <input {...getInputProps()} />
       {placeholder ?? <Iconify icon="eva:cloud-upload-fill" width={28} />}
-    </UploadArea>
+    </div>
   );
 }

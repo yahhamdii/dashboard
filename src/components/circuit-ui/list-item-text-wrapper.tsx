@@ -5,35 +5,38 @@
 'use client';
 
 import React from 'react';
-import ListItemText from '@mui/material/ListItemText';
-import type { ListItemTextProps as MuiListItemTextProps } from '@mui/material/ListItemText';
+// import ListItemText from '@mui/material/ListItemText';
+// import type { ListItemTextProps as MuiListItemTextProps } from '@mui/material/ListItemText';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type ListItemTextWrapperProps = MuiListItemTextProps;
+export interface ListItemTextWrapperProps {
+    primary?: React.ReactNode;
+    secondary?: React.ReactNode;
+    className?: string;
+    sx?: any;
+    [key: string]: any;
+}
 
-export function ListItemTextWrapper({
-    primary,
-    secondary,
-    className,
-    sx,
-    ...other
-}: ListItemTextWrapperProps) {
-    const useCircuit = useCircuitComponent('USE_CIRCUIT_TYPOGRAPHY');
+export function ListItemTextWrapper(props: ListItemTextWrapperProps) {
+    // const useCircuit = useCircuitComponent('USE_CIRCUIT_TYPOGRAPHY');
 
-    if (!useCircuit) {
-        return (
-            <ListItemText
-                primary={primary}
-                secondary={secondary}
-                className={className}
-                sx={sx}
-                {...other}
-            />
-        );
-    }
+    const {
+        primary,
+        secondary,
+        className,
+        sx,
+        // Filter out MUI-specific props that are not valid for a <div>
+        slotProps,
+        slots,
+        disableTypography,
+        inset,
+        primaryTypographyProps,
+        secondaryTypographyProps,
+        ...other
+    } = props as any;
 
     const circuitStyles: React.CSSProperties = {
         display: 'flex',
@@ -46,7 +49,7 @@ export function ListItemTextWrapper({
         <div
             className={`list-item-text ${className || ''}`}
             style={circuitStyles}
-            {...(other as any)}
+            {...other}
         >
             <div style={{ fontWeight: 600, color: 'var(--cui-fg-normal)', fontSize: '0.875rem' }}>
                 {primary}

@@ -1,11 +1,8 @@
 'use client';
 
-import type { Theme, SxProps, CSSObject } from '@mui/material/styles';
+import React, { useEffect } from 'react';
 
 import { mergeClasses } from 'minimal-shared/utils';
-
-import { styled } from '@mui/material/styles';
-import GlobalStyles from '@mui/material/GlobalStyles';
 
 import { layoutClasses } from './classes';
 import { layoutSectionVars } from './css-vars';
@@ -13,13 +10,45 @@ import { layoutSectionVars } from './css-vars';
 // ----------------------------------------------------------------------
 
 export type LayoutSectionProps = React.ComponentProps<'div'> & {
-  sx?: SxProps<Theme>;
-  cssVars?: CSSObject;
+  sx?: any;
+  cssVars?: Record<string, any>;
   children?: React.ReactNode;
   footerSection?: React.ReactNode;
   headerSection?: React.ReactNode;
   sidebarSection?: React.ReactNode;
 };
+
+// Simple GlobalStyles replacement
+function GlobalStyles({ styles }: { styles: () => Record<string, any> }) {
+  useEffect(() => {
+    const styleId = 'layout-section-global-styles';
+    let styleElement = document.getElementById(styleId) as HTMLStyleElement;
+
+    if (!styleElement) {
+      styleElement = document.createElement('style');
+      styleElement.id = styleId;
+      document.head.appendChild(styleElement);
+    }
+
+    const cssVars = styles();
+    const bodyStyles = cssVars.body || {};
+    const cssText = `body { ${Object.entries(bodyStyles).map(([key, value]) => {
+      const cssKey = key.replace(/([A-Z])/g, '-$1').toLowerCase();
+      return `${cssKey}: ${value};`;
+    }).join(' ')} }`;
+
+    styleElement.textContent = cssText;
+
+    return () => {
+      const existingStyle = document.getElementById(styleId);
+      if (existingStyle) {
+        existingStyle.remove();
+      }
+    };
+  }, []);
+
+  return null;
+}
 
 export function LayoutSection({
   sx,
@@ -29,30 +58,46 @@ export function LayoutSection({
   headerSection,
   sidebarSection,
   className,
+  style,
   ...other
 }: LayoutSectionProps) {
-  const inputGlobalStyles = (
-    <GlobalStyles styles={(theme) => ({ body: { ...layoutSectionVars(theme), ...cssVars } })} />
-  );
+  const mergedSx = Array.isArray(sx) ? sx : [sx];
+  const sxStyles = mergedSx.reduce((acc, style) => {
+    if (style && typeof style === 'object') {
+      return { ...acc, ...style };
+    }
+    return acc;
+  }, {});
+
+  const rootStyles: React.CSSProperties = {
+    ...sxStyles,
+    ...(style || {}),
+  };
+
+  const sidebarContainerStyles: React.CSSProperties = {
+    display: 'flex',
+    flex: '1 1 auto',
+    flexDirection: 'column',
+  };
 
   return (
     <>
-      {inputGlobalStyles}
+      <GlobalStyles styles={() => ({ body: { ...layoutSectionVars({} as any), ...cssVars } })} />
 
-      <LayoutRoot
+      <div
         id="root__layout"
         className={mergeClasses([layoutClasses.root, className])}
-        sx={sx}
+        style={rootStyles}
         {...other}
       >
         {sidebarSection ? (
           <>
             {sidebarSection}
-            <LayoutSidebarContainer className={layoutClasses.sidebarContainer}>
+            <div className={layoutClasses.sidebarContainer} style={sidebarContainerStyles}>
               {headerSection}
               {children}
               {footerSection}
-            </LayoutSidebarContainer>
+            </div>
           </>
         ) : (
           <>
@@ -61,17 +106,7 @@ export function LayoutSection({
             {footerSection}
           </>
         )}
-      </LayoutRoot>
+      </div>
     </>
   );
 }
-
-// ----------------------------------------------------------------------
-
-const LayoutRoot = styled('div')``;
-
-const LayoutSidebarContainer = styled('div')(() => ({
-  display: 'flex',
-  flex: '1 1 auto',
-  flexDirection: 'column',
-}));

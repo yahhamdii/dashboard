@@ -1,8 +1,8 @@
-import type { Theme, SxProps } from '@mui/material/styles';
+import type { SxProps } from 'src/types/component-props';
 
 // ----------------------------------------------------------------------
 
 export type SvgColorProps = React.ComponentProps<'span'> & {
   src: string;
-  sx?: SxProps<Theme>;
+  sx?: SxProps;
 };

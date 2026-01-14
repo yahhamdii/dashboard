@@ -3,12 +3,16 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isValidPhoneNumber } from 'react-phone-number-input/input';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import Grid from '@mui/material/Grid';
+import {
+  BoxWrapper as Box,
+  GridWrapper as Grid,
+  CardWrapper as Card,
+} from 'src/components/circuit-ui';
 
-import { CardWrapper as Card } from 'src/components/circuit-ui';
-
-import { TypographyWrapper as Typography, ButtonWrapper as Button } from 'src/components/circuit-ui';
+import {
+  TypographyWrapper as Typography,
+  ButtonWrapper as Button,
+} from 'src/components/circuit-ui';
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 
@@ -110,37 +114,37 @@ export function AccountGeneral() {
                 textAlign: 'center',
               }}
             >
-            <Field.UploadAvatar
-              name="photoURL"
-              maxSize={3145728}
-              helperText={
-                <Typography
-                  variant="caption"
-                  sx={{
-                    mt: 3,
-                    mx: 'auto',
-                    display: 'block',
-                    textAlign: 'center',
-                    color: 'text.disabled',
-                  }}
-                >
-                  Allowed *.jpeg, *.jpg, *.png, *.gif
-                  <br /> max size of {fData(3145728)}
-                </Typography>
-              }
-            />
+              <Field.UploadAvatar
+                name="photoURL"
+                maxSize={3145728}
+                helperText={
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      mt: 3,
+                      mx: 'auto',
+                      display: 'block',
+                      textAlign: 'center',
+                      color: 'text.disabled',
+                    }}
+                  >
+                    Allowed *.jpeg, *.jpg, *.png, *.gif
+                    <br /> max size of {fData(3145728)}
+                  </Typography>
+                }
+              />
 
-            <Field.Switch
-              name="isPublic"
-              labelPlacement="start"
-              label="Public profile"
-              sx={{ mt: 5 }}
-            />
+              <Field.Switch
+                name="isPublic"
+                labelPlacement="start"
+                label="Public profile"
+                sx={{ mt: 5 }}
+              />
 
-            <Button variant="soft" color="error" sx={{ mt: 3 }}>
-              Delete user
-            </Button>
-          </Card>
+              <Button variant="soft" color="error" sx={{ mt: 3 }}>
+                Delete user
+              </Button>
+            </Card>
           </div>
 
           <div className="md:col-span-8">
@@ -234,7 +238,15 @@ export function AccountGeneral() {
                 <Field.Text name="zipCode" label="Zip/code" />
               </Box>
 
-              <Box sx={{ mt: 3, display: 'flex', flexDirection: 'column', gap: 3, alignItems: 'flex-end' }}>
+              <Box
+                sx={{
+                  mt: 3,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 3,
+                  alignItems: 'flex-end',
+                }}
+              >
                 <Field.Text name="about" multiline rows={4} label="About" />
 
                 <Button type="submit" variant="contained" loading={isSubmitting}>

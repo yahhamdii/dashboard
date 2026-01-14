@@ -5,37 +5,31 @@
 'use client';
 
 import React from 'react';
-import Skeleton from '@mui/material/Skeleton';
-import type { SkeletonProps as MuiSkeletonProps } from '@mui/material/Skeleton';
+// import Skeleton from '@mui/material/Skeleton';
+// import type { SkeletonProps as MuiSkeletonProps } from '@mui/material/Skeleton';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type SkeletonWrapperProps = MuiSkeletonProps;
+export interface SkeletonWrapperProps extends React.HTMLAttributes<HTMLSpanElement> {
+    variant?: 'text' | 'rectangular' | 'rounded' | 'circular';
+    width?: number | string;
+    height?: number | string;
+    animation?: 'pulse' | 'wave' | false;
+    sx?: any;
+    [key: string]: any;
+}
 
 export function SkeletonWrapper({
-    variant,
+    variant = 'text',
     width,
     height,
     className,
     sx,
     ...other
 }: SkeletonWrapperProps) {
-    const useCircuit = useCircuitComponent('USE_CIRCUIT_LAYOUTS');
-
-    if (!useCircuit) {
-        return (
-            <Skeleton
-                variant={variant}
-                width={width}
-                height={height}
-                className={className}
-                sx={sx}
-                {...other}
-            />
-        );
-    }
+    // const useCircuit = useCircuitComponent('USE_CIRCUIT_LAYOUTS');
 
     const circuitStyles: React.CSSProperties = {
         backgroundColor: 'var(--cui-bg-subtle-hovered)',

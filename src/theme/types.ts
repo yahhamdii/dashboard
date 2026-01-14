@@ -1,13 +1,13 @@
-import type {
-  Theme,
-  Shadows,
-  Components,
-  ColorSystemOptions,
-  CssVarsThemeOptions,
-  SupportedColorScheme,
-  ThemeOptions as MuiThemeOptions,
-} from '@mui/material/styles';
-import type { CustomShadows } from './core/custom-shadows';
+// import type {
+//   Theme,
+//   Shadows,
+//   Components,
+//   ColorSystemOptions,
+//   CssVarsThemeOptions,
+//   SupportedColorScheme,
+//   ThemeOptions as MuiThemeOptions,
+// } from '@mui/material/styles';
+// import type { CustomShadows } from './core/custom-shadows';
 
 // ----------------------------------------------------------------------
 
@@ -18,28 +18,32 @@ import type { CustomShadows } from './core/custom-shadows';
  * @see https://github.com/mui/material-ui/blob/master/packages/mui-material/src/styles/createTheme.ts
  */
 
-export type ThemeColorScheme = SupportedColorScheme;
-export type ThemeCssVariables = Pick<
-  CssVarsThemeOptions,
-  | 'cssVarPrefix'
-  | 'rootSelector'
-  | 'colorSchemeSelector'
-  | 'disableCssColorScheme'
-  | 'shouldSkipGeneratingVar'
->;
+export type ThemeColorScheme = 'light' | 'dark'; // SupportedColorScheme;
 
-export type ColorSchemeOptionsExtended = ColorSystemOptions & {
-  shadows?: Partial<Shadows>;
-};
+export type ThemeCssVariables = {
+  cssVarPrefix?: string;
+  rootSelector?: string;
+  colorSchemeSelector?: string;
+  disableCssColorScheme?: boolean;
+  shouldSkipGeneratingVar?: boolean;
+}; // Pick<CssVarsThemeOptions, ...>
+
+export type ColorSchemeOptionsExtended = {
+  palette?: any; // ColorSystemOptions['palette']
+  shadows?: any; // Partial<Shadows>
+} & Record<string, any>;
 
 export type SchemesRecord<T> = Partial<Record<ThemeColorScheme, T>>;
 
-export type ThemeOptions = Omit<MuiThemeOptions, 'components'> &
-  Pick<CssVarsThemeOptions, 'defaultColorScheme'> & {
-    colorSchemes?: SchemesRecord<ColorSchemeOptionsExtended>;
-    cssVariables?: ThemeCssVariables;
-    components?: Components<Theme>;
-  };
+export type ThemeOptions = {
+  colorSchemes?: SchemesRecord<ColorSchemeOptionsExtended>;
+  cssVariables?: ThemeCssVariables;
+  components?: any; // Components<Theme>;
+  shape?: { borderRadius: number };
+  direction?: 'ltr' | 'rtl';
+  mixins?: any;
+  typography?: any;
+} & Record<string, any>;
 
 // ----------------------------------------------------------------------
 

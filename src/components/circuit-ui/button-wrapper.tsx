@@ -7,21 +7,28 @@
 
 'use client';
 
-import Button from '@mui/material/Button';
-import type { ButtonProps as MuiButtonProps } from '@mui/material/Button';
+// import Button from '@mui/material/Button';
+// import type { ButtonProps as MuiButtonProps } from '@mui/material/Button';
 
 import { Button as CircuitButton } from '@sumup-oss/circuit-ui';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 import { useTranslate } from 'src/locales';
 
 // ----------------------------------------------------------------------
 
-type ButtonWrapperProps = Omit<MuiButtonProps, 'variant' | 'size' | 'color'> & {
+export interface ButtonWrapperProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'contained' | 'outlined' | 'text' | 'soft';
   size?: 'small' | 'medium' | 'large';
   color?: 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success' | 'inherit';
-};
+  startIcon?: React.ReactNode;
+  endIcon?: React.ReactNode;
+  component?: React.ElementType;
+  href?: string;
+  sx?: any;
+  loading?: boolean;
+  [key: string]: any;
+}
 
 /**
  * Mapping MUI Button variants → Circuit UI variants
@@ -73,44 +80,20 @@ export function ButtonWrapper({
   sx,
   ...other
 }: ButtonWrapperProps) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_BUTTONS');
+  // const useCircuit = useCircuitComponent('USE_CIRCUIT_BUTTONS');
   const { currentLang } = useTranslate();
-  
+
   // Mapper la locale de l'app vers le format Circuit UI (ex: 'fr' -> 'fr-FR')
-  const circuitLocale = currentLang?.value === 'fr' ? 'fr-FR' : 
-                        currentLang?.value === 'en' ? 'en-US' :
-                        currentLang?.value === 'vi' ? 'vi-VN' :
-                        currentLang?.value === 'cn' ? 'zh-CN' :
-                        currentLang?.value === 'ar' ? 'ar-SA' : 'en-US';
-
-  // Si Circuit UI n'est pas activé, utiliser MUI
-  if (!useCircuit) {
-    const buttonProps: any = {
-      variant,
-      size,
-      color,
-      startIcon,
-      endIcon,
-      className,
-      sx,
-      ...other,
-    };
-
-    // Ajouter component et href seulement s'ils sont définis
-    if (component) {
-      buttonProps.component = component;
-    }
-    if (href) {
-      buttonProps.href = href;
-    }
-
-    return <Button {...buttonProps}>{children}</Button>;
-  }
+  const circuitLocale = currentLang?.value === 'fr' ? 'fr-FR' :
+    currentLang?.value === 'en' ? 'en-US' :
+      currentLang?.value === 'vi' ? 'vi-VN' :
+        currentLang?.value === 'cn' ? 'zh-CN' :
+          currentLang?.value === 'ar' ? 'ar-SA' : 'en-US';
 
   // Utiliser Circuit UI
   const circuitVariant = mapVariant(variant);
   const circuitSize = mapSize(size);
-  
+
   // Circuit UI utilise 'as' au lieu de 'component'
   const asProp = component || (href ? 'a' : undefined);
 
@@ -121,7 +104,7 @@ export function ButtonWrapper({
   const icon = undefined; // TODO: Convertir startIcon en IconComponentType si nécessaire
 
   // Convertir sx (MUI) en style (Circuit UI)
-  const style = sx ? (typeof sx === 'object' && !Array.isArray(sx) ? sx : {}) : undefined;
+  const style = sx ? (typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}) : undefined;
 
   // Gérer destructive pour error color
   const destructive = color === 'error';

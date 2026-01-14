@@ -5,40 +5,49 @@
 'use client';
 
 import React from 'react';
-import ToggleButton from '@mui/material/ToggleButton';
-import type { ToggleButtonProps as MuiToggleButtonProps } from '@mui/material/ToggleButton';
+// import ToggleButton from '@mui/material/ToggleButton';
+// import type { ToggleButtonProps as MuiToggleButtonProps } from '@mui/material/ToggleButton';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type ToggleButtonWrapperProps = MuiToggleButtonProps;
+export interface ToggleButtonWrapperProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    value: any;
+    selected?: boolean;
+    sx?: any;
+    [key: string]: any;
+}
 
-export function ToggleButtonWrapper({
-    children,
-    value,
-    selected,
-    onClick,
-    className,
-    sx,
-    ...other
-}: ToggleButtonWrapperProps) {
-    const useCircuit = useCircuitComponent('USE_CIRCUIT_BUTTONS');
+export function ToggleButtonWrapper(props: ToggleButtonWrapperProps) {
+    // const useCircuit = useCircuitComponent('USE_CIRCUIT_BUTTONS');
 
-    if (!useCircuit) {
-        return (
-            <ToggleButton
-                value={value}
-                selected={selected}
-                onClick={onClick}
-                className={className}
-                sx={sx}
-                {...other}
-            >
-                {children}
-            </ToggleButton>
-        );
-    }
+    const {
+        children,
+        value,
+        selected,
+        onClick,
+        className,
+        sx,
+        // Filter out MUI-specific props
+        color,
+        disableFocusRipple,
+        fullWidth,
+        size,
+        action,
+        centerRipple,
+        disableRipple,
+        disableTouchRipple,
+        focusRipple,
+        focusVisibleClassName,
+        LinkComponent,
+        onFocusVisible,
+        TouchRippleProps,
+        touchRippleRef,
+        slotProps,
+        slots,
+        ...other
+    } = props as any;
 
     const circuitStyles: React.CSSProperties = {
         padding: '8px',
@@ -60,7 +69,7 @@ export function ToggleButtonWrapper({
             onClick={onClick}
             className={`toggle-button ${className || ''}`}
             style={circuitStyles}
-            {...(other as any)}
+            {...other}
         >
             {children}
         </button>

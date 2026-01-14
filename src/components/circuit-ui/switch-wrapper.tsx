@@ -8,14 +8,21 @@
 'use client';
 
 import React from 'react';
-import Switch from '@mui/material/Switch';
-import type { SwitchProps as MuiSwitchProps } from '@mui/material/Switch';
+// import Switch from '@mui/material/Switch';
+// import type { SwitchProps as MuiSwitchProps } from '@mui/material/Switch';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type SwitchWrapperProps = MuiSwitchProps;
+export interface SwitchWrapperProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'onChange'> {
+  color?: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning' | 'default';
+  size?: 'small' | 'medium';
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
+  sx?: any;
+  slotProps?: any;
+  [key: string]: any;
+}
 
 /**
  * Switch wrapper component
@@ -37,30 +44,13 @@ export function SwitchWrapper({
   slotProps,
   ...other
 }: SwitchWrapperProps) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_FORMS');
-
-  // Si Circuit UI n'est pas activé, utiliser MUI
-  if (!useCircuit) {
-    return (
-      <Switch
-        checked={checked}
-        onChange={onChange}
-        disabled={disabled}
-        color={color}
-        size={size}
-        className={className}
-        sx={sx}
-        slotProps={slotProps}
-        {...other}
-      />
-    );
-  }
+  // const useCircuit = useCircuitComponent('USE_CIRCUIT_FORMS');
 
   // Utiliser un input switch HTML natif avec styles Circuit UI
   // Note: Circuit UI n'a pas de composant Switch, donc on utilise HTML natif
   const switchWidth = size === 'small' ? '36px' : '44px';
   const switchHeight = size === 'small' ? '20px' : '24px';
-  
+
   const circuitStyles: React.CSSProperties = {
     width: switchWidth,
     height: switchHeight,
@@ -78,10 +68,21 @@ export function SwitchWrapper({
           checked: event.target.checked,
         },
       } as React.ChangeEvent<HTMLInputElement>;
-      
-      onChange(muiEvent, event.target.checked);
+
+      onChange(muiEvent, event.target.checked as any);
     }
   };
+
+  // Exclude MUI props
+  const {
+    centerRipple,
+    disableRipple,
+    disableFocusRipple,
+    disableTouchRipple,
+    focusRipple,
+    focusVisibleClassName,
+    ...domProps
+  } = other as any;
 
   // Pour un meilleur rendu, on utilise un div stylisé comme switch
   // car l'input type="checkbox" avec appearance: none nécessite plus de CSS
@@ -106,7 +107,7 @@ export function SwitchWrapper({
           width: 0,
           height: 0,
         }}
-        {...(other as any)}
+        {...domProps}
       />
       <span
         style={{
@@ -139,6 +140,7 @@ export function SwitchWrapper({
     </label>
   );
 }
+
 
 
 

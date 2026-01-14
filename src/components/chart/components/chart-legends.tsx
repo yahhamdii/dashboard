@@ -1,27 +1,29 @@
 'use client';
 
+import React from 'react';
+
 import { mergeClasses } from 'minimal-shared/utils';
 
-import { styled } from '@mui/material/styles';
 import { tokens } from 'src/theme/design-tokens';
 
 import { chartClasses } from '../classes';
 
 // ----------------------------------------------------------------------
 
-export type ChartLegendsProps = React.ComponentProps<typeof ListRoot> & {
+export type ChartLegendsProps = React.ComponentProps<'ul'> & {
   labels?: string[];
   colors?: string[];
   values?: string[];
   sublabels?: string[];
   icons?: React.ReactNode[];
+  sx?: any;
   slotProps?: {
-    wrapper?: React.ComponentProps<typeof ItemWrapper>;
-    root?: React.ComponentProps<typeof ItemRoot>;
-    dot?: React.ComponentProps<typeof ItemDot>;
-    icon?: React.ComponentProps<typeof ItemIcon>;
-    value?: React.ComponentProps<typeof ItemValue>;
-    label?: React.ComponentProps<typeof ItemLabel>;
+    wrapper?: React.ComponentProps<'li'> & { sx?: any };
+    root?: React.ComponentProps<'div'>;
+    dot?: React.ComponentProps<'span'>;
+    icon?: React.ComponentProps<'span'>;
+    value?: React.ComponentProps<'span'>;
+    label?: React.ComponentProps<'span'>;
   };
 };
 
@@ -34,101 +36,108 @@ export function ChartLegends({
   labels = [],
   colors = [],
   sublabels = [],
+  style,
   ...other
 }: ChartLegendsProps) {
+  const mergedSx = Array.isArray(sx) ? sx : [sx];
+  const sxStyles = mergedSx.reduce((acc, style) => {
+    if (style && typeof style === 'object') {
+      return { ...acc, ...style };
+    }
+    return acc;
+  }, {});
+
+  const listStyles: React.CSSProperties = {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: tokens.spacing(2),
+    ...sxStyles,
+    ...(style || {}),
+  };
+
+  const wrapperMergedSx = Array.isArray(slotProps?.wrapper?.sx) ? slotProps.wrapper.sx : [slotProps?.wrapper?.sx];
+  const wrapperSxStyles = wrapperMergedSx.reduce((acc, style) => {
+    if (style && typeof style === 'object') {
+      return { ...acc, ...style };
+    }
+    return acc;
+  }, {});
+
   return (
-    <ListRoot className={mergeClasses([chartClasses.legends.root, className])} sx={sx} {...other}>
-      {labels.map((series, index) => (
-        <ItemWrapper
-          key={series}
-          className={chartClasses.legends.item.wrapper}
-          sx={[
-            {
-              '--icon-color': colors[index],
-              ...slotProps?.wrapper,
-            },
-            ...(Array.isArray(slotProps?.wrapper?.sx)
-              ? slotProps.wrapper.sx
-              : [slotProps?.wrapper?.sx]),
-          ]}
-        >
-          <ItemRoot className={chartClasses.legends.item.root} {...slotProps?.root}>
-            {icons.length ? (
-              <ItemIcon className={chartClasses.legends.item.icon} {...slotProps?.icon}>
-                {icons[index]}
-              </ItemIcon>
-            ) : (
-              <ItemDot className={chartClasses.legends.item.dot} {...slotProps?.dot} />
+    <ul className={mergeClasses([chartClasses.legends.root, className])} style={listStyles} {...other}>
+      {labels.map((series, index) => {
+        const wrapperStyles: React.CSSProperties = {
+          display: 'inline-flex',
+          flexDirection: 'column',
+          '--icon-color': colors[index],
+          ...wrapperSxStyles,
+        };
+
+        const rootStyles: React.CSSProperties = {
+          gap: 6,
+          alignItems: 'center',
+          display: 'inline-flex',
+          justifyContent: 'flex-start',
+          fontSize: tokens.typography.pxToRem(13),
+          fontWeight: tokens.typography.fontWeightMedium,
+        };
+
+        const iconStyles: React.CSSProperties = {
+          display: 'inline-flex',
+          color: 'var(--icon-color)',
+        };
+
+        const dotStyles: React.CSSProperties = {
+          width: 12,
+          height: 12,
+          flexShrink: 0,
+          display: 'flex',
+          borderRadius: '50%',
+          position: 'relative',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'var(--icon-color)',
+          backgroundColor: 'currentColor',
+        };
+
+        const valueStyles: React.CSSProperties = {
+          fontSize: tokens.typography.h6.fontSize,
+          fontWeight: tokens.typography.h6.fontWeight,
+          marginTop: tokens.spacing(1),
+        };
+
+        return (
+          <li
+            key={series}
+            className={chartClasses.legends.item.wrapper}
+            style={wrapperStyles}
+            {...slotProps?.wrapper}
+          >
+            <div className={chartClasses.legends.item.root} style={rootStyles} {...slotProps?.root}>
+              {icons.length ? (
+                <span className={chartClasses.legends.item.icon} style={iconStyles} {...slotProps?.icon}>
+                  <span style={{ width: 20, height: 20, display: 'inline-block' }}>
+                    {icons[index]}
+                  </span>
+                </span>
+              ) : (
+                <span className={chartClasses.legends.item.dot} style={dotStyles} {...slotProps?.dot} />
+              )}
+
+              <span className={chartClasses.legends.item.label} style={{ flexShrink: 0 }} {...slotProps?.label}>
+                {series}
+                {!!sublabels.length && <> {` (${sublabels[index]})`}</>}
+              </span>
+            </div>
+
+            {values && (
+              <span className={chartClasses.legends.item.value} style={valueStyles} {...slotProps?.value}>
+                {values[index]}
+              </span>
             )}
-
-            <ItemLabel className={chartClasses.legends.item.label} {...slotProps?.label}>
-              {series}
-              {!!sublabels.length && <> {` (${sublabels[index]})`}</>}
-            </ItemLabel>
-          </ItemRoot>
-
-          {values && (
-            <ItemValue className={chartClasses.legends.item.value} {...slotProps?.value}>
-              {values[index]}
-            </ItemValue>
-          )}
-        </ItemWrapper>
-      ))}
-    </ListRoot>
+          </li>
+        );
+      })}
+    </ul>
   );
 }
-
-// ----------------------------------------------------------------------
-
-const ListRoot = styled('ul')(() => ({
-  display: 'flex',
-  flexWrap: 'wrap',
-  gap: tokens.spacing(2),
-}));
-
-const ItemWrapper = styled('li')(() => ({
-  display: 'inline-flex',
-  flexDirection: 'column',
-}));
-
-const ItemRoot = styled('div')(() => ({
-  gap: 6,
-  alignItems: 'center',
-  display: 'inline-flex',
-  justifyContent: 'flex-start',
-  fontSize: tokens.typography.pxToRem(13),
-  fontWeight: tokens.typography.fontWeightMedium,
-}));
-
-const ItemIcon = styled('span')({
-  display: 'inline-flex',
-  color: 'var(--icon-color)',
-  /**
-   * As ':first-child' for ssr
-   * https://github.com/emotion-js/emotion/issues/1105#issuecomment-1126025608
-   */
-  '& > :first-of-type:not(style):not(:first-of-type ~ *), & > style + *': {
-    width: 20,
-    height: 20,
-  },
-});
-
-const ItemDot = styled('span')({
-  width: 12,
-  height: 12,
-  flexShrink: 0,
-  display: 'flex',
-  borderRadius: '50%',
-  position: 'relative',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: 'var(--icon-color)',
-  backgroundColor: 'currentColor',
-});
-
-const ItemLabel = styled('span')({ flexShrink: 0 });
-
-const ItemValue = styled('span')(() => ({
-  ...tokens.typography.h6,
-  marginTop: tokens.spacing(1),
-}));

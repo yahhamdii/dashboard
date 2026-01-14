@@ -5,7 +5,7 @@ import type { LogoProps } from '../logo';
 import { m } from 'framer-motion';
 import { varAlpha } from 'minimal-shared/utils';
 
-import { styled } from '@mui/material/styles';
+import styled from '@emotion/styled';
 import { tokens } from 'src/theme/design-tokens';
 
 import { Logo } from '../logo';
@@ -22,7 +22,7 @@ export type AnimateLogoProps = React.ComponentProps<'div'> & {
 
 export function AnimateLogoZoom({ logo, slotProps, sx, ...other }: AnimateLogoProps) {
   return (
-    <LogoZoomRoot sx={sx} {...other}>
+    <LogoZoomRoot style={sx} {...other}>
       <m.span
         animate={{ scale: [1, 0.9, 0.9, 1, 1], opacity: [1, 0.48, 0.48, 1, 1] }}
         transition={{
@@ -71,13 +71,13 @@ const LogoZoomRoot = styled('div')(() => ({
   width: 120,
   height: 120,
   alignItems: 'center',
-  position: 'relative',
+  position: 'relative' as const,
   display: 'inline-flex',
   justifyContent: 'center',
 }));
 
 const LogoZoomPrimaryOutline = styled(m.span)(() => ({
-  position: 'absolute',
+  position: 'absolute' as const,
   width: 'calc(100% - 20px)',
   height: 'calc(100% - 20px)',
   border: `solid 3px ${varAlpha(tokens.colors.primary.darkChannel, 0.24)}`,
@@ -86,6 +86,6 @@ const LogoZoomPrimaryOutline = styled(m.span)(() => ({
 const LogoZoomSecondaryOutline = styled(m.span)(() => ({
   width: '100%',
   height: '100%',
-  position: 'absolute',
+  position: 'absolute' as const,
   border: `solid 8px ${varAlpha(tokens.colors.primary.darkChannel, 0.24)}`,
 }));

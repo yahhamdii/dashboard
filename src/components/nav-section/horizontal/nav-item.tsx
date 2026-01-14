@@ -1,13 +1,10 @@
-'use client';
-
-import type { CSSObject } from '@mui/material/styles';
+import styled from '@emotion/styled';
+// import type { CSSObject } from '@mui/material/styles';
 import type { NavItemProps } from '../types';
 
 import { mergeClasses } from 'minimal-shared/utils';
 
-import Tooltip from '@mui/material/Tooltip';
-import { styled } from '@mui/material/styles';
-import ButtonBase from '@mui/material/ButtonBase';
+import { TooltipWrapper as Tooltip, ButtonBaseWrapper as ButtonBase } from 'src/components/circuit-ui';
 import { tokens } from 'src/theme/design-tokens';
 
 import { Iconify } from '../../iconify';
@@ -112,6 +109,7 @@ export function NavItem({
 
 type StyledState = Pick<NavItemProps, 'open' | 'active' | 'disabled'> & {
   variant: 'rootItem' | 'subItem';
+  sx?: any;
 };
 
 const shouldForwardProp = (prop: string) =>
@@ -124,7 +122,7 @@ const ItemRoot = styled(ButtonBase, { shouldForwardProp })<StyledState>(({
   active,
   open,
 }) => {
-  const rootItemStyles: CSSObject = {
+  const rootItemStyles: any = {
     padding: 'var(--nav-item-root-padding)',
     minHeight: 'var(--nav-item-root-height)',
     ...(open && {
@@ -138,7 +136,7 @@ const ItemRoot = styled(ButtonBase, { shouldForwardProp })<StyledState>(({
     }),
   };
 
-  const subItemStyles: CSSObject = {
+  const subItemStyles: any = {
     padding: 'var(--nav-item-sub-padding)',
     minHeight: 'var(--nav-item-sub-height)',
     color: tokens.colors.text.secondary,
@@ -213,3 +211,4 @@ const ItemArrow = styled(Iconify, { shouldForwardProp })<StyledState>(() => ({
   ...navItemStyles.arrow(),
   variants: [{ props: { variant: 'subItem' }, style: { marginRight: tokens.spacing(-0.5) } }],
 }));
+

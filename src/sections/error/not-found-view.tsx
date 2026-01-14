@@ -2,7 +2,7 @@
 
 import { m } from 'framer-motion';
 
-import Container from '@mui/material/Container';
+import { ContainerWrapper as Container } from 'src/components/circuit-ui';
 
 import { RouterLink } from 'src/routes/components';
 import { useCircuitComponent } from 'src/lib/feature-flags';

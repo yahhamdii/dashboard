@@ -1,5 +1,4 @@
-import type { SelectChangeEvent } from '@mui/material/Select';
-import type { SelectProps } from '@mui/material/Select';
+import type { SelectProps } from 'src/types/component-props';
 import type { UseSetStateReturn } from 'minimal-shared/hooks';
 import type { IUserTableFilters } from 'src/types/user';
 

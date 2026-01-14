@@ -1,8 +1,6 @@
 'use client';
 
-import type { BoxProps } from '@mui/material/Box';
-import type { Theme, SxProps } from '@mui/material/styles';
-import type { TypographyProps } from '@mui/material/Typography';
+import type { BoxProps, SxProps, TypographyProps } from 'src/types/component-props';
 
 import { BoxWrapper as Box } from 'src/components/circuit-ui';
 

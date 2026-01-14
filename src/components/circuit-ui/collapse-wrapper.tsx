@@ -5,14 +5,20 @@
 'use client';
 
 import React from 'react';
-import Collapse from '@mui/material/Collapse';
-import type { CollapseProps as MuiCollapseProps } from '@mui/material/Collapse';
+// import Collapse from '@mui/material/Collapse';
+// import type { CollapseProps as MuiCollapseProps } from '@mui/material/Collapse';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type CollapseWrapperProps = MuiCollapseProps;
+export interface CollapseWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
+    in?: boolean;
+    timeout?: any;
+    unmountOnExit?: boolean;
+    sx?: any;
+    [key: string]: any;
+}
 
 export function CollapseWrapper({
     children,
@@ -23,22 +29,7 @@ export function CollapseWrapper({
     sx,
     ...other
 }: CollapseWrapperProps) {
-    const useCircuit = useCircuitComponent('USE_CIRCUIT_LAYOUTS');
-
-    if (!useCircuit) {
-        return (
-            <Collapse
-                in={inProp}
-                timeout={timeout}
-                unmountOnExit={unmountOnExit}
-                className={className}
-                sx={sx}
-                {...other}
-            >
-                {children}
-            </Collapse>
-        );
-    }
+    // const useCircuit = useCircuitComponent('USE_CIRCUIT_LAYOUTS');
 
     // Simple implementation for Circuit UI
     if (!inProp && unmountOnExit) {
@@ -57,6 +48,7 @@ export function CollapseWrapper({
         <div
             className={`collapse ${className || ''}`}
             style={circuitStyles}
+            {...(other as any)}
         >
             {children}
         </div>

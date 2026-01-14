@@ -7,18 +7,27 @@
 
 'use client';
 
-import Typography from '@mui/material/Typography';
-import type { TypographyProps as MuiTypographyProps } from '@mui/material/Typography';
+// import Typography from '@mui/material/Typography';
+// import type { TypographyProps as MuiTypographyProps } from '@mui/material/Typography';
 
 import { Headline, Body } from '@sumup-oss/circuit-ui';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type TypographyWrapperProps = Omit<MuiTypographyProps, 'variant'> & {
-  variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'body1' | 'body2' | 'caption' | 'subtitle1' | 'subtitle2' | 'overline' | string;
-};
+export interface TypographyWrapperProps extends Omit<React.HTMLAttributes<HTMLElement>, 'color'> {
+  variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'body1' | 'body2' | 'caption' | 'subtitle1' | 'subtitle2' | 'overline' | 'inherit' | string;
+  align?: 'inherit' | 'left' | 'center' | 'right' | 'justify';
+  gutterBottom?: boolean;
+  noWrap?: boolean;
+  paragraph?: boolean;
+  component?: React.ElementType;
+  color?: string;
+  sx?: any;
+  [key: string]: any;
+}
+
 
 /**
  * Mapping MUI Typography variants → Circuit UI components
@@ -51,22 +60,14 @@ export function TypographyWrapper({
   sx,
   ...other
 }: TypographyWrapperProps) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_TYPOGRAPHY');
+  // const useCircuit = useCircuitComponent('USE_CIRCUIT_TYPOGRAPHY');
 
   // Normaliser le variant (peut être une string ou un type MUI)
-  const normalizedVariant = typeof variant === 'string' ? variant : 'body1';
-  
-  // Si Circuit UI n'est pas activé, utiliser MUI
-  if (!useCircuit) {
-    return (
-      <Typography variant={normalizedVariant as any} className={className} sx={sx} {...other}>
-        {children}
-      </Typography>
-    );
-  }
+  const normalizedVariant = (typeof variant === 'string' ? variant : 'body1');
 
   // Utiliser Circuit UI
   const mapping = variantMapping[normalizedVariant as keyof typeof variantMapping];
+
   if (!mapping) {
     // Fallback sur body1 si variant non reconnu
     const fallback = variantMapping.body1;
@@ -77,17 +78,24 @@ export function TypographyWrapper({
       gutterBottom,
       paragraph,
       align,
+      component,
       ...circuitProps
     } = other as any;
-    
-    const style = noWrap
-      ? { whiteSpace: 'nowrap' as const, overflow: 'hidden', textOverflow: 'ellipsis' }
-      : align
-      ? { textAlign: align }
-      : undefined;
-    
+
+    // Merge styles
+    const style = {
+      ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? sx as React.CSSProperties : undefined),
+      ...(noWrap ? { whiteSpace: 'nowrap' as const, overflow: 'hidden', textOverflow: 'ellipsis' } : {}),
+      ...(align ? { textAlign: align } : {}),
+      ...(color ? { color } : {})
+    };
+
+    // If component is passed, we might want to respect it, but Circuit UI components expect proper 'as' prop.
+    // 'as' prop in Circuit UI usually accepts valid HTML tags.
+    const asProp = component || fallback.as;
+
     return (
-      <Component as={fallback.as} size={fallback.size} className={className} style={style} {...circuitProps}>
+      <Component as={asProp} size={fallback.size} className={className} style={style} {...circuitProps}>
         {children}
       </Component>
     );
@@ -103,6 +111,7 @@ export function TypographyWrapper({
     gutterBottom, // MUI prop qui n'existe pas dans Circuit UI
     paragraph, // MUI prop qui n'existe pas dans Circuit UI
     align, // MUI prop qui n'existe pas dans Circuit UI
+    component,
     ...circuitProps
   } = other as any;
 
@@ -119,8 +128,13 @@ export function TypographyWrapper({
     ? { ...finalStyle, textAlign: align }
     : finalStyle;
 
+  // Handle color override
+  const finalStyleWithColor = color ? { ...finalStyleWithAlign, color } : finalStyleWithAlign;
+
+  const asProp = component || as;
+
   return (
-    <Component as={as} size={size} className={className} style={finalStyleWithAlign} {...circuitProps}>
+    <Component as={asProp} size={size} className={className} style={finalStyleWithColor} {...circuitProps}>
       {children}
     </Component>
   );

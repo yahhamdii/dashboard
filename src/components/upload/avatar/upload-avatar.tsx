@@ -3,7 +3,7 @@ import type { UploadProps } from '../types';
 import { useDropzone } from 'react-dropzone';
 import { mergeClasses } from 'minimal-shared/utils';
 
-import CircularProgress from '@mui/material/CircularProgress';
+// import CircularProgress from '@mui/material/CircularProgress';
 
 import { Iconify } from 'src/components/iconify';
 import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
@@ -11,13 +11,14 @@ import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
 import { uploadClasses } from '../classes';
 import { RejectedFiles } from '../components/rejected-files';
 import { getFileMeta, useFilePreview } from '../../file-thumbnail';
-import {
-  UploadArea,
-  PreviewImage,
-  UploadContent,
-  UploadWrapper,
-  PlaceholderContainer,
-} from './styles';
+// import {
+//   UploadArea,
+//   PreviewImage,
+//   UploadContent,
+//   UploadWrapper,
+//   PlaceholderContainer,
+// } from './styles';
+import '../upload.css';
 
 // ----------------------------------------------------------------------
 
@@ -49,48 +50,53 @@ export function UploadAvatar({
   const { previewUrl } = useFilePreview(file);
 
   const renderPlaceholder = () => (
-    <PlaceholderContainer className={uploadClasses.placeholder.root}>
+    <div className={`placeholder-container placeholder-root ${uploadClasses.placeholder.root}`}>
       <Iconify icon="solar:camera-add-bold" width={32} className={uploadClasses.placeholder.icon} />
       <Typography variant="caption" className={uploadClasses.placeholder.title}>
         {hasSelectedFile ? 'Update photo' : 'Upload photo'}
       </Typography>
-    </PlaceholderContainer>
+    </div>
   );
 
   const renderLoading = () =>
     loading && (
-      <CircularProgress
-        thickness={1}
-        size="100%"
-        sx={{ zIndex: 9, top: 0, left: 0, position: 'absolute' }}
-      />
+      <div className="upload-spinner upload-spinner-avatar">
+        <svg width="40" height="40" viewBox="0 0 50 50">
+          <circle cx="25" cy="25" r="20" fill="none" strokeWidth="4" />
+        </svg>
+      </div>
     );
 
   const renderPreview = () =>
-    hasSelectedFile && previewUrl && <PreviewImage alt={fileMeta.name} src={previewUrl} />;
+    hasSelectedFile && previewUrl && <img alt={fileMeta.name} src={previewUrl} className="preview-image" />;
+
+  const rootStyles = sx && typeof sx === 'object' && !Array.isArray(sx) ? sx : {};
 
   return (
-    <UploadWrapper {...slotProps?.wrapper} className={uploadClasses.wrapper}>
-      <UploadArea
+    <div {...slotProps?.wrapper} className={`upload-wrapper ${uploadClasses.wrapper}`} style={rootStyles}>
+      <div
         {...getRootProps()}
-        className={mergeClasses([uploadClasses.avatar, className], {
+        className={mergeClasses(['upload-area', 'upload-avatar', uploadClasses.avatar, className], {
+          'upload-state-drag-active': isDragActive,
+          'upload-state-disabled': disabled,
+          'upload-state-error': hasError,
+          'upload-state-has-file': hasSelectedFile,
           [uploadClasses.state.dragActive]: isDragActive,
           [uploadClasses.state.disabled]: disabled,
           [uploadClasses.state.error]: hasError,
           [uploadClasses.state.hasFile]: hasSelectedFile,
         })}
-        sx={sx}
       >
         <input {...getInputProps()} />
-        <UploadContent>
+        <div className="upload-content">
           {renderPreview()}
           {renderPlaceholder()}
-        </UploadContent>
+        </div>
         {renderLoading()}
-      </UploadArea>
+      </div>
 
       {helperText && helperText}
       {showFilesRejected && <RejectedFiles files={fileRejections} {...slotProps?.rejectedFiles} />}
-    </UploadWrapper>
+    </div>
   );
 }

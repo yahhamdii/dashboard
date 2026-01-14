@@ -1,6 +1,6 @@
 import { varAlpha } from 'minimal-shared/utils';
 
-import { styled } from '@mui/material/styles';
+import styled from '@emotion/styled';
 import { tokens } from 'src/theme/design-tokens';
 
 import { AvatarWrapper, BoxWrapper as Box } from 'src/components/circuit-ui';

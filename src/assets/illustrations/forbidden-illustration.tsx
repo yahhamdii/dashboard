@@ -1,8 +1,9 @@
-import type { SvgIconProps } from '@mui/material/SvgIcon';
+// import type { SvgIconWrapperProps as SvgIconProps } from 'src/components/circuit-ui';
+type SvgIconProps = React.ComponentProps<typeof SvgIcon>;
 
 import { memo } from 'react';
 
-import SvgIcon from '@mui/material/SvgIcon';
+import { SvgIconWrapper as SvgIcon } from 'src/components/circuit-ui/svg-icon-wrapper';
 
 import { CONFIG } from 'src/global-config';
 

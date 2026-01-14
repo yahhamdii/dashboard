@@ -1,32 +1,33 @@
-import type { BoxProps } from '@mui/material/Box';
-import type { CheckboxProps } from '@mui/material/Checkbox';
-import type { FormGroupProps } from '@mui/material/FormGroup';
-import type { FormLabelProps } from '@mui/material/FormLabel';
-import type { FormControlProps } from '@mui/material/FormControl';
-import type { FormHelperTextProps } from '@mui/material/FormHelperText';
-import type { FormControlLabelProps } from '@mui/material/FormControlLabel';
+import type { BoxWrapperProps } from 'src/components/circuit-ui/box-wrapper';
+import type { CheckboxWrapperProps } from 'src/components/circuit-ui/checkbox-wrapper';
+import type { FormGroupWrapperProps } from 'src/components/circuit-ui/form-group-wrapper';
+import type { FormLabelWrapperProps } from 'src/components/circuit-ui/form-label-wrapper';
+import type { FormControlWrapperProps } from 'src/components/circuit-ui/form-control-wrapper';
+import type { FormHelperTextWrapperProps } from 'src/components/circuit-ui/form-helper-text-wrapper';
+import type { FormControlLabelWrapperProps } from 'src/components/circuit-ui/form-control-label-wrapper';
 
 import { Controller, useFormContext } from 'react-hook-form';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import FormGroup from '@mui/material/FormGroup';
-import FormLabel from '@mui/material/FormLabel';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-
-import { CheckboxWrapper as Checkbox } from 'src/components/circuit-ui';
+import {
+  BoxWrapper as Box,
+  FormGroupWrapper as FormGroup,
+  FormLabelWrapper as FormLabel,
+  FormControlWrapper as FormControl,
+  FormControlLabelWrapper as FormControlLabel,
+  CheckboxWrapper as Checkbox,
+} from 'src/components/circuit-ui';
 
 import { HelperText } from './help-text';
 
 // ----------------------------------------------------------------------
 
-type RHFCheckboxProps = Omit<FormControlLabelProps, 'control'> & {
+type RHFCheckboxProps = Omit<FormControlLabelWrapperProps, 'control'> & {
   name: string;
   helperText?: React.ReactNode;
   slotProps?: {
-    wrapper?: BoxProps;
-    checkbox?: CheckboxProps;
-    helperText?: FormHelperTextProps;
+    wrapper?: BoxWrapperProps;
+    checkbox?: CheckboxWrapperProps;
+    helperText?: FormHelperTextWrapperProps;
   };
 };
 
@@ -80,16 +81,16 @@ export function RHFCheckbox({
 
 // ----------------------------------------------------------------------
 
-type RHFMultiCheckboxProps = FormGroupProps & {
+type RHFMultiCheckboxProps = FormGroupWrapperProps & {
   name: string;
   label?: string;
   helperText?: React.ReactNode;
   options: { label: string; value: string }[];
   slotProps?: {
-    wrapper?: FormControlProps;
-    checkbox?: CheckboxProps;
-    formLabel?: FormLabelProps;
-    helperText?: FormHelperTextProps;
+    wrapper?: FormControlWrapperProps;
+    checkbox?: CheckboxWrapperProps;
+    formLabel?: FormLabelWrapperProps;
+    helperText?: FormHelperTextWrapperProps;
   };
 };
 

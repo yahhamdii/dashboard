@@ -4,7 +4,7 @@ import type { FileThumbnailProps } from './types';
 
 import { mergeClasses } from 'minimal-shared/utils';
 
-import Tooltip from '@mui/material/Tooltip';
+import { TooltipWrapper as Tooltip } from 'src/components/circuit-ui';
 
 import { Iconify } from '../iconify';
 import { fileThumbnailClasses } from './classes';
@@ -38,7 +38,6 @@ export function FileThumbnail({
 
   const renderImage = () => (
     <ThumbnailImage
-      showImage
       alt={fileMeta.name}
       src={imageSrc}
       className={fileThumbnailClasses.img}
@@ -79,10 +78,12 @@ export function FileThumbnail({
     </>
   );
 
+  const sxStyles = Array.isArray(sx) ? Object.assign({}, ...sx) : sx;
+
   const renderContent = () => (
     <ThumbnailRoot
       className={mergeClasses([fileThumbnailClasses.root, className])}
-      sx={sx}
+      style={sxStyles as React.CSSProperties}
       {...other}
     >
       {canShowImage ? renderImage() : renderIcon()}

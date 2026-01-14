@@ -1,6 +1,6 @@
-import type { LinkProps } from '@mui/material/Link';
+// import type { LinkProps } from '@mui/material/Link';
 
-import Link from '@mui/material/Link';
+import { LinkWrapper as Link } from 'src/components/circuit-ui';
 
 import { RouterLink } from 'src/routes/components';
 
@@ -8,8 +8,9 @@ import { Iconify, iconifyClasses } from '../iconify';
 
 // ----------------------------------------------------------------------
 
-export type BackLinkProps = LinkProps & {
+export type BackLinkProps = React.ComponentProps<'a'> & {
   label?: string;
+  sx?: any;
 };
 
 export function BackLink({ sx, label, ...other }: BackLinkProps) {
@@ -19,7 +20,7 @@ export function BackLink({ sx, label, ...other }: BackLinkProps) {
       color="inherit"
       underline="none"
       sx={[
-        (theme) => ({
+        (theme: any) => ({
           verticalAlign: 'middle',
           [`& .${iconifyClasses.root}`]: {
             verticalAlign: 'inherit',

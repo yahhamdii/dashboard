@@ -1,14 +1,13 @@
 'use client';
 
-import type { Breakpoint } from '@mui/material/styles';
 import type { SimpleCompactContentProps } from './content';
 import type { MainSectionProps, HeaderSectionProps, LayoutSectionProps } from '../core';
 
 import { merge } from 'es-toolkit';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import Link from '@mui/material/Link';
-import Alert from '@mui/material/Alert';
+import { BoxWrapper as Box, AlertWrapper as Alert } from 'src/components/circuit-ui';
+
+type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';

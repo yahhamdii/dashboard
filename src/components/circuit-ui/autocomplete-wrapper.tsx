@@ -5,19 +5,25 @@
 'use client';
 
 import React from 'react';
-import Autocomplete from '@mui/material/Autocomplete';
-import type { AutocompleteProps as MuiAutocompleteProps } from '@mui/material/Autocomplete';
+// import Autocomplete from '@mui/material/Autocomplete';
+// import type { AutocompleteProps as MuiAutocompleteProps } from '@mui/material/Autocomplete';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type AutocompleteWrapperProps<
+export interface AutocompleteWrapperProps<
     T,
     Multiple extends boolean | undefined = undefined,
     DisableClearable extends boolean | undefined = undefined,
     FreeSolo extends boolean | undefined = undefined,
-> = MuiAutocompleteProps<T, Multiple, DisableClearable, FreeSolo>;
+> {
+    options: ReadonlyArray<T>;
+    renderInput: (params: any) => React.ReactNode;
+    className?: string;
+    sx?: any;
+    [key: string]: any;
+}
 
 export function AutocompleteWrapper<
     T,
@@ -26,24 +32,15 @@ export function AutocompleteWrapper<
     FreeSolo extends boolean | undefined = undefined,
 >(props: AutocompleteWrapperProps<T, Multiple, DisableClearable, FreeSolo>) {
     const { options, renderInput, className, sx, ...other } = props;
-    const useCircuit = useCircuitComponent('USE_CIRCUIT_FORMS');
-
-    if (!useCircuit) {
-        return (
-            <Autocomplete
-                options={options}
-                renderInput={renderInput}
-                className={className}
-                sx={sx}
-                {...(other as any)}
-            />
-        );
-    }
+    // const useCircuit = useCircuitComponent('USE_CIRCUIT_FORMS');
 
     // Very basic implementation: just render the input for now
     // Real Autocomplete is complex to replicate in vanilla CSS
     return renderInput({
         className: `autocomplete ${className || ''}`,
         style: (sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}),
+        ...other
     } as any);
 }
+
+

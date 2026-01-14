@@ -1,4 +1,4 @@
-import type { Theme, SxProps } from '@mui/material/styles';
+import type { SxProps } from 'src/types/component-props';
 import type { ThemeConfig } from 'src/theme/theme-config';
 
 // ----------------------------------------------------------------------
@@ -36,6 +36,6 @@ export type SettingsProviderProps = {
 };
 
 export type SettingsDrawerProps = {
-  sx?: SxProps<Theme>;
+  sx?: SxProps;
   defaultSettings: SettingsState;
 };

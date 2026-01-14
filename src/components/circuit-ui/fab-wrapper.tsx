@@ -5,14 +5,20 @@
 'use client';
 
 import React from 'react';
-import Fab from '@mui/material/Fab';
-import type { FabProps as MuiFabProps } from '@mui/material/Fab';
+// import Fab from '@mui/material/Fab';
+// import type { FabProps as MuiFabProps } from '@mui/material/Fab';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type FabWrapperProps = MuiFabProps;
+export interface FabWrapperProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    variant?: 'circular' | 'extended';
+    size?: 'small' | 'medium' | 'large';
+    color?: 'default' | 'inherit' | 'primary' | 'secondary';
+    sx?: any;
+    [key: string]: any;
+}
 
 export function FabWrapper({
     children,
@@ -24,23 +30,7 @@ export function FabWrapper({
     sx,
     ...other
 }: FabWrapperProps) {
-    const useCircuit = useCircuitComponent('USE_CIRCUIT_BUTTONS');
-
-    if (!useCircuit) {
-        return (
-            <Fab
-                size={size}
-                color={color}
-                variant={variant}
-                onClick={onClick}
-                className={className}
-                sx={sx}
-                {...other}
-            >
-                {children}
-            </Fab>
-        );
-    }
+    // const useCircuit = useCircuitComponent('USE_CIRCUIT_BUTTONS');
 
     const circuitStyles: React.CSSProperties = {
         display: 'inline-flex',

@@ -5,33 +5,42 @@
 'use client';
 
 import React from 'react';
-import Divider from '@mui/material/Divider';
-import type { DividerProps as MuiDividerProps } from '@mui/material/Divider';
+// import Divider from '@mui/material/Divider';
+// import type { DividerProps as MuiDividerProps } from '@mui/material/Divider';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type DividerWrapperProps = MuiDividerProps;
+export interface DividerWrapperProps extends React.HTMLAttributes<HTMLHRElement> {
+    orientation?: 'horizontal' | 'vertical';
+    sx?: any;
+    absolute?: boolean;
+    flexItem?: boolean;
+    light?: boolean;
+    variant?: 'fullWidth' | 'inset' | 'middle';
+    [key: string]: any;
+}
 
-export function DividerWrapper({
-    className,
-    sx,
-    orientation = 'horizontal',
-    ...other
-}: DividerWrapperProps) {
-    const useCircuit = useCircuitComponent('USE_CIRCUIT_LAYOUTS');
+export function DividerWrapper(props: DividerWrapperProps) {
+    // const useCircuit = useCircuitComponent('USE_CIRCUIT_LAYOUTS');
 
-    if (!useCircuit) {
-        return (
-            <Divider
-                className={className}
-                sx={sx}
-                orientation={orientation}
-                {...other}
-            />
-        );
-    }
+    const {
+        className,
+        sx,
+        orientation = 'horizontal',
+        // Filter out MUI-specific props
+        absolute,
+        flexItem,
+        light,
+        textAlign,
+        variant,
+        component,
+        slots,
+        slotProps,
+        children,
+        ...other
+    } = props as any;
 
     const circuitStyles: React.CSSProperties = {
         backgroundColor: 'var(--cui-border-divider)',
@@ -52,7 +61,7 @@ export function DividerWrapper({
         <hr
             className={`divider ${className || ''}`}
             style={circuitStyles}
-            {...(other as any)}
+            {...other}
         />
     );
 }

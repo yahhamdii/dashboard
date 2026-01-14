@@ -1,17 +1,17 @@
-import type { CSSObject } from '@mui/material/styles';
+// import type { any } from '@mui/material/styles';
 import { tokens } from 'src/theme/design-tokens';
 
 // ----------------------------------------------------------------------
 
 type NavItemStyles = {
-  icon: CSSObject;
-  info: CSSObject;
-  texts: CSSObject;
-  disabled: CSSObject;
-  captionIcon: CSSObject;
-  title: () => CSSObject;
-  arrow: () => CSSObject;
-  captionText: () => CSSObject;
+  icon: any;
+  info: any;
+  texts: any;
+  disabled: any;
+  captionIcon: any;
+  title: () => any;
+  arrow: () => any;
+  captionText: () => any;
 };
 
 export const navItemStyles: NavItemStyles = {

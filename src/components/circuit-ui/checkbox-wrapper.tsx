@@ -8,14 +8,22 @@
 'use client';
 
 import React from 'react';
-import Checkbox from '@mui/material/Checkbox';
-import type { CheckboxProps as MuiCheckboxProps } from '@mui/material/Checkbox';
+// import Checkbox from '@mui/material/Checkbox';
+// import type { CheckboxProps as MuiCheckboxProps } from '@mui/material/Checkbox';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type CheckboxWrapperProps = MuiCheckboxProps;
+export interface CheckboxWrapperProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'onChange'> {
+  sx?: any;
+  indeterminate?: boolean;
+  slotProps?: any;
+  inputRef?: any;
+  size?: 'small' | 'medium'; // Explicitly define size variants
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
+  [key: string]: any;
+}
 
 /**
  * Checkbox wrapper component
@@ -38,48 +46,24 @@ export function CheckboxWrapper({
   slotProps,
   ...other
 }: CheckboxWrapperProps) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_FORMS');
-
-  // Si Circuit UI n'est pas activé, utiliser MUI
-  if (!useCircuit) {
-    return (
-      <Checkbox
-        checked={checked}
-        onChange={onChange}
-        disabled={disabled}
-        indeterminate={indeterminate}
-        color={color}
-        size={size}
-        className={className}
-        sx={sx}
-        slotProps={slotProps}
-        {...other}
-      />
-    );
-  }
+  // const useCircuit = useCircuitComponent('USE_CIRCUIT_FORMS');
 
   // Utiliser un input checkbox HTML natif avec styles Circuit UI
   // Note: Circuit UI n'a pas de composant Checkbox, donc on utilise HTML natif
   const checkboxSize = size === 'small' ? '16px' : '20px';
-  
+
   const circuitStyles: React.CSSProperties = {
     width: checkboxSize,
     height: checkboxSize,
     cursor: disabled ? 'not-allowed' : 'pointer',
     opacity: disabled ? 0.6 : 1,
     accentColor: 'var(--cui-bg-accent)',
+    ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}),
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
-      // Convertir l'événement HTML en événement MUI
-      const muiEvent = {
-        target: {
-          checked: event.target.checked,
-        },
-      } as React.ChangeEvent<HTMLInputElement>;
-      
-      onChange(muiEvent, event.target.checked);
+      onChange(event, event.target.checked);
     }
   };
 
@@ -102,7 +86,7 @@ export function CheckboxWrapper({
   return (
     <input
       type="checkbox"
-      checked={checked || false}
+      checked={!!checked}
       onChange={handleChange}
       disabled={disabled}
       ref={(el) => {
@@ -112,7 +96,7 @@ export function CheckboxWrapper({
         // Gérer inputRef si fourni
         if (inputRef && typeof inputRef === 'function') {
           inputRef(el);
-        } else if (inputRef && typeof inputRef === 'object' && inputRef.current !== undefined) {
+        } else if (inputRef && typeof inputRef === 'object' && inputRef && 'current' in inputRef) {
           (inputRef as React.MutableRefObject<HTMLInputElement | null>).current = el;
         }
       }}

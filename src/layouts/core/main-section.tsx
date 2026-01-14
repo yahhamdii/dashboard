@@ -1,27 +1,37 @@
 'use client';
 
-import { mergeClasses } from 'minimal-shared/utils';
+import React from 'react';
 
-import { styled } from '@mui/material/styles';
+import { mergeClasses } from 'minimal-shared/utils';
 
 import { layoutClasses } from './classes';
 
 // ----------------------------------------------------------------------
 
-export type MainSectionProps = React.ComponentProps<typeof MainRoot>;
+export type MainSectionProps = React.ComponentProps<'main'> & {
+  sx?: any;
+};
 
-export function MainSection({ children, className, sx, ...other }: MainSectionProps) {
+export function MainSection({ children, className, sx, style, ...other }: MainSectionProps) {
+  const mergedSx = Array.isArray(sx) ? sx : [sx];
+  const sxStyles = mergedSx.reduce((acc, style) => {
+    if (style && typeof style === 'object') {
+      return { ...acc, ...style };
+    }
+    return acc;
+  }, {});
+
+  const mainStyles: React.CSSProperties = {
+    display: 'flex',
+    flex: '1 1 auto',
+    flexDirection: 'column',
+    ...sxStyles,
+    ...(style || {}),
+  };
+
   return (
-    <MainRoot className={mergeClasses([layoutClasses.main, className])} sx={sx} {...other}>
+    <main className={mergeClasses([layoutClasses.main, className])} style={mainStyles} {...other}>
       {children}
-    </MainRoot>
+    </main>
   );
 }
-
-// ----------------------------------------------------------------------
-
-const MainRoot = styled('main')({
-  display: 'flex',
-  flex: '1 1 auto',
-  flexDirection: 'column',
-});

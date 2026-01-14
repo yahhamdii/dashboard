@@ -1,0 +1,268 @@
+/**
+ * Palette Variables CSS
+ *
+ * Variables CSS complètes inspirées du thème MUI Minimal
+ * Ces variables sont utilisées par les composants migrant de MUI vers Circuit UI
+ */
+
+:root {
+  /* ======================================
+   * Primary Colors
+   * ====================================== */
+  --palette-primary-lighter: #C8FAD6;
+  --palette-primary-light: #5BE49B;
+  --palette-primary-main: #00A76F;
+  --palette-primary-dark: #007867;
+  --palette-primary-darker: #004B50;
+  --palette-primary-contrastText: #FFFFFF;
+  --palette-primary-lighterChannel: 200 250 214;
+  --palette-primary-lightChannel: 91 228 155;
+  --palette-primary-mainChannel: 0 167 111;
+  --palette-primary-darkChannel: 0 120 103;
+  --palette-primary-darkerChannel: 0 75 80;
+
+  /* ======================================
+   * Secondary Colors
+   * ====================================== */
+  --palette-secondary-lighter: #EFD6FF;
+  --palette-secondary-light: #C684FF;
+  --palette-secondary-main: #8E33FF;
+  --palette-secondary-dark: #5119B7;
+  --palette-secondary-darker: #27097A;
+  --palette-secondary-contrastText: #FFFFFF;
+  --palette-secondary-lighterChannel: 239 214 255;
+  --palette-secondary-lightChannel: 198 132 255;
+  --palette-secondary-mainChannel: 142 51 255;
+  --palette-secondary-darkChannel: 81 25 183;
+  --palette-secondary-darkerChannel: 39 9 122;
+
+  /* ======================================
+   * Info Colors
+   * ====================================== */
+  --palette-info-lighter: #CAFDF5;
+  --palette-info-light: #61F3F3;
+  --palette-info-main: #00B8D9;
+  --palette-info-dark: #006C9C;
+  --palette-info-darker: #003768;
+  --palette-info-contrastText: #FFFFFF;
+  --palette-info-lighterChannel: 202 253 245;
+  --palette-info-lightChannel: 97 243 243;
+  --palette-info-mainChannel: 0 184 217;
+  --palette-info-darkChannel: 0 108 156;
+  --palette-info-darkerChannel: 0 55 104;
+
+  /* ======================================
+   * Success Colors
+   * ====================================== */
+  --palette-success-lighter: #D3FCD2;
+  --palette-success-light: #77ED8B;
+  --palette-success-main: #22C55E;
+  --palette-success-dark: #118D57;
+  --palette-success-darker: #065E49;
+  --palette-success-contrastText: #FFFFFF;
+  --palette-success-lighterChannel: 211 252 210;
+  --palette-success-lightChannel: 119 237 139;
+  --palette-success-mainChannel: 34 197 94;
+  --palette-success-darkChannel: 17 141 87;
+  --palette-success-darkerChannel: 6 94 73;
+
+  /* ======================================
+   * Warning Colors
+   * ====================================== */
+  --palette-warning-lighter: #FFF5CC;
+  --palette-warning-light: #FFD666;
+  --palette-warning-main: #FFAB00;
+  --palette-warning-dark: #B76E00;
+  --palette-warning-darker: #7A4100;
+  --palette-warning-contrastText: #1C252E;
+  --palette-warning-lighterChannel: 255 245 204;
+  --palette-warning-lightChannel: 255 214 102;
+  --palette-warning-mainChannel: 255 171 0;
+  --palette-warning-darkChannel: 183 110 0;
+  --palette-warning-darkerChannel: 122 65 0;
+
+  /* ======================================
+   * Error Colors
+   * ====================================== */
+  --palette-error-lighter: #FFE9D5;
+  --palette-error-light: #FFAC82;
+  --palette-error-main: #FF5630;
+  --palette-error-dark: #B71D18;
+  --palette-error-darker: #7A0916;
+  --palette-error-contrastText: #FFFFFF;
+  --palette-error-lighterChannel: 255 233 213;
+  --palette-error-lightChannel: 255 172 130;
+  --palette-error-mainChannel: 255 86 48;
+  --palette-error-darkChannel: 183 29 24;
+  --palette-error-darkerChannel: 122 9 22;
+
+  /* ======================================
+   * Grey Scale
+   * ====================================== */
+  --palette-grey-50: #FCFDFD;
+  --palette-grey-100: #F9FAFB;
+  --palette-grey-200: #F4F6F8;
+  --palette-grey-300: #DFE3E8;
+  --palette-grey-400: #C4CDD5;
+  --palette-grey-500: #919EAB;
+  --palette-grey-600: #637381;
+  --palette-grey-700: #454F5B;
+  --palette-grey-800: #1C252E;
+  --palette-grey-900: #141A21;
+  --palette-grey-50Channel: 252 253 253;
+  --palette-grey-100Channel: 249 250 251;
+  --palette-grey-200Channel: 244 246 248;
+  --palette-grey-300Channel: 223 227 232;
+  --palette-grey-400Channel: 196 205 213;
+  --palette-grey-500Channel: 145 158 171;
+  --palette-grey-600Channel: 99 115 129;
+  --palette-grey-700Channel: 69 79 91;
+  --palette-grey-800Channel: 28 37 46;
+  --palette-grey-900Channel: 20 26 33;
+
+  /* ======================================
+   * Common Colors
+   * ====================================== */
+  --palette-common-black: #000000;
+  --palette-common-white: #FFFFFF;
+  --palette-common-blackChannel: 0 0 0;
+  --palette-common-whiteChannel: 255 255 255;
+
+  /* ======================================
+   * Text Colors (Light Mode)
+   * ====================================== */
+  --palette-text-primary: #1C252E;
+  --palette-text-secondary: #637381;
+  --palette-text-disabled: #919EAB;
+  --palette-text-primaryChannel: 28 37 46;
+  --palette-text-secondaryChannel: 99 115 129;
+  --palette-text-disabledChannel: 145 158 171;
+
+  /* ======================================
+   * Background Colors (Light Mode)
+   * ====================================== */
+  --palette-background-default: #FFFFFF;
+  --palette-background-paper: #FFFFFF;
+  --palette-background-neutral: #F4F6F8;
+  --palette-background-defaultChannel: 255 255 255;
+  --palette-background-paperChannel: 255 255 255;
+  --palette-background-neutralChannel: 244 246 248;
+
+  /* ======================================
+   * Action Colors
+   * ====================================== */
+  --palette-action-active: #637381;
+  --palette-action-hover: rgba(145, 158, 171, 0.08);
+  --palette-action-selected: rgba(145, 158, 171, 0.16);
+  --palette-action-disabled: rgba(145, 158, 171, 0.8);
+  --palette-action-disabledBackground: rgba(145, 158, 171, 0.24);
+  --palette-action-focus: rgba(145, 158, 171, 0.24);
+
+  /* ======================================
+   * Divider
+   * ====================================== */
+  --palette-divider: rgba(145, 158, 171, 0.2);
+
+  /* ======================================
+   * Custom Shadows
+   * ====================================== */
+  --customShadows-z1: 0 1px 2px 0 rgba(145, 158, 171, 0.16);
+  --customShadows-z4: 0 4px 8px 0 rgba(145, 158, 171, 0.16);
+  --customShadows-z8: 0 8px 16px 0 rgba(145, 158, 171, 0.16);
+  --customShadows-z12: 0 12px 24px -4px rgba(145, 158, 171, 0.16);
+  --customShadows-z16: 0 16px 32px -4px rgba(145, 158, 171, 0.16);
+  --customShadows-z20: 0 20px 40px -4px rgba(145, 158, 171, 0.16);
+  --customShadows-z24: 0 24px 48px 0 rgba(145, 158, 171, 0.16);
+
+  --customShadows-card: 0 0 2px 0 rgba(145, 158, 171, 0.2),
+                        0 12px 24px -4px rgba(145, 158, 171, 0.12);
+  --customShadows-dropdown: 0 0 2px 0 rgba(145, 158, 171, 0.24),
+                            -20px 20px 40px -4px rgba(145, 158, 171, 0.24);
+  --customShadows-dialog: -40px 40px 80px -8px rgba(145, 158, 171, 0.24);
+
+  --customShadows-primary: 0 8px 16px 0 rgba(0, 167, 111, 0.24);
+  --customShadows-secondary: 0 8px 16px 0 rgba(142, 51, 255, 0.24);
+  --customShadows-info: 0 8px 16px 0 rgba(0, 184, 217, 0.24);
+  --customShadows-success: 0 8px 16px 0 rgba(34, 197, 94, 0.24);
+  --customShadows-warning: 0 8px 16px 0 rgba(255, 171, 0, 0.24);
+  --customShadows-error: 0 8px 16px 0 rgba(255, 86, 48, 0.24);
+
+  /* ======================================
+   * Border Radius
+   * ====================================== */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  /* ======================================
+   * Spacing (8px base)
+   * ====================================== */
+  --spacing-0: 0px;
+  --spacing-0-5: 4px;
+  --spacing-1: 8px;
+  --spacing-1-5: 12px;
+  --spacing-2: 16px;
+  --spacing-2-5: 20px;
+  --spacing-3: 24px;
+  --spacing-4: 32px;
+  --spacing-5: 40px;
+  --spacing-6: 48px;
+  --spacing-8: 64px;
+  --spacing-10: 80px;
+  --spacing-12: 96px;
+
+  /* ======================================
+   * Layout Variables
+   * ====================================== */
+  --layout-transition-duration: 300ms;
+  --layout-transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --layout-nav-vertical-width: 280px;
+  --layout-nav-mini-width: 88px;
+  --layout-header-height: 64px;
+  --layout-header-mobile-height: 56px;
+}
+
+/* ======================================
+ * Dark Mode Overrides
+ * ====================================== */
+[data-color-scheme="dark"] {
+  /* Text Colors */
+  --palette-text-primary: #FFFFFF;
+  --palette-text-secondary: #919EAB;
+  --palette-text-disabled: #637381;
+  --palette-text-primaryChannel: 255 255 255;
+  --palette-text-secondaryChannel: 145 158 171;
+  --palette-text-disabledChannel: 99 115 129;
+
+  /* Background Colors */
+  --palette-background-default: #141A21;
+  --palette-background-paper: #1C252E;
+  --palette-background-neutral: #28323D;
+  --palette-background-defaultChannel: 20 26 33;
+  --palette-background-paperChannel: 28 37 46;
+  --palette-background-neutralChannel: 40 50 61;
+
+  /* Action Colors */
+  --palette-action-active: #919EAB;
+  --palette-action-hover: rgba(145, 158, 171, 0.08);
+  --palette-action-selected: rgba(145, 158, 171, 0.16);
+  --palette-action-disabled: rgba(145, 158, 171, 0.8);
+  --palette-action-disabledBackground: rgba(145, 158, 171, 0.24);
+
+  /* Custom Shadows (Dark) */
+  --customShadows-z1: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+  --customShadows-z4: 0 4px 8px 0 rgba(0, 0, 0, 0.16);
+  --customShadows-z8: 0 8px 16px 0 rgba(0, 0, 0, 0.16);
+  --customShadows-z12: 0 12px 24px -4px rgba(0, 0, 0, 0.16);
+  --customShadows-z16: 0 16px 32px -4px rgba(0, 0, 0, 0.16);
+  --customShadows-z20: 0 20px 40px -4px rgba(0, 0, 0, 0.16);
+  --customShadows-z24: 0 24px 48px 0 rgba(0, 0, 0, 0.16);
+
+  --customShadows-card: 0 0 2px 0 rgba(0, 0, 0, 0.2),
+                        0 12px 24px -4px rgba(0, 0, 0, 0.12);
+  --customShadows-dropdown: 0 0 2px 0 rgba(0, 0, 0, 0.24),
+                            -20px 20px 40px -4px rgba(0, 0, 0, 0.24);
+  --customShadows-dialog: -40px 40px 80px -8px rgba(0, 0, 0, 0.24);
+}

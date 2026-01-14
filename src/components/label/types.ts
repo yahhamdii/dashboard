@@ -19,4 +19,5 @@ export interface LabelProps extends React.ComponentProps<typeof LabelRoot> {
   variant?: LabelVariant;
   endIcon?: React.ReactNode;
   startIcon?: React.ReactNode;
+  sx?: React.CSSProperties;
 }

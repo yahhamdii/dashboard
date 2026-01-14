@@ -1,10 +1,10 @@
-import type { SxProps } from '@mui/material/styles';
+// import type { SxProps } from '@mui/material/styles';
 
-import Link from '@mui/material/Link';
-import { styled } from '@mui/material/styles';
+import { LinkWrapper as Link } from 'src/components/circuit-ui';
+import styled from '@emotion/styled';
 import { tokens } from 'src/theme/design-tokens';
 
-import { RouterLink } from 'src/routes/components';
+// import { RouterLink } from 'src/routes/components';
 
 // ----------------------------------------------------------------------
 
@@ -13,7 +13,7 @@ export type BreadcrumbsLinkProps = React.ComponentProps<'div'> & {
   href?: string;
   disabled?: boolean;
   icon?: React.ReactNode;
-  sx?: SxProps<any>;
+  sx?: any;
 };
 
 export function BreadcrumbsLink({ href, icon, name, disabled, ...other }: BreadcrumbsLinkProps) {
@@ -27,8 +27,8 @@ export function BreadcrumbsLink({ href, icon, name, disabled, ...other }: Breadc
   if (href) {
     return (
       <Link
-        component={RouterLink}
         href={href}
+        // component={RouterLink} // LinkWrapper handles this internally via router or a tag
         color="inherit"
         sx={{
           display: 'inline-flex',

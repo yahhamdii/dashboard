@@ -1,8 +1,6 @@
-import type { CSSObject } from '@mui/material/styles';
-
 import { remToPx } from 'minimal-shared/utils';
 
-import { createTheme as getTheme } from '@mui/material/styles';
+import type { CSSObject, Theme } from './types';
 
 // ----------------------------------------------------------------------
 
@@ -76,9 +74,27 @@ function calculateHeight(fontSize: number, lineHeight: number, line: number): nu
 }
 
 export function maxLine({ line, persistent }: MaxLineProps): CSSObject {
+  // Breakpoints par défaut si non fournis
+  const getBreakpointValue = (key: string): number => {
+    const values: Record<string, number> = {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    };
+    return values[key] || 0;
+  };
+
+  const breakpoints = {
+    keys: ['xs', 'sm', 'md', 'lg', 'xl'],
+    up: (key: string) => `@media (min-width:${getBreakpointValue(key)}px)`,
+  };
+
   const {
-    breakpoints: { keys, up },
-  } = getTheme();
+    keys,
+    up,
+  } = breakpoints;
 
   const baseStyles: CSSObject = {
     overflow: 'hidden',

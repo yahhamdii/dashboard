@@ -5,14 +5,20 @@
 'use client';
 
 import React from 'react';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import type { FormControlLabelProps as MuiFormControlLabelProps } from '@mui/material/FormControlLabel';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import type { FormControlLabelProps as MuiFormControlLabelProps } from '@mui/material/FormControlLabel';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type FormControlLabelWrapperProps = MuiFormControlLabelProps;
+export interface FormControlLabelWrapperProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
+    control: React.ReactElement<any, any>;
+    label: React.ReactNode;
+    labelPlacement?: 'end' | 'start' | 'top' | 'bottom';
+    sx?: any;
+    [key: string]: any;
+}
 
 export function FormControlLabelWrapper({
     control,
@@ -22,20 +28,7 @@ export function FormControlLabelWrapper({
     sx,
     ...other
 }: FormControlLabelWrapperProps) {
-    const useCircuit = useCircuitComponent('USE_CIRCUIT_FORMS');
-
-    if (!useCircuit) {
-        return (
-            <FormControlLabel
-                control={control}
-                label={label}
-                labelPlacement={labelPlacement}
-                className={className}
-                sx={sx}
-                {...other}
-            />
-        );
-    }
+    // const useCircuit = useCircuitComponent('USE_CIRCUIT_FORMS');
 
     const circuitStyles: React.CSSProperties = {
         display: 'flex',
@@ -50,6 +43,7 @@ export function FormControlLabelWrapper({
         <label
             className={`form-control-label ${className || ''}`}
             style={circuitStyles}
+            {...(other as any)}
         >
             {control}
             <span className="label-text">{label}</span>

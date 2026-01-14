@@ -5,14 +5,18 @@
 'use client';
 
 import React from 'react';
-import Paper from '@mui/material/Paper';
-import type { PaperProps as MuiPaperProps } from '@mui/material/Paper';
+// import Paper from '@mui/material/Paper';
+// import type { PaperProps as MuiPaperProps } from '@mui/material/Paper';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type PaperWrapperProps = MuiPaperProps;
+export interface PaperWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
+    elevation?: number;
+    sx?: any;
+    [key: string]: any;
+}
 
 export function PaperWrapper({
     children,
@@ -20,19 +24,7 @@ export function PaperWrapper({
     sx,
     ...other
 }: PaperWrapperProps) {
-    const useCircuit = useCircuitComponent('USE_CIRCUIT_LAYOUTS');
-
-    if (!useCircuit) {
-        return (
-            <Paper
-                className={className}
-                sx={sx}
-                {...other}
-            >
-                {children}
-            </Paper>
-        );
-    }
+    // const useCircuit = useCircuitComponent('USE_CIRCUIT_LAYOUTS');
 
     const circuitStyles: React.CSSProperties = {
         backgroundColor: 'var(--cui-bg-normal)',
@@ -42,11 +34,19 @@ export function PaperWrapper({
         ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}),
     };
 
+    // Remove MUI props
+    const {
+        elevation,
+        square,
+        variant, // MUI Paper variant
+        ...domProps
+    } = other as any;
+
     return (
         <div
             className={`paper ${className || ''}`}
             style={circuitStyles}
-            {...(other as any)}
+            {...domProps}
         >
             {children}
         </div>

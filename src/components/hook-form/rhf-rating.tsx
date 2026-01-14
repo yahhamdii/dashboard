@@ -1,22 +1,21 @@
-import type { BoxProps } from '@mui/material/Box';
-import type { RatingProps } from '@mui/material/Rating';
-import type { FormHelperTextProps } from '@mui/material/FormHelperText';
+import type { BoxWrapperProps } from 'src/components/circuit-ui/box-wrapper';
+import type { RatingWrapperProps } from 'src/components/circuit-ui/rating-wrapper';
+import type { FormHelperTextWrapperProps } from 'src/components/circuit-ui/form-helper-text-wrapper';
 
 import { Controller, useFormContext } from 'react-hook-form';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import Rating from '@mui/material/Rating';
+import { BoxWrapper as Box, RatingWrapper as Rating } from 'src/components/circuit-ui';
 
 import { HelperText } from './help-text';
 
 // ----------------------------------------------------------------------
 
-export type RHFRatingProps = RatingProps & {
+export type RHFRatingProps = RatingWrapperProps & {
   name: string;
   helperText?: React.ReactNode;
   slotProps?: {
-    wrapper?: BoxProps;
-    helperText?: FormHelperTextProps;
+    wrapper?: BoxWrapperProps;
+    helperText?: FormHelperTextWrapperProps;
   };
 };
 

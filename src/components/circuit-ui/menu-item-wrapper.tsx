@@ -5,17 +5,21 @@
 'use client';
 
 import React from 'react';
-import MenuItem from '@mui/material/MenuItem';
-import type { MenuItemProps as MuiMenuItemProps } from '@mui/material/MenuItem';
+// import MenuItem from '@mui/material/MenuItem';
+// import type { MenuItemProps as MuiMenuItemProps } from '@mui/material/MenuItem';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type MenuItemWrapperProps = MuiMenuItemProps & {
+export interface MenuItemWrapperProps extends React.HTMLAttributes<HTMLElement> {
     href?: string;
+    selected?: boolean;
+    disabled?: boolean;
+    component?: React.ElementType;
+    sx?: any;
     [key: string]: any;
-};
+}
 
 export function MenuItemWrapper({
     children,
@@ -27,24 +31,7 @@ export function MenuItemWrapper({
     sx,
     ...other
 }: MenuItemWrapperProps) {
-    const useCircuit = useCircuitComponent('USE_CIRCUIT_NAVIGATION');
-
-    if (!useCircuit) {
-        const MuiMenuItem = MenuItem as any;
-        return (
-            <MuiMenuItem
-                onClick={onClick}
-                disabled={disabled}
-                selected={selected}
-                component={component}
-                className={className}
-                sx={sx}
-                {...other}
-            >
-                {children}
-            </MuiMenuItem>
-        );
-    }
+    // const useCircuit = useCircuitComponent('USE_CIRCUIT_NAVIGATION');
 
     const circuitStyles: React.CSSProperties = {
         display: 'flex',
@@ -61,12 +48,20 @@ export function MenuItemWrapper({
 
     const Component = component || 'div';
 
+    // Remove MUI props
+    const {
+        disableGutters,
+        divider,
+        autoFocus,
+        ...domProps
+    } = other as any;
+
     return (
         <Component
             onClick={onClick}
             className={`menu-item ${className || ''}`}
             style={circuitStyles}
-            {...(other as any)}
+            {...domProps}
         >
             {children}
         </Component>

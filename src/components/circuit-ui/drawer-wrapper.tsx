@@ -5,14 +5,20 @@
 'use client';
 
 import React from 'react';
-import Drawer from '@mui/material/Drawer';
-import type { DrawerProps as MuiDrawerProps } from '@mui/material/Drawer';
+// import Drawer from '@mui/material/Drawer';
+// import type { DrawerProps as MuiDrawerProps } from '@mui/material/Drawer';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type DrawerWrapperProps = MuiDrawerProps;
+export interface DrawerWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
+    open?: boolean;
+    onClose?: (event: {}, reason: 'backdropClick' | 'escapeKeyDown') => void;
+    anchor?: 'left' | 'right' | 'top' | 'bottom';
+    sx?: any;
+    [key: string]: any;
+}
 
 export function DrawerWrapper({
     children,
@@ -23,22 +29,7 @@ export function DrawerWrapper({
     sx,
     ...other
 }: DrawerWrapperProps) {
-    const useCircuit = useCircuitComponent('USE_CIRCUIT_LAYOUTS');
-
-    if (!useCircuit) {
-        return (
-            <Drawer
-                open={open}
-                onClose={onClose}
-                anchor={anchor}
-                className={className}
-                sx={sx}
-                {...other}
-            >
-                {children}
-            </Drawer>
-        );
-    }
+    // const useCircuit = useCircuitComponent('USE_CIRCUIT_LAYOUTS');
 
     // Basic implementation for Circuit UI side panels
     if (!open) return null;
@@ -70,7 +61,7 @@ export function DrawerWrapper({
 
     return (
         <>
-            <div style={backdropStyles} onClick={onClose as any} />
+            <div style={backdropStyles} onClick={() => onClose && onClose({}, 'backdropClick')} />
             <div
                 className={`drawer ${className || ''}`}
                 style={circuitStyles}

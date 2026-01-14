@@ -1,4 +1,4 @@
-import type { BoxProps } from '@mui/material/Box';
+import type { BoxProps } from 'src/types/component-props';
 import type { IUserProfileCover } from 'src/types/user';
 
 import { varAlpha } from 'minimal-shared/utils';

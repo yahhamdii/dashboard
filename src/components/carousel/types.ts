@@ -1,7 +1,13 @@
-import type { BoxProps } from '@mui/material/Box';
-import type { ButtonBaseProps } from '@mui/material/ButtonBase';
+// import type { BoxProps } from '@mui/material/Box';
+// import type { ButtonBaseProps } from '@mui/material/ButtonBase';
 import type { UseEmblaCarouselType } from 'embla-carousel-react';
-import type { Theme, SxProps, Breakpoint } from '@mui/material/styles';
+// import type { Theme, SxProps, Breakpoint } from '@mui/material/styles';
+
+type BoxProps<T extends keyof React.JSX.IntrinsicElements = 'div'> = React.ComponentProps<T>;
+type ButtonBaseProps = React.ComponentProps<'button'>;
+type Theme = any;
+type SxProps<T = Theme> = any;
+type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 import type { EmblaOptionsType, EmblaCarouselType } from 'embla-carousel';
 
 // ----------------------------------------------------------------------
@@ -20,6 +26,8 @@ export type CarouselDotButtonsProps = BoxProps<'ul'> &
   Omit<UseCarouselDotsReturn, 'dotCount'> & {
     gap?: number;
     variant?: 'circular' | 'rounded' | 'number';
+    sx?: SxProps<Theme>;
+    style?: React.CSSProperties;
     slotProps?: {
       dot?: {
         size?: number;
@@ -43,6 +51,8 @@ export type CarouselArrowButtonProps = ButtonBaseProps & {
   variant: 'prev' | 'next';
   svgIcon?: React.ReactNode;
   options?: CarouselArrowButtonsProps['options'];
+  sx?: SxProps<Theme>;
+  style?: React.CSSProperties;
 };
 
 export type CarouselArrowButtonsProps = React.ComponentProps<'div'> &
@@ -75,6 +85,8 @@ export type CarouselThumbProps = ButtonBaseProps & {
   src: string;
   index: number;
   selected: boolean;
+  sx?: SxProps<Theme>;
+  style?: React.CSSProperties;
 };
 
 export type CarouselThumbsProps = React.ComponentProps<'div'> & {

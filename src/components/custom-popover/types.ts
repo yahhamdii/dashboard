@@ -1,6 +1,11 @@
-import type { PaperProps } from '@mui/material/Paper';
-import type { PopoverProps } from '@mui/material/Popover';
-import type { Theme, SxProps } from '@mui/material/styles';
+// import type { PaperProps } from '@mui/material/Paper';
+// import type { PopoverProps } from '@mui/material/Popover';
+// import type { Theme, SxProps } from '@mui/material/styles';
+
+type PaperProps = React.ComponentProps<'div'>;
+type PopoverProps = React.ComponentProps<'div'>;
+type Theme = any;
+type SxProps<T = Theme> = any;
 
 // ----------------------------------------------------------------------
 
@@ -28,7 +33,10 @@ export type ArrowProps = {
 export type PaperOffset = [number, number];
 
 export type CustomPopoverProps = PopoverProps & {
-  slotProps?: PopoverProps['slotProps'] & {
+  open?: boolean;
+  anchorEl?: HTMLElement | null;
+  onClose?: () => void;
+  slotProps?: any & {
     arrow?: ArrowProps;
     paper?: PaperProps & {
       offset?: PaperOffset;

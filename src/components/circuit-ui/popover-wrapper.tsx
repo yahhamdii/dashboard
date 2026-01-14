@@ -5,14 +5,22 @@
 'use client';
 
 import React from 'react';
-import Popover from '@mui/material/Popover';
-import type { PopoverProps as MuiPopoverProps } from '@mui/material/Popover';
+// import Popover from '@mui/material/Popover';
+// import type { PopoverProps as MuiPopoverProps } from '@mui/material/Popover';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type PopoverWrapperProps = MuiPopoverProps;
+export interface PopoverWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
+    open: boolean;
+    anchorEl?: any;
+    onClose?: (event: {}, reason: 'backdropClick' | 'escapeKeyDown') => void;
+    anchorOrigin?: any;
+    transformOrigin?: any;
+    sx?: any;
+    [key: string]: any;
+}
 
 export function PopoverWrapper({
     children,
@@ -23,21 +31,45 @@ export function PopoverWrapper({
     sx,
     ...other
 }: PopoverWrapperProps) {
-    const useCircuit = useCircuitComponent('USE_CIRCUIT_LAYOUTS');
+    // const useCircuit = useCircuitComponent('USE_CIRCUIT_LAYOUTS');
 
     // Circuit UI doesn't have a direct Popover equivalent.
     // We'll keep using MUI Popover but through this wrapper.
+    if (!open) return null;
 
+    // TODO: Implement proper positioning relative to anchorEl
+    // For now, simple centered absolute positioning or just render children
+
+    // Simple overlay implementation
     return (
-        <Popover
-            open={open}
-            anchorEl={anchorEl}
-            onClose={onClose}
-            className={className}
-            sx={sx}
-            {...other}
-        >
-            {children}
-        </Popover>
+        <>
+            <div
+                style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    zIndex: 1300,
+                    backgroundColor: 'transparent'
+                }}
+                onClick={(e) => onClose && onClose({}, 'backdropClick')}
+            />
+            <div
+                className={`popover ${className || ''}`}
+                style={{
+                    position: 'absolute', // Should be absolute/fixed relative to anchor
+                    zIndex: 1301,
+                    backgroundColor: 'var(--cui-bg-normal)',
+                    borderRadius: 'var(--cui-border-radius-byte)',
+                    boxShadow: 'var(--cui-shadow-low)',
+                    padding: '8px',
+                    ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {})
+                }}
+                {...other as any}
+            >
+                {children}
+            </div>
+        </>
     );
 }

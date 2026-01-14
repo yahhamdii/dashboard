@@ -1,13 +1,26 @@
 'use client';
 
-import type { PaperProps } from '@mui/material/Paper';
-import type { DialogProps } from '@mui/material/Dialog';
+// import type { PaperProps } from '@mui/material/Paper';
+// import type { DialogProps } from '@mui/material/Dialog';
+
+type PaperProps = React.ComponentProps<'div'>;
+type DialogProps = React.ComponentProps<'div'>;
 import type { UseDateRangePickerReturn } from './use-date-range-picker';
 
 import { useCallback } from 'react';
 
-import { DatePickerWrapper as DatePicker, CalendarWrapper as DateCalendar } from 'src/components/circuit-ui';
-import { ButtonWrapper as Button, DialogWrapper as Dialog, DialogTitleWrapper as DialogTitle, DialogActionsWrapper as DialogActions, DialogContentWrapper as DialogContent, BoxWrapper as Box } from 'src/components/circuit-ui';
+import {
+  DatePickerWrapper as DatePicker,
+  CalendarWrapper as DateCalendar,
+} from 'src/components/circuit-ui';
+import {
+  ButtonWrapper as Button,
+  DialogWrapper as Dialog,
+  DialogTitleWrapper as DialogTitle,
+  DialogActionsWrapper as DialogActions,
+  DialogContentWrapper as DialogContent,
+  BoxWrapper as Box,
+} from 'src/components/circuit-ui';
 
 import { tokens } from 'src/theme/design-tokens';
 
@@ -16,6 +29,9 @@ import { tokens } from 'src/theme/design-tokens';
 export type CustomDateRangePickerProps = DialogProps &
   UseDateRangePickerReturn & {
     onSubmit?: () => void;
+    slotProps?: any;
+    variant?: 'input' | 'calendar';
+    title?: string;
   };
 
 export function CustomDateRangePicker({
@@ -43,7 +59,7 @@ export function CustomDateRangePicker({
     onSubmit?.();
   }, [onClose, onSubmit]);
 
-  const dialogPaperSx = (slotProps?.paper as PaperProps)?.sx;
+  const dialogPaperSx = (slotProps?.paper as any)?.sx;
 
   return (
     <Dialog

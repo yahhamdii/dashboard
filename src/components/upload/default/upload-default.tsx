@@ -3,11 +3,12 @@ import type { UploadProps } from '../types';
 import { useDropzone } from 'react-dropzone';
 import { mergeClasses } from 'minimal-shared/utils';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import FormHelperText from '@mui/material/FormHelperText';
-import CircularProgress from '@mui/material/CircularProgress';
+// import { BoxWrapper as Box } from 'src/components/circuit-ui';
+// import FormHelperText from '@mui/material/FormHelperText';
+// import CircularProgress from '@mui/material/CircularProgress';
 
 import { ButtonWrapper as Button } from 'src/components/circuit-ui';
+import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
 
 import { UploadIllustration } from 'src/assets/illustrations';
 
@@ -16,7 +17,8 @@ import { uploadClasses } from '../classes';
 import { RejectedFiles } from '../components/rejected-files';
 import { MultiFilePreview } from '../components/multi-file-preview';
 import { SingleFilePreview } from '../components/single-file-preview';
-import { UploadArea, DeleteButton, UploadWrapper, PlaceholderContainer } from './styles';
+// import { UploadArea, DeleteButton, UploadWrapper, PlaceholderContainer } from './styles';
+import '../upload.css';
 
 // ----------------------------------------------------------------------
 
@@ -50,27 +52,27 @@ export function Upload({
   const showFilesRejected = !hideFilesRejected && fileRejections.length > 0;
 
   const renderPlaceholder = () => (
-    <PlaceholderContainer className={uploadClasses.placeholder.root}>
+    <div className={`placeholder-container ${uploadClasses.placeholder.root}`}>
       <UploadIllustration hideBackground sx={{ width: 200 }} />
-      <div className={uploadClasses.placeholder.content}>
-        <div className={uploadClasses.placeholder.title}>
+      <div className={`placeholder-content ${uploadClasses.placeholder.content}`}>
+        <div className={`placeholder-title ${uploadClasses.placeholder.title}`}>
           {multiple ? 'Drop or select files' : 'Drop or select a file'}
         </div>
-        <div className={uploadClasses.placeholder.description}>
+        <div className={`placeholder-description ${uploadClasses.placeholder.description}`}>
           {multiple ? 'Drag files here' : 'Drag a file here'}, or <span>browse</span> your device.
         </div>
       </div>
-    </PlaceholderContainer>
+    </div>
   );
 
   const renderSingleFileLoading = () =>
     loading &&
     !multiple && (
-      <CircularProgress
-        size={26}
-        color="primary"
-        sx={{ zIndex: 9, right: 16, bottom: 16, position: 'absolute' }}
-      />
+      <div className="upload-spinner upload-spinner-single">
+        <svg width="26" height="26" viewBox="0 0 50 50">
+          <circle cx="25" cy="25" r="20" fill="none" strokeWidth="4" />
+        </svg>
+      </div>
     );
 
   const renderSingleFilePreview = () => isSingleFileSelected && <SingleFilePreview file={value} />;
@@ -78,17 +80,17 @@ export function Upload({
   const renderMultiFilesPreview = () =>
     hasMultiFilesSelected && (
       <>
-        <Box sx={{ my: 3 }}>
+        <div style={{ margin: '24px 0' }}>
           <MultiFilePreview
             files={value}
             onRemove={onRemove}
             orientation={previewOrientation}
             {...slotProps?.multiPreview}
           />
-        </Box>
+        </div>
 
         {(onRemoveAll || onUpload) && (
-          <Box sx={{ gap: 1.5, display: 'flex', justifyContent: 'flex-end' }}>
+          <div style={{ gap: '12px', display: 'flex', justifyContent: 'flex-end' }}>
             {onRemoveAll && (
               <Button size="small" variant="outlined" color="inherit" onClick={onRemoveAll}>
                 Remove All
@@ -106,37 +108,45 @@ export function Upload({
                 {loading && multiple ? 'Uploading...' : 'Upload'}
               </Button>
             )}
-          </Box>
+          </div>
         )}
       </>
     );
 
+  const rootStyles = sx && typeof sx === 'object' && !Array.isArray(sx) ? sx : {};
+
   return (
-    <UploadWrapper {...slotProps?.wrapper} className={uploadClasses.wrapper}>
-      <UploadArea
+    <div {...slotProps?.wrapper} className={`upload-wrapper ${uploadClasses.wrapper}`} style={rootStyles}>
+      <div
         {...getRootProps()}
-        className={mergeClasses([uploadClasses.default, className], {
+        className={mergeClasses(['upload-area', uploadClasses.default, className], {
+          'upload-state-drag-active': isDragActive,
+          'upload-state-disabled': disabled,
+          'upload-state-error': hasError,
           [uploadClasses.state.dragActive]: isDragActive,
           [uploadClasses.state.disabled]: disabled,
           [uploadClasses.state.error]: hasError,
         })}
-        sx={sx}
       >
         <input {...getInputProps()} />
         {isSingleFileSelected ? renderSingleFilePreview() : renderPlaceholder()}
-      </UploadArea>
+      </div>
 
       {isSingleFileSelected && (
-        <DeleteButton size="small" onClick={onDelete}>
+        <button type="button" className="delete-button" onClick={onDelete}>
           <Iconify icon="mingcute:close-line" width={16} />
-        </DeleteButton>
+        </button>
       )}
 
-      {helperText && <FormHelperText error={!!error}>{helperText}</FormHelperText>}
+      {helperText && (
+        <Typography variant="caption" style={{ color: error ? 'var(--cui-fg-danger)' : 'inherit', marginTop: '8px', display: 'block' }}>
+          {helperText}
+        </Typography>
+      )}
       {showFilesRejected && <RejectedFiles files={fileRejections} {...slotProps?.rejectedFiles} />}
 
       {renderSingleFileLoading()}
       {renderMultiFilesPreview()}
-    </UploadWrapper>
+    </div>
   );
 }

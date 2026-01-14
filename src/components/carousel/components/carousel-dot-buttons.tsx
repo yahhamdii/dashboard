@@ -1,14 +1,12 @@
 'use client';
 
-import type { CSSObject } from '@mui/material/styles';
+import React from 'react';
 import type { CarouselDotButtonsProps } from '../types';
 
 import { mergeClasses } from 'minimal-shared/utils';
 
-import Box from '@mui/material/Box';
+import { BoxWrapper as Box, ButtonBaseWrapper as ButtonBase } from 'src/components/circuit-ui';
 import { tokens } from 'src/theme/design-tokens';
-import { styled } from '@mui/material/styles';
-import ButtonBase from '@mui/material/ButtonBase';
 
 import { carouselClasses } from '../classes';
 
@@ -27,35 +25,42 @@ export function CarouselDotButtons({
   scrollSnaps,
   selectedIndex,
   variant = 'circular',
+  style,
   ...other
 }: CarouselDotButtonsProps) {
-  const dotGap = gap ?? DOT_GAPS[variant];
-  const dotSize = slotProps?.dot?.size ?? DOT_SIZES[variant];
+  const dotGap = gap ?? DOT_GAPS[variant as keyof typeof DOT_GAPS];
+  const dotSize = slotProps?.dot?.size ?? DOT_SIZES[variant as keyof typeof DOT_SIZES];
   const listItemHeight = variant === 'number' ? dotSize : dotSize + OUTER_PADDING;
 
+  const mergedSx = Array.isArray(sx) ? sx : [sx];
+  const sxStyles = mergedSx.reduce((acc, style) => {
+    if (style && typeof style === 'object') {
+      return { ...acc, ...style };
+    }
+    return acc;
+  }, {});
+
+  const boxStyles: React.CSSProperties = {
+    zIndex: 9,
+    display: 'flex',
+    gap: `${dotGap}px`,
+    height: listItemHeight,
+    ...sxStyles,
+    ...(style || {}),
+  };
+
   return (
-    <Box
-      component="ul"
+    <ul
       className={mergeClasses([carouselClasses.dots.root, className])}
-      sx={[
-        {
-          zIndex: 9,
-          display: 'flex',
-          gap: `${dotGap}px`,
-          height: listItemHeight,
-          '& > li': { display: 'inline-flex' },
-        },
-        ...(Array.isArray(sx) ? sx : [sx]),
-      ]}
+      style={boxStyles}
       {...other}
     >
-      {scrollSnaps.map((_, index) => {
+      {scrollSnaps.map((_: number, index: number) => {
         const isSelected = index === selectedIndex;
 
         return (
-          <li key={index}>
+          <li key={index} style={{ display: 'inline-flex' }}>
             <DotItem
-              disableRipple
               aria-label={`dot-${index}`}
               size={dotSize}
               variant={variant}
@@ -71,7 +76,7 @@ export function CarouselDotButtons({
           </li>
         );
       })}
-    </Box>
+    </ul>
   );
 }
 
@@ -80,68 +85,109 @@ export function CarouselDotButtons({
 type DotItemProps = Pick<CarouselDotButtonsProps, 'variant'> & {
   selected?: boolean;
   size?: number;
+  className?: string;
+  onClick?: () => void;
+  'aria-label'?: string;
+  sx?: any;
+  style?: React.CSSProperties;
+  children?: React.ReactNode;
 };
 
-const DotItem = styled(ButtonBase, {
-  shouldForwardProp: (prop: string) => !['size', 'variant', 'selected', 'sx'].includes(prop),
-})<DotItemProps>(({ size = 0, selected, theme }) => {
+const DotItem: React.FC<DotItemProps> = ({
+  size = 0,
+  selected,
+  variant,
+  className,
+  onClick,
+  sx,
+  style,
+  children,
+  ...other
+}) => {
   const wrapperSize = size + OUTER_PADDING;
 
-  const dotBaseStyles: CSSObject = {
+  const dotBaseStyles: React.CSSProperties = {
     width: size,
     height: size,
-    content: '""',
-    opacity: 0.24,
+    opacity: selected ? 1 : 0.24,
     backgroundColor: 'currentColor',
-    transition: theme.transitions.create(['width', 'opacity'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.shorter,
-    }),
+    transition:
+      'width 200ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms cubic-bezier(0.4, 0, 0.2, 1)',
   };
 
-  return {
-    variants: [
-      {
-        props: { variant: 'circular' },
-        style: {
-          width: wrapperSize,
-          height: wrapperSize,
-          '&::before': {
+  const mergedSx =
+    sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {};
+  const mergedStyle = { ...mergedSx, ...(style || {}) };
+
+  if (variant === 'circular') {
+    const circularStyles: React.CSSProperties = {
+      width: wrapperSize,
+      height: wrapperSize,
+      position: 'relative',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      ...mergedStyle,
+    };
+
+    return (
+      <ButtonBase className={className} onClick={onClick} style={circularStyles} {...other}>
+        <span
+          style={{
             ...dotBaseStyles,
             borderRadius: '50%',
-            ...(selected && { opacity: 1 }),
-          },
-        },
-      },
-      {
-        props: { variant: 'rounded' },
-        style: {
-          width: wrapperSize,
-          height: wrapperSize,
-          '&::before': {
+            position: 'absolute',
+          }}
+        />
+      </ButtonBase>
+    );
+  }
+
+  if (variant === 'rounded') {
+    const roundedStyles: React.CSSProperties = {
+      width: wrapperSize,
+      height: wrapperSize,
+      position: 'relative',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      ...mergedStyle,
+    };
+
+    return (
+      <ButtonBase className={className} onClick={onClick} style={roundedStyles} {...other}>
+        <span
+          style={{
             ...dotBaseStyles,
             borderRadius: size / 2,
-            ...(selected && { opacity: 1, width: 'calc(100% - 4px)' }),
-          },
-        },
-      },
-      {
-        props: { variant: 'number' },
-        style: {
-          width: size,
-          height: size,
-          borderRadius: '50%',
-          ...tokens.typography.body2,
-          color: tokens.colors.text.disabled,
-          border: `solid 1px ${tokens.colors.shared.buttonOutlined}`,
-          ...(selected && {
-            color: tokens.colors.common.white,
-            backgroundColor: tokens.colors.grey[800],
-            fontWeight: tokens.typography.fontWeightBold,
-            borderColor: 'transparent',
-          }),
-        },
-      },
-    ],
+            width: selected ? 'calc(100% - 4px)' : size,
+            position: 'absolute',
+          }}
+        />
+      </ButtonBase>
+    );
+  }
+
+  // variant === 'number'
+  const numberStyles: React.CSSProperties = {
+    width: size,
+    height: size,
+    borderRadius: '50%',
+    fontSize: tokens.typography.pxToRem(14),
+    lineHeight: '22px',
+    color: selected ? tokens.colors.common.white : tokens.colors.text.disabled,
+    backgroundColor: selected ? tokens.colors.grey[800] : 'transparent',
+    fontWeight: selected ? tokens.typography.fontWeightBold : tokens.typography.fontWeightRegular,
+    border: selected ? 'transparent' : `solid 1px ${tokens.colors.shared.buttonOutlined}`,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    ...mergedStyle,
   };
-});
+
+  return (
+    <ButtonBase className={className} onClick={onClick} style={numberStyles} {...other}>
+      {children}
+    </ButtonBase>
+  );
+};

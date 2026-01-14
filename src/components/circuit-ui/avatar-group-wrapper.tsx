@@ -5,14 +5,20 @@
 'use client';
 
 import React from 'react';
-import AvatarGroup from '@mui/material/AvatarGroup';
-import type { AvatarGroupProps as MuiAvatarGroupProps } from '@mui/material/AvatarGroup';
+// import AvatarGroup from '@mui/material/AvatarGroup';
+// import type { AvatarGroupProps as MuiAvatarGroupProps } from '@mui/material/AvatarGroup';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type AvatarGroupWrapperProps = MuiAvatarGroupProps;
+export interface AvatarGroupWrapperProps {
+    children?: React.ReactNode;
+    max?: number;
+    className?: string;
+    sx?: any;
+    [key: string]: any;
+}
 
 export function AvatarGroupWrapper({
     children,
@@ -21,20 +27,7 @@ export function AvatarGroupWrapper({
     sx,
     ...other
 }: AvatarGroupWrapperProps) {
-    const useCircuit = useCircuitComponent('USE_CIRCUIT_LAYOUTS');
-
-    if (!useCircuit) {
-        return (
-            <AvatarGroup
-                max={max}
-                className={className}
-                sx={sx}
-                {...other}
-            >
-                {children}
-            </AvatarGroup>
-        );
-    }
+    // const useCircuit = useCircuitComponent('USE_CIRCUIT_LAYOUTS');
 
     const circuitStyles: React.CSSProperties = {
         display: 'flex',
@@ -54,3 +47,5 @@ export function AvatarGroupWrapper({
         </div>
     );
 }
+
+

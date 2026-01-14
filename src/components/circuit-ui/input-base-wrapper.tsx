@@ -5,39 +5,51 @@
 'use client';
 
 import React from 'react';
-import InputBase from '@mui/material/InputBase';
-import type { InputBaseProps as MuiInputBaseProps } from '@mui/material/InputBase';
+// import InputBase from '@mui/material/InputBase';
+// import type { InputBaseProps as MuiInputBaseProps } from '@mui/material/InputBase';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type InputBaseWrapperProps = MuiInputBaseProps;
+export interface InputBaseWrapperProps extends React.InputHTMLAttributes<HTMLInputElement> {
+    multiline?: boolean;
+    fullWidth?: boolean;
+    rows?: number | string;
+    sx?: any;
+    inputRef?: React.Ref<any>;
+    inputProps?: any;
+    startAdornment?: React.ReactNode;
+    endAdornment?: React.ReactNode;
+    [key: string]: any;
+}
 
-export function InputBaseWrapper({
-    multiline,
-    fullWidth,
-    rows,
-    placeholder,
-    className,
-    sx,
-    ...other
-}: InputBaseWrapperProps) {
-    const useCircuit = useCircuitComponent('USE_CIRCUIT_FORMS');
+export function InputBaseWrapper(props: InputBaseWrapperProps) {
+    // const useCircuit = useCircuitComponent('USE_CIRCUIT_FORMS');
 
-    if (!useCircuit) {
-        return (
-            <InputBase
-                multiline={multiline}
-                fullWidth={fullWidth}
-                rows={rows}
-                placeholder={placeholder}
-                className={className}
-                sx={sx}
-                {...other}
-            />
-        );
-    }
+    const {
+        multiline,
+        fullWidth,
+        rows,
+        placeholder,
+        className,
+        sx,
+        // Filter out MUI-specific props
+        color,
+        error,
+        margin,
+        size,
+        startAdornment,
+        endAdornment,
+        inputComponent,
+        inputRef,
+        inputProps,
+        minRows,
+        maxRows,
+        slots,
+        slotProps,
+        ...other
+    } = props as any;
 
     const circuitStyles: React.CSSProperties = {
         width: fullWidth ? '100%' : 'auto',
@@ -54,21 +66,25 @@ export function InputBaseWrapper({
     if (multiline) {
         return (
             <textarea
+                ref={inputRef}
                 rows={rows as number}
                 placeholder={placeholder}
                 className={`input-base-multiline ${className || ''}`}
                 style={circuitStyles}
-                {...(other as any)}
+                {...inputProps}
+                {...other}
             />
         );
     }
 
     return (
         <input
+            ref={inputRef}
             placeholder={placeholder}
             className={`input-base ${className || ''}`}
             style={circuitStyles}
-            {...(other as any)}
+            {...inputProps}
+            {...other}
         />
     );
 }

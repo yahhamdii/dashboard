@@ -4,11 +4,9 @@ import type { TableHeadCellProps } from 'src/components/table';
 import { usePopover } from 'minimal-shared/hooks';
 
 import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import Divider from '@mui/material/Divider';
-import MenuList from '@mui/material/MenuList';
-import MenuItem from '@mui/material/MenuItem';
+import { DividerWrapper as Divider, MenuListWrapper as MenuList, MenuItemWrapper as MenuItem, ButtonWrapper as Button, CardWrapper as Card, CardHeaderWrapper as CardHeader, TableWrapper as Table, TableBodyWrapper as TableBody, TableRowWrapper as TableRow, TableCellWrapper as TableCell, IconButtonWrapper } from 'src/components/circuit-ui';
 
-import { ButtonWrapper as Button, CardWrapper as Card, CardHeaderWrapper as CardHeader, TableWrapper as Table, TableBodyWrapper as TableBody, TableRowWrapper as TableRow, TableCellWrapper as TableCell, IconButtonWrapper } from 'src/components/circuit-ui';
+
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 

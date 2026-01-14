@@ -5,7 +5,7 @@ import type { NavGroupProps, NavSectionProps } from '../types';
 import { useBoolean } from 'minimal-shared/hooks';
 import { mergeClasses } from 'minimal-shared/utils';
 
-import Collapse from '@mui/material/Collapse';
+import { CollapseWrapper as Collapse } from 'src/components/circuit-ui';
 
 import { tokens } from 'src/theme/design-tokens';
 

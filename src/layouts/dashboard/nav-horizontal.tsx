@@ -1,10 +1,10 @@
-import type { Breakpoint } from '@mui/material/styles';
+import type { Breakpoint } from 'src/types/component-props';
 import type { NavSectionProps } from 'src/components/nav-section';
 
 import { varAlpha, mergeClasses } from 'minimal-shared/utils';
 
 import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import Divider from '@mui/material/Divider';
+import { DividerWrapper as Divider } from 'src/components/circuit-ui';
 import { tokens } from 'src/theme/design-tokens';
 
 import { NavSectionHorizontal } from 'src/components/nav-section';

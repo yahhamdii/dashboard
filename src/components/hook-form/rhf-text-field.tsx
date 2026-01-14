@@ -1,4 +1,4 @@
-import type { TextFieldProps } from '@mui/material/TextField';
+// import type { TextFieldProps } from '@mui/material/TextField';
 
 import { Controller, useFormContext } from 'react-hook-form';
 import { transformValue, transformValueOnBlur, transformValueOnChange } from 'minimal-shared/utils';
@@ -7,8 +7,12 @@ import { InputWrapper as TextField } from 'src/components/circuit-ui';
 
 // ----------------------------------------------------------------------
 
-export type RHFTextFieldProps = TextFieldProps & {
+export type RHFTextFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> & {
   name: string;
+  label?: string;
+  helperText?: React.ReactNode;
+  slotProps?: any;
+  size?: 'small' | 'medium';
 };
 
 export function RHFTextField({

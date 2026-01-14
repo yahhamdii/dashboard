@@ -1,13 +1,12 @@
 'use client';
 
-import type { CSSObject } from '@mui/material/styles';
+import styled from '@emotion/styled';
+// import type { CSSObject } from '@mui/material/styles';
 import type { NavItemProps } from '../types';
 
 import { mergeClasses } from 'minimal-shared/utils';
 
-import Tooltip from '@mui/material/Tooltip';
-import { styled } from '@mui/material/styles';
-import ButtonBase from '@mui/material/ButtonBase';
+import { TooltipWrapper as Tooltip, ButtonBaseWrapper as ButtonBase } from 'src/components/circuit-ui';
 import { tokens } from 'src/theme/design-tokens';
 
 import { Iconify } from '../../iconify';
@@ -81,7 +80,7 @@ export function NavItem({
           </ItemTitle>
 
           {caption && (
-            <Tooltip title={caption} placement="top-start">
+            <Tooltip title={caption} placement="top">
               <ItemCaptionText
                 {...ownerState}
                 className={navSectionClasses.item.caption}
@@ -116,6 +115,7 @@ export function NavItem({
 
 type StyledState = Pick<NavItemProps, 'open' | 'active' | 'disabled'> & {
   variant: 'rootItem' | 'subItem';
+  sx?: any;
 };
 
 const shouldForwardProp = (prop: string) =>
@@ -130,7 +130,7 @@ const ItemRoot = styled(ButtonBase, { shouldForwardProp })<StyledState>(({
 }) => {
   const bulletSvg = `"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' viewBox='0 0 14 14'%3E%3Cpath d='M1 1v4a8 8 0 0 0 8 8h4' stroke='%23efefef' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E"`;
 
-  const bulletStyles: CSSObject = {
+  const bulletStyles: any = {
     left: 0,
     content: '""',
     position: 'absolute',
@@ -145,7 +145,7 @@ const ItemRoot = styled(ButtonBase, { shouldForwardProp })<StyledState>(({
         : 'translate(calc(var(--nav-bullet-size) * -1), calc(var(--nav-bullet-size) * -0.4))',
   };
 
-  const rootItemStyles: CSSObject = {
+  const rootItemStyles: any = {
     minHeight: 'var(--nav-item-root-height)',
     ...(open && {
       color: 'var(--nav-item-root-open-color)',
@@ -158,7 +158,7 @@ const ItemRoot = styled(ButtonBase, { shouldForwardProp })<StyledState>(({
     }),
   };
 
-  const subItemStyles: CSSObject = {
+  const subItemStyles: any = {
     minHeight: 'var(--nav-item-sub-height)',
     '&::before': bulletStyles,
     ...(open && {

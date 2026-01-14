@@ -1,4 +1,4 @@
-import type { CardProps } from '@mui/material/Card';
+import type { CardProps } from 'src/types/component-props';
 import type { ChartOptions } from 'src/components/chart';
 
 import {

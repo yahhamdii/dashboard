@@ -1,6 +1,11 @@
-import type { PopoverOrigin } from '@mui/material/Popover';
+// import type { PopoverOrigin } from '@mui/material/Popover';
 import type { ElementRect } from './hooks';
 import type { ArrowPlacement } from './types';
+
+type PopoverOrigin = {
+  vertical: 'top' | 'center' | 'bottom' | number;
+  horizontal: 'left' | 'center' | 'right' | number;
+};
 
 // ----------------------------------------------------------------------
 

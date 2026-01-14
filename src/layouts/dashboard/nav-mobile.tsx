@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { mergeClasses } from 'minimal-shared/utils';
 
 import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import Drawer from '@mui/material/Drawer';
+import { DrawerWrapper as Drawer } from 'src/components/circuit-ui';
 
 import { usePathname } from 'src/routes/hooks';
 
@@ -59,12 +59,11 @@ export function NavMobile({
             style={{ zIndex: 'calc(var(--layout-nav-zIndex) - 1)' }}
           />
         )}
-        
+
         {/* Drawer */}
         <div
-          className={`fixed top-0 left-0 h-full z-[var(--layout-nav-zIndex)] transform transition-transform duration-300 ease-in-out md:hidden ${
-            open ? 'translate-x-0' : '-translate-x-full'
-          } ${mergeClasses([layoutClasses.nav.root, layoutClasses.nav.vertical, className])}`}
+          className={`fixed top-0 left-0 h-full z-[var(--layout-nav-zIndex)] transform transition-transform duration-300 ease-in-out md:hidden ${open ? 'translate-x-0' : '-translate-x-full'
+            } ${mergeClasses([layoutClasses.nav.root, layoutClasses.nav.vertical, className])}`}
           style={{
             overflow: 'unset',
             backgroundColor: 'var(--layout-nav-bg)',

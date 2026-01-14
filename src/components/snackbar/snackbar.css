@@ -1,0 +1,134 @@
+/* Snackbar Styles */
+
+@keyframes rotate {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+.snackbar-loader-visible {
+    display: inline-flex;
+}
+
+.snackbar-loader-icon {
+    z-index: 9;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    animation: rotate 3s infinite linear;
+    background: conic-gradient(transparent, rgba(107, 114, 128, 0.64));
+}
+
+.snackbar-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    align-self: flex-start;
+    justify-content: center;
+}
+
+.snackbar-icon:not(.snackbar-unset) {
+    width: 48px;
+    height: 48px;
+    border-radius: inherit;
+    background-color: rgba(var(--cui-fg-normal-rgb, 0, 0, 0), 0.08);
+    /* Fallback to approximation */
+}
+
+.snackbar-icon svg {
+    /* iconSvg */
+    width: 24px;
+    height: 24px;
+}
+
+.snackbar-content {
+    gap: 2px;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+}
+
+.snackbar-title {
+    font-weight: 500;
+    font-size: 0.8125rem;
+    /* 13px */
+    line-height: 1.5;
+}
+
+.snackbar-description {
+    opacity: 0.64;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+}
+
+.snackbar-action-button,
+.snackbar-close-button {
+    color: inherit;
+    cursor: pointer;
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    background-color: transparent;
+    border: 1px solid rgba(var(--cui-fg-normal-rgb, 0, 0, 0), 0.16);
+}
+
+.snackbar-action-button:hover,
+.snackbar-close-button:hover {
+    border-color: rgba(0, 0, 0, 0.24);
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+.snackbar-action-button {
+    border-radius: 6px;
+    line-height: 1.4;
+    padding: 2px 8px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+}
+
+.snackbar-close-button {
+    top: 0;
+    right: 0;
+    width: 20px;
+    ;
+    height: 20px;
+    padding: 0;
+    border-radius: 50%;
+    position: absolute;
+    transform: translate(-6px, 6px);
+}
+
+.snackbar-toast {
+    gap: 12px;
+    min-height: 52px;
+    border-radius: 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 4px 8px 4px 4px;
+    box-shadow: var(--cui-shadow-interaction);
+    background-color: var(--cui-bg-normal);
+    color: var(--cui-fg-normal);
+}
+
+.snackbar-toast.snackbar-default {
+    padding: 8px;
+    color: var(--cui-bg-normal);
+    background-color: var(--cui-fg-normal);
+}
+
+.snackbar-toast.snackbar-info .snackbar-icon {
+    color: var(--cui-fg-info);
+}
+
+.snackbar-toast.snackbar-success .snackbar-icon {
+    color: var(--cui-fg-success);
+}
+
+.snackbar-toast.snackbar-warning .snackbar-icon {
+    color: var(--cui-fg-warning);
+}
+
+.snackbar-toast.snackbar-error .snackbar-icon {
+    color: var(--cui-fg-danger);
+}

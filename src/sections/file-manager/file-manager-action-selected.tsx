@@ -1,9 +1,10 @@
 import type { BoxProps } from '@mui/material/Box';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import Portal from '@mui/material/Portal';
-
-import { CheckboxWrapper as Checkbox } from 'src/components/circuit-ui';
+import {
+  BoxWrapper as Box,
+  PortalWrapper as Portal,
+  CheckboxWrapper as Checkbox,
+} from 'src/components/circuit-ui';
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 import { tokens } from 'src/theme/design-tokens';
 
@@ -41,7 +42,14 @@ export function FileManagerActionSelected({
             position: 'fixed',
             alignItems: 'center',
             bgcolor: tokens.colors.common.black,
-            p: tokens.spacing(1.5) + ' ' + tokens.spacing(2) + ' ' + tokens.spacing(1.5) + ' ' + tokens.spacing(1),
+            p:
+              tokens.spacing(1.5) +
+              ' ' +
+              tokens.spacing(2) +
+              ' ' +
+              tokens.spacing(1.5) +
+              ' ' +
+              tokens.spacing(1),
             boxShadow: tokens.customShadows.z20,
             m: { xs: 2, md: 3 },
           },

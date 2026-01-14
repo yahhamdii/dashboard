@@ -2,10 +2,16 @@ import type { DialogProps } from '@mui/material/Dialog';
 
 import { useState, useEffect, useCallback } from 'react';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import IconButton from '@mui/material/IconButton';
-
-import { InputWrapper as TextField, ButtonWrapper as Button, DialogWrapper as Dialog, DialogTitleWrapper as DialogTitle, DialogActionsWrapper as DialogActions, DialogContentWrapper as DialogContent } from 'src/components/circuit-ui';
+import {
+  BoxWrapper as Box,
+  IconButtonWrapper as IconButton,
+  InputWrapper as TextField,
+  ButtonWrapper as Button,
+  DialogWrapper as Dialog,
+  DialogTitleWrapper as DialogTitle,
+  DialogActionsWrapper as DialogActions,
+  DialogContentWrapper as DialogContent,
+} from 'src/components/circuit-ui';
 import { tokens } from 'src/theme/design-tokens';
 
 import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
@@ -65,7 +71,20 @@ export function FileManagerCreateFolderDialog({
 
   return (
     <Dialog fullWidth maxWidth="sm" open={open} aria-hidden={!open} onClose={onClose} {...other}>
-      <DialogTitle sx={{ p: tokens.spacing(3) + ' ' + tokens.spacing(3) + ' ' + tokens.spacing(2) + ' ' + tokens.spacing(3) }}>{title}</DialogTitle>
+      <DialogTitle
+        sx={{
+          p:
+            tokens.spacing(3) +
+            ' ' +
+            tokens.spacing(3) +
+            ' ' +
+            tokens.spacing(2) +
+            ' ' +
+            tokens.spacing(3),
+        }}
+      >
+        {title}
+      </DialogTitle>
 
       <IconButton
         aria-label="Close"

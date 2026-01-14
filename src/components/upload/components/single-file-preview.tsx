@@ -2,48 +2,38 @@ import type { FileUploadType } from '../types';
 
 import { mergeClasses } from 'minimal-shared/utils';
 
-import { styled } from '@mui/material/styles';
-import { tokens } from 'src/theme/design-tokens';
+// import { styled } from '@mui/material/styles';
+// import { tokens } from 'src/theme/design-tokens';
 
 import { uploadClasses } from '../classes';
 import { getFileMeta, useFilePreview } from '../../file-thumbnail';
+import '../upload.css';
 
 // ----------------------------------------------------------------------
 
-export type SingleFilePreviewProps = React.ComponentProps<typeof PreviewRoot> & {
+export type SingleFilePreviewProps = React.ComponentProps<'div'> & {
   file: FileUploadType;
+  sx?: any;
 };
 
 export function SingleFilePreview({ sx, file, className, ...other }: SingleFilePreviewProps) {
   const fileMeta = getFileMeta(file);
   const { previewUrl } = useFilePreview(file);
 
+  const rootStyles = sx && typeof sx === 'object' && !Array.isArray(sx) ? sx : {};
+
   return (
-    <PreviewRoot
-      className={mergeClasses([uploadClasses.preview.single, className])}
-      sx={sx}
+    <div
+      className={mergeClasses(['single-preview-root', uploadClasses.preview.single, className])}
+      style={rootStyles}
       {...other}
     >
-      {previewUrl && <PreviewImage alt={fileMeta.name} src={previewUrl} />}
-    </PreviewRoot>
+      {previewUrl && <img alt={fileMeta.name} src={previewUrl} className="single-preview-image" />}
+    </div>
   );
 }
 
 // ----------------------------------------------------------------------
 
-const PreviewRoot = styled('div')(() => ({
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  position: 'absolute',
-  borderRadius: 'inherit',
-  padding: tokens.spacing(1),
-}));
-
-const PreviewImage = styled('img')({
-  width: '100%',
-  height: '100%',
-  objectFit: 'cover',
-  borderRadius: 'inherit',
-});
+// const PreviewRoot = styled('div')(() => ({...}));
+// const PreviewImage = styled('img')({...});

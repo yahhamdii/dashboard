@@ -1,16 +1,15 @@
-import type { BoxProps } from '@mui/material/Box';
 import type { ChartProps } from '../types';
 
 import { mergeClasses } from 'minimal-shared/utils';
 
 import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import Skeleton from '@mui/material/Skeleton';
+import { SkeletonWrapper as Skeleton } from 'src/components/circuit-ui';
 
 import { chartClasses } from '../classes';
 
 // ----------------------------------------------------------------------
 
-export type ChartLoadingProps = BoxProps & Pick<ChartProps, 'type'>;
+export type ChartLoadingProps = React.ComponentProps<typeof Box> & Pick<ChartProps, 'type'>;
 
 export function ChartLoading({ sx, className, type, ...other }: ChartLoadingProps) {
   const circularTypes: ChartProps['type'][] = ['donut', 'radialBar', 'pie', 'polarArea'];
@@ -19,7 +18,7 @@ export function ChartLoading({ sx, className, type, ...other }: ChartLoadingProp
     <Box
       className={mergeClasses([chartClasses.loading, className])}
       sx={[
-        () => ({
+        {
           top: 0,
           left: 0,
           width: 1,
@@ -31,7 +30,7 @@ export function ChartLoading({ sx, className, type, ...other }: ChartLoadingProp
           position: 'absolute',
           borderRadius: 'inherit',
           justifyContent: 'center',
-        }),
+        },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
       {...other}

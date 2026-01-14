@@ -1,32 +1,35 @@
-import type { BoxProps } from '@mui/material/Box';
-import type { SwitchProps } from '@mui/material/Switch';
-import type { FormGroupProps } from '@mui/material/FormGroup';
-import type { FormLabelProps } from '@mui/material/FormLabel';
-import type { FormControlProps } from '@mui/material/FormControl';
-import type { FormHelperTextProps } from '@mui/material/FormHelperText';
-import type { FormControlLabelProps } from '@mui/material/FormControlLabel';
-
 import { Controller, useFormContext } from 'react-hook-form';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import FormGroup from '@mui/material/FormGroup';
-import FormLabel from '@mui/material/FormLabel';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-
-import { SwitchWrapper as Switch } from 'src/components/circuit-ui';
+import {
+  BoxWrapper as Box,
+  FormGroupWrapper as FormGroup,
+  FormLabelWrapper as FormLabel,
+  FormControlWrapper as FormControl,
+  FormControlLabelWrapper as FormControlLabel,
+  SwitchWrapper as Switch,
+} from 'src/components/circuit-ui';
+import type {
+  BoxWrapperProps,
+  SwitchWrapperProps,
+  FormGroupWrapperProps,
+  FormLabelWrapperProps,
+  FormControlWrapperProps,
+  FormControlLabelWrapperProps,
+} from 'src/components/circuit-ui';
 
 import { HelperText } from './help-text';
 
 // ----------------------------------------------------------------------
 
-export type RHFSwitchProps = Omit<FormControlLabelProps, 'control'> & {
+type HelperTextProps = React.HTMLAttributes<HTMLParagraphElement> & { sx?: any };
+
+export type RHFSwitchProps = Omit<FormControlLabelWrapperProps, 'control'> & {
   name: string;
   helperText?: React.ReactNode;
   slotProps?: {
-    wrapper?: BoxProps;
-    switch?: SwitchProps;
-    helperText?: FormHelperTextProps;
+    wrapper?: BoxWrapperProps;
+    switch?: SwitchWrapperProps;
+    helperText?: HelperTextProps;
   };
 };
 
@@ -73,7 +76,7 @@ export function RHFSwitch({ name, helperText, label, slotProps, sx, ...other }: 
 
 // ----------------------------------------------------------------------
 
-type RHFMultiSwitchProps = FormGroupProps & {
+type RHFMultiSwitchProps = FormGroupWrapperProps & {
   name: string;
   label?: string;
   helperText?: React.ReactNode;
@@ -82,10 +85,10 @@ type RHFMultiSwitchProps = FormGroupProps & {
     value: string;
   }[];
   slotProps?: {
-    wrapper?: FormControlProps;
-    switch: SwitchProps;
-    formLabel?: FormLabelProps;
-    helperText?: FormHelperTextProps;
+    wrapper?: FormControlWrapperProps;
+    switch: SwitchWrapperProps;
+    formLabel?: FormLabelWrapperProps;
+    helperText?: HelperTextProps;
   };
 };
 

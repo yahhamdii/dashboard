@@ -1,10 +1,9 @@
-import type { CSSObject } from '@mui/material/styles';
+import React from 'react';
 import type { ElementRect } from './hooks';
 import type { ArrowProps, PaperOffset, ArrowPlacement } from './types';
 
 import { varAlpha, noRtlFlip } from 'minimal-shared/utils';
 
-import { styled } from '@mui/material/styles';
 import { tokens } from 'src/theme/design-tokens';
 
 import { getArrowOffset } from './utils';
@@ -28,7 +27,7 @@ export function getPaperOffsetStyles(
   placement: ArrowPlacement,
   paperOffsets: PaperOffset,
   isRtl: boolean
-): CSSObject {
+): React.CSSProperties {
   if (!placement) return {};
 
   const [primaryOffset, secondaryOffset] = paperOffsets;
@@ -60,21 +59,21 @@ export function getPaperOffsetStyles(
   const [side, align = 'center'] = placement.split('-') as [Side, Align];
   const [translateX, translateY] = offsetBySide[side]?.[align] || [0, 0];
 
-  return { translate: `${translateX}px ${translateY}px` };
+  return { transform: `translate(${translateX}px, ${translateY}px)` };
 }
 
 // ----------------------------------------------------------------------
 
-function getArrowPlacementStyles(side: Side, isRtl = false): CSSObject {
-  const styleBySide: Record<Side, CSSObject> = {
-    top: { top: 0, rotate: '135deg', translate: `0 -${ARROW_TRANSLATE}` },
-    bottom: { bottom: 0, rotate: '-45deg', translate: `0 ${ARROW_TRANSLATE}` },
+function getArrowPlacementStyles(side: Side, isRtl = false): React.CSSProperties {
+  const styleBySide: Record<Side, React.CSSProperties> = {
+    top: { top: 0, transform: `rotate(135deg) translate(0, -${ARROW_TRANSLATE})` },
+    bottom: { bottom: 0, transform: `rotate(-45deg) translate(0, ${ARROW_TRANSLATE})` },
     left: isRtl
-      ? { left: 0, rotate: '-135deg', translate: `${ARROW_TRANSLATE} 0` }
-      : { left: 0, rotate: '45deg', translate: `-${ARROW_TRANSLATE} 0` },
+      ? { left: 0, transform: `rotate(-135deg) translate(${ARROW_TRANSLATE}, 0)` }
+      : { left: 0, transform: `rotate(45deg) translate(-${ARROW_TRANSLATE}, 0)` },
     right: isRtl
-      ? { right: 0, rotate: '45deg', translate: `-${ARROW_TRANSLATE} 0` }
-      : { right: 0, rotate: '-135deg', translate: `${ARROW_TRANSLATE} 0` },
+      ? { right: 0, transform: `rotate(45deg) translate(-${ARROW_TRANSLATE}, 0)` }
+      : { right: 0, transform: `rotate(-135deg) translate(${ARROW_TRANSLATE}, 0)` },
   };
 
   return styleBySide[side] ?? {};
@@ -126,67 +125,76 @@ function getArrowColor({
 type StyledArrowProps = ArrowProps & {
   paperRect: ElementRect;
   anchorRect: ElementRect;
+  sx?: any;
+  style?: React.CSSProperties;
 };
 
-export const Arrow = styled('span', {
-  shouldForwardProp: (prop: string) =>
-    !['size', 'placement', 'anchorRect', 'paperRect', 'sx'].includes(prop),
-})<StyledArrowProps>(({ size = 0, placement = 'top-right', anchorRect, paperRect }) => {
-  const isRtl = tokens.direction === 'rtl';
-  const { offsetX, offsetY } = getArrowOffset(anchorRect, paperRect, size);
+export const Arrow = React.forwardRef<HTMLSpanElement, StyledArrowProps>(
+  ({ size = 0, placement = 'top-right', anchorRect, paperRect, sx, style, ...other }, ref) => {
+    const isRtl = tokens.direction === 'rtl';
+    const { offsetX, offsetY } = getArrowOffset(anchorRect, paperRect, size);
 
-  const arrowColor = getArrowColor({
-    isRtl,
-    placement,
-    xRatio: offsetX / paperRect.width,
-    yRatio: offsetY / paperRect.height,
-    paperRatio: Math.round((paperRect.width / paperRect.height) * 100) / 100,
-  });
+    const arrowColor = getArrowColor({
+      isRtl,
+      placement,
+      xRatio: offsetX / paperRect.width,
+      yRatio: offsetY / paperRect.height,
+      paperRatio: Math.round((paperRect.width / paperRect.height) * 100) / 100,
+    });
 
-  const arrowBaseStyle: CSSObject = {
-    width: size,
-    height: size,
-    position: 'absolute',
-    borderBottomLeftRadius: isRtl ? 0 : size / 4,
-    borderBottomRightRadius: isRtl ? size / 4 : 0,
-    clipPath: 'polygon(0% 0%, 100% 100%, 0% 100%)',
-    backgroundColor: tokens.colors.background.paper,
-    border: `solid 1px ${varAlpha(tokens.colors.grey['500Channel'], 0.12)}`,
-  };
+    const mergedSx = Array.isArray(sx) ? sx : [sx];
+    const sxStyles = mergedSx.reduce((acc, style) => {
+      if (style && typeof style === 'object') {
+        return { ...acc, ...style };
+      }
+      return acc;
+    }, {});
 
-  const arrowBackgroundStyle: CSSObject = {
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: `${size * 3}px ${size * 3}px`,
-    ...(arrowColor === 'cyan' && {
-      backgroundPosition: noRtlFlip('top right'),
-      backgroundImage: `linear-gradient(45deg, ${varAlpha(tokens.colors.info.mainChannel, 0.08)}, ${varAlpha(tokens.colors.info.mainChannel, 0.08)})`,
-    }),
-    ...(arrowColor === 'red' && {
-      backgroundPosition: noRtlFlip('bottom left'),
-      backgroundImage: `linear-gradient(45deg, ${varAlpha(tokens.colors.error.mainChannel, 0.08)}, ${varAlpha(tokens.colors.error.mainChannel, 0.08)})`,
-    }),
-  };
+    const arrowBaseStyle: React.CSSProperties = {
+      width: size,
+      height: size,
+      position: 'absolute',
+      borderBottomLeftRadius: isRtl ? 0 : size / 4,
+      borderBottomRightRadius: isRtl ? size / 4 : 0,
+      clipPath: 'polygon(0% 0%, 100% 100%, 0% 100%)',
+      backgroundColor: tokens.colors.background.paper,
+      border: `solid 1px ${varAlpha(tokens.colors.grey['500Channel'], 0.12)}`,
+    };
 
-  return {
-    ...arrowBaseStyle,
-    ...arrowBackgroundStyle,
-    variants: [
-      {
-        props: (props: any) => props.placement?.startsWith('top-'),
-        style: { ...getArrowPlacementStyles('top'), left: noRtlFlip(`${offsetX}px`) },
-      },
-      {
-        props: (props: any) => props.placement?.startsWith('bottom-'),
-        style: { ...getArrowPlacementStyles('bottom'), left: noRtlFlip(`${offsetX}px`) },
-      },
-      {
-        props: (props: any) => props.placement?.startsWith('left-'),
-        style: { ...getArrowPlacementStyles('left', isRtl), top: `${offsetY}px` },
-      },
-      {
-        props: (props: any) => props.placement?.startsWith('right-'),
-        style: { ...getArrowPlacementStyles('right', isRtl), top: `${offsetY}px` },
-      },
-    ],
-  };
-});
+    const arrowBackgroundStyle: React.CSSProperties = {
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: `${size * 3}px ${size * 3}px`,
+      ...(arrowColor === 'cyan' && {
+        backgroundPosition: noRtlFlip('top right'),
+        backgroundImage: `linear-gradient(45deg, ${varAlpha(tokens.colors.info.mainChannel, 0.08)}, ${varAlpha(tokens.colors.info.mainChannel, 0.08)})`,
+      }),
+      ...(arrowColor === 'red' && {
+        backgroundPosition: noRtlFlip('bottom left'),
+        backgroundImage: `linear-gradient(45deg, ${varAlpha(tokens.colors.error.mainChannel, 0.08)}, ${varAlpha(tokens.colors.error.mainChannel, 0.08)})`,
+      }),
+    };
+
+    let placementStyles: React.CSSProperties = {};
+    if (placement?.startsWith('top-')) {
+      placementStyles = { ...getArrowPlacementStyles('top'), left: noRtlFlip(`${offsetX}px`) };
+    } else if (placement?.startsWith('bottom-')) {
+      placementStyles = { ...getArrowPlacementStyles('bottom'), left: noRtlFlip(`${offsetX}px`) };
+    } else if (placement?.startsWith('left-')) {
+      placementStyles = { ...getArrowPlacementStyles('left', isRtl), top: `${offsetY}px` };
+    } else if (placement?.startsWith('right-')) {
+      placementStyles = { ...getArrowPlacementStyles('right', isRtl), top: `${offsetY}px` };
+    }
+
+    const arrowStyles: React.CSSProperties = {
+      ...arrowBaseStyle,
+      ...arrowBackgroundStyle,
+      ...placementStyles,
+      ...sxStyles,
+      ...(style || {}),
+    };
+
+    return <span ref={ref} style={arrowStyles} {...other} />;
+  }
+);
+
+Arrow.displayName = 'Arrow';

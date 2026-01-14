@@ -8,16 +8,26 @@
 'use client';
 
 import React from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import type { TabsProps as MuiTabsProps } from '@mui/material/Tabs';
-import type { TabProps as MuiTabProps } from '@mui/material/Tab';
+// import Tabs from '@mui/material/Tabs';
+// import Tab from '@mui/material/Tab';
+// import type { TabsProps as MuiTabsProps } from '@mui/material/Tabs';
+// import type { TabProps as MuiTabProps } from '@mui/material/Tab';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type TabsWrapperProps = MuiTabsProps;
+export interface TabsWrapperProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  value?: any;
+  onChange?: (event: React.SyntheticEvent, value: any) => void;
+  orientation?: 'horizontal' | 'vertical';
+  variant?: 'standard' | 'scrollable' | 'fullWidth';
+  scrollButtons?: boolean | 'auto' | 'allow';
+  textColor?: 'secondary' | 'primary' | 'inherit';
+  indicatorColor?: 'secondary' | 'primary';
+  sx?: any;
+  [key: string]: any;
+}
 
 /**
  * Tabs wrapper component
@@ -33,15 +43,7 @@ export function TabsWrapper({
   sx,
   ...other
 }: TabsWrapperProps) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_FORMS');
-
-  if (!useCircuit) {
-    return (
-      <Tabs value={value} onChange={onChange} className={className} sx={sx} {...other}>
-        {children}
-      </Tabs>
-    );
-  }
+  // const useCircuit = useCircuitComponent('USE_CIRCUIT_FORMS');
 
   // Circuit UI n'a pas de composant Tabs natif, utiliser un système natif avec Tailwind
   const circuitStyles: React.CSSProperties = {
@@ -60,6 +62,8 @@ export function TabsWrapper({
     scrollButtons,
     TabIndicatorProps,
     TabScrollButtonProps,
+    allowScrollButtonsMobile,
+    selectionFollowsFocus,
     ...divProps
   } = other as any;
 
@@ -68,12 +72,14 @@ export function TabsWrapper({
       className={className}
       style={circuitStyles}
       role="tablist"
-      {...(divProps as React.HTMLAttributes<HTMLDivElement>)}
+      {...divProps}
     >
       {React.Children.map(children, (child) => {
-        if (React.isValidElement(child) && child.type === TabWrapper) {
+        if (React.isValidElement(child) && (child.type === TabWrapper || (child.type as any).displayName === 'TabWrapper')) {
+          // Note: checking displayName might be needed if component is wrapped or hot reloaded
+          // But child.type === TabWrapper usually works for imports
           const childProps = child.props as any;
-          return React.cloneElement(child, {
+          return React.cloneElement(child as React.ReactElement<any>, {
             ...childProps,
             selected: childProps.value === value,
             onClick: (e: React.MouseEvent) => {
@@ -82,7 +88,7 @@ export function TabsWrapper({
               }
               childProps.onClick?.(e);
             },
-          } as any);
+          });
         }
         return child;
       })}
@@ -92,10 +98,17 @@ export function TabsWrapper({
 
 // ----------------------------------------------------------------------
 
-type TabWrapperProps = MuiTabProps & {
-  href?: string;
+export interface TabWrapperProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  value?: any;
+  label?: React.ReactNode;
+  icon?: React.ReactElement;
+  iconPosition?: 'top' | 'bottom' | 'start' | 'end';
+  selected?: boolean;
+  sx?: any;
   component?: React.ElementType;
-};
+  href?: string;
+  [key: string]: any;
+}
 
 /**
  * Tab wrapper component
@@ -111,22 +124,8 @@ export function TabWrapper({
   selected,
   onClick,
   ...other
-}: TabWrapperProps & { selected?: boolean; onClick?: (e: React.MouseEvent) => void }) {
-  const useCircuit = useCircuitComponent('USE_CIRCUIT_FORMS');
-
-  if (!useCircuit) {
-    return (
-      <Tab
-        value={value}
-        label={label}
-        icon={icon}
-        iconPosition={iconPosition}
-        className={className}
-        sx={sx}
-        {...other}
-      />
-    );
-  }
+}: TabWrapperProps) {
+  // const useCircuit = useCircuitComponent('USE_CIRCUIT_FORMS');
 
   // Circuit UI n'a pas de composant Tab natif, utiliser un bouton natif avec Tailwind
   const circuitStyles: React.CSSProperties = {
@@ -139,6 +138,8 @@ export function TabWrapper({
     alignItems: 'center',
     gap: icon ? 'var(--cui-spacings-byte)' : 0,
     flexDirection: iconPosition === 'top' ? 'column' : 'row',
+    background: 'none',
+    border: 'none', // Reset button styling
     ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}),
   };
 
@@ -149,6 +150,7 @@ export function TabWrapper({
     wrapped,
     component,
     href,
+    disableFocusRipple,
     ...buttonProps
   } = other as any;
 
@@ -161,7 +163,7 @@ export function TabWrapper({
         role="tab"
         aria-selected={selected}
         className={className}
-        style={circuitStyles}
+        style={{ ...circuitStyles, textDecoration: 'none' }}
         onClick={onClick}
         {...(buttonProps as any)}
       >

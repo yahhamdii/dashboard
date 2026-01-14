@@ -5,14 +5,18 @@
 'use client';
 
 import React from 'react';
-import InputAdornment from '@mui/material/InputAdornment';
-import type { InputAdornmentProps as MuiInputAdornmentProps } from '@mui/material/InputAdornment';
+// import InputAdornment from '@mui/material/InputAdornment';
+// import type { InputAdornmentProps as MuiInputAdornmentProps } from '@mui/material/InputAdornment';
 
-import { useCircuitComponent } from 'src/lib/feature-flags';
+// import { useCircuitComponent } from 'src/lib/feature-flags';
 
 // ----------------------------------------------------------------------
 
-type InputAdornmentWrapperProps = MuiInputAdornmentProps;
+export interface InputAdornmentWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
+    position?: 'start' | 'end';
+    sx?: any;
+    [key: string]: any;
+}
 
 export function InputAdornmentWrapper({
     children,
@@ -21,20 +25,7 @@ export function InputAdornmentWrapper({
     sx,
     ...other
 }: InputAdornmentWrapperProps) {
-    const useCircuit = useCircuitComponent('USE_CIRCUIT_FORMS');
-
-    if (!useCircuit) {
-        return (
-            <InputAdornment
-                position={position}
-                className={className}
-                sx={sx}
-                {...other}
-            >
-                {children}
-            </InputAdornment>
-        );
-    }
+    // const useCircuit = useCircuitComponent('USE_CIRCUIT_FORMS');
 
     const circuitStyles: React.CSSProperties = {
         display: 'flex',

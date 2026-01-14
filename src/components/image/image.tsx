@@ -1,8 +1,9 @@
 'use client';
 
 import type { UseInViewOptions } from 'framer-motion';
-import type { Breakpoint } from '@mui/material/styles';
 import type { EffectsType } from './styles';
+
+type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 import { useInView } from 'framer-motion';
 import { mergeRefs, mergeClasses } from 'minimal-shared/utils';

@@ -1,10 +1,9 @@
-import type { BoxProps } from '@mui/material/Box';
-import type { CardProps } from '@mui/material/Card';
+import type { BoxProps, CardProps } from 'src/types/component-props';
 
 import Autoplay from 'embla-carousel-autoplay';
 
 import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import Link from '@mui/material/Link';
+import { LinkWrapper as Link } from 'src/components/circuit-ui';
 
 import { CardWrapper as Card } from 'src/components/circuit-ui';
 

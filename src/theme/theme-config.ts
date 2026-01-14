@@ -1,22 +1,29 @@
-import type { Theme, Direction, CommonColors, ThemeProviderProps } from '@mui/material/styles';
 import type { ThemeCssVariables } from './types';
-import type { PaletteColor } from '@mui/material/styles';
 
 export type PaletteColorKey = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error';
-export type PaletteColorNoChannels = Omit<PaletteColor, 'lighterChannel' | 'darkerChannel'> & {
+export type Direction = 'ltr' | 'rtl';
+
+export type PaletteColorNoChannels = {
   lighter: string;
+  light: string;
+  main: string;
+  dark: string;
   darker: string;
+  contrastText: string;
 };
 
 export type ThemeConfig = {
   direction: Direction;
   classesPrefix: string;
   cssVariables: ThemeCssVariables;
-  defaultMode: ThemeProviderProps<Theme>['defaultMode'];
-  modeStorageKey: ThemeProviderProps<Theme>['modeStorageKey'];
+  defaultMode: 'light' | 'dark' | 'system';
+  modeStorageKey: string;
   fontFamily: Record<'primary' | 'secondary', string>;
-  palette: Record<PaletteColorKey, PaletteColorNoChannels & { contrastText: string }> & {
-    common: Pick<CommonColors, 'black' | 'white'>;
+  palette: Record<PaletteColorKey, PaletteColorNoChannels> & {
+    common: {
+      black: string;
+      white: string;
+    };
     grey: {
       [K in 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 as `${K}`]: string;
     };

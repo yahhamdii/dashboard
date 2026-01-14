@@ -6,7 +6,7 @@ import { useEffect, useCallback } from 'react';
 import { usePopoverHover } from 'minimal-shared/hooks';
 import { isActiveLink, isExternalLink } from 'minimal-shared/utils';
 
-import { popoverClasses } from '@mui/material/Popover';
+// import { popoverClasses } from '@mui/material/Popover';
 
 import { usePathname } from 'src/routes/hooks';
 import { tokens } from 'src/theme/design-tokens';
@@ -110,9 +110,9 @@ export function NavList({
         }}
         sx={{
           ...cssVars,
-          [`& .${popoverClasses.paper}`]: {
-            ...(depth === 1 && { pt: 1, ml: -0.75 }),
-          },
+          // [`& .${popoverClasses.paper}`]: {
+          //   ...(depth === 1 && { pt: 1, ml: -0.75 }),
+          // },
         }}
       >
         <NavDropdownPaper
@@ -157,7 +157,7 @@ function NavSubList({
   enabledRootRedirect,
 }: NavSubListProps) {
   return (
-    <NavUl sx={{ gap: 0.5 }}>
+    <NavUl style={{ gap: tokens.spacing(0.5) }}>
       {data.map((list) => (
         <NavList
           key={list.title}
@@ -173,3 +173,4 @@ function NavSubList({
     </NavUl>
   );
 }
+

@@ -1,22 +1,21 @@
-import type { BoxProps } from '@mui/material/Box';
-import type { SliderProps } from '@mui/material/Slider';
-import type { FormHelperTextProps } from '@mui/material/FormHelperText';
+import type { BoxWrapperProps } from 'src/components/circuit-ui/box-wrapper';
+import type { SliderWrapperProps } from 'src/components/circuit-ui/slider-wrapper';
+import type { FormHelperTextWrapperProps } from 'src/components/circuit-ui/form-helper-text-wrapper';
 
 import { Controller, useFormContext } from 'react-hook-form';
 
-import { BoxWrapper as Box } from 'src/components/circuit-ui';
-import Slider from '@mui/material/Slider';
+import { BoxWrapper as Box, SliderWrapper as Slider } from 'src/components/circuit-ui';
 
 import { HelperText } from './help-text';
 
 // ----------------------------------------------------------------------
 
-export type RHFSliderProps = SliderProps & {
+export type RHFSliderProps = SliderWrapperProps & {
   name: string;
   helperText?: React.ReactNode;
   slotProps?: {
-    wrapper?: BoxProps;
-    helperText?: FormHelperTextProps;
+    wrapper?: BoxWrapperProps;
+    helperText?: FormHelperTextWrapperProps;
   };
 };
 

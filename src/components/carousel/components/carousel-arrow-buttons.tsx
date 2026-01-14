@@ -4,7 +4,7 @@ import type { CarouselArrowButtonsProps } from '../types';
 
 import { varAlpha, mergeClasses } from 'minimal-shared/utils';
 
-import { styled } from '@mui/material/styles';
+import styled from '@emotion/styled';
 import { tokens } from 'src/theme/design-tokens';
 
 import { ArrowButton } from './arrow-button';
@@ -12,13 +12,18 @@ import { carouselClasses } from '../classes';
 
 // ----------------------------------------------------------------------
 
-const BasicButtonsRoot = styled('div')(() => ({
-  gap: '4px',
-  zIndex: 9,
-  alignItems: 'center',
-  display: 'inline-flex',
-  color: tokens.colors.action.active,
-}));
+const BasicButtonsRoot = styled('div', {
+  shouldForwardProp: (prop: string) => !['sx'].includes(prop),
+})<{ sx?: any }>(({ sx }) => [
+  {
+    gap: '4px',
+    zIndex: 9,
+    alignItems: 'center',
+    display: 'inline-flex',
+    color: tokens.colors.action.active,
+  },
+  ...(Array.isArray(sx) ? sx : [sx]),
+]);
 
 export function CarouselArrowBasicButtons({
   sx,
@@ -128,28 +133,33 @@ export function CarouselArrowFloatButtons({
 
 // ----------------------------------------------------------------------
 
-const NumberButtonsRoot = styled('div')(() => ({
-  gap: '2px',
-  zIndex: 9,
-  alignItems: 'center',
-  display: 'inline-flex',
-  padding: tokens.spacing(0.5),
-  color: tokens.colors.common.white,
-  borderRadius: tokens.shape.borderRadius * 1.25,
-  backgroundColor: varAlpha(tokens.colors.grey['900Channel'], 0.48),
-  [`& .${carouselClasses.arrows.label}`]: {
-    ...tokens.typography.subtitle2,
-    margin: tokens.spacing(0, 0.5),
+const NumberButtonsRoot = styled('div', {
+  shouldForwardProp: (prop: string) => !['sx'].includes(prop),
+})<{ sx?: any }>(({ sx }) => [
+  {
+    gap: '2px',
+    zIndex: 9,
+    alignItems: 'center',
+    display: 'inline-flex',
+    padding: tokens.spacing(0.5),
+    color: tokens.colors.common.white,
+    borderRadius: tokens.shape.borderRadius * 1.25,
+    backgroundColor: varAlpha(tokens.colors.grey['900Channel'], 0.48),
+    [`& .${carouselClasses.arrows.label}`]: {
+      ...tokens.typography.subtitle2,
+      margin: tokens.spacing(0, 0.5),
+    },
+    [`& .${carouselClasses.arrows.prev}`]: {
+      borderRadius: 'inherit',
+      padding: tokens.spacing(0.75),
+    },
+    [`& .${carouselClasses.arrows.next}`]: {
+      borderRadius: 'inherit',
+      padding: tokens.spacing(0.75),
+    },
   },
-  [`& .${carouselClasses.arrows.prev}`]: {
-    borderRadius: 'inherit',
-    padding: tokens.spacing(0.75),
-  },
-  [`& .${carouselClasses.arrows.next}`]: {
-    borderRadius: 'inherit',
-    padding: tokens.spacing(0.75),
-  },
-}));
+  ...(Array.isArray(sx) ? sx : [sx]),
+]);
 
 export function CarouselArrowNumberButtons({
   sx,
