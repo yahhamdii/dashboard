@@ -32,8 +32,18 @@ export function LinkWrapper({
     const circuitStyles: React.CSSProperties = {
         color: color === 'inherit' ? 'inherit' : 'var(--cui-fg-accent)',
         textDecoration: underline === 'none' ? 'none' : 'underline',
+        whiteSpace: other.noWrap ? 'nowrap' : 'normal',
         cursor: 'pointer',
-        ...(sx && typeof sx === 'object' && !Array.isArray(sx) ? (sx as React.CSSProperties) : {}),
+        // Filtrer les styles non supportés par l'attribut style
+        ...(sx && typeof sx === 'object' && !Array.isArray(sx)
+            ? Object.keys(sx).reduce((acc: any, key) => {
+                if (key.startsWith('@') || key.startsWith('&') || key.startsWith(':')) {
+                    return acc;
+                }
+                acc[key] = sx[key];
+                return acc;
+            }, {})
+            : {}),
     };
 
     const Component = component || 'a';
@@ -42,6 +52,7 @@ export function LinkWrapper({
     const {
         variant,
         typographyClasses,
+        noWrap, // Extract noWrap so it's not passed to DOM
         ...domProps
     } = other as any;
 

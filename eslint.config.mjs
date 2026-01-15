@@ -143,7 +143,6 @@ const sortImportsRules = () => {
         ],
         customGroups: {
           value: {
-            [customGroups.mui]: ['^@mui/.+'],
             [customGroups.auth]: ['^src/auth/.+'],
             [customGroups.hooks]: ['^src/hooks/.+'],
             [customGroups.utils]: ['^src/utils/.+'],
