@@ -1,5 +1,4 @@
 import type { DropzoneOptions } from 'react-dropzone';
-// import type { Theme, SxProps } from '@mui/material/styles';
 import type { UploadWrapper } from './default/styles';
 import type { RejectedFiles } from './components/rejected-files';
 import type { PreviewOrientation, MultiFilePreviewProps } from './components/multi-file-preview';

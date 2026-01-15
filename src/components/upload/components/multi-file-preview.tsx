@@ -3,9 +3,6 @@ import type { FileThumbnailProps } from '../../file-thumbnail';
 
 import { mergeClasses, varAlpha } from 'minimal-shared/utils';
 
-// import { styled } from '@mui/material/styles';
-// import IconButton from '@mui/material/IconButton';
-// import ListItemText from '@mui/material/ListItemText';
 
 import { tokens } from 'src/theme/design-tokens';
 import { fData } from 'src/utils/format-number';

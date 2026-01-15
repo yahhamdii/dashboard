@@ -11,14 +11,6 @@
 'use client';
 
 import React from 'react';
-// import Dialog from '@mui/material/Dialog';
-// import DialogTitle from '@mui/material/DialogTitle';
-// import DialogContent from '@mui/material/DialogContent';
-// import DialogActions from '@mui/material/DialogActions';
-// import type { DialogProps as MuiDialogProps } from '@mui/material/Dialog';
-// import type { DialogTitleProps as MuiDialogTitleProps } from '@mui/material/DialogTitle';
-// import type { DialogContentProps as MuiDialogContentProps } from '@mui/material/DialogContent';
-// import type { DialogActionsProps as MuiDialogActionsProps } from '@mui/material/DialogActions';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

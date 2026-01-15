@@ -1,7 +1,6 @@
 'use client';
 
 import styled from '@emotion/styled';
-// import type { CSSObject } from '@mui/material/styles';
 import type { NavItemProps } from '../types';
 
 import { mergeClasses } from 'minimal-shared/utils';

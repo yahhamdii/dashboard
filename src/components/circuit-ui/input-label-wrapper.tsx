@@ -5,8 +5,6 @@
 'use client';
 
 import React from 'react';
-// import InputLabel from '@mui/material/InputLabel';
-// import type { InputLabelProps as MuiInputLabelProps } from '@mui/material/InputLabel';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

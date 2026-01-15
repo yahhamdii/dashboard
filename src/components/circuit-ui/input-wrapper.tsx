@@ -8,8 +8,6 @@
 'use client';
 
 import React from 'react';
-// import TextField from '@mui/material/TextField';
-// import type { TextFieldProps as MuiTextFieldProps } from '@mui/material/TextField';
 
 import { Input as CircuitInput } from '@sumup-oss/circuit-ui';
 

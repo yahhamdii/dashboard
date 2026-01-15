@@ -8,8 +8,6 @@
 'use client';
 
 import React from 'react';
-// import Container from '@mui/material/Container';
-// import type { ContainerProps as MuiContainerProps } from '@mui/material/Container';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

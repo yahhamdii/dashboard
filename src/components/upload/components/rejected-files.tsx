@@ -2,7 +2,6 @@ import type { FileRejection } from 'react-dropzone';
 
 import { mergeClasses } from 'minimal-shared/utils';
 
-// import { styled } from '@mui/material/styles';
 // import { tokens } from 'src/theme/design-tokens';
 
 import { fData } from 'src/utils/format-number';

@@ -1,5 +1,3 @@
-import type { BoxProps } from '@mui/material/Box';
-import type { CardProps } from '@mui/material/Card';
 
 import { orderBy } from 'es-toolkit';
 import { varAlpha } from 'minimal-shared/utils';
@@ -17,7 +15,7 @@ import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-type Props = CardProps & {
+type Props = any & {
   title?: string;
   subheader?: string;
   list: {
@@ -51,7 +49,7 @@ export function AppTopAuthors({ title, subheader, list, sx, ...other }: Props) {
 
 // ----------------------------------------------------------------------
 
-type ItemProps = BoxProps & {
+type ItemProps = any & {
   index: number;
   item: Props['list'][number];
 };

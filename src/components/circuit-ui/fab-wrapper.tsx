@@ -5,8 +5,6 @@
 'use client';
 
 import React from 'react';
-// import Fab from '@mui/material/Fab';
-// import type { FabProps as MuiFabProps } from '@mui/material/Fab';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

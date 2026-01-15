@@ -1,11 +1,8 @@
 'use client';
 
-// import type { Theme, SxProps } from '@mui/material/styles';
-// import type { BreadcrumbsProps } from '@mui/material/Breadcrumbs';
 import type { MoreLinksProps } from './more-links';
 import type { BreadcrumbsLinkProps } from './breadcrumb-link';
 
-// import Breadcrumbs from '@mui/material/Breadcrumbs';
 
 import { BackLink } from './back-link';
 import { MoreLinks } from './more-links';

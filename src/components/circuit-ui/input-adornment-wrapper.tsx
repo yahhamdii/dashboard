@@ -5,8 +5,6 @@
 'use client';
 
 import React from 'react';
-// import InputAdornment from '@mui/material/InputAdornment';
-// import type { InputAdornmentProps as MuiInputAdornmentProps } from '@mui/material/InputAdornment';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

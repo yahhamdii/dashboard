@@ -8,10 +8,6 @@
 'use client';
 
 import React from 'react';
-// import Tabs from '@mui/material/Tabs';
-// import Tab from '@mui/material/Tab';
-// import type { TabsProps as MuiTabsProps } from '@mui/material/Tabs';
-// import type { TabProps as MuiTabProps } from '@mui/material/Tab';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

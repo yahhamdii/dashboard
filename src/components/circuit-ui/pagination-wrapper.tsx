@@ -5,8 +5,6 @@
 'use client';
 
 import React from 'react';
-// import Pagination from '@mui/material/Pagination';
-// import type { PaginationProps as MuiPaginationProps } from '@mui/material/Pagination';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

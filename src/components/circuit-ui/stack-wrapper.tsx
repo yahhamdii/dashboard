@@ -8,8 +8,6 @@
 'use client';
 
 import React from 'react';
-// import Stack from '@mui/material/Stack';
-// import type { StackProps as MuiStackProps } from '@mui/material/Stack';
 
 // import { useCircuitLayoutsWithPathname } from 'src/lib/feature-flags';
 

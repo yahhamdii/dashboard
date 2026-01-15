@@ -6,7 +6,6 @@ import { useEffect, useCallback } from 'react';
 import { usePopoverHover } from 'minimal-shared/hooks';
 import { isActiveLink, isExternalLink } from 'minimal-shared/utils';
 
-// import { popoverClasses } from '@mui/material/Popover';
 
 import { usePathname } from 'src/routes/hooks';
 import { tokens } from 'src/theme/design-tokens';

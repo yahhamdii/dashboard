@@ -5,8 +5,6 @@
 'use client';
 
 import React from 'react';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import type { FormControlLabelProps as MuiFormControlLabelProps } from '@mui/material/FormControlLabel';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

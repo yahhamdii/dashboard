@@ -8,9 +8,6 @@
 'use client';
 
 import React from 'react';
-// import Select from '@mui/material/Select';
-// import type { SelectProps as MuiSelectProps } from '@mui/material/Select';
-// import MenuItem from '@mui/material/MenuItem';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

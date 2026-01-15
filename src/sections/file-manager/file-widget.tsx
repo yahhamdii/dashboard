@@ -1,4 +1,3 @@
-import type { CardProps } from '@mui/material/Card';
 
 import {
   BoxWrapper as Box,
@@ -16,7 +15,7 @@ import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-type Props = CardProps & {
+type Props = any & {
   title: string;
   value: number;
   total: number;

@@ -1,6 +1,3 @@
-// import type { PaperProps } from '@mui/material/Paper';
-// import type { PopoverProps } from '@mui/material/Popover';
-// import type { Theme, SxProps } from '@mui/material/styles';
 
 type PaperProps = React.ComponentProps<'div'>;
 type PopoverProps = React.ComponentProps<'div'>;

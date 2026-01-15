@@ -1,4 +1,3 @@
-// import type { any } from '@mui/material/styles';
 import { tokens } from 'src/theme/design-tokens';
 
 // ----------------------------------------------------------------------

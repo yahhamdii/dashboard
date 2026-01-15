@@ -5,8 +5,6 @@
 'use client';
 
 import React from 'react';
-// import MenuItem from '@mui/material/MenuItem';
-// import type { MenuItemProps as MuiMenuItemProps } from '@mui/material/MenuItem';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

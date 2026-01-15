@@ -5,8 +5,6 @@
 'use client';
 
 import React from 'react';
-// import Collapse from '@mui/material/Collapse';
-// import type { CollapseProps as MuiCollapseProps } from '@mui/material/Collapse';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

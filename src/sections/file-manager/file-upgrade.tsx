@@ -1,4 +1,3 @@
-import type { CardProps } from '@mui/material/Card';
 
 import {
   BoxWrapper as Box,
@@ -15,7 +14,7 @@ import { SvgColor } from 'src/components/svg-color';
 
 // ----------------------------------------------------------------------
 
-export function FileUpgrade({ sx, ...other }: CardProps) {
+export function FileUpgrade({ sx, ...other }: any) {
   return (
     <Card
       sx={[

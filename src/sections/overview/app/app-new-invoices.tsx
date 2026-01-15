@@ -1,4 +1,3 @@
-import type { CardProps } from '@mui/material/Card';
 import type { TableHeadCellProps } from 'src/components/table';
 
 import { usePopover } from 'minimal-shared/hooks';
@@ -20,7 +19,7 @@ import { CustomPopover } from 'src/components/custom-popover';
 
 // ----------------------------------------------------------------------
 
-type Props = CardProps & {
+type Props = any & {
   title?: string;
   subheader?: string;
   headCells: TableHeadCellProps[];

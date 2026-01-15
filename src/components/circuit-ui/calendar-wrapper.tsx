@@ -5,8 +5,6 @@
 'use client';
 
 import React from 'react';
-// import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
-// import type { DateCalendarProps } from '@mui/x-date-pickers/DateCalendar';
 
 // Note: On importera Calendar de Circuit UI ici une fois vérifié
 // import { Calendar } from '@sumup-oss/circuit-ui';

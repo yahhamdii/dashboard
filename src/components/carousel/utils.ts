@@ -1,4 +1,3 @@
-// import type { Breakpoint } from '@mui/material/styles';
 import type { CarouselOptions } from './types';
 
 type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl';

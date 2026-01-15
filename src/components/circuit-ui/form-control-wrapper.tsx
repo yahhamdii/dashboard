@@ -5,8 +5,6 @@
 'use client';
 
 import React from 'react';
-// import FormControl from '@mui/material/FormControl';
-// import type { FormControlProps as MuiFormControlProps } from '@mui/material/FormControl';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

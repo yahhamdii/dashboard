@@ -5,8 +5,6 @@
 'use client';
 
 import React from 'react';
-// import Drawer from '@mui/material/Drawer';
-// import type { DrawerProps as MuiDrawerProps } from '@mui/material/Drawer';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

@@ -5,8 +5,6 @@
 'use client';
 
 import React from 'react';
-// import MenuList from '@mui/material/MenuList';
-// import type { MenuListProps as MuiMenuListProps } from '@mui/material/MenuList';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

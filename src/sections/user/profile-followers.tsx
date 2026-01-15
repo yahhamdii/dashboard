@@ -1,4 +1,3 @@
-import type { CardProps } from '@mui/material/Card';
 import type { IUserProfileFollower } from 'src/types/user';
 
 import { useState, useCallback } from 'react';
@@ -67,7 +66,7 @@ export function ProfileFollowers({ followers }: Props) {
 
 // ----------------------------------------------------------------------
 
-type CardItemProps = CardProps & {
+type CardItemProps = any & {
   selected: boolean;
   onSelected: () => void;
   follower: IUserProfileFollower;

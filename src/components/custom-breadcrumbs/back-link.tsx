@@ -1,4 +1,3 @@
-// import type { LinkProps } from '@mui/material/Link';
 
 import { LinkWrapper as Link } from 'src/components/circuit-ui';
 

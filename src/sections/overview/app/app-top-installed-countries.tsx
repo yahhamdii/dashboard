@@ -1,5 +1,3 @@
-import type { BoxProps } from '@mui/material/Box';
-import type { CardProps } from '@mui/material/Card';
 import type { IconifyName } from 'src/components/iconify';
 
 import { BoxWrapper as Box } from 'src/components/circuit-ui';
@@ -18,7 +16,7 @@ import { Scrollbar } from 'src/components/scrollbar';
 
 // ----------------------------------------------------------------------
 
-type Props = CardProps & {
+type Props = any & {
   title?: string;
   subheader?: string;
   list: {
@@ -65,7 +63,7 @@ export function AppTopInstalledCountries({ title, subheader, list, sx, ...other 
 
 // ----------------------------------------------------------------------
 
-type CountryItemProps = BoxProps & {
+type CountryItemProps = any & {
   item: Props['list'][number];
 };
 

@@ -5,8 +5,6 @@
 'use client';
 
 import React from 'react';
-// import Skeleton from '@mui/material/Skeleton';
-// import type { SkeletonProps as MuiSkeletonProps } from '@mui/material/Skeleton';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

@@ -1,12 +1,10 @@
 'use client';
 
-// import type { Direction } from '@mui/material/styles';
 
 import { useEffect } from 'react';
 // import createCache from '@emotion/cache';
 // import { CacheProvider } from '@emotion/react';
 
-// import rtlPlugin from '@mui/stylis-plugin-rtl';
 
 // ----------------------------------------------------------------------
 

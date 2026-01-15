@@ -8,8 +8,6 @@
 'use client';
 
 import React, { useState } from 'react';
-// import Tooltip from '@mui/material/Tooltip';
-// import type { TooltipProps as MuiTooltipProps } from '@mui/material/Tooltip';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

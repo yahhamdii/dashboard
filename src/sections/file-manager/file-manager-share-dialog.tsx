@@ -1,4 +1,3 @@
-import type { DialogProps } from '@mui/material/Dialog';
 import type { IFileShared } from 'src/types/file';
 
 import {
@@ -20,7 +19,7 @@ import { FileManagerInvitedItem } from './file-manager-invited-item';
 
 // ----------------------------------------------------------------------
 
-type Props = DialogProps & {
+type Props = any & {
   inviteEmail?: string;
   shared?: IFileShared[] | null;
   onClose: () => void;

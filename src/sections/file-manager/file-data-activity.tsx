@@ -1,4 +1,3 @@
-import type { CardProps } from '@mui/material/Card';
 import type { ChartOptions } from 'src/components/chart';
 
 import { useState, useCallback } from 'react';
@@ -14,7 +13,7 @@ import { Chart, useChart, ChartSelect } from 'src/components/chart';
 
 // ----------------------------------------------------------------------
 
-type Props = CardProps & {
+type Props = any & {
   title?: string;
   subheader?: string;
   chart: {

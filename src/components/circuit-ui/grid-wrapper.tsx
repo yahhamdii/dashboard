@@ -36,7 +36,14 @@ function getColumnWidth(cols: number | 'auto'): string {
 
 // Conversion des props sx en styles CSS
 function convertSxToStyles(sx: any): React.CSSProperties {
-  if (!sx || typeof sx !== 'object' || Array.isArray(sx)) return {};
+  if (!sx) return {};
+
+  // Handle array of styles
+  if (Array.isArray(sx)) {
+    return sx.reduce((acc, item) => ({ ...acc, ...convertSxToStyles(item) }), {});
+  }
+
+  if (typeof sx !== 'object') return {};
 
   const styles: React.CSSProperties = {};
 
@@ -70,6 +77,18 @@ function convertSxToStyles(sx: any): React.CSSProperties {
     }
 
     // Direct CSS properties
+    if (['width', 'height', 'minWidth', 'minHeight', 'maxWidth', 'maxHeight'].includes(key)) {
+      const sizeValue = typeof value === 'object' ? (value as any).xs ?? Object.values(value)[0] : value;
+
+      if (typeof sizeValue === 'number') {
+        // MUI convention: values <= 1 are percentages, > 1 are pixels
+        (styles as any)[key] = sizeValue <= 1 ? `${sizeValue * 100}%` : `${sizeValue}px`;
+      } else {
+        (styles as any)[key] = sizeValue;
+      }
+      continue;
+    }
+
     if (key === 'display') {
       styles.display = value as any;
       continue;
@@ -137,19 +156,19 @@ export function GridWrapper({
   // Générer le style CSS pour container
   const containerStyles: React.CSSProperties = container
     ? {
-        display: 'grid',
-        gridTemplateColumns: 'repeat(12, 1fr)',
-        gap: convertSpacing(spacingXs),
-        width: '100%',
-        ...(direction && { gridAutoFlow: direction === 'column' || direction === 'column-reverse' ? 'column' : 'row' }),
-      }
+      display: 'grid',
+      gridTemplateColumns: 'repeat(12, 1fr)',
+      gap: convertSpacing(spacingXs),
+      width: '100%',
+      ...(direction && { gridAutoFlow: direction === 'column' || direction === 'column-reverse' ? 'column' : 'row' }),
+    }
     : {};
 
   // Générer le style CSS pour item (non-container)
   const itemStyles: React.CSSProperties = !container
     ? {
-        gridColumn: sizeXs === 'auto' ? 'auto' : `span ${sizeXs}`,
-      }
+      gridColumn: sizeXs === 'auto' ? 'auto' : `span ${sizeXs}`,
+    }
     : {};
 
   // Générer les classes CSS pour les breakpoints responsifs

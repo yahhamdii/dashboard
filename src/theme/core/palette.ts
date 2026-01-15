@@ -3,7 +3,6 @@
 //   PaletteColor,
 //   ColorSystemOptions,
 //   PaletteColorChannel,
-// } from '@mui/material/styles';
 import type { SchemesRecord } from '../types';
 
 import { varAlpha, createPaletteChannel } from 'minimal-shared/utils';

@@ -1,7 +1,4 @@
-// import type { BoxProps } from '@mui/material/Box';
-// import type { ButtonBaseProps } from '@mui/material/ButtonBase';
 import type { UseEmblaCarouselType } from 'embla-carousel-react';
-// import type { Theme, SxProps, Breakpoint } from '@mui/material/styles';
 
 type BoxProps<T extends keyof React.JSX.IntrinsicElements = 'div'> = React.ComponentProps<T>;
 type ButtonBaseProps = React.ComponentProps<'button'>;

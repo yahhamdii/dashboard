@@ -7,8 +7,6 @@
 
 'use client';
 
-// import Button from '@mui/material/Button';
-// import type { ButtonProps as MuiButtonProps } from '@mui/material/Button';
 
 import { Button as CircuitButton } from '@sumup-oss/circuit-ui';
 

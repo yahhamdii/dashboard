@@ -5,8 +5,6 @@
 'use client';
 
 import React from 'react';
-// import Paper from '@mui/material/Paper';
-// import type { PaperProps as MuiPaperProps } from '@mui/material/Paper';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

@@ -3,7 +3,6 @@ import type { UploadProps } from '../types';
 import { useDropzone } from 'react-dropzone';
 import { mergeClasses } from 'minimal-shared/utils';
 
-// import CircularProgress from '@mui/material/CircularProgress';
 
 import { Iconify } from 'src/components/iconify';
 import { TypographyWrapper as Typography } from 'src/components/circuit-ui';

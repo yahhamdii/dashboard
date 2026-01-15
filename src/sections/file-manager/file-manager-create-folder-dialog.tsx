@@ -1,4 +1,3 @@
-import type { DialogProps } from '@mui/material/Dialog';
 
 import { useState, useEffect, useCallback } from 'react';
 
@@ -21,7 +20,7 @@ import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-type Props = DialogProps & {
+type Props = any & {
   title?: string;
   folderName?: string;
   onClose: () => void;

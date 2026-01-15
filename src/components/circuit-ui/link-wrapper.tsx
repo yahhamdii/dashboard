@@ -5,8 +5,6 @@
 'use client';
 
 import React from 'react';
-// import Link from '@mui/material/Link';
-// import type { LinkProps as MuiLinkProps } from '@mui/material/Link';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

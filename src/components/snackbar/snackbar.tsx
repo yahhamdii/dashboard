@@ -1,6 +1,5 @@
 'use client';
 
-// import Portal from '@mui/material/Portal';
 import { createPortal } from 'react-dom';
 import { useState, useEffect } from 'react';
 import { Toaster } from 'sonner';

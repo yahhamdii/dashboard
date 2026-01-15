@@ -5,8 +5,6 @@
 'use client';
 
 import React from 'react';
-// import AvatarGroup from '@mui/material/AvatarGroup';
-// import type { AvatarGroupProps as MuiAvatarGroupProps } from '@mui/material/AvatarGroup';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

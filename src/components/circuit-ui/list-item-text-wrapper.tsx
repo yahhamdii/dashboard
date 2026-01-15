@@ -5,8 +5,6 @@
 'use client';
 
 import React from 'react';
-// import ListItemText from '@mui/material/ListItemText';
-// import type { ListItemTextProps as MuiListItemTextProps } from '@mui/material/ListItemText';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

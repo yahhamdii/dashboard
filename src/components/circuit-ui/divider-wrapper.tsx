@@ -5,8 +5,6 @@
 'use client';
 
 import React from 'react';
-// import Divider from '@mui/material/Divider';
-// import type { DividerProps as MuiDividerProps } from '@mui/material/Divider';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

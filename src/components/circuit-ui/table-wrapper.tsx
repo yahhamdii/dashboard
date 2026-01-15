@@ -10,18 +10,6 @@
 
 'use client';
 
-// import Table from '@mui/material/Table';
-// import TableHead from '@mui/material/TableHead';
-// import TableBody from '@mui/material/TableBody';
-// import TableRow from '@mui/material/TableRow';
-// import TableCell from '@mui/material/TableCell';
-// import TableContainer from '@mui/material/TableContainer';
-// import type { TableProps as MuiTableProps } from '@mui/material/Table';
-// import type { TableHeadProps as MuiTableHeadProps } from '@mui/material/TableHead';
-// import type { TableBodyProps as MuiTableBodyProps } from '@mui/material/TableBody';
-// import type { TableRowProps as MuiTableRowProps } from '@mui/material/TableRow';
-// import type { TableCellProps as MuiTableCellProps } from '@mui/material/TableCell';
-// import type { TableContainerProps as MuiTableContainerProps } from '@mui/material/TableContainer';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

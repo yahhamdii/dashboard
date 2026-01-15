@@ -5,8 +5,6 @@
 'use client';
 
 import React from 'react';
-// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-// import type { DatePickerProps } from '@mui/x-date-pickers/DatePicker';
 
 // import { DateInput } from '@sumup-oss/circuit-ui';
 

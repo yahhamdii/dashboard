@@ -5,8 +5,6 @@
 'use client';
 
 import React from 'react';
-// import Popover from '@mui/material/Popover';
-// import type { PopoverProps as MuiPopoverProps } from '@mui/material/Popover';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

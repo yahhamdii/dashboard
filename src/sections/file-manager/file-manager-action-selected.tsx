@@ -1,4 +1,3 @@
-import type { BoxProps } from '@mui/material/Box';
 
 import {
   BoxWrapper as Box,
@@ -12,7 +11,7 @@ import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-type Props = BoxProps & {
+type Props = any & {
   rowCount: number;
   numSelected: number;
   selected?: string[];

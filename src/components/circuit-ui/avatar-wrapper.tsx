@@ -8,8 +8,6 @@
 'use client';
 
 import React from 'react';
-// import Avatar from '@mui/material/Avatar';
-// import type { AvatarProps as MuiAvatarProps } from '@mui/material/Avatar';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

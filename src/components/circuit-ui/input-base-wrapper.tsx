@@ -5,8 +5,6 @@
 'use client';
 
 import React from 'react';
-// import InputBase from '@mui/material/InputBase';
-// import type { InputBaseProps as MuiInputBaseProps } from '@mui/material/InputBase';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

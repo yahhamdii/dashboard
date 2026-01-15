@@ -8,8 +8,6 @@
 'use client';
 
 import React from 'react';
-// import Switch from '@mui/material/Switch';
-// import type { SwitchProps as MuiSwitchProps } from '@mui/material/Switch';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

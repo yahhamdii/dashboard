@@ -1,4 +1,3 @@
-// import type { CSSObject } from '@mui/material/styles';
 import type { SettingsState } from 'src/components/settings';
 
 import { tokens } from 'src/theme/design-tokens';

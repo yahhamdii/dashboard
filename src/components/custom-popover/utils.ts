@@ -1,4 +1,3 @@
-// import type { PopoverOrigin } from '@mui/material/Popover';
 import type { ElementRect } from './hooks';
 import type { ArrowPlacement } from './types';
 

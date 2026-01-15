@@ -8,8 +8,6 @@
 'use client';
 
 import React from 'react';
-// import IconButton from '@mui/material/IconButton';
-// import type { IconButtonProps as MuiIconButtonProps } from '@mui/material/IconButton';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

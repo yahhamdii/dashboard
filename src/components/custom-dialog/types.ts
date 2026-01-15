@@ -1,4 +1,3 @@
-// import type { DialogProps } from '@mui/material/Dialog';
 
 type DialogProps = React.ComponentProps<'div'>;
 

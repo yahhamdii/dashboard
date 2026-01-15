@@ -5,8 +5,6 @@
 'use client';
 
 import React from 'react';
-// import Alert from '@mui/material/Alert'; // Removed
-// import type { AlertProps as MuiAlertProps } from '@mui/material/Alert'; // Removed
 
 // import { useCircuitComponent } from 'src/lib/feature-flags'; // Removed
 

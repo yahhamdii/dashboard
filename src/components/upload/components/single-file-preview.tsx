@@ -2,7 +2,6 @@ import type { FileUploadType } from '../types';
 
 import { mergeClasses } from 'minimal-shared/utils';
 
-// import { styled } from '@mui/material/styles';
 // import { tokens } from 'src/theme/design-tokens';
 
 import { uploadClasses } from '../classes';

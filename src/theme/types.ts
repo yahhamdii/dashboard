@@ -6,7 +6,6 @@
 //   CssVarsThemeOptions,
 //   SupportedColorScheme,
 //   ThemeOptions as MuiThemeOptions,
-// } from '@mui/material/styles';
 // import type { CustomShadows } from './core/custom-shadows';
 
 // ----------------------------------------------------------------------

@@ -1,9 +1,6 @@
 'use client';
 
-// import type { ChipProps } from '@mui/material/Chip';
-// import type { Theme, SxProps } from '@mui/material/styles';
 
-// import { styled } from '@mui/material/styles';
 
 import { ButtonWrapper as Button } from 'src/components/circuit-ui';
 

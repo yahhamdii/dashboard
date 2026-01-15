@@ -1,5 +1,3 @@
-// import type { BoxProps } from '@mui/material/Box';
-// import type { CardProps } from '@mui/material/Card';
 
 type BoxProps = React.ComponentProps<typeof Box>;
 type CardProps = React.ComponentProps<typeof Card>;
@@ -7,10 +5,8 @@ type CardProps = React.ComponentProps<typeof Card>;
 import { useTabs } from 'minimal-shared/hooks';
 
 import { BoxWrapper as Box, StackWrapper as Stack } from 'src/components/circuit-ui';
-// import Rating from '@mui/material/Rating';
 
 import { CardWrapper as Card, CardHeaderWrapper as CardHeader, TabsWrapper, TabWrapper, AvatarWrapper } from 'src/components/circuit-ui';
-// import { svgIconClasses } from '@mui/material/SvgIcon';
 
 import { TypographyWrapper as Typography } from 'src/components/circuit-ui';
 

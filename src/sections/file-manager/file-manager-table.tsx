@@ -1,4 +1,3 @@
-import type { BoxProps } from '@mui/material/Box';
 import type { IFile } from 'src/types/file';
 import type { UseTableReturn, TableHeadCellProps } from 'src/components/table';
 
@@ -36,7 +35,7 @@ const TABLE_HEAD: TableHeadCellProps[] = [
 
 // ----------------------------------------------------------------------
 
-type Props = BoxProps & {
+type Props = any & {
   table: UseTableReturn;
   notFound: boolean;
   dataFiltered: IFile[];

@@ -5,8 +5,6 @@
 'use client';
 
 import React from 'react';
-// import LinearProgress from '@mui/material/LinearProgress';
-// import type { LinearProgressProps as MuiLinearProgressProps } from '@mui/material/LinearProgress';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

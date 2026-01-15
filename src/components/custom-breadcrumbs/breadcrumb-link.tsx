@@ -1,4 +1,3 @@
-// import type { SxProps } from '@mui/material/styles';
 
 import { LinkWrapper as Link } from 'src/components/circuit-ui';
 import styled from '@emotion/styled';

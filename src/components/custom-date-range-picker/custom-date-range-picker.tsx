@@ -1,7 +1,5 @@
 'use client';
 
-// import type { PaperProps } from '@mui/material/Paper';
-// import type { DialogProps } from '@mui/material/Dialog';
 
 type PaperProps = React.ComponentProps<'div'>;
 type DialogProps = React.ComponentProps<'div'>;

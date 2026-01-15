@@ -1,4 +1,3 @@
-import type { DrawerProps } from '@mui/material/Drawer';
 import type { IFile } from 'src/types/file';
 
 import { useState, useCallback } from 'react';
@@ -30,7 +29,7 @@ import { FileManagerInvitedItem } from './file-manager-invited-item';
 
 // ----------------------------------------------------------------------
 
-type Props = DrawerProps & {
+type Props = any & {
   file: IFile;
   favorited?: boolean;
   onClose: () => void;

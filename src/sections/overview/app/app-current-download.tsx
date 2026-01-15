@@ -1,4 +1,3 @@
-import type { CardProps } from '@mui/material/Card';
 import type { ChartOptions } from 'src/components/chart';
 
 import { DividerWrapper as Divider } from 'src/components/circuit-ui';
@@ -12,7 +11,7 @@ import { Chart, useChart, ChartLegends } from 'src/components/chart';
 
 // ----------------------------------------------------------------------
 
-type Props = CardProps & {
+type Props = any & {
   title?: string;
   subheader?: string;
   chart: {

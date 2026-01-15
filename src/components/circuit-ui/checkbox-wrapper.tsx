@@ -8,8 +8,6 @@
 'use client';
 
 import React from 'react';
-// import Checkbox from '@mui/material/Checkbox';
-// import type { CheckboxProps as MuiCheckboxProps } from '@mui/material/Checkbox';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

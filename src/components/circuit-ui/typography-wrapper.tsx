@@ -7,8 +7,6 @@
 
 'use client';
 
-// import Typography from '@mui/material/Typography';
-// import type { TypographyProps as MuiTypographyProps } from '@mui/material/Typography';
 
 import { Headline, Body } from '@sumup-oss/circuit-ui';
 

@@ -5,8 +5,6 @@
 'use client';
 
 import React from 'react';
-// import Chip from '@mui/material/Chip';
-// import type { ChipProps as MuiChipProps } from '@mui/material/Chip';
 
 // import { useCircuitComponent } from 'src/lib/feature-flags';
 

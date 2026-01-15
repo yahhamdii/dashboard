@@ -1,7 +1,6 @@
 /**
  * Component Props Types
  *
- * Types de props pour les composants, remplaçant les imports @mui/material.
  * Ces types sont compatibles avec l'API des wrappers Circuit UI.
  */
 

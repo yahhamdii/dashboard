@@ -30,7 +30,14 @@ function convertSpacing(value: any): string | undefined {
 
 // Conversion des props sx en styles CSS
 function convertSxToStyles(sx: any): React.CSSProperties {
-  if (!sx || typeof sx !== 'object' || Array.isArray(sx)) return {};
+  if (!sx) return {};
+
+  // Handle array of styles
+  if (Array.isArray(sx)) {
+    return sx.reduce((acc, item) => ({ ...acc, ...convertSxToStyles(item) }), {});
+  }
+
+  if (typeof sx !== 'object') return {};
 
   const styles: React.CSSProperties = {};
 
@@ -82,7 +89,13 @@ function convertSxToStyles(sx: any): React.CSSProperties {
     // Propriétés de taille
     if (['width', 'height', 'minWidth', 'minHeight', 'maxWidth', 'maxHeight'].includes(key)) {
       const sizeValue = typeof value === 'object' ? (value as any).xs ?? Object.values(value)[0] : value;
-      (styles as any)[key] = typeof sizeValue === 'number' ? `${sizeValue}px` : sizeValue;
+
+      if (typeof sizeValue === 'number') {
+        // MUI convention: values <= 1 are percentages, > 1 are pixels
+        (styles as any)[key] = sizeValue <= 1 ? `${sizeValue * 100}%` : `${sizeValue}px`;
+      } else {
+        (styles as any)[key] = sizeValue;
+      }
       continue;
     }
 

@@ -1,4 +1,3 @@
-import type { Theme, SxProps } from '@mui/material/styles';
 import type { IFileManager } from 'src/types/file';
 
 import { useState, useCallback } from 'react';
