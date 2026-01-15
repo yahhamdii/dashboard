@@ -165,11 +165,9 @@ export function GridWrapper({
     : {};
 
   // Générer le style CSS pour item (non-container)
-  const itemStyles: React.CSSProperties = !container
-    ? {
-      gridColumn: sizeXs === 'auto' ? 'auto' : `span ${sizeXs}`,
-    }
-    : {};
+  // Générer le style CSS pour item (non-container)
+  // Note: On n'applique pas gridColumn via style inline car cela surchargerait les classes Tailwind responsives
+  const itemStyles: React.CSSProperties = {};
 
   // Générer les classes CSS pour les breakpoints responsifs
   const generateResponsiveClasses = (): string => {

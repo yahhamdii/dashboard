@@ -29,6 +29,8 @@ function NoSsr({ children, fallback }: { children: React.ReactNode; fallback: Re
   return <>{children}</>;
 }
 
+import { convertSxToStyles } from 'src/components/circuit-ui/styles-utils';
+
 export function Chart({
   sx,
   type,
@@ -41,13 +43,7 @@ export function Chart({
 }: ChartProps) {
   const renderFallback = () => <ChartLoading type={type} sx={slotProps?.loading} />;
 
-  const mergedSx = Array.isArray(sx) ? sx : [sx];
-  const sxStyles = mergedSx.reduce((acc, style) => {
-    if (style && typeof style === 'object') {
-      return { ...acc, ...style };
-    }
-    return acc;
-  }, {});
+  const sxStyles = convertSxToStyles(sx);
 
   const rootStyles: React.CSSProperties = {
     width: '100%',

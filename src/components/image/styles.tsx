@@ -41,15 +41,11 @@ export type ImageRootProps = React.ComponentProps<'span'> & {
   sx?: any;
 };
 
+import { convertSxToStyles } from 'src/components/circuit-ui/styles-utils';
+
 export const ImageRoot = React.forwardRef<HTMLSpanElement, ImageRootProps>(
   ({ effect, sx, style, className, ...other }, ref) => {
-    const mergedSx = Array.isArray(sx) ? sx : [sx];
-    const sxStyles = mergedSx.reduce((acc, style) => {
-      if (style && typeof style === 'object') {
-        return { ...acc, ...style };
-      }
-      return acc;
-    }, {});
+    const sxStyles = convertSxToStyles(sx);
 
     const rootStyles: React.CSSProperties = {
       maxWidth: '100%',
