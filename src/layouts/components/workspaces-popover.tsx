@@ -79,6 +79,7 @@ export function WorkspacesPopover({ data = [], sx, ...other }: WorkspacesPopover
       <ButtonBase
         onClick={onOpen}
         style={buttonStyles}
+        className="lg:pl-[var(--layout-nav-vertical-width)]"
         {...other}
       >
         <div style={buttonBg} />

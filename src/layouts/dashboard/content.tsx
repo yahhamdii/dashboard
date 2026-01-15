@@ -57,7 +57,7 @@ export function DashboardContent({
       }
       @media (min-width: ${breakpointValue}px) {
         [data-dashboard-content="${contentId}"] {
-          padding-left: var(--layout-dashboard-content-px);
+          padding-left: var(--layout-nav-vertical-width);
           padding-right: var(--layout-dashboard-content-px);
         }
         ${isNavHorizontal ? `[data-dashboard-content="${contentId}"] { --layout-dashboard-content-pt: 40px; }` : ''}
